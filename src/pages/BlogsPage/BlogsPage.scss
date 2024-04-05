@@ -1,0 +1,224 @@
+.blogsPage-container {
+  .hero {
+    margin-top: 140px !important;
+
+    .intro-container {
+      h1 {
+        color: var(--color-text-secondary);
+
+        span {
+          color: var(--color-text-primary);
+        }
+
+        .wave {
+          animation-name: wave-animation;
+          /* Refers to the name of your @keyframes element below */
+          animation-duration: 2.5s;
+          /* Change to speed up or slow down */
+          animation-iteration-count: infinite;
+          /* Never stop waving :) */
+          transform-origin: 70% 70%;
+          /* Pivot around the bottom-left palm */
+          display: inline-block;
+        }
+
+        @keyframes wave-animation {
+          0% {
+            transform: rotate(0deg);
+          }
+
+          10% {
+            transform: rotate(14deg);
+          }
+
+          /* The following five values can be played with to make the waving more or less extreme */
+          20% {
+            transform: rotate(-8deg);
+          }
+
+          30% {
+            transform: rotate(14deg);
+          }
+
+          40% {
+            transform: rotate(-4deg);
+          }
+
+          50% {
+            transform: rotate(10deg);
+          }
+
+          60% {
+            transform: rotate(0deg);
+          }
+
+          /* Reset for the last half to pause */
+          100% {
+            transform: rotate(0deg);
+          }
+        }
+      }
+    }
+
+    .navigation-buttons {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 20px 0px;
+    }
+  }
+
+  .about-me {
+    .about-me-container {
+      display: flex;
+      gap: 16px;
+
+      .left {
+        width: 50%;
+      }
+
+      .right {
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+
+        .signature-container {
+          align-self: flex-end;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          pointer-events: none;
+          margin-right: 20px;
+          flex: 1;
+        }
+      }
+    }
+  }
+
+  .subscription {
+    .blog-letter {
+      background-color: var(--color-bg--box-container);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 48px;
+      border-radius: 10px;
+      border: 1px solid var(--border-color);
+      box-sizing: border-box;
+
+      .blogletter-container {
+        width: 100%;
+        box-sizing: border-box;
+
+        .icons {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 40px;
+
+          .icon-plane {
+            color: var(--color-text-secondary);
+            font-size: 40px;
+          }
+        }
+
+        h3 {
+          margin: 20px 0;
+        }
+
+        p {
+          margin: 20px 0;
+          margin-bottom: 10px;
+          font-size: 16px;
+        }
+
+        ul {
+          li {
+            .fa-circle-dot {
+              color: var(--color-anchor);
+              margin-right: 10px;
+            }
+
+            margin: 14px 10px;
+          }
+        }
+
+        form {
+          display: flex;
+          gap: 10px;
+          align-items: center;
+          justify-content: center;
+          margin-top: 40px;
+
+          input {
+            flex: 1;
+            padding: 8px 20px;
+            height: 100%;
+            background-color: #1d202a;
+            border: 1px solid var(--border-color);
+            color: var(--color-text-primary);
+            font-size: 14px;
+            font-family: var(--font-family);
+            outline: none;
+            background: none;
+            border-radius: 10px;
+
+            &::placeholder {
+              color: var(--color-text-secondary-dark);
+              font-size: 14px;
+            }
+
+            &:focus {
+              border: 1px solid var(--color-anchor);
+              box-shadow: 0 0 20px var(--shadow-color);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .blogsPage-container {
+    .about-me {
+      .about-me-container {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+
+        .left {
+          width: 100%;
+        }
+
+        .right {
+          width: 100%;
+        }
+      }
+    }
+
+    .subscription {
+      .blog-letter {
+        padding: 20px;
+
+        .blogletter-container {
+          width: 100%;
+          box-sizing: border-box;
+
+          .icons {
+            margin-bottom: 20px;
+          }
+
+          form {
+            box-sizing: border-box;
+
+            input {
+              width: 95%;
+            }
+          }
+        }
+      }
+    }
+  }
+}

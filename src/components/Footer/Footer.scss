@@ -1,0 +1,19 @@
+.footer-content {
+  border-top: 1px solid var(--border-color);
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 80px;
+  text-align: center;
+  line-height: 1.5rem;
+
+  span {
+    font-size: 14px;
+    color: var(--color-text-secondary-dark);
+
+    .fa-heart {
+      color: var(--color-anchor);
+    }
+  }
+}

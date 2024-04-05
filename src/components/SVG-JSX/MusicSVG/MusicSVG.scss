@@ -1,0 +1,28 @@
+.music-icon-container {
+    height: 100%;
+    padding: 7.5px;
+    border: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-right: 8px;
+}
+
+.music-icon-container .music-icon {
+    fill: var(--color-text-secondary);
+    width: 22px;
+    height: 22px;
+}
+
+.music-icon-container:hover .music-icon {
+    transition: all 0.1s ease;
+    fill: var(--color-anchor);
+}
+
+.music-icon-container:hover {
+    border: 1px solid var(--color-anchor);
+    box-shadow: 0 0 30px var(--anchor-underline-color);
+}

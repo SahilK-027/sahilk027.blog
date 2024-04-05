@@ -1,0 +1,33 @@
+/* Command container styles */
+.command-container {
+  height: 100%;
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  // margin-right: 8px;
+}
+
+/* Command icon styles */
+.command-container .command-icon {
+  fill: var(--color-text-secondary); /* Transition fill color */
+  width: 16px;
+  height: 16px;
+  transition: all 0.3s ease;
+}
+
+/* Command icon hover styles */
+.command-container:hover .command-icon {
+  transition: all 0.3s ease;
+  fill: var(--color-anchor); /* Change fill color on hover */
+}
+
+.command-container:hover {
+  transition: all 0.3s ease;
+  border: 1px solid var(--color-anchor);
+  box-shadow: 0 0 30px var(--anchor-underline-color);
+}

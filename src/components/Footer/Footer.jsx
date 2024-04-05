@@ -21,7 +21,7 @@ const Footer = ({ toggleTheme }) => {
           </div>
 
           <div className="right">
-            Theme
+            Change Theme
             <span>
               <input
                 type="checkbox"

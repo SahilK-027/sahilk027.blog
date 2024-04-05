@@ -31,7 +31,7 @@
         border: 1px solid var(--border-color);
         background-color: var(--color-bg-box-container);
         width: 50px;
-        height: 26px;
+        height: 24px;
         border-radius: 50px;
         position: relative;
         padding: 5px;
@@ -51,10 +51,10 @@
 
       .checkbox-label .ball {
         background-color: var(--color-text-primary);
-        width: 22px;
-        height: 22px;
+        width: 18px;
+        height: 18px;
         position: absolute;
-        left: 2px;
+        left: 4px;
         top: 2px;
         border-radius: 50%;
         transition: transform 0.2s linear;

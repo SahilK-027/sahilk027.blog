@@ -7,14 +7,41 @@
     justify-content: center;
     border-radius: 10px;
     cursor: pointer;
-    transition: all 0.3s ease;
     margin-right: 8px;
+}
+
+.music-icon-container.play-animation {
+    animation: glow 1s infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        box-shadow: 0 0 0px var(--shadow-color);
+    }
+
+    to {
+        box-shadow: 0 0 10px var(--shadow-color);
+    }
 }
 
 .music-icon-container .music-icon {
     fill: var(--color-text-secondary);
     width: 22px;
     height: 22px;
+}
+
+.music-icon-container .music-icon.play-animation {
+    animation: colorGlow 1s infinite alternate;
+}
+
+@keyframes colorGlow {
+    from {
+        fill: var(--color-text-secondary);
+    }
+
+    to {
+        fill: var(--color-anchor);
+    }
 }
 
 .music-icon-container:hover .music-icon {

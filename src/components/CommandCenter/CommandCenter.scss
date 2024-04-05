@@ -62,14 +62,12 @@
         justify-content: center;
         border-radius: 10px;
         cursor: pointer;
-        transition: all 0.3s ease;
         margin-right: 20px;
       }
 
       .filter-posts-container .filter-icon {
         color: var(--color-text-secondary-dark);
         font-size: 16px;
-        transition: all 0.3s ease;
       }
 
       .filter-posts-container:hover .filter-icon {
@@ -109,9 +107,9 @@
           gap: 10px;
           text-decoration: none;
           color: var(--color-text-secondary);
-          transition: all 0.2s ease;
 
           &:hover {
+            transition: all 0.2s ease;
             color: var(--color-anchor);
             background-color: var(--selection-bg-color);
           }

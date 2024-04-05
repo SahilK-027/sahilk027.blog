@@ -5,9 +5,11 @@ import React from "react";
 import Navbar from "../../components/Navbar/Navbar";
 
 // Importing styling and assets
-import signature from "../../assets/svg/signature.svg";
 import "./BlogsPage.scss";
 import Footer from "../../components/Footer/Footer";
+import { Link } from "react-router-dom";
+import SignatureForBlackBg from "../../components/SVG-JSX/SignatureForBlackBg/SignatureForBlackBg";
+import SignatureForWhiteBg from "../../components/SVG-JSX/SignatureForWhiteBg/SignatureForWhiteBg";
 
 /**
  * `BlogIntroTxt` component is the introductory text for the blogs page.
@@ -38,7 +40,7 @@ const BlogIntroTxt = () => {
 const NavigationButtons = () => {
   return (
     <div className="navigation-buttons">
-      <a href="/projects">
+      <Link to="/projects">
         <button className="btn">
           My Work{" "}
           <i
@@ -46,7 +48,7 @@ const NavigationButtons = () => {
             className="fa-regular fa-circle-check"
           ></i>
         </button>
-      </a>
+      </Link>
       <a target="_blank" href="https://github.com/SahilK-027">
         <button className="btn">
           @SahilK-027{" "}
@@ -61,7 +63,7 @@ const NavigationButtons = () => {
  * AboutMe component
  * @returns {JSX.Element} - AboutMe component
  */
-const AboutMe = () => {
+const AboutMe = ({ theme }) => {
   return (
     <>
       <h2 className="section-header">About Me</h2>
@@ -74,9 +76,9 @@ const AboutMe = () => {
             something similar. I've been exploring the world of web development
             for a year and a half now, and with that, I learned lots of new
             technologies and built some{" "}
-            <a className="link" href="/projects">
+            <Link className="link" to="/projects">
               awesome projects
-            </a>{" "}
+            </Link>{" "}
             along the way! So with this blog page, I want to share my
             experiences and discoveries with you.
           </p>
@@ -104,7 +106,14 @@ const AboutMe = () => {
           </p>
           <br />
           <div className="signature-container">
-            — <img className="signature" src={signature} alt="signature" />
+            —{" "}
+            <div className="signature">
+              {theme === "dark" ? (
+                <SignatureForBlackBg />
+              ) : (
+                <SignatureForWhiteBg />
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -131,9 +140,9 @@ const BlogLetter = () => {
           </h3>
           <p>
             Stay Updated with the{" "}
-            <a className="link" href="#">
+            <Link className="link" to="/">
               Latest Blog
-            </a>{" "}
+            </Link>{" "}
             News, Containing:
           </p>
           <ul>
@@ -174,17 +183,22 @@ const BlogLetter = () => {
  * @param {*} param0
  * @returns {JSX.Element} - BlogsPage component
  */
-const BlogsPage = ({ openCMDCenter }) => {
+const BlogsPage = ({ openCMDCenter, controlMusic, isMusicPlaying, theme }) => {
   return (
     <>
-      <Navbar openCMDCenter={openCMDCenter} />
+      <Navbar
+        openCMDCenter={openCMDCenter}
+        controlMusic={controlMusic}
+        isMusicPlaying={isMusicPlaying}
+        theme={theme}
+      />
       <div className="blogsPage-container page">
         <div className="section hero">
           <BlogIntroTxt />
           <NavigationButtons />
         </div>
         <div className="section about-me">
-          <AboutMe />
+          <AboutMe theme={theme} />
         </div>
         <div className="section subscription">
           <BlogLetter />

@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
 import "./NotFound.scss";
+import { Link } from "react-router-dom";
 
-const NotFound = ({ openCMDCenter }) => {
+const NotFound = ({ openCMDCenter, controlMusic, isMusicPlaying, theme }) => {
   const [requestedURL, setRequestedURL] = useState("");
 
   useEffect(() => {
@@ -17,7 +18,12 @@ const NotFound = ({ openCMDCenter }) => {
 
   return (
     <>
-      <Navbar openCMDCenter={openCMDCenter} />
+      <Navbar
+        openCMDCenter={openCMDCenter}
+        controlMusic={controlMusic}
+        isMusicPlaying={isMusicPlaying}
+        theme={theme}
+      />
       <div className="page not-found-page">
         <h1>
           <span className="error-no">Error 404:</span>{" "}
@@ -30,9 +36,9 @@ const NotFound = ({ openCMDCenter }) => {
         </p>
         <p>
           Don't worry I got you! Click{" "}
-          <a className="link" href="/">
+          <Link className="link" to="/">
             here
-          </a>{" "}
+          </Link>{" "}
           to go back home.
         </p>
       </div>

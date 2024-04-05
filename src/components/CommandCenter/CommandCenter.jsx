@@ -8,6 +8,7 @@ import Tooltip from "../Tooltip/Tooltip";
 // Importing necessary styles && data
 import "./CommandCenter.scss";
 import { commandShortcuts, cmdItems } from "../../data/CommandShortCuts";
+import { Link } from "react-router-dom";
 
 /**
  * SearchBlogs component
@@ -43,12 +44,12 @@ const ItemCenter = () => {
           <div key={index}>
             <h4>{item.title}</h4>
             {item.navLinks.map((link, idx) => (
-              <a target={link.target} key={idx} href={link.href}>
+              <Link target={link.target} key={idx} to={link.href}>
                 <div className="icon">
                   <i className={`fa ${link.icon}`}></i>
                 </div>
                 <div className="nav-link">{link.text}</div>
-              </a>
+              </Link>
             ))}
           </div>
         ))}

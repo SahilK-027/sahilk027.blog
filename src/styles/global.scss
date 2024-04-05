@@ -120,12 +120,12 @@ p {
   text-decoration: underline;
   text-underline-offset: 0.2em;
   text-decoration-color: var(--anchor-underline-color);
-  transition: all 0.3s ease;
   font-weight: 500;
   font-style: italic;
 }
 
 .link:hover {
+  transition: all 0.3s ease;
   text-decoration-color: var(--color-anchor);
 }
 
@@ -138,7 +138,6 @@ p {
   padding: 8px 16px;
   border-radius: 0.5rem;
   cursor: pointer;
-  transition: all 0.3s ease;
   font-size: 16px;
   min-width: 100px;
   font-weight: 500;
@@ -146,6 +145,7 @@ p {
 }
 
 .btn:hover {
+  transition: box-shadow 0.3s ease, border 0.3s ease;
   border: 1px solid var(--color-anchor);
   box-shadow: 0 0 20px var(--shadow-color);
 }
@@ -170,6 +170,8 @@ img {
   width: 100px;
   height: 70px;
   pointer-events: none;
+  margin-left: 8px;
+  box-sizing: border-box;
 }
 
 ul,

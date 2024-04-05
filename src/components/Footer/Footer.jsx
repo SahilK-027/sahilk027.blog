@@ -8,7 +8,11 @@ const Footer = () => {
         <span>
           © {new Date().getFullYear()} Sahil K | All Rights Reserved. Developed
           with <i className="fa-solid fa-heart"></i> by{" "}
-          <a className="link" href="">
+          <a
+            target="_blank"
+            className="link"
+            href="https://github.com/SahilK-027"
+          >
             SahilK-027
           </a>
           .

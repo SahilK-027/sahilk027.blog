@@ -11,6 +11,9 @@ import CommandCenter from "./components/CommandCenter/CommandCenter";
 // Importing necessary data
 import { commandShortcuts } from "./data/CommandShortCuts";
 
+// Importing Assets
+import music from "./assets/audio/focus.ogg";
+
 /**
  * `App` component is the root component of the application.
  * @returns {JSX.Element} - App component
@@ -19,6 +22,8 @@ const App = () => {
   // State to manage the opening and closing of the command center
   const [isCommandCenterOpen, setIsCommandCenterOpen] = useState(false);
   const [isCommandKeyPressed, setIsCommandKeyPressed] = useState(false);
+  const [isMusicPlaying, setIsMusicPlaying] = useState(false);
+  const [theme, setTheme] = useState("dark");
 
   const body = document.querySelector("body");
 
@@ -32,6 +37,18 @@ const App = () => {
   const closeCMDCenter = () => {
     setIsCommandCenterOpen(false);
     body.classList.remove("no-scroll");
+  };
+
+  // Function to play the background music
+  const controlMusic = () => {
+    setIsMusicPlaying(!isMusicPlaying);
+  };
+
+  // Function to toggle the theme
+  const toggleTheme = () => {
+    const html = document.querySelector("html");
+    html.dataset.theme = html.dataset.theme === "dark" ? "light" : "dark";
+    setTheme(html.dataset.theme);
   };
 
   // Event listeners to handle the command center opening and closing
@@ -53,7 +70,7 @@ const App = () => {
         (shortcut) => shortcut.shortcut === event.key.toUpperCase()
       );
       if (isCommandKeyPressed && shortcut) {
-        shortcut.action(openCMDCenter);
+        shortcut.action(openCMDCenter, controlMusic, toggleTheme);
       }
     };
 
@@ -69,25 +86,68 @@ const App = () => {
       document.removeEventListener("keypress", handleShortcutKeyPress);
     };
   }, [isCommandKeyPressed]);
+
+  useEffect(() => {
+    const audio = new Audio(music);
+    // Set loop attribute to true
+    audio.loop = true;
+    audio.volume = 0.8;
+
+    if (isMusicPlaying) {
+      audio.play();
+    } else {
+      audio.pause();
+      audio.currentTime = 0;
+    }
+
+    return () => {
+      audio.pause();
+      audio.currentTime = 0;
+    };
+  }, [isMusicPlaying]);
+
   return (
     <>
       <BrowserRouter>
         <Routes>
           <Route
             path={"/"}
-            element={<BlogsPage openCMDCenter={openCMDCenter} />}
+            element={
+              <BlogsPage
+                openCMDCenter={openCMDCenter}
+                controlMusic={controlMusic}
+                isMusicPlaying={isMusicPlaying}
+                theme={theme}
+              />
+            }
           />
           <Route
-            path="/projects"
-            element={<ProjectsPage openCMDCenter={openCMDCenter} />}
+            path="/projects/*"
+            element={
+              <ProjectsPage
+                openCMDCenter={openCMDCenter}
+                controlMusic={controlMusic}
+                isMusicPlaying={isMusicPlaying}
+                theme={theme}
+              />
+            }
           />
           <Route
             path="/*"
-            element={<NotFound openCMDCenter={openCMDCenter} />}
+            element={
+              <NotFound
+                openCMDCenter={openCMDCenter}
+                controlMusic={controlMusic}
+                isMusicPlaying={isMusicPlaying}
+                theme={theme}
+              />
+            }
           />
         </Routes>
+        {isCommandCenterOpen && (
+          <CommandCenter closeCMDCenter={closeCMDCenter} />
+        )}
       </BrowserRouter>
-      {isCommandCenterOpen && <CommandCenter closeCMDCenter={closeCMDCenter} />}
     </>
   );
 };

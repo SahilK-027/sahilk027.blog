@@ -13,15 +13,12 @@ export const commandShortcuts = [
   {
     name: "Music",
     shortcut: "M",
-    action: () => console.log("Navigating to random blog"),
+    action: (_, controlMusic) => controlMusic(),
   },
   {
     name: "Theme",
     shortcut: "T",
-    action: () => {
-      const html = document.querySelector("html");
-      html.dataset.theme = html.dataset.theme === "dark" ? "light" : "dark";
-    },
+    action: (_, __, toggleTheme) => toggleTheme(),
   },
 ];
 

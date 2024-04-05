@@ -1,69 +1,75 @@
 .footer-content {
   border-top: 1px solid var(--border-color);
-  padding: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 100%;
   margin-top: 80px;
   text-align: center;
   line-height: 1.5rem;
   font-size: 14px;
   color: var(--color-text-secondary-dark);
-  gap: 30px;
 
-  .right {
+  .page {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 20px;
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 10px;
-    justify-content: center;
+    gap: 20px;
 
-    .checkbox {
-      opacity: 0;
-      position: absolute;
-    }
-
-    .checkbox-label {
-      border: 1px solid var(--border-color);
-      background-color: var(--color-bg-box-container);
-      width: 50px;
-      height: 26px;
-      border-radius: 50px;
-      position: relative;
-      padding: 5px;
-      cursor: pointer;
+    .right {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      gap: 10px;
+      justify-content: center;
+
+      .checkbox {
+        opacity: 0;
+        position: absolute;
+      }
+
+      .checkbox-label {
+        border: 1px solid var(--border-color);
+        background-color: var(--color-bg-box-container);
+        width: 50px;
+        height: 26px;
+        border-radius: 50px;
+        position: relative;
+        padding: 5px;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .fa-moon {
+        color: var(--color-anchor);
+      }
+
+      .fa-sun {
+        color: var(--color-anchor);
+      }
+
+      .checkbox-label .ball {
+        background-color: var(--color-text-primary);
+        width: 22px;
+        height: 22px;
+        position: absolute;
+        left: 2px;
+        top: 2px;
+        border-radius: 50%;
+        transition: transform 0.2s linear;
+      }
+
+      .checkbox:checked+.checkbox-label .ball {
+        transform: translateX(24px);
+      }
     }
 
-    .fa-moon {
-      color: var(--color-anchor);
-    }
-
-    .fa-sun {
-      color: var(--color-anchor);
-    }
-
-    .checkbox-label .ball {
-      background-color: var(--color-text-primary);
-      width: 22px;
-      height: 22px;
-      position: absolute;
-      left: 2px;
-      top: 2px;
-      border-radius: 50%;
-      transition: transform 0.2s linear;
-    }
-
-    .checkbox:checked+.checkbox-label .ball {
-      transform: translateX(24px);
-    }
-  }
-
-  .left {
-    span {
-      a {
-        font-size: 14px;
+    .left {
+      span {
+        a {
+          font-size: 14px;
+        }
       }
     }
   }

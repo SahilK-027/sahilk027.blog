@@ -118,6 +118,7 @@ const App = () => {
                 controlMusic={controlMusic}
                 isMusicPlaying={isMusicPlaying}
                 theme={theme}
+                toggleTheme={toggleTheme}
               />
             }
           />
@@ -129,6 +130,7 @@ const App = () => {
                 controlMusic={controlMusic}
                 isMusicPlaying={isMusicPlaying}
                 theme={theme}
+                toggleTheme={toggleTheme}
               />
             }
           />
@@ -140,6 +142,7 @@ const App = () => {
                 controlMusic={controlMusic}
                 isMusicPlaying={isMusicPlaying}
                 theme={theme}
+                toggleTheme={toggleTheme}
               />
             }
           />

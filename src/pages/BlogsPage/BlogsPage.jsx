@@ -183,7 +183,13 @@ const BlogLetter = () => {
  * @param {*} param0
  * @returns {JSX.Element} - BlogsPage component
  */
-const BlogsPage = ({ openCMDCenter, controlMusic, isMusicPlaying, theme }) => {
+const BlogsPage = ({
+  openCMDCenter,
+  controlMusic,
+  isMusicPlaying,
+  theme,
+  toggleTheme,
+}) => {
   return (
     <>
       <Navbar
@@ -204,7 +210,7 @@ const BlogsPage = ({ openCMDCenter, controlMusic, isMusicPlaying, theme }) => {
           <BlogLetter />
         </div>
       </div>
-      <Footer />
+      <Footer toggleTheme={toggleTheme} />
     </>
   );
 };

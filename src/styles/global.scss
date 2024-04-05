@@ -11,7 +11,7 @@
 /* Default theme - Dark */
 :root {
   --color-bg-primary: #010314;
-  --color-bg--box-container: #0f111f;
+  --color-bg-box-container: #0f111f;
   --color-text-primary: #fff;
   --color-text-secondary: #acb5c8;
   --color-text-secondary-dark: #60677a;
@@ -31,7 +31,7 @@
 /* Light theme */
 [data-theme="light"] {
   --color-bg-primary: #f0f2f5;
-  --color-bg--box-container: #f7f9ff;
+  --color-bg-box-container: #f7f9ff;
   --color-text-primary: #333;
   --color-text-secondary: #6b7280;
   --color-text-secondary-dark: #60677a;

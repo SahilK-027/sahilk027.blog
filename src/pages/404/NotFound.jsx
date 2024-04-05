@@ -4,7 +4,13 @@ import Footer from "../../components/Footer/Footer";
 import "./NotFound.scss";
 import { Link } from "react-router-dom";
 
-const NotFound = ({ openCMDCenter, controlMusic, isMusicPlaying, theme }) => {
+const NotFound = ({
+  openCMDCenter,
+  controlMusic,
+  isMusicPlaying,
+  theme,
+  toggleTheme,
+}) => {
   const [requestedURL, setRequestedURL] = useState("");
 
   useEffect(() => {
@@ -42,7 +48,7 @@ const NotFound = ({ openCMDCenter, controlMusic, isMusicPlaying, theme }) => {
           to go back home.
         </p>
       </div>
-      <Footer />
+      <Footer toggleTheme={toggleTheme} />
     </>
   );
 };

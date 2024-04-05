@@ -8,6 +8,7 @@ const ProjectsPage = ({
   controlMusic,
   isMusicPlaying,
   theme,
+  toggleTheme,
 }) => {
   return (
     <>
@@ -22,7 +23,7 @@ const ProjectsPage = ({
           <h1>Projects </h1>
         </div>
       </div>
-      <Footer />
+      <Footer toggleTheme={toggleTheme} />
     </>
   );
 };

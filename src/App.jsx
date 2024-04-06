@@ -12,7 +12,7 @@ import CommandCenter from "./components/CommandCenter/CommandCenter";
 import { commandShortcuts } from "./data/CommandShortCuts";
 
 // Importing Assets
-import music from "./assets/audio/focus.ogg";
+import music from "./assets/audio/ghostrifter-purple-dream.ogg";
 
 /**
  * `App` component is the root component of the application.

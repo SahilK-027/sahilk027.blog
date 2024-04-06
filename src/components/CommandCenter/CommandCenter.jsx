@@ -35,7 +35,7 @@ const SearchBlogs = () => {
  * ItemCenter component
  * @returns {JSX.Element} - CommandCenter component
  */
-const ItemCenter = () => {
+const ItemCenter = ({ closeCMDCenter }) => {
   return (
     <div className="item-center">
       <div className="search-result"></div>
@@ -44,7 +44,12 @@ const ItemCenter = () => {
           <div key={index}>
             <h4>{item.title}</h4>
             {item.navLinks.map((link, idx) => (
-              <Link target={link.target} key={idx} to={link.href}>
+              <Link
+                target={link.target}
+                key={idx}
+                to={link.href}
+                onClick={closeCMDCenter}
+              >
                 <div className="icon">
                   <i className={`fa ${link.icon}`}></i>
                 </div>
@@ -123,7 +128,7 @@ const CommandCenter = ({ closeCMDCenter }) => {
         ref={commandCenterRef}
       >
         <SearchBlogs />
-        <ItemCenter />
+        <ItemCenter closeCMDCenter={closeCMDCenter} />
         <ShortCuts />
       </animated.div>
     </div>

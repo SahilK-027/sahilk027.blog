@@ -5,7 +5,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, fill 0.3s ease-in-out, stroke 0.3s ease-in-out;
+  transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, fill 0.3s ease, stroke 0.3s ease, background 0.3s ease;
 }
 
 /* Global variables */
@@ -32,7 +32,7 @@
 /* Light theme */
 [data-theme="light"] {
   --color-bg-primary: #f0f2f5;
-  --color-bg-box-container: #f7f9ff;
+  --color-bg-box-container: #fff;
   --color-text-primary: #333;
   --color-text-secondary: #6b7280;
   --color-text-secondary-dark: #60677a;
@@ -62,13 +62,33 @@ body {
   color: var(--color-text-primary);
 }
 
-body.no-scroll {
+html.no-scroll {
   height: 100vh;
-  overflow: hidden;
+  overflow-y: hidden;
 }
 
 #root {
   background-color: var(--color-bg-primary);
+}
+
+::-webkit-scrollbar {
+  height: 0px;
+  width: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--anchor-underline-color);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--anchor-underline-color);
 }
 
 .page {

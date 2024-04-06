@@ -26,18 +26,18 @@ const App = () => {
   const [isMusicPlaying, setIsMusicPlaying] = useState(false);
   const [theme, setTheme] = useState("dark");
 
-  const body = document.querySelector("body");
+  const html = document.querySelector("html");
 
   // Function to open the command center
   const openCMDCenter = () => {
     setIsCommandCenterOpen(true);
-    body.classList.add("no-scroll");
+    html.classList.add("no-scroll");
   };
 
   // Function to close the command center
   const closeCMDCenter = () => {
     setIsCommandCenterOpen(false);
-    body.classList.remove("no-scroll");
+    html.classList.remove("no-scroll");
   };
 
   // Function to play the background music

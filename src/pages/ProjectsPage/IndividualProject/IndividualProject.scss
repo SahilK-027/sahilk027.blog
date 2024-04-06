@@ -1,0 +1,114 @@
+.individual-project-page {
+    display: flex;
+
+    .individual-project-container {
+        .individual-project-section {
+            margin-bottom: 40px;
+        }
+
+        .project-subtitle {
+            margin-bottom: 20px;
+        }
+
+        .image-container {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            padding-top: 56.25%;
+
+            .project-image {
+                position: absolute;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                right: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: auto;
+                border-radius: 10px;
+                cursor: pointer;
+                border: 1px solid var(--border-color);
+            }
+        }
+
+        .launch-project {
+            .launch-buttons {
+                display: flex;
+                gap: 10px
+            }
+        }
+
+        .techstack-container {
+            .tech {
+                display: flex;
+                flex-direction: column;
+
+                p {
+                    padding-left: 8px;
+                    margin-bottom: 12px;
+
+                    i {
+                        color: var(--color-anchor);
+                        margin-right: 4px;
+                    }
+
+                    span {
+                        color: var(--color-anchor);
+                        text-decoration-color: var(--anchor-underline-color);
+                        font-weight: 500;
+                    }
+                }
+            }
+        }
+        .learnings{
+            ul{
+                li{
+                    margin-bottom: 10px;
+
+                    p {
+                        padding-left: 8px;
+    
+                        span {
+                            color: var(--color-text-primary);
+                            text-decoration-color: var(--anchor-underline-color);
+                            font-weight: 500;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .project-not-found-page {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        align-self: center;
+        height: 75vh;
+        flex-direction: column;
+        max-width: 400px !important;
+        margin: 0 auto;
+        text-align: center;
+
+        h1 {
+            margin-top: 100px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            .requested-URL {
+                color: var(--color-anchor);
+                background-color: var(--selection-bg-color);
+                padding: 4px;
+            }
+        }
+
+        .error-no {
+            color: var(--color-error);
+        }
+
+        .rem-h1 {
+            color: var(--color-text-secondary);
+        }
+    }
+}

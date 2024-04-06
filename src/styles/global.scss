@@ -158,6 +158,10 @@ img {
   pointer-events: none;
 }
 
+.section-top {
+  margin: 150px 0 0 0;
+}
+
 .section {
   margin: 100px 0 0 0;
 }
@@ -187,7 +191,7 @@ ul {
 
 @media (max-width: 768px) {
   h1 {
-    font-size: 22px;
+    font-size: 24px;
   }
 
   h2 {
@@ -209,6 +213,10 @@ ul {
 
   .btn {
     font-size: 14px;
+  }
+
+  .section-top {
+    margin: 110px 0 0 0;
   }
 
   .section {

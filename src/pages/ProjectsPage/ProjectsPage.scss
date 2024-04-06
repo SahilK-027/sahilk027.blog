@@ -1,7 +1,6 @@
 .projects-page-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 20px;
 
     h1 {
         margin-bottom: 30px;
@@ -9,7 +8,7 @@
 
     .projects-container {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         grid-gap: 60px;
 
         .project-description {
@@ -18,9 +17,8 @@
             gap: 10px;
             margin-bottom: 10px;
 
-            h3 {
+            h2 {
                 font-size: 18px;
-
                 a {
                     font-style: normal !important;
                 }
@@ -59,12 +57,12 @@
     }
 }
 
-// Responsive adjustments
-@media (max-width: 768px) {
-    .projects-page-container {
-        .projects-container {
-            grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
-            grid-gap: 60px;
-        }
-    }
-}
+// // Responsive adjustments
+// @media (max-width: 500px) {
+//     .projects-page-container {
+//         .projects-container {
+//             grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+//             grid-gap: 60px;
+//         }
+//     }
+// }

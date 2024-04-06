@@ -199,7 +199,7 @@ const BlogsPage = ({
         theme={theme}
       />
       <div className="blogsPage-container page">
-        <div className="section hero">
+        <div className="section-top hero">
           <BlogIntroTxt />
           <NavigationButtons />
         </div>

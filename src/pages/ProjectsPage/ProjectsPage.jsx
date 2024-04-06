@@ -3,6 +3,7 @@ import "./ProjectsPage.scss";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
 import { Projects } from "../../data/Projects";
+import { Link } from "react-router-dom";
 
 const ProjectsPage = ({
   openCMDCenter,
@@ -20,24 +21,23 @@ const ProjectsPage = ({
         theme={theme}
       />
       <div className="page projects-page">
-        <div className="section projects-page-container">
-          <h1>Collection of my projects:</h1>
+        <div className="section-top projects-page-container">
+          <h1>Collection of my projects 🧑‍💻</h1>
           <div className="projects-container">
             {Projects.map((project, index) => (
               <div key={index}>
                 <div className="project-description">
                   <div>
-                    <h3>
-                      {" "}
-                      <a className="link" href={project.projectUrl}>
+                    <h2>
+                      <Link className="link" to={project.projectUrl}>
                         {project.name}
-                      </a>
-                    </h3>
+                      </Link>
+                    </h2>
                   </div>
                   <div>
                     {project.concept.map((concept, idx) => (
                       <span key={index + idx}>
-                        {concept}{" "}
+                        {concept}
                         {idx !== project.concept.length - 1 ? " • " : ""}
                       </span>
                     ))}
@@ -45,9 +45,9 @@ const ProjectsPage = ({
                 </div>
                 <div className="project-card" key={index}>
                   <div className="image-holder">
-                    <a href={project.projectUrl}>
+                    <Link to={project.projectUrl}>
                       <img src={project.thumbnailUrl} alt={project.name} />
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>

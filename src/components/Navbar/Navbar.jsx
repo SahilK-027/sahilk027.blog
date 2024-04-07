@@ -28,7 +28,7 @@ const Navbar = ({ openCMDCenter, controlMusic, isMusicPlaying, theme }) => {
           </Link>
         </div>
         <div className="navigation-container">
-          <Tooltip content="Command Menu" direction="bottom">
+          <Tooltip content="Control Menu" direction="bottom">
             <CommandSVG openCMDCenter={openCMDCenter} />
           </Tooltip>
           <Tooltip content="Music" direction="bottom">

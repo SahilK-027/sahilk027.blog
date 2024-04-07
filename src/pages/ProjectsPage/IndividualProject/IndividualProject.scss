@@ -10,11 +10,11 @@
             margin-bottom: 20px;
         }
 
-        .image-container {
+        .video-container {
             overflow: hidden;
             width: 100%;
 
-            .project-image {
+            .video {
                 width: 100%;
                 height: 100%;
                 pointer-events: auto;
@@ -53,14 +53,15 @@
                 }
             }
         }
-        .learnings{
-            ul{
-                li{
+
+        .learnings {
+            ul {
+                li {
                     margin-bottom: 10px;
 
                     p {
                         padding-left: 8px;
-    
+
                         span {
                             color: var(--color-text-primary);
                             text-decoration-color: var(--anchor-underline-color);

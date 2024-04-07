@@ -34,12 +34,10 @@ const CurrentProject = ({ currProject }) => {
       <h1>{currProject.projectTitle}</h1>
       <p className="project-subtitle">{currProject.subtitle}</p>
 
-      <div className="individual-project-section image-container">
-        <img
-          src={currProject.thumbnailUrl}
-          alt={currProject.idSelector}
-          className="project-image"
-        />
+      <div className="individual-project-section video-container">
+        <video className="video" loop autoPlay muted controls>
+          <source src={currProject.videoUrl} type="video/mp4" />
+        </video>
       </div>
 
       <div className="individual-project-section launch-project">
@@ -59,6 +57,13 @@ const CurrentProject = ({ currProject }) => {
           ) : (
             <></>
           )}
+          {currProject.publicationHref ? (
+            <a target="_blank" className="btn" href={currProject.publicationHref}>
+              Publication &nbsp; <i className="fa-solid fa-file-circle-check"></i>
+            </a>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
 
@@ -73,22 +78,28 @@ const CurrentProject = ({ currProject }) => {
       </div>
 
       <div className="individual-project-section credits">
-        <h2 className="project-subtitle">🙏 Credits:</h2>
-        <ul>
-          {currProject.credits.map((credit, index) => (
-            <li key={index}>
-              <a
-                className="link"
-                href={credit.profile}
-                target="_blank"
-                rel="noreferrer"
-              >
-                {credit.person}
-              </a>{" "}
-              - {credit.role}
-            </li>
-          ))}
-        </ul>
+        {currProject.credits.length > 0 ? (
+          <>
+            <h2 className="project-subtitle">🙏 Credits:</h2>
+            <ul>
+              {currProject.credits.map((credit, index) => (
+                <li key={index}>
+                  <a
+                    className="link"
+                    href={credit.profile}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {credit.person}
+                  </a>{" "}
+                  - {credit.role}
+                </li>
+              ))}
+            </ul>
+          </>
+        ) : (
+          <></>
+        )}
       </div>
 
       <div className="individual-project-section technicalDescription">
@@ -118,7 +129,10 @@ const CurrentProject = ({ currProject }) => {
         <ul>
           {currProject.learnings.map((learning, index) => (
             <li key={index}>
-              <p><span>{learning.title}: </span>{learning.description}</p>
+              <p>
+                <span>{learning.title}: </span>
+                {learning.description}
+              </p>
             </li>
           ))}
         </ul>

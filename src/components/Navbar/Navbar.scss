@@ -3,7 +3,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px calc((100% - 900px) / 2);
+  padding: 8px calc((100% - 920px) / 2);
   background-color: var(--blur-bg);
   backdrop-filter: blur(20px);
   position: fixed;
@@ -14,11 +14,23 @@
 
   .logo-container {
     display: flex;
+    align-items: center;
 
     .logo {
       width: 52px;
       height: 52px;
       margin-left: 8px;
+    }
+
+    .page-title {
+      width: 45vw;
+      font-size: 20px;
+      font-weight: 500;
+      margin-left: 20px;
+      color: var(--color-text-primary-dark);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 
@@ -37,6 +49,17 @@
         width: 44px;
         height: 44px;
         margin-left: 8px;
+      }
+
+      .page-title {
+        width: 55vw;
+        font-size: 18px;
+        font-weight: 500;
+        margin-left: 10px;
+        color: var(--color-text-primary-dark);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
   }

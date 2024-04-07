@@ -171,6 +171,7 @@ const IndividualProject = ({
         controlMusic={controlMusic}
         isMusicPlaying={isMusicPlaying}
         theme={theme}
+        pageTitle={currProject ? currProject.projectTitle : "404 Project Not Found"}
       />
       <div className="page individual-project-page">
         {currProject ? (

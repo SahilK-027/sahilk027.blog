@@ -22,6 +22,7 @@ const ProjectsPage = ({
         controlMusic={controlMusic}
         isMusicPlaying={isMusicPlaying}
         theme={theme}
+        pageTitle="My projects Collection🧑‍💻"
       />
       <div className="page projects-page">
         <div className="section-top projects-page-container">

@@ -30,6 +30,7 @@ const NotFound = ({
         controlMusic={controlMusic}
         isMusicPlaying={isMusicPlaying}
         theme={theme}
+        pageTitle="404 Page Not Found"
       />
       <div className="page not-found-page">
         <h1>

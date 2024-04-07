@@ -200,6 +200,7 @@ const BlogsPage = ({
         controlMusic={controlMusic}
         isMusicPlaying={isMusicPlaying}
         theme={theme}
+        pageTitle="Hello 👋 ! I'm Sahil"
       />
       <div className="blogsPage-container page">
         <div className="section-top hero">

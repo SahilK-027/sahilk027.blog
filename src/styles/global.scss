@@ -13,6 +13,7 @@
 :root {
   --color-bg-primary: #010314;
   --color-bg-box-container: #0f111f;
+  --color-bg-box-container-dark: #151c2a;
   --color-text-primary: #fff;
   --color-text-primary-dark: #e1eafd;
   --color-text-secondary: #acb5c8;
@@ -34,6 +35,7 @@
 [data-theme="light"] {
   --color-bg-primary: #f0f2f5;
   --color-bg-box-container: #fff;
+  --color-bg-box-container-dark: #fff;
   --color-text-primary: #333;
   --color-text-primary-dark: #242424;
   --color-text-secondary: #6b7280;

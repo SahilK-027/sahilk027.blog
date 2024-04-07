@@ -15,6 +15,12 @@ import { Link } from "react-router-dom";
  * @returns {JSX.Element} - CommandCenter component
  */
 const SearchBlogs = () => {
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  const handleDropdownToggle = () => {
+    setShowDropdown(!showDropdown);
+  };
+
   return (
     <div className="search-bar">
       <input
@@ -23,10 +29,27 @@ const SearchBlogs = () => {
         placeholder="Please enter keywords to search for a blog post..."
       />
       <Tooltip content="Filter Blogs" direction="top">
-        <div className="filter-posts-container">
+        <div className="filter-posts-container" onClick={handleDropdownToggle}>
           <i className="fa-solid fa-filter filter-icon"></i>
         </div>
       </Tooltip>
+      {showDropdown && (
+        <div className="dropdown-menu">
+          <div className="dropdown-top">
+            <div>
+              <h5>Select Blog Type</h5>
+            </div>
+            <div onClick={handleDropdownToggle}>
+              <i className="fa-solid fa-xmark"></i>
+            </div>
+          </div>
+
+          <ul>
+            <li>All</li>
+            <li>three js</li>
+          </ul>
+        </div>
+      )}
     </div>
   );
 };

@@ -26,7 +26,7 @@ const SearchBlogs = () => {
       <input
         autoFocus={true}
         type="text"
-        placeholder="Please enter keywords to search for a blog post..."
+        placeholder="Search a blog post with keywords..."
       />
       <Tooltip content="Filter Blogs" direction="top">
         <div className="filter-posts-container" onClick={handleDropdownToggle}>

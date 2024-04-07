@@ -26,6 +26,7 @@ const ProjectsPage = ({
       />
       <div className="page projects-page">
         <div className="section-top projects-page-container">
+          <Link to={"/"}><i className="fa-solid fa-arrow-left-long back-link"></i>&nbsp; Home</Link>
           <h1>Collection of my projects 🧑‍💻</h1>
           <div className="projects-container">
             {Projects.map((project, index) => (

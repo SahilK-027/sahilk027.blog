@@ -171,11 +171,17 @@ const IndividualProject = ({
         controlMusic={controlMusic}
         isMusicPlaying={isMusicPlaying}
         theme={theme}
-        pageTitle={currProject ? currProject.projectTitle : "404 Project Not Found"}
+        pageTitle={
+          currProject ? currProject.projectTitle : "404 Project Not Found"
+        }
       />
       <div className="page individual-project-page">
         {currProject ? (
           <div className="section-top individual-project-container">
+            <Link to={"/projects"}>
+              <i className="fa-solid fa-arrow-left-long back-link"></i>&nbsp;
+              All Projects
+            </Link>
             <CurrentProject currProject={currProject} />
           </div>
         ) : (

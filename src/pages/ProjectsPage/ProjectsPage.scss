@@ -3,7 +3,7 @@
     margin: 0 auto;
 
     h1 {
-        margin-bottom: 30px;
+        margin-bottom: 20px;
     }
 
     .projects-container {
@@ -58,7 +58,7 @@
             &:hover {
                 transition: all 0.3s ease;
                 border: 1px solid var(--color-anchor);
-                box-shadow: 0px 0px 20px var(--shadow-color); 
+                box-shadow: 0px 0px 20px var(--shadow-color);
             }
         }
     }

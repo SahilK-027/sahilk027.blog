@@ -181,6 +181,11 @@ p {
 
 a {
   text-decoration: none;
+  color: var(--color-text-secondary);
+}
+
+.back-link {
+  margin-bottom: 30px;
 }
 
 img {

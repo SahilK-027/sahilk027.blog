@@ -62,6 +62,10 @@ body {
   color: var(--color-text-primary);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 html.no-scroll {
   height: 100vh;
   overflow-y: hidden;

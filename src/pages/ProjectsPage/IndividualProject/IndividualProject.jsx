@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Projects } from "../../../data/Projects";
 import Navbar from "../../../components/Navbar/Navbar";
@@ -58,8 +58,13 @@ const CurrentProject = ({ currProject }) => {
             <></>
           )}
           {currProject.publicationHref ? (
-            <a target="_blank" className="btn" href={currProject.publicationHref}>
-              Publication &nbsp; <i className="fa-solid fa-file-circle-check"></i>
+            <a
+              target="_blank"
+              className="btn"
+              href={currProject.publicationHref}
+            >
+              Publication &nbsp;{" "}
+              <i className="fa-solid fa-file-circle-check"></i>
             </a>
           ) : (
             <></>
@@ -154,6 +159,10 @@ const IndividualProject = ({
   const currProject = Projects.find(
     (project) => project.idSelector === projectName
   );
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <>

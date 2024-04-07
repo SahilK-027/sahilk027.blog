@@ -1,5 +1,5 @@
 // Importing necessary libraries and tools
-import React from "react";
+import React, { useEffect } from "react";
 
 // Importing necessary components and pages
 import Navbar from "../../components/Navbar/Navbar";
@@ -190,6 +190,9 @@ const BlogsPage = ({
   theme,
   toggleTheme,
 }) => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <>
       <Navbar

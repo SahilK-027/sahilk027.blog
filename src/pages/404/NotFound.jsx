@@ -14,6 +14,7 @@ const NotFound = ({
   const [requestedURL, setRequestedURL] = useState("");
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     // Get the current path from window.location.pathname
     const currentPath = window.location.pathname;
     // Extract the text after the leading slash

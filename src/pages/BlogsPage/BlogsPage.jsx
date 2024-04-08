@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 import SignatureForBlackBg from "../../components/SVG-JSX/SignatureForBlackBg/SignatureForBlackBg";
 import SignatureForWhiteBg from "../../components/SVG-JSX/SignatureForWhiteBg/SignatureForWhiteBg";
 import { mostRecentBlog } from "../../data/BlogsData";
+import { blogSeries } from "../../data/BlogsData";
 
 /**
  * `BlogIntroTxt` component is the introductory text for the blogs page.
@@ -180,6 +181,42 @@ const BlogLetter = () => {
 };
 
 /**
+ * BlogSeries component
+ * @returns {JSX.Element} - BlogSeries component
+ */
+const BlogSeries = ({ blogSeriesData }) => {
+  return (
+    <>
+      <h2 className="section-header">Blog Series</h2>
+      <div className="blog-series-container">
+        {blogSeriesData.map((series, index) => (
+          <div key={index} className="blog-series-card">
+            <h3 className="blog-series-card-header">{series.seriesTitle}</h3>
+            <p className="blog-series-start-date">
+              Publish Date: {series.startDate}
+            </p>
+            <p className="blog-series-card-desc">{series.seriesDescription}</p>
+            <div className="buttons">
+              <Link to={series.seriesUrl}>
+                <button className="btn">
+                  View Series &nbsp;{" "}
+                  <i className="fa-solid fa-up-right-from-square"></i>
+                </button>
+              </Link>
+              <Link target="_blank" to={series.seriesDiscussion}>
+                <button className="btn">
+                  Discussion &nbsp; <i className="fa-solid fa-comments"></i>
+                </button>
+              </Link>
+            </div>
+          </div>
+        ))}
+      </div>
+    </>
+  );
+};
+
+/**
  *  BlogsPage component
  * @param {*} param0
  * @returns {JSX.Element} - BlogsPage component
@@ -213,6 +250,9 @@ const BlogsPage = ({
         </div>
         <div className="section subscription">
           <BlogLetter />
+        </div>
+        <div className="section blog-series">
+          <BlogSeries blogSeriesData={blogSeries} />
         </div>
       </div>
       <Footer toggleTheme={toggleTheme} />

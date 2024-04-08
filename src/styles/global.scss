@@ -34,6 +34,11 @@
   --blur-bg: #1213165a;
   --loader-color: no-repeat
     radial-gradient(circle closest-side, var(--color-text-secondary) 90%, #0000);
+
+  --gradient-yellow: #ffe0a2;
+  --gradient-purple: #bf87ff;
+  --gradient-blue: #9ce8ff;
+  --gradient-pink: #f093b0;
 }
 
 /* Light theme */
@@ -58,6 +63,11 @@
   --blur-bg: #ffffffb3;
   --loader-color: no-repeat
     radial-gradient(circle closest-side, var(--color-text-secondary) 90%, #0000);
+
+  --gradient-yellow: #ffa703;
+  --gradient-purple: #9232ff;
+  --gradient-blue: #2c88ff;
+  --gradient-pink: #ff6d9c;
 }
 
 /* Body styles */

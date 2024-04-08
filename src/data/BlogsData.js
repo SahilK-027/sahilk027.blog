@@ -1,12 +1,16 @@
 export const blogSeries = [
   {
-    seriesTitle: "Three.js Journey",
+    seriesTitle: "Three.js Journey: Stepping Into The of 3D Web Development",
     filterTag: "Threejs Journey",
     seriesID: 1,
     seriesDescription:
-      "Learn Three.js from scratch with this series of blog posts.",
+      "Embark on an immersive journey into the world of Three.js, a powerful JavaScript library for creating stunning 3D visualizations and experiences on the web. This series of blog posts will guide you from the fundamentals to advanced techniques of Three.js, covering everything from setup to building complex scenes.",
+    seriesUrl: `/blogs/three-js-journey`,
+    seriesDiscussion:
+      "https://github.com/sahilk027-blogs/three-js-journey-series/discussions",
     // blogID
     blogsCollection: [1],
+    startDate: "19th April 2024",
   },
 ];
 

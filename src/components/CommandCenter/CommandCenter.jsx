@@ -17,20 +17,14 @@ import { blogSeries } from "../../data/BlogsData";
  * SearchBlogs component
  * @returns {JSX.Element} - CommandCenter component
  */
-const SearchBlogs = () => {
-  const noFilter = "No filter";
-  const [showDropdown, setShowDropdown] = useState(false);
-  const [selectedFilter, setSelectedFilter] = useState(noFilter);
 
-  const handleDropdownToggle = () => {
-    setShowDropdown(!showDropdown);
-  };
-
-  const handleFilterSelection = (filter) => {
-    setSelectedFilter(filter);
-    setShowDropdown(false);
-  };
-
+const SearchBlogs = ({
+  noFilter,
+  selectedFilter,
+  showDropdown,
+  handleFilterSelection,
+  handleDropdownToggle,
+}) => {
   return (
     <div className="search-bar">
       <input
@@ -79,7 +73,6 @@ const SearchBlogs = () => {
                       selectedFilter === series.filterTag ? "visible" : ""
                     }`}
                   ></i>
-
                   <div className="series-title">{series.filterTag}</div>
                 </div>
               </li>
@@ -153,6 +146,18 @@ const ShortCuts = () => {
 const CommandCenter = ({ closeCMDCenter }) => {
   // Ref to the command center
   const commandCenterRef = useRef(null);
+  const noFilter = "No filter";
+  const [selectedFilter, setSelectedFilter] = useState(noFilter);
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  const handleDropdownToggle = () => {
+    setShowDropdown(!showDropdown);
+  };
+
+  const handleFilterSelection = (filter) => {
+    setSelectedFilter(filter);
+    setShowDropdown(false);
+  };
 
   // Event listener to handle the click outside the command center to close it
   useEffect(() => {
@@ -187,7 +192,13 @@ const CommandCenter = ({ closeCMDCenter }) => {
         style={animationProps}
         ref={commandCenterRef}
       >
-        <SearchBlogs />
+        <SearchBlogs
+          noFilter={noFilter}
+          selectedFilter={selectedFilter}
+          showDropdown={showDropdown}
+          handleFilterSelection={handleFilterSelection}
+          handleDropdownToggle={handleDropdownToggle}
+        />
         <ItemCenter closeCMDCenter={closeCMDCenter} />
         <ShortCuts />
       </animated.div>

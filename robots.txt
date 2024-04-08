@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /projects/*
+Allow: /blog/*

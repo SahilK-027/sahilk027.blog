@@ -35,13 +35,14 @@ const NotFound = ({
       <div className="page not-found-page">
         <h1>
           <span className="error-no">Error 404:</span>{" "}
-          <span className="rem-h1">That's an error.</span>
+          <span className="rem-h1">Ohh No...😬!</span>
         </h1>
         <p>
           The requested URL{" "}
           <span className="requested-URL">/{requestedURL}</span> was not found
           on this server. That's all I know.🤦‍♂️!
         </p>
+        <br />
         <p>
           Don't worry I got you! Click{" "}
           <Link className="link" to="/">

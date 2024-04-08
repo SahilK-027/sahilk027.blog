@@ -10,13 +10,14 @@ const NotFoundProject = ({ projectName }) => {
     <div className="project-not-found-page">
       <h1>
         <span className="error-no">Error 404:</span>{" "}
-        <span className="rem-h1">That's an error.</span>
+        <span className="rem-h1">Ohh No...😬!</span>
       </h1>
       <p>
         Well, well, well, it appears my resume is missing a project named{" "}
         <span className="requested-URL">{projectName}</span>. Looks like I'll
         have to work on it!
       </p>
+      <br />
       <p>
         But, don't worry I got you! Click{" "}
         <Link className="link" to="/">

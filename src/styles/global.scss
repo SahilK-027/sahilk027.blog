@@ -5,7 +5,9 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, fill 0.3s ease, stroke 0.3s ease, background 0.3s ease;
+  transition: color 0.3s ease, background-color 0.3s ease,
+    border-color 0.3s ease, fill 0.3s ease, stroke 0.3s ease,
+    background 0.3s ease;
 }
 
 /* Global variables */
@@ -20,6 +22,7 @@
   --color-text-secondary-dark: #60677a;
   --color-error: #ff375f;
   --color-warning: #ffa115;
+  --color-warning-bg: #ffa11536;
   --color-success: #00b8a3;
   --color-info: #0b84ff;
   --font-family: "Inter", sans-serif;
@@ -29,6 +32,8 @@
   --shadow-color: #9771ff84;
   --anchor-underline-color: #7f50ff6a;
   --blur-bg: #1213165a;
+  --loader-color: no-repeat
+    radial-gradient(circle closest-side, var(--color-text-secondary) 90%, #0000);
 }
 
 /* Light theme */
@@ -51,6 +56,8 @@
   --shadow-color: #7444ff84;
   --anchor-underline-color: #7444ff6a;
   --blur-bg: #ffffffb3;
+  --loader-color: no-repeat
+    radial-gradient(circle closest-side, var(--color-text-secondary) 90%, #0000);
 }
 
 /* Body styles */

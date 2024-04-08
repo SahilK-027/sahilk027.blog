@@ -11,26 +11,67 @@ import { commandShortcuts, cmdItems } from "../../data/CommandShortCuts";
 import { Link } from "react-router-dom";
 
 // Blog series data
-import { blogSeries } from "../../data/BlogsData";
-
+import { blogSeries, blogPost } from "../../data/BlogsData";
+import Loader from "../Loader/Loader";
+const noFilter = "No filter";
 /**
  * SearchBlogs component
  * @returns {JSX.Element} - CommandCenter component
  */
 
 const SearchBlogs = ({
-  noFilter,
   selectedFilter,
   showDropdown,
   handleFilterSelection,
   handleDropdownToggle,
+  setLoadingBlogs,
+  setSearchedFilteredBlogs,
 }) => {
+  const [searchQuery, setSearchQuery] = useState("");
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setLoadingBlogs(true);
+
+      if (searchQuery !== "" || selectedFilter !== noFilter) {
+        let searchedBlogs = blogPost;
+
+        if (searchQuery !== "") {
+          searchedBlogs = blogPost.filter((blog) =>
+            blog.keywords.some((keyword) =>
+              keyword.toLowerCase().includes(searchQuery.toLowerCase())
+            )
+          );
+        }
+
+        if (selectedFilter !== noFilter) {
+          searchedBlogs = searchedBlogs.filter((blog) => {
+            return blog.filterTag === selectedFilter;
+          });
+        }
+
+        setTimeout(() => {
+          setSearchedFilteredBlogs(searchedBlogs);
+          setLoadingBlogs(false);
+        }, 1500);
+      } else {
+        setSearchedFilteredBlogs(null);
+        setLoadingBlogs(false);
+      }
+    }, 500);
+
+    // Cleanup function to clear timeout
+    return () => clearTimeout(timeoutId);
+  }, [searchQuery, setSearchedFilteredBlogs, selectedFilter]);
+
   return (
     <div className="search-bar">
       <input
         autoFocus={true}
         type="text"
         placeholder="Search a blog post with keywords..."
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
       />
       <Tooltip content="Filter Blogs" direction="top">
         <div className="filter-posts-container" onClick={handleDropdownToggle}>
@@ -88,30 +129,83 @@ const SearchBlogs = ({
  * ItemCenter component
  * @returns {JSX.Element} - CommandCenter component
  */
-const ItemCenter = ({ closeCMDCenter }) => {
+const ItemCenter = ({
+  closeCMDCenter,
+  searchedFilteredBlogs,
+  loadingBlogs,
+  selectedFilter,
+  setSelectedFilter,
+}) => {
+  const handleRemoveFilter = () => {
+    setSelectedFilter(noFilter);
+  };
   return (
     <div className="item-center">
-      <div className="search-result"></div>
-      <div className="cmd-items">
-        {cmdItems.map((item, index) => (
-          <div key={index}>
-            <h4>{item.title}</h4>
-            {item.navLinks.map((link, idx) => (
-              <Link
-                target={link.target}
-                key={idx}
-                to={link.href}
-                onClick={closeCMDCenter}
-              >
-                <div className="icon">
-                  <i className={`fa ${link.icon}`}></i>
+      {loadingBlogs ? (
+        <Loader />
+      ) : searchedFilteredBlogs ? (
+        <div className="search-filter-result">
+          {selectedFilter !== noFilter ? (
+            <div className="filter">
+              <span>Applied filter: </span>
+              <div className="filter-container">
+                <div className="filter-name">{selectedFilter}</div>
+                <div>
+                  <i
+                    className="fa-solid fa-xmark"
+                    onClick={handleRemoveFilter}
+                  ></i>
                 </div>
-                <div className="nav-link">{link.text}</div>
-              </Link>
-            ))}
-          </div>
-        ))}
-      </div>
+              </div>
+            </div>
+          ) : (
+            <></>
+          )}
+          {searchedFilteredBlogs.length > 0 ? (
+            <div className="result">
+              <span>
+                <b>
+                  {searchedFilteredBlogs.length > 1
+                    ? `${searchedFilteredBlogs.length} results`
+                    : `${searchedFilteredBlogs.length} result`}{" "}
+                </b>
+                for blogs matching entered keyword
+              </span>
+              {searchedFilteredBlogs.map((blog, index) => (
+                <Link key={index} to={blog.blogUrl} onClick={closeCMDCenter}>
+                  <i className="fa-solid fa-blog"></i>
+                  {blog.blogTitle}
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <div className="no-result">
+              Sorry, I haven't written any blog about it yet! 😅
+            </div>
+          )}
+        </div>
+      ) : (
+        <div className="cmd-items">
+          {cmdItems.map((item, index) => (
+            <div key={index}>
+              <h4>{item.title}</h4>
+              {item.navLinks.map((link, idx) => (
+                <Link
+                  target={link.target}
+                  key={idx}
+                  to={link.href}
+                  onClick={closeCMDCenter}
+                >
+                  <div className="icon">
+                    <i className={`fa ${link.icon}`}></i>
+                  </div>
+                  <div className="nav-link">{link.text}</div>
+                </Link>
+              ))}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
@@ -146,9 +240,10 @@ const ShortCuts = () => {
 const CommandCenter = ({ closeCMDCenter }) => {
   // Ref to the command center
   const commandCenterRef = useRef(null);
-  const noFilter = "No filter";
   const [selectedFilter, setSelectedFilter] = useState(noFilter);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [loadingBlogs, setLoadingBlogs] = useState(false);
+  const [searchedFilteredBlogs, setSearchedFilteredBlogs] = useState(null);
 
   const handleDropdownToggle = () => {
     setShowDropdown(!showDropdown);
@@ -193,13 +288,20 @@ const CommandCenter = ({ closeCMDCenter }) => {
         ref={commandCenterRef}
       >
         <SearchBlogs
-          noFilter={noFilter}
           selectedFilter={selectedFilter}
           showDropdown={showDropdown}
           handleFilterSelection={handleFilterSelection}
           handleDropdownToggle={handleDropdownToggle}
+          setLoadingBlogs={setLoadingBlogs}
+          setSearchedFilteredBlogs={setSearchedFilteredBlogs}
         />
-        <ItemCenter closeCMDCenter={closeCMDCenter} />
+        <ItemCenter
+          closeCMDCenter={closeCMDCenter}
+          searchedFilteredBlogs={searchedFilteredBlogs}
+          loadingBlogs={loadingBlogs}
+          selectedFilter={selectedFilter}
+          setSelectedFilter={setSelectedFilter}
+        />
         <ShortCuts />
       </animated.div>
     </div>

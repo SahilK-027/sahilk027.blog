@@ -101,12 +101,14 @@
           justify-content: space-between;
           align-items: center;
           border-bottom: 1px solid var(--border-color);
-          padding: 8px;
+          padding: 8px 16px;
 
           div {
             h5 {
               font-size: 14px;
-              color: var(--color-text-secondary);
+              color: var(--color-text-primary);
+              opacity: 0.9;
+              font-weight: 500;
             }
           }
 
@@ -141,11 +143,11 @@
                 font-size: 14px;
               }
 
-              i{
+              i {
                 visibility: hidden;
               }
 
-              i.visible{
+              i.visible {
                 visibility: visible;
               }
 
@@ -162,7 +164,7 @@
             }
 
             &:hover {
-              transition: all 0.2s ease;
+              transition: all 0.2s ease !important;
               background-color: var(--selection-bg-color);
             }
 
@@ -181,6 +183,93 @@
       border-top: none;
       overflow-y: scroll;
       padding: 0 12px;
+
+      .search-filter-result {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: flex-start;
+        color: var(--color-text-secondary);
+        flex-direction: column;
+        box-sizing: border-box;
+        padding-top: 8px;
+        gap: 2px;
+
+        .filter {
+          font-size: 14px;
+          padding: 2px 9px;
+          padding-bottom: 10px;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          margin-bottom: 6px;
+          border-bottom: 1px solid var(--border-color);
+
+          span {
+            color: var(--color-text-secondary-dark);
+          }
+
+          .filter-container {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            background-color: var(--color-warning-bg);
+            padding: 6px 8px;
+            border-radius: 8px;
+            color: var(--color-warning);
+
+            i {
+              cursor: pointer;
+            }
+          }
+        }
+
+        .result {
+          span {
+            font-size: 14px;
+            color: var(--color-text-secondary-dark);
+            padding: 9px;
+
+            b {
+              font-weight: 600;
+            }
+          }
+
+          a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            padding: 12px 10px;
+            margin-top: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            color: var(--color-anchor);
+
+            &:hover {
+              transition: all 0.2s ease !important;
+              color: var(--color-anchor);
+              background-color: var(--selection-bg-color);
+            }
+          }
+        }
+
+        .no-result {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100%;
+          width: 55%;
+          color: var(--color-error);
+          align-self: center;
+          text-align: center;
+          line-height: 1.8;
+        }
+      }
 
       .cmd-items {
         h4 {
@@ -201,8 +290,12 @@
           color: var(--color-text-secondary);
           margin-bottom: 10px;
 
+          .icon {
+            transition: all 0.01s ease !important;
+          }
+
           &:hover {
-            transition: all 0.2s ease;
+            transition: all 0.1s ease !important;
             color: var(--color-anchor);
             background-color: var(--selection-bg-color);
           }

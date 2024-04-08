@@ -1,0 +1,31 @@
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+
+  .loader {
+    width: 50px;
+    aspect-ratio: 4;
+    background: var(--loader-color) 0% 50%, var(--loader-color) 50% 50%,
+      var(--loader-color) 100% 50%;
+    background-size: calc(100% / 3) 100%;
+    animation: l7 1s infinite linear;
+  }
+
+  @keyframes l7 {
+    33% {
+      background-size: calc(100% / 3) 0%, calc(100% / 3) 100%,
+        calc(100% / 3) 100%;
+    }
+    50% {
+      background-size: calc(100% / 3) 100%, calc(100% / 3) 0%,
+        calc(100% / 3) 100%;
+    }
+    66% {
+      background-size: calc(100% / 3) 100%, calc(100% / 3) 100%,
+        calc(100% / 3) 0%;
+    }
+  }
+}

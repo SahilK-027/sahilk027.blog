@@ -1,11 +1,12 @@
 export const blogSeries = [
   {
     seriesTitle: "Three.js Journey",
+    filterTag: "Threejs Journey",
     seriesID: 1,
     seriesDescription:
       "Learn Three.js from scratch with this series of blog posts.",
-    blogsCollection: [],
-    filterTag: "Threejs Journey",
+    // blogID
+    blogsCollection: [1],
   },
 ];
 
@@ -15,17 +16,18 @@ export const blogPost = [
     seriesID: 1,
     sequenceNo: 1,
     seriesTitle: "Three.js Journey",
+    filterTag: "Threejs Journey",
     blogTitle: "Introduction to Series: Three.js Journey",
     blogDate: "19th April 2024",
     blogUrl: `/blogs/three-js-journey/introduction-to-series-three-js-journey`,
-    blogTags: [
+    keywords: [
+      "Introduction to Series: Three.js Journey",
       "Three.js",
       "Threejs Journey",
       "WebGL",
       "3D",
-      "Graphics",
       "Intro",
-      "Introduction to Series: Three.js Journey",
+      "three js",
     ],
     views: 0,
   },

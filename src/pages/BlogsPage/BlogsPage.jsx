@@ -10,6 +10,7 @@ import Footer from "../../components/Footer/Footer";
 import { Link } from "react-router-dom";
 import SignatureForBlackBg from "../../components/SVG-JSX/SignatureForBlackBg/SignatureForBlackBg";
 import SignatureForWhiteBg from "../../components/SVG-JSX/SignatureForWhiteBg/SignatureForWhiteBg";
+import { mostRecentBlog } from "../../data/BlogsData";
 
 /**
  * `BlogIntroTxt` component is the introductory text for the blogs page.
@@ -140,7 +141,7 @@ const BlogLetter = () => {
           </h3>
           <p>
             Stay Updated with the{" "}
-            <Link className="link" to="/">
+            <Link className="link" to={mostRecentBlog.blogUrl}>
               Latest Blog
             </Link>{" "}
             News, Containing:

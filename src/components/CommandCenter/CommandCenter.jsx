@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 
 // Blog series data
 import { blogSeries, blogPost } from "../../data/BlogsData";
+
 import Loader from "../Loader/Loader";
 const noFilter = "No filter";
 /**
@@ -62,7 +63,7 @@ const SearchBlogs = ({
 
     // Cleanup function to clear timeout
     return () => clearTimeout(timeoutId);
-  }, [searchQuery, setSearchedFilteredBlogs, selectedFilter]);
+  }, [searchQuery, selectedFilter]);
 
   return (
     <div className="search-bar">

@@ -1,4 +1,7 @@
 // This file contains the data for the command shortcuts that are displayed in the command center
+import { mostRecentBlog } from "./BlogsData";
+const mostRecentBlogLink = mostRecentBlog.blogUrl;
+
 export const commandShortcuts = [
   {
     name: "Menu",
@@ -33,7 +36,7 @@ export const cmdItems = [
         target: "_self",
       },
       {
-        href: "",
+        href: mostRecentBlogLink,
         icon: "fa-solid fa-blog",
         text: "Read the most recent blog post",
         target: "_self",

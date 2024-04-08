@@ -12,9 +12,9 @@ export const blogSeries = [
 
 export const blogPost = [
   {
-    blogID: 1,
+    blogNo: 1,
     seriesID: 1,
-    sequenceNo: 1,
+    sequenceNumberInSeries: 1,
     seriesTitle: "Three.js Journey",
     filterTag: "Threejs Journey",
     blogTitle: "Introduction to Series: Three.js Journey",
@@ -32,3 +32,5 @@ export const blogPost = [
     views: 0,
   },
 ];
+
+export const mostRecentBlog = blogPost[blogPost.length - 1];

@@ -10,15 +10,24 @@ import "./CommandCenter.scss";
 import { commandShortcuts, cmdItems } from "../../data/CommandShortCuts";
 import { Link } from "react-router-dom";
 
+// Blog series data
+import { blogSeries } from "../../data/BlogsData";
+
 /**
  * SearchBlogs component
  * @returns {JSX.Element} - CommandCenter component
  */
 const SearchBlogs = () => {
   const [showDropdown, setShowDropdown] = useState(false);
+  const [selectedFilter, setSelectedFilter] = useState(null);
 
   const handleDropdownToggle = () => {
     setShowDropdown(!showDropdown);
+  };
+
+  const handleFilterSelection = (filter) => {
+    setSelectedFilter(filter);
+    setShowDropdown(false);
   };
 
   return (
@@ -37,7 +46,7 @@ const SearchBlogs = () => {
         <div className="dropdown-menu">
           <div className="dropdown-top">
             <div>
-              <h5>Select Blog Type</h5>
+              <h5>Filter Blog Series</h5>
             </div>
             <div onClick={handleDropdownToggle}>
               <i className="fa-solid fa-xmark"></i>
@@ -45,8 +54,35 @@ const SearchBlogs = () => {
           </div>
 
           <ul>
-            <li>All</li>
-            <li>three js</li>
+            <li>
+              <div
+                className="series-container"
+                onClick={() => handleFilterSelection("All Blog Series")}
+              >
+                <i
+                  className={`fa-solid fa-check ${
+                    selectedFilter === "All Blog Series" ? "visible" : ""
+                  }`}
+                ></i>
+                <div className="series-title">All Blog Series</div>
+              </div>
+            </li>
+            {blogSeries.map((series, index) => (
+              <li key={index}>
+                <div
+                  className="series-container"
+                  onClick={() => handleFilterSelection(series.filterTag)}
+                >
+                  <i
+                    className={`fa-solid fa-check ${
+                      selectedFilter === series.filterTag ? "visible" : ""
+                    }`}
+                  ></i>
+
+                  <div className="series-title">{series.filterTag}</div>
+                </div>
+              </li>
+            ))}
           </ul>
         </div>
       )}

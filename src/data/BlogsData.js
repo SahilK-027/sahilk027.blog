@@ -4,6 +4,6 @@ export const blogSeries = [
     seriesDescription:
       "Learn Three.js from scratch with this series of blog posts.",
     blogsCollection: [],
-    filterTag: "threejs",
+    filterTag: "Threejs Journey",
   },
 ];

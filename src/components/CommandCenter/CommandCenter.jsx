@@ -18,8 +18,9 @@ import { blogSeries } from "../../data/BlogsData";
  * @returns {JSX.Element} - CommandCenter component
  */
 const SearchBlogs = () => {
+  const noFilter = "No filter";
   const [showDropdown, setShowDropdown] = useState(false);
-  const [selectedFilter, setSelectedFilter] = useState(null);
+  const [selectedFilter, setSelectedFilter] = useState(noFilter);
 
   const handleDropdownToggle = () => {
     setShowDropdown(!showDropdown);
@@ -57,14 +58,14 @@ const SearchBlogs = () => {
             <li>
               <div
                 className="series-container"
-                onClick={() => handleFilterSelection("All Blog Series")}
+                onClick={() => handleFilterSelection(noFilter)}
               >
                 <i
                   className={`fa-solid fa-check ${
-                    selectedFilter === "All Blog Series" ? "visible" : ""
+                    selectedFilter === noFilter ? "visible" : ""
                   }`}
                 ></i>
-                <div className="series-title">All Blog Series</div>
+                <div className="series-title">No filter</div>
               </div>
             </li>
             {blogSeries.map((series, index) => (

@@ -42,10 +42,10 @@ export const cmdItems = [
         target: "_self",
       },
       {
-        href: "",
+        href: "https://github.com/SahilK-027/sahilk027.blog/discussions",
         icon: "fa-regular fa-lightbulb",
         text: "Suggest a topic for blog",
-        target: "_self",
+        target: "_target",
       },
       {
         href: "https://www.dropbox.com/scl/fi/o9ks6egn520k1qycbzw0s/resume.pdf?rlkey=p7b0d25l1an8grc1hixtddc34&dl=0",

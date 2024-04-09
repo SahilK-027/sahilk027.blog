@@ -217,6 +217,50 @@ const BlogSeries = ({ blogSeriesData }) => {
 };
 
 /**
+ * GetInTouch component
+ * @returns {JSX.Element} - GetInTouch component
+ */
+const GetInTouch = () => {
+  return (
+    <>
+      <h2 className="section-header">Get In Touch</h2>
+      <div className="get-in-touch-container">
+        <p>
+          Have a question or want to suggest a topic for blog series or a post?
+        </p>
+        <p>
+          Write me at{" "}
+          <a
+            target="_blank"
+            className="link"
+            href="mailto:sahilkandhare027@gmail.com"
+          >
+            sahilkandhare027@gmail.com
+          </a>
+          . OR Follow me at{" "}
+          <a
+            target="_blank"
+            className="link"
+            href="https://github.com/SahilK-027"
+          >
+            @SahilK-027
+          </a>
+          . OR 💡 Suggest idea for next blog series or post at{" "}
+          <a
+            target="_blank"
+            className="link"
+            href="https://github.com/SahilK-027/sahilk027.blog/discussions"
+          >
+            Discussions
+          </a>
+          .
+        </p>
+      </div>
+    </>
+  );
+};
+
+/**
  *  BlogsPage component
  * @param {*} param0
  * @returns {JSX.Element} - BlogsPage component
@@ -253,6 +297,9 @@ const BlogsPage = ({
         </div>
         <div className="section blog-series">
           <BlogSeries blogSeriesData={blogSeries} />
+        </div>
+        <div className="section get-in-touch">
+          <GetInTouch />
         </div>
       </div>
       <Footer toggleTheme={toggleTheme} />

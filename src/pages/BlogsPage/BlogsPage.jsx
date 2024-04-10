@@ -212,7 +212,7 @@ const BlogLetter = () => {
       }
     } catch (error) {
       toast.error(
-        "Oops 😬! Something went wrong on our end. Please try again later.",
+        "Oops 😬! Something went wrong on server side. Please try again later.",
         {
           position: "top-center",
           autoClose: 3000,

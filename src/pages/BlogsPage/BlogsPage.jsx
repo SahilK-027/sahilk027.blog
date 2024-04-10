@@ -1,5 +1,6 @@
 // Importing necessary libraries and tools
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
 
 // Importing necessary components and pages
 import Navbar from "../../components/Navbar/Navbar";
@@ -128,6 +129,99 @@ const AboutMe = ({ theme }) => {
  * @returns {JSX.Element} - BlogLetter component
  */
 const BlogLetter = () => {
+  const [mail, setMail] = useState("");
+  const env = "development";
+  let SERVER_LINK = "";
+  if (env === "development") {
+    SERVER_LINK = process.env.REACT_APP_API_BASE_URL_DEV;
+  } else if (env === "production") {
+    SERVER_LINK = process.env.REACT_APP_API_BASE_URL_PROD;
+  }
+  const handleSubscriptionCall = async (e) => {
+    e.preventDefault();
+    const EMAIL_TEST = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    const isValidMail = EMAIL_TEST.test(mail);
+
+    if (!isValidMail) {
+      toast.error("Please enter a valid email address.", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+    try {
+      const response = await fetch(`${SERVER_LINK}/subscribe`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: mail,
+        }),
+      });
+
+      if (response.ok) {
+        toast.success("Subscription succdncessful!", {
+          position: "top-center",
+          autoClose: 2500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+
+        setTimeout(() => {
+          toast.info("Refreshing!", {
+            position: "top-center",
+            autoClose: 1500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
+        }, 1000);
+
+        setTimeout(() => {
+          window.location.reload();
+        }, 3000);
+      } else {
+        const error = await response.json();
+        toast.error(error.message, {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+        return;
+      }
+    } catch (error) {
+      toast.error(error, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    }
+  };
+
   return (
     <>
       <h2 className="section-header">Blogsletter</h2>
@@ -164,11 +258,12 @@ const BlogLetter = () => {
             </li>
           </ul>
 
-          <form>
+          <form onSubmit={handleSubscriptionCall}>
             <input
               type="email"
               placeholder="@ Enter your email address"
               required
+              onChange={(e) => setMail(e.target.value)}
             />
             <button className="btn" type="submit">
               Subscribe

@@ -1,6 +1,7 @@
 // Importing necessary libraries and tools
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { ToastContainer } from "react-toastify";
 
 // Importing necessary components and pages
 import BlogsPage from "./pages/BlogsPage/BlogsPage";
@@ -163,6 +164,18 @@ const App = () => {
         {isCommandCenterOpen && (
           <CommandCenter closeCMDCenter={closeCMDCenter} />
         )}
+        <ToastContainer
+          position="top-center"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss={false}
+          draggable
+          pauseOnHover
+          theme="dark"
+        />
       </BrowserRouter>
     </>
   );

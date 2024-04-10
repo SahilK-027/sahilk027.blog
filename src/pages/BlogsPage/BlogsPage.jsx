@@ -162,7 +162,9 @@ const BlogLetter = () => {
       const response = await fetch(`${SERVER_LINK}/subscribe`, {
         method: "POST",
         headers: {
+          Accept: "application/json",
           "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
         },
         body: JSON.stringify({
           email: mail,

@@ -130,6 +130,7 @@ const AboutMe = ({ theme }) => {
  */
 const BlogLetter = () => {
   const [mail, setMail] = useState("");
+  const [isMakingNWCall, setIsMakingNWCall] = useState(false);
   const env = "development";
   let SERVER_LINK = "";
   if (env === "development") {
@@ -143,7 +144,7 @@ const BlogLetter = () => {
     const isValidMail = EMAIL_TEST.test(mail);
 
     if (!isValidMail) {
-      toast.error("Please enter a valid email address.", {
+      toast.error("Please enter a valid email address. 👀", {
         position: "top-center",
         autoClose: 3000,
         hideProgressBar: false,
@@ -156,6 +157,7 @@ const BlogLetter = () => {
       return;
     }
     try {
+      setIsMakingNWCall(true);
       const response = await fetch(`${SERVER_LINK}/subscribe`, {
         method: "POST",
         headers: {
@@ -167,7 +169,7 @@ const BlogLetter = () => {
       });
 
       if (response.ok) {
-        toast.success("Subscription succdncessful!", {
+        toast.success("Cool 🤟 you are a subscriber now!", {
           position: "top-center",
           autoClose: 2500,
           hideProgressBar: false,
@@ -209,16 +211,21 @@ const BlogLetter = () => {
         return;
       }
     } catch (error) {
-      toast.error(error, {
-        position: "top-center",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
+      toast.error(
+        "Oops 😬! Something went wrong on our end. Please try again later.",
+        {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        }
+      );
+    } finally {
+      setIsMakingNWCall(false);
     }
   };
 
@@ -265,7 +272,7 @@ const BlogLetter = () => {
               required
               onChange={(e) => setMail(e.target.value)}
             />
-            <button className="btn" type="submit">
+            <button className="btn" type="submit" disabled={isMakingNWCall}>
               Subscribe
             </button>
           </form>

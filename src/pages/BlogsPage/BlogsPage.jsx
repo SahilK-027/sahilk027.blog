@@ -171,7 +171,7 @@ const BlogLetter = () => {
       if (response.ok) {
         toast.success("Cool 🤟 you are a subscriber now!", {
           position: "top-center",
-          autoClose: 2500,
+          autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -183,7 +183,7 @@ const BlogLetter = () => {
         setTimeout(() => {
           toast.info("Refreshing!", {
             position: "top-center",
-            autoClose: 1500,
+            autoClose: 1000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -191,11 +191,11 @@ const BlogLetter = () => {
             progress: undefined,
             theme: "dark",
           });
-        }, 1000);
+        }, 2000);
 
         setTimeout(() => {
           window.location.reload();
-        }, 3000);
+        }, 4000);
       } else {
         const error = await response.json();
         toast.error(error.message, {

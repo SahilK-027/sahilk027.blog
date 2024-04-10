@@ -13,6 +13,7 @@ import SignatureForBlackBg from "../../components/SVG-JSX/SignatureForBlackBg/Si
 import SignatureForWhiteBg from "../../components/SVG-JSX/SignatureForWhiteBg/SignatureForWhiteBg";
 import { mostRecentBlog } from "../../data/BlogsData";
 import { blogSeries } from "../../data/BlogsData";
+import Environment from "../../data/Environment";
 
 /**
  * `BlogIntroTxt` component is the introductory text for the blogs page.
@@ -131,7 +132,7 @@ const AboutMe = ({ theme }) => {
 const BlogLetter = () => {
   const [mail, setMail] = useState("");
   const [isMakingNWCall, setIsMakingNWCall] = useState(false);
-  const env = "development";
+  const env = Environment;
   let SERVER_LINK = "";
   if (env === "development") {
     SERVER_LINK = process.env.REACT_APP_API_BASE_URL_DEV;

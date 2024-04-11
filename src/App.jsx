@@ -15,6 +15,7 @@ import { commandShortcuts } from "./data/CommandShortCuts";
 // Importing Assets
 import music from "./assets/audio/ghostrifter-purple-dream.ogg";
 import IndividualProject from "./pages/ProjectsPage/IndividualProject/IndividualProject";
+import PublisherPage from "./pages/PublisherPage/PublisherPage";
 
 /**
  * `App` component is the root component of the application.
@@ -148,6 +149,7 @@ const App = () => {
               />
             }
           />
+          <Route path="/publisher" element={<PublisherPage />} />
           <Route
             path="/*"
             element={

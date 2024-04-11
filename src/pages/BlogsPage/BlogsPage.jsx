@@ -137,7 +137,7 @@ const BlogLetter = () => {
   if (env === "development") {
     SERVER_LINK = "http://localhost:2710";
   } else if (env === "production") {
-    SERVER_LINK = "https://api-blog-server.vercel.app/";
+    SERVER_LINK = process.env.REACT_APP_PROD_API;
   }
   const handleSubscriptionCall = async (e) => {
     e.preventDefault();

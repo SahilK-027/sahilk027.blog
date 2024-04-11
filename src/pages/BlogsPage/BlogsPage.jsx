@@ -139,7 +139,7 @@ const BlogLetter = () => {
   // Define animation properties
   const thanksAnimation = useSpring({
     opacity: success ? 1 : 0,
-    transform: success ? "translateY(0px)" : "translateY(20px)",
+    transform: success ? "translateY(0px)" : "translateY(-20px)",
   });
 
   const env = Environment;

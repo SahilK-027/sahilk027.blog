@@ -15,6 +15,7 @@ import { mostRecentBlog } from "../../data/BlogsData";
 import { blogSeries } from "../../data/BlogsData";
 import Environment from "../../data/Environment";
 import Loader from "../../components/Loader/Loader";
+import { animated, useSpring } from "react-spring";
 
 /**
  * `BlogIntroTxt` component is the introductory text for the blogs page.
@@ -133,6 +134,14 @@ const AboutMe = ({ theme }) => {
 const BlogLetter = () => {
   const [mail, setMail] = useState("");
   const [isMakingNWCall, setIsMakingNWCall] = useState(false);
+  const [success, setSuccess] = useState(false);
+
+  // Define animation properties
+  const thanksAnimation = useSpring({
+    opacity: success ? 1 : 0,
+    transform: success ? "translateY(0px)" : "translateY(20px)",
+  });
+
   const env = Environment;
   let SERVER_LINK = "";
   if (env === "development") {
@@ -182,23 +191,7 @@ const BlogLetter = () => {
           progress: undefined,
           theme: "dark",
         });
-
-        setTimeout(() => {
-          toast.info("Refreshing Page!", {
-            position: "top-center",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-          });
-        }, 2000);
-
-        setTimeout(() => {
-          window.location.reload();
-        }, 4000);
+        setSuccess(true);
       } else {
         const error = await response.json();
         toast.info(error.message, {
@@ -292,6 +285,13 @@ const BlogLetter = () => {
               )}
             </button>
           </form>
+          {success ? (
+            <animated.p id="thanks" style={thanksAnimation}>
+              Thanks for subscribing 💖! You will receive welcome mail soon!
+            </animated.p>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
     </>

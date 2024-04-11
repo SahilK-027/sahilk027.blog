@@ -14,6 +14,7 @@ import SignatureForWhiteBg from "../../components/SVG-JSX/SignatureForWhiteBg/Si
 import { mostRecentBlog } from "../../data/BlogsData";
 import { blogSeries } from "../../data/BlogsData";
 import Environment from "../../data/Environment";
+import Loader from "../../components/Loader/Loader";
 
 /**
  * `BlogIntroTxt` component is the introductory text for the blogs page.
@@ -171,24 +172,24 @@ const BlogLetter = () => {
       });
 
       if (response.ok) {
-        toast.success("Cool 🤟 you are a subscriber now!", {
+        toast.success("Thank you for subscribing to my blogs 🙇‍♂️!", {
           position: "top-center",
           autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
-          pauseOnHover: true,
+          pauseOnHover: false,
           draggable: true,
           progress: undefined,
           theme: "dark",
         });
 
         setTimeout(() => {
-          toast.info("Refreshing!", {
+          toast.info("Refreshing Page!", {
             position: "top-center",
             autoClose: 1000,
             hideProgressBar: false,
             closeOnClick: true,
-            pauseOnHover: true,
+            pauseOnHover: false,
             draggable: true,
             progress: undefined,
             theme: "dark",
@@ -200,7 +201,7 @@ const BlogLetter = () => {
         }, 4000);
       } else {
         const error = await response.json();
-        toast.error(error.message, {
+        toast.info(error.message, {
           position: "top-center",
           autoClose: 3000,
           hideProgressBar: false,
@@ -274,8 +275,21 @@ const BlogLetter = () => {
               required
               onChange={(e) => setMail(e.target.value)}
             />
-            <button className="btn" type="submit" disabled={isMakingNWCall}>
-              Subscribe
+            <button
+              className="btn"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              type="submit"
+              disabled={isMakingNWCall}
+            >
+              {isMakingNWCall ? (
+                <div className="spinner-loader"></div>
+              ) : (
+                <span>Subscribe</span>
+              )}
             </button>
           </form>
         </div>

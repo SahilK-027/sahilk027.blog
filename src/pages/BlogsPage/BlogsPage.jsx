@@ -309,7 +309,11 @@ const BlogSeries = ({ blogSeriesData }) => {
       <div className="blog-series-container">
         {blogSeriesData.map((series, index) => (
           <div key={index} className="blog-series-card">
-            <h3 className="blog-series-card-header">{series.seriesTitle}</h3>
+            <h3>
+              <Link to={series.seriesUrl} className="blog-series-card-header">
+                {series.seriesTitle}
+              </Link>
+            </h3>
             <p className="blog-series-start-date">
               Publish Date: {series.startDate}
             </p>

@@ -175,7 +175,7 @@
           }
         }
 
-        #thanks{
+        #thanks {
           margin: 0;
           padding: 30px 0;
           padding-bottom: 0px;
@@ -206,7 +206,15 @@
           );
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
-          margin-bottom: 8px;
+          text-decoration: underline;
+          text-underline-position: below;
+          text-decoration-color: var(--anchor-underline-color);
+          text-underline-offset: 5px;
+
+          &:hover {
+            transition: all 0.3s ease-in-out;
+            text-decoration-color: var(--color-anchor);
+          }
         }
 
         .blog-series-card-desc {

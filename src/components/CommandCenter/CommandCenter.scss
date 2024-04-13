@@ -319,7 +319,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 8px;
+        gap: 1px;
 
         .shortcut-name {
           color: var(--color-text-secondary-dark);
@@ -333,8 +333,9 @@
           color: var(--color-anchor);
 
           .shortcut-letter {
-            width: 27px;
-            height: 27px;
+            width: 30px;
+            height: 30px;
+            padding: 0 2px;
             display: flex;
             align-items: center;
             justify-content: center;

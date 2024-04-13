@@ -29,14 +29,14 @@ const NotFoundProject = ({ projectName }) => {
   );
 };
 
-const CurrentProject = ({ currProject }) => {
+const CurrentProject = ({ currProject, currProjectIdx }) => {
   return (
-    <>
+    <div key={currProjectIdx}>
       <h1>{currProject.projectTitle}</h1>
       <p className="project-subtitle">{currProject.subtitle}</p>
 
       <div className="individual-project-section video-container">
-        <video className="video" loop autoPlay muted controls>
+        <video className="video" loop autoPlay muted={true} preload="auto">
           <source src={currProject.videoUrl} type="video/mp4" />
         </video>
       </div>
@@ -76,10 +76,10 @@ const CurrentProject = ({ currProject }) => {
       <div className="individual-project-section description">
         <h2 className="project-subtitle">🧑‍💻 The Project: </h2>
         {currProject.detailedDescription.map((description, index) => (
-          <>
-            <p key={index}>{description}</p>
+          <div key={index}>
+            <p>{description}</p>
             <br />
-          </>
+          </div>
         ))}
       </div>
 
@@ -111,8 +111,8 @@ const CurrentProject = ({ currProject }) => {
       <div className="individual-project-section technicalDescription">
         <h2 className="project-subtitle">👨‍🔧 Technical details:</h2>
         {currProject.technicalDescription.map((description, index) => (
-          <div>
-            <p key={index}>{description}</p>
+          <div key={index}>
+            <p>{description}</p>
             <br />
           </div>
         ))}
@@ -143,7 +143,7 @@ const CurrentProject = ({ currProject }) => {
           ))}
         </ul>
       </div>
-    </>
+    </div>
   );
 };
 
@@ -160,6 +160,8 @@ const IndividualProject = ({
   const currProject = Projects.find(
     (project) => project.idSelector === projectName
   );
+
+  const currProjectIdx = currProject.id;
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -178,12 +180,18 @@ const IndividualProject = ({
       />
       <div className="page individual-project-page">
         {currProject ? (
-          <div className="section-top individual-project-container">
+          <div
+            key={currProjectIdx}
+            className="section-top individual-project-container"
+          >
             <Link to={"/projects"}>
               <i className="fa-solid fa-arrow-left-long back-link"></i>&nbsp;
               All Projects
             </Link>
-            <CurrentProject currProject={currProject} />
+            <CurrentProject
+              currProjectIdx={currProjectIdx}
+              currProject={currProject}
+            />
           </div>
         ) : (
           <NotFoundProject projectName={projectName} />

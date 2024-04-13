@@ -2,6 +2,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
+import Cookies from "js-cookie";
 
 // Importing necessary components and pages
 import BlogsPage from "./pages/BlogsPage/BlogsPage";
@@ -47,15 +48,29 @@ const App = () => {
     setIsMusicPlaying(!isMusicPlaying);
   };
 
+  // Function to check for saved theme in cookie
+  const checkSavedTheme = () => {
+    const savedTheme = Cookies.get("theme");
+    if (savedTheme) {
+      const html = document.querySelector("html");
+      html.dataset.theme = savedTheme;
+      setTheme(savedTheme);
+    } else {
+      Cookies.set("theme", "dark");
+    }
+  };
+
   // Function to toggle the theme
   const toggleTheme = () => {
     const html = document.querySelector("html");
     html.dataset.theme = html.dataset.theme === "dark" ? "light" : "dark";
     setTheme(html.dataset.theme);
+    Cookies.set("theme", html.dataset.theme);
   };
 
   // Event listeners to handle the command center opening and closing
   useEffect(() => {
+    checkSavedTheme();
     const handleKeyDown = (event) => {
       if (event.key === "Control") {
         setIsCommandKeyPressed(true);
@@ -107,7 +122,7 @@ const App = () => {
       audio.pause();
       audio.currentTime = 0;
     };
-  }, [isMusicPlaying]);
+  }, [isMusicPlaying, isCommandKeyPressed]);
 
   return (
     <>

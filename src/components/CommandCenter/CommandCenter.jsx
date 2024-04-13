@@ -59,7 +59,7 @@ const SearchBlogs = ({
         setSearchedFilteredBlogs(null);
         setLoadingBlogs(false);
       }
-    }, 500);
+    }, 1000);
 
     // Cleanup function to clear timeout
     return () => clearTimeout(timeoutId);
@@ -222,9 +222,7 @@ const ShortCuts = () => {
         <div key={index} className="shortcut-item">
           <div className="shortcut-name">{shortcut.name}</div>
           <div className="shortcut-key">
-            <div className="shortcut-letter">
-              <i className="fa-solid fa-angle-up"></i>
-            </div>
+            <div className="shortcut-letter">ctrl</div>
             <div className="shortcut-letter">{shortcut.shortcut}</div>
           </div>
         </div>

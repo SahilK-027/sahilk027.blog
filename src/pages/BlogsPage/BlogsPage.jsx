@@ -308,30 +308,30 @@ const BlogSeries = ({ blogSeriesData }) => {
       <h2 className="section-header">Blog Series</h2>
       <div className="blog-series-container">
         {blogSeriesData.map((series, index) => (
-          <div key={index} className="blog-series-card">
-            <h3>
-              <Link to={series.seriesUrl} className="blog-series-card-header">
-                {series.seriesTitle}
-              </Link>
-            </h3>
-            <p className="blog-series-start-date">
-              Publish Date: {series.startDate}
-            </p>
-            <p className="blog-series-card-desc">{series.seriesDescription}</p>
-            <div className="buttons">
-              <Link to={series.seriesUrl}>
-                <button className="btn">
-                  View Series &nbsp;{" "}
-                  <i className="fa-solid fa-up-right-from-square"></i>
-                </button>
-              </Link>
-              <Link target="_blank" to={series.seriesDiscussion}>
-                <button className="btn">
-                  Discussion &nbsp; <i className="fa-solid fa-comments"></i>
-                </button>
-              </Link>
+          <Link to={series.seriesUrl}>
+            <div key={index} className="blog-series-card">
+              <h3 className="blog-series-card-header">{series.seriesTitle}</h3>
+              <p className="blog-series-start-date">
+                Publish Date: {series.startDate}
+              </p>
+              <p className="blog-series-card-desc">
+                {series.seriesDescription}
+              </p>
+              <div className="buttons">
+                <Link to={series.seriesUrl}>
+                  <button className="btn">
+                    View Series &nbsp;{" "}
+                    <i className="fa-solid fa-up-right-from-square"></i>
+                  </button>
+                </Link>
+                <Link target="_blank" to={series.seriesDiscussion}>
+                  <button className="btn">
+                    Discussion &nbsp; <i className="fa-solid fa-comments"></i>
+                  </button>
+                </Link>
+              </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </>

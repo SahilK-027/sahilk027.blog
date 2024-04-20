@@ -17,6 +17,7 @@ import { commandShortcuts } from "./data/CommandShortCuts";
 import music from "./assets/audio/ghostrifter-purple-dream.ogg";
 import IndividualProject from "./pages/ProjectsPage/IndividualProject/IndividualProject";
 import PublisherPage from "./pages/PublisherPage/PublisherPage";
+import JourneyPage from "./pages/BlogsPage/JourneyPage/JourneyPage";
 
 /**
  * `App` component is the root component of the application.
@@ -156,6 +157,18 @@ const App = () => {
             path="/projects/:projectName"
             element={
               <IndividualProject
+                openCMDCenter={openCMDCenter}
+                controlMusic={controlMusic}
+                isMusicPlaying={isMusicPlaying}
+                theme={theme}
+                toggleTheme={toggleTheme}
+              />
+            }
+          />
+          <Route
+            path="/blogs/:journeyName"
+            element={
+              <JourneyPage
                 openCMDCenter={openCMDCenter}
                 controlMusic={controlMusic}
                 isMusicPlaying={isMusicPlaying}

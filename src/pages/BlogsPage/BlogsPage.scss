@@ -197,39 +197,31 @@
         margin-bottom: 20px;
 
         .blog-series-card-header {
-          background: linear-gradient(
-            270deg,
-            var(--gradient-blue) 30%,
-            var(--gradient-purple) 50%,
-            var(--gradient-pink) 70%,
-            var(--gradient-yellow) 94%
-          );
+          background: linear-gradient(270deg,
+              var(--gradient-blue) 30%,
+              var(--gradient-purple) 50%,
+              var(--gradient-pink) 70%,
+              var(--gradient-yellow) 94%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
-          text-decoration: underline;
-          text-underline-position: below;
-          text-decoration-color: var(--anchor-underline-color);
-          text-underline-offset: 5px;
-
-          &:hover {
-            transition: all 0.3s ease-in-out;
-            text-decoration-color: var(--color-anchor);
-          }
         }
 
         .blog-series-card-desc {
           font-size: 14px;
           margin-bottom: 10px;
         }
+
         .blog-series-start-date {
           font-size: 14px;
           margin-bottom: 10px;
           color: var(--color-text-secondary);
         }
+
         .buttons {
           display: flex;
           align-items: center;
           gap: 10px;
+
           button {
             font-size: 14px;
           }

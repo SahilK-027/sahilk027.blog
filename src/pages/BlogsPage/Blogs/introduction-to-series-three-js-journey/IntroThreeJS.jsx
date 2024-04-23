@@ -117,10 +117,9 @@ const IntroThreeJS = ({
                 </a>
                 . Yep, you heard it right. This is going to be a comprehensive
                 guide that will help you understand the intricate puzzle of 3D
-                development. So why am I writing this blog series? Now, you're
-                probably wondering why I'm doing this. Well, I'll be honest with
-                you - <span>I just love writing</span>! 😆 But that's not the
-                only reason.
+                development. Now, you're probably wondering why I'm doing this.
+                Well, I'll be honest with you - <span>I just love writing</span>
+                ! 😆 But that's not the only reason.
               </p>
               <p>
                 Yes, there are many reasons behind writing a technical blog

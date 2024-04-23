@@ -74,13 +74,13 @@ const App = () => {
   useEffect(() => {
     checkSavedTheme();
     const handleKeyDown = (event) => {
-      if (event.key === "Control") {
+      if (event.key === "G" || event.key === "g") {
         setIsCommandKeyPressed(true);
       }
     };
 
     const handleKeyUp = (event) => {
-      if (event.key === "Control") {
+      if (event.key === "G" || event.key === "g") {
         setIsCommandKeyPressed(false);
       }
     };

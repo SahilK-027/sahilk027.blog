@@ -222,7 +222,7 @@ const ShortCuts = () => {
         <div key={index} className="shortcut-item">
           <div className="shortcut-name">{shortcut.name}</div>
           <div className="shortcut-key">
-            <div className="shortcut-letter">ctrl</div>
+            <div className="shortcut-letter">G</div>
             <div className="shortcut-letter">{shortcut.shortcut}</div>
           </div>
         </div>

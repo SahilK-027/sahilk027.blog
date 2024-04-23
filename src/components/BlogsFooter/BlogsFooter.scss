@@ -1,0 +1,27 @@
+.footer-bg {
+  width: 100%;
+  background-color: var(--color-bg-box-container);
+
+  .footer-container {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 60px 20px;
+    transition: none !important;
+    .footer-txt {
+      transition: none !important;
+      line-height: 1.8;
+    }
+
+    .signature-container {
+      align-self: flex-end;
+      display: flex;
+      justify-content: start;
+      align-items: center;
+      pointer-events: none;
+      margin-top: 10px;
+      flex: 1;
+      color: var(--color-text-primary);
+      flex-direction: row;
+    }
+  }
+}

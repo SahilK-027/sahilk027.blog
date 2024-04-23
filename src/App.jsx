@@ -18,6 +18,7 @@ import music from "./assets/audio/ghostrifter-purple-dream.ogg";
 import IndividualProject from "./pages/ProjectsPage/IndividualProject/IndividualProject";
 import PublisherPage from "./pages/PublisherPage/PublisherPage";
 import JourneyPage from "./pages/BlogsPage/JourneyPage/JourneyPage";
+import IntroThreeJS from "./pages/BlogsPage/Blogs/introduction-to-series-three-js-journey/IntroThreeJS";
 
 /**
  * `App` component is the root component of the application.
@@ -169,6 +170,18 @@ const App = () => {
             path="/blogs/:journeyName"
             element={
               <JourneyPage
+                openCMDCenter={openCMDCenter}
+                controlMusic={controlMusic}
+                isMusicPlaying={isMusicPlaying}
+                theme={theme}
+                toggleTheme={toggleTheme}
+              />
+            }
+          />
+          <Route
+            path="/blogs/:journeyName/introduction-to-series-three-js-journey"
+            element={
+              <IntroThreeJS
                 openCMDCenter={openCMDCenter}
                 controlMusic={controlMusic}
                 isMusicPlaying={isMusicPlaying}

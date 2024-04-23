@@ -1,0 +1,47 @@
+.blog-letter {
+  .blogletter-container {
+    width: 100%;
+    box-sizing: border-box;
+
+    form {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: center;
+      margin: 18px 0;
+
+      input {
+        flex: 1;
+        padding: 8px 20px;
+        height: 100%;
+        background-color: #1d202a;
+        border: 1px solid var(--border-color);
+        color: var(--color-text-primary);
+        font-size: 14px;
+        font-family: var(--font-family);
+        outline: none;
+        background: none;
+        border-radius: 10px;
+
+        &::placeholder {
+          color: var(--color-text-secondary-dark);
+          font-size: 14px;
+        }
+
+        &:focus {
+          border: 1px solid var(--color-anchor);
+          box-shadow: 0 0 20px var(--shadow-color);
+        }
+      }
+    }
+
+    #thanks {
+      margin: 0;
+      padding: 0px 0;
+      padding-bottom: 10px;
+      padding-left: 0px;
+      color: var(--color-heart);
+      font-size: 16px;
+    }
+  }
+}

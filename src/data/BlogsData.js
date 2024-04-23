@@ -22,7 +22,7 @@ export const blogPost = [
     seriesTitle: "Three.js Journey",
     filterTag: "Threejs Journey",
     blogTitle: "Introduction to Series: Three.js Journey",
-    blogDate: "19th April 2024",
+    blogDate: "1st May 2024",
     selector: "introduction-to-series-three-js-journey",
     blogUrl: `/blogs/three-js-journey/introduction-to-series-three-js-journey`,
     keywords: [

@@ -89,6 +89,7 @@
           margin-right: 20px;
           flex: 1;
           color: var(--color-text-primary);
+          flex-direction: row;
         }
       }
     }
@@ -197,11 +198,13 @@
         margin-bottom: 20px;
 
         .blog-series-card-header {
-          background: linear-gradient(270deg,
-              var(--gradient-blue) 30%,
-              var(--gradient-purple) 50%,
-              var(--gradient-pink) 70%,
-              var(--gradient-yellow) 94%);
+          background: linear-gradient(
+            270deg,
+            var(--gradient-blue) 30%,
+            var(--gradient-purple) 50%,
+            var(--gradient-pink) 70%,
+            var(--gradient-yellow) 94%
+          );
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
         }

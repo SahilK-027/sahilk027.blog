@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./JourneyPage.scss";
 import Navbar from "../../../components/Navbar/Navbar";
 import Footer from "../../../components/Footer/Footer";
@@ -43,7 +43,9 @@ const JourneyPage = ({
     (blogSeries) => blogSeries.selector === journeyName
   );
 
-  console.log(currJourney);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <>
@@ -74,14 +76,21 @@ const JourneyPage = ({
                       (blog) => blog.blogNo === blogID
                     );
                     return (
-                      <Link
-                        to={currBlog.blogUrl}
-                        key={currBlog.blogNo}
-                        className="blog-series-item"
-                      >
-                        <p>&nbsp;🔷 &nbsp;{currBlog.blogDate}</p>
-                        <h4>{currBlog.blogTitle}</h4>
-                      </Link>
+                      <div className="series-item">
+                        <div class="timeline-middle">
+                          <div class="timeline-circle"></div>
+                        </div>
+                        <div>
+                          <Link
+                            to={currBlog.blogUrl}
+                            key={currBlog.blogNo}
+                            className="blog-series-item"
+                          >
+                            <p>&nbsp;[ {currBlog.blogNo} ]</p>
+                            <h4>{currBlog.blogTitle}</h4>
+                          </Link>
+                        </div>
+                      </div>
                     );
                   })}
                 </div>

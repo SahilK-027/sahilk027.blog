@@ -14,7 +14,6 @@ import SignatureForWhiteBg from "../../components/SVG-JSX/SignatureForWhiteBg/Si
 import { mostRecentBlog } from "../../data/BlogsData";
 import { blogSeries } from "../../data/BlogsData";
 import Environment from "../../data/Environment";
-import Loader from "../../components/Loader/Loader";
 import { animated, useSpring } from "react-spring";
 
 /**

@@ -5,9 +5,8 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  transition: color 0.3s ease, background-color 0.3s ease,
-    border-color 0.3s ease, fill 0.3s ease, stroke 0.3s ease,
-    background 0.3s ease;
+  transition: background-color 0.3s ease, border-color 0.3s ease, fill 0.3s ease,
+    stroke 0.3s ease, background 0.3s ease;
 }
 
 /* Global variables */
@@ -18,7 +17,7 @@
   --color-bg-box-container-dark: #151c2a;
   --color-text-primary: #e2eafd;
   --color-text-primary-dark: #e1eafd;
-  --color-text-secondary: #acb5c8;
+  --color-text-secondary: #9fa7b9;
   --color-text-secondary-dark: #60677a;
   --color-error: #ff375f;
   --color-heart: #f1a1ff;
@@ -122,6 +121,7 @@ html.no-scroll {
   max-width: 920px;
   margin: 0 auto;
   padding: 20px;
+  margin-bottom: 80px;
 }
 
 /* Selection styles */
@@ -216,6 +216,14 @@ a {
   margin-bottom: 30px;
 }
 
+.blog-date {
+  font-size: 15px;
+  padding-bottom: 24px;
+}
+.main-blog-content {
+  padding: 24px 0;
+}
+
 img {
   pointer-events: none;
 }
@@ -255,8 +263,8 @@ ul {
   width: 20px;
   aspect-ratio: 1;
   border-radius: 50%;
-  background: radial-gradient(farthest-side, var(--color-anchor) 94%, #0000) top/8px 8px
-      no-repeat,
+  background: radial-gradient(farthest-side, var(--color-anchor) 94%, #0000)
+      top/8px 8px no-repeat,
     conic-gradient(#0000 30%, var(--color-anchor));
   -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 8px), #000 0);
   animation: l13 1s infinite linear;

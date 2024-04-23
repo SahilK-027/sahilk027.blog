@@ -7,6 +7,7 @@ import sight from "../assets/images/projectThumbnails/sight.webp";
 import tr2024 from "../assets/images/projectThumbnails/trinity-2024.webp";
 import particlesGPGPU from "../assets/images/projectThumbnails/particles-gpgpu.webp";
 import ironmanHolograms from "../assets/images/projectThumbnails/ironman-holograms.webp";
+import waterColour from "../assets/images/projectThumbnails/water-colour.webp";
 
 import tr2023Video from "../assets/videos/projectVideos/trinity-2023.mp4";
 import innovisionVideo from "../assets/videos/projectVideos/innovision.mp4";
@@ -17,6 +18,7 @@ import sightVideo from "../assets/videos/projectVideos/sight.mp4";
 import tr2024Video from "../assets/videos/projectVideos/trinity-2024.mp4";
 import particlesGPGPUVideo from "../assets/videos/projectVideos/particles-GPGPU.mp4";
 import ironmanHologramsVideo from "../assets/videos/projectVideos/ironman-holograms.mp4";
+import waterColourVideo from "../assets/videos/projectVideos/water-colour.mp4";
 
 export const Projects = [
   {
@@ -652,6 +654,49 @@ export const Projects = [
         title: "Performance Optimization",
         description:
           "Performance optimization techniques were employed to ensure smooth rendering and responsive interaction, especially when dealing with complex shaders and high-resolution holographic visuals. Techniques such as shader caching, uniform buffering, and shader minification were used to minimize shader compilation times and reduce runtime overhead. dditionally, WebGL features such as instanced rendering and vertex buffer objects (VBOs) were utilized to optimize rendering performance and reduce GPU draw calls.",
+      },
+    ],
+  },
+  {
+    id: 10,
+    idSelector: "water-colors",
+    name: "Water Color Simulation",
+    thumbnailUrl: waterColour,
+    concept: ["3D Illustration", "Shaders"],
+    projectUrl: "/projects/water-colors",
+
+    // Detailed Description
+    projectTitle: "Water Colour: An Abstract Mural with Shaders 🎨",
+    projectHref: "https://watercolor-sk027.vercel.app/",
+    subtitle: `A stunning pointer event based water colour effect built using Three.js and FBO noise.`,
+    videoUrl: waterColourVideo,
+    detailedDescription: [
+      `"Water Colours" is an immersive digital artwork created with Three.js and utilizing Framebuffer Objects (FBO) noise, this piece delivers a mesmerizing watercolor effect that responds dynamically to user interaction.`,
+    ],
+    credits: [],
+    technicalDescription: [
+      "The artwork is built using Three.js, a popular JavaScript library for creating and displaying 3D computer graphics in web browsers. Three.js provides the foundation for rendering the abstract mural and facilitating user interaction.",
+
+      `FBOs are used to generate and manipulate textures in WebGL, the underlying technology powering Three.js. In this context, FBOs are employed to create noise textures that serve as the basis for the watercolor simulation. By applying these textures to the shader calculations, the artwork achieves a realistic and dynamic portrayal of flowing pigments.`,
+
+      "The rendering process is dynamic and responsive, adjusting in real-time based on user interaction. As users move their pointer across the screen, the watercolor effect dynamically evolves, creating an engaging and immersive experience.",
+    ],
+    techStack: [
+      {
+        technology: "Three.js",
+        useCase:
+          "Three.js is the core framework used to render the abstract mural, apply shaders, and handle user interaction.",
+      },
+      {
+        technology: "Framebuffer Objects (FBO)",
+        useCase:
+          "FBOs are a feature of WebGL used to create and manipulate textures offscreen. In this project, FBOs are utilized to generate noise textures that are essential for simulating the flow and dispersion of watercolor pigments.",
+      },
+    ],
+    learnings: [
+      {
+        title: "Creative Experimentation",
+        description: `Through the development I learned invaluable insights into the world of creative experimentation and the power of leveraging FBO noise. Working with FBO noise allowed me to simulate intricate textures and patterns, breathing life into the watercolor effect within the artwork. This experimentation process taught me to embrace curiosity and explore unconventional techniques to achieve desired visual outcomes. Additionally, I learned how to harness the flexibility of shaders to manipulate and transform digital canvases, unlocking endless creative possibilities.`,
       },
     ],
   },

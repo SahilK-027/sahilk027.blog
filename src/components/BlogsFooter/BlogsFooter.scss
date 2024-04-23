@@ -1,6 +1,8 @@
 .footer-bg {
   width: 100%;
   background-color: var(--color-bg-box-container);
+  position: relative;
+  z-index: 2;
 
   .footer-container {
     max-width: 920px;

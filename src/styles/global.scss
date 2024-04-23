@@ -19,6 +19,7 @@
   --color-text-primary-dark: #e1eafd;
   --color-text-secondary: #9fa7b9;
   --color-text-secondary-dark: #60677a;
+  --color-text-secondary-dark-2: #60677a58;
   --color-error: #ff375f;
   --color-heart: #f1a1ff;
   --color-warning: #ffa115;
@@ -49,6 +50,7 @@
   --color-text-primary: #333;
   --color-text-primary-dark: #242424;
   --color-text-secondary: #6b7280;
+  --color-text-secondary-dark: #60677a9c;
   --color-text-secondary-dark: #60677a;
   --color-error: #ff375f;
   --color-heart: #f1a1ff;
@@ -121,7 +123,7 @@ html.no-scroll {
   max-width: 920px;
   margin: 0 auto;
   padding: 20px;
-  margin-bottom: 80px;
+  margin-bottom: 50px;
 }
 
 /* Selection styles */

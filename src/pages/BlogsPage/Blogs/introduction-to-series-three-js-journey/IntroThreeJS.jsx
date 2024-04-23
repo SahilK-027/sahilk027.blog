@@ -166,10 +166,10 @@ const IntroThreeJS = ({
               </p>
             </div>
             <div className="blog-section">
-              <h3 className="blog-section-title">Who Am I? 🫣</h3>
+              <h3 className="blog-section-title">Who Am I? 👀</h3>
               <p>
                 All right, let me talk about myself for a second. I'm Sahil, a
-                <span>front-end developer</span>, although I prefer to call
+                <span> front-end developer</span>, although I prefer to call
                 myself a <span>creative web developer</span>. I've always been
                 fascinated by the amazing websites people create, and watching
                 them made me want to build something similar. I've been

@@ -32,7 +32,7 @@ const BlogsFooter = ({ theme }) => {
           Have doubts or question regarding the article? Feel free to reach out
           to me on{" "}
           <a
-            href="https://github.com/SahilK-027"
+            href="https://github.com/sahilk027-blogs"
             target="_blank"
             className="link"
           >

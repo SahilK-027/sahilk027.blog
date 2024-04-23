@@ -11,7 +11,9 @@ export const commandShortcuts = [
   {
     name: "Blog",
     shortcut: "B",
-    action: () => console.log("Navigating to random blog"),
+    action: () => {
+      window.open(mostRecentBlogLink, "_self");
+    },
   },
   {
     name: "Music",

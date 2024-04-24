@@ -71,7 +71,7 @@ const IntroThreeJS = ({
 
   const mustRead = `
   <div>
-  <p>While FBO, Shaders and Post processing are some of the fascinating topics, this blog will not focus on it. These are rather advanced topics and each subject listed here deserves it's own blog post.
+  <p>While FBO, Shaders and Post processing are some of the fascinating topics, this blog will not focus on them. These are rather advanced topics and each subject listed here deserves its own blog post.
   </p>
   <p> 👉 But your curious mind can further read more about them here: </p>
   <ul>

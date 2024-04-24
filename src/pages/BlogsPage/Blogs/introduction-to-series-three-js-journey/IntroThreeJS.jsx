@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import "./IntroThreeJS.scss";
 import BlogsFooter from "../../../../components/BlogsFooter/BlogsFooter";
 import LeftSidebar from "../../../../components/LeftSideBar/LeftSidebar";
+import InfoDiv from "../../../../components/InfoDIV/InfoDiv";
+import MustReadDiv from "../../../../components/MustReadDIV/MustReadDiv";
 
 const IntroThreeJS = ({
   openCMDCenter,
@@ -58,6 +60,41 @@ const IntroThreeJS = ({
     "What Will You Learn?",
     "How to Get Involved?",
   ];
+
+  const infoTrinity = `
+  <div>
+  <p>No doubt I will be writing a blog on this topic but till then if you want to check out which blog post I referred to while building fluid simulation for Trinity 2024 head over to this 
+  <a href="https://mofu-dev.com/en/blog/stable-fluids/" target="_blank">blog</a>
+  post.
+  </p>
+  </div>`;
+
+  const mustRead = `
+  <div>
+  <p>While FBO, Shaders and Post processing are some of the fascinating topics, this blog will not focus on it. These are rather advanced topics and each subject listed here deserves it's own blog post.
+  </p>
+  <p> 👉 But your curious mind can further read more about them here: </p>
+  <ul>
+    <li>
+      <i class="fa-solid fa-arrow-right"></i>
+      <a href="https://barradeau.com/blog/?p=621" target="_blank">FBO particles</a>
+    </li>
+    <li>
+      <i class="fa-solid fa-arrow-right"></i>
+      <a href="https://thebookofshaders.com/" target="_blank">The Book of Shaders
+      </a>
+    </li>
+    <li>
+      <i class="fa-solid fa-arrow-right"></i>
+      <a href="https://tympanus.net/codrops/2022/11/29/sketchy-pencil-effect-with-three-js-post-processing/" target="_blank">Post-Processing</a>
+    </li>
+  </ul>
+  <p>
+  😉 Don't worry, I will be writing a blog on these topics in the future. So stay tuned!
+  </p>
+  </div>
+  `;
+
   return (
     <>
       <Navbar
@@ -139,22 +176,24 @@ const IntroThreeJS = ({
               </p>
               <p>
                 All right, picture this: you've got this brilliant idea for a
-                website, right? But there's one tiny hitch – you want to add
-                these mind-blowing fluid simulations, and you're like, "Um,
-                how?" That's exactly where I found myself with my recent
-                project,{" "}
+                website, you want to create mesmerising user interactive landing
+                page. After thnking for a while, you get an idea "let's add
+                mind-blowing fluid simulations, you are exited but suddenly
+                you're like, "Umm, but how?" That's exactly where I found myself
+                with my recent project,{" "}
                 <a
                   href="https://trinity-2024.vercel.app"
                   target="_blank"
                   className="link"
                 >
                   Trinity 2024
-                </a>{" "}
+                </a>
                 . After searching the vast expanse of the internet and digging
                 through countless blog posts, I stumbled upon a gem of wisdom
                 that lit up my path. It was like finding the missing puzzle
                 piece!
               </p>
+              <InfoDiv infoText={infoTrinity} />
               <p>
                 I built the website eventually, but it took me a lot of time to
                 do so. And that got me thinking - why keep all this hard-earned
@@ -168,7 +207,7 @@ const IntroThreeJS = ({
             <div className="blog-section">
               <h3 className="blog-section-title">Who Am I? 👀</h3>
               <p>
-                All right, let me talk about myself for a second. I'm Sahil, a
+                Let me talk about myself for a second. I'm Sahil, a
                 <span> front-end developer</span>, although I prefer to call
                 myself a <span>creative web developer</span>. I've always been
                 fascinated by the amazing websites people create, and watching
@@ -262,6 +301,7 @@ const IntroThreeJS = ({
                   </li>
                 </ul>
               </p>
+              <MustReadDiv mustReadText={mustRead} />
               <p>
                 And that's just a taste of what's to come! With each topic, I'll
                 provide hands-on examples, practical tips, and real-world

@@ -7,6 +7,7 @@
     .blog-section {
       p {
         padding: 16px 0;
+        font-size: 16px;
 
         ul {
           li {
@@ -17,14 +18,14 @@
             }
             i {
               color: var(--color-anchor);
-              font-size: 18px;
+              font-size: 16px;
               margin-right: 6px;
             }
           }
         }
 
         span {
-          font-size: 18px;
+          font-size: 16px;
           color: var(--color-text-primary);
         }
       }

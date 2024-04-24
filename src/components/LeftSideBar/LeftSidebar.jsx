@@ -1,7 +1,17 @@
 import React, { useEffect } from "react";
 import "./LeftSidebar.scss";
 
-const LeftSidebar = ({ scrollPercentage, activeSection, sections }) => {
+const LeftSidebar = ({
+  scrollPercentage,
+  activeSection,
+  sections,
+  setActiveSection,
+}) => {
+  useEffect(() => {
+    if (scrollPercentage === 0) {
+      setActiveSection(null);
+    }
+  }, [scrollPercentage, activeSection]);
   const filledHeight = `${scrollPercentage}%`;
 
   return (

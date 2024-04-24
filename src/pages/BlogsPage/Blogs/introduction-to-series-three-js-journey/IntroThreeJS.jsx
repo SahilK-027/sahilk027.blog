@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../../../../components/Navbar/Navbar";
 import Footer from "../../../../components/Footer/Footer";
 import { blogPost } from "../../../../data/BlogsData";
@@ -19,7 +19,6 @@ const IntroThreeJS = ({
   const [currBlog, setCurrBlog] = useState(null);
   const [activeSection, setActiveSection] = useState(null);
   const [scrollPercentage, setScrollPercentage] = useState(0);
-  const scrollRef = useRef(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -109,6 +108,7 @@ const IntroThreeJS = ({
           scrollPercentage={scrollPercentage}
           activeSection={activeSection}
           sections={sections}
+          setActiveSection={setActiveSection}
         />
         <div className="section-top">
           <Link to={"/"}>
@@ -214,15 +214,20 @@ const IntroThreeJS = ({
                 them made me want to build something similar. I've been
                 exploring the world of web development for a year and a half
                 now, and with that, I learned lots of new technologies and built
-                some awesome projects along the way! So with this blog page, I
-                want to share my experiences and discoveries with you. I don't
-                just build cool front-ends, though. I also work on{" "}
-                <span>Full-Stack</span> web applications. I've explored{" "}
+                some{" "}
+                <Link className="link" to="/projects">
+                  {" "}
+                  awesome projects{" "}
+                </Link>{" "}
+                along the way! So with this blog page, I want to share my
+                experiences and discoveries with you. I don't just build cool
+                front-ends, though. I also work on <span>Full-Stack</span> web
+                applications. I've explored{" "}
                 <span>
-                  Python-Flask, node.js, MongoDB, AI, ML, OpenCV, and Compiler
+                  Python-Flask, node.js, MongoDB, AI, ML, OpenCV, Compiler
                   Design
                 </span>{" "}
-                Feel free to discuss any of these topics with me.
+                and much more. Feel free to discuss any of these topics with me.
               </p>
             </div>
             <div className="blog-section">

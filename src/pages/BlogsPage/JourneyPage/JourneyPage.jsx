@@ -77,8 +77,8 @@ const JourneyPage = ({
                     );
                     return (
                       <div className="series-item">
-                        <div class="timeline-middle">
-                          <div class="timeline-circle"></div>
+                        <div className="timeline-middle">
+                          <div className="timeline-circle"></div>
                         </div>
                         <div>
                           <Link

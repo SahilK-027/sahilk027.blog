@@ -18,7 +18,16 @@ const BlogsFooter = ({ theme }) => {
         </span>
         <BlogLetter />
         <span className="footer-txt">
-          Want to express your appreciation? Follow me on{" "}
+          Want to show your appreciation 😊? give this{" "}
+          <a
+            href="https://github.com/SahilK-027/sahilk027.blog"
+            target="_blank"
+            className="link"
+          >
+            project repository
+          </a>{" "}
+          star ⭐️ <br />
+          Feeling extra appreciative? Follow me on
           <a
             href="https://github.com/SahilK-027"
             target="_blank"
@@ -26,10 +35,11 @@ const BlogsFooter = ({ theme }) => {
           >
             GitHub
           </a>{" "}
+          for even more appreciation 😂
         </span>
         <br />
         <span className="footer-txt">
-          Have doubts or question regarding the article? Feel free to reach out
+          Have doubts or question regarding this article? Feel free to reach out
           to me on{" "}
           <a
             href="https://github.com/sahilk027-blogs"
@@ -40,7 +50,7 @@ const BlogsFooter = ({ theme }) => {
           </a>{" "}
         </span>
         <br /> <br /> <br />
-        Have a great day! 😊
+        Have a great day! 🚀
         <div className="signature-container">
           <div className="dash">— </div>
 

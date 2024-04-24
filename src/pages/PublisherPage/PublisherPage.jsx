@@ -4,18 +4,18 @@ import { toast } from "react-toastify";
 import Environment from "../../data/Environment";
 
 const PublisherPage = () => {
-  const PASS = process.env.REACT_APP_PUBLISHER_CONSOLE_PASSWORD;
+  const TIMEPASS = "purple@2427";
   let SERVER_LINK = "";
   const env = Environment;
   if (env === "development") {
     SERVER_LINK = "http://localhost:2710";
   } else if (env === "production") {
-    SERVER_LINK = process.env.REACT_APP_PROD_API;
+    SERVER_LINK = "https://api-sk-blog-server.vercel.app";
   }
   const [isMakingNWCall, setIsMakingNWCall] = useState(false);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (e.target.elements.publisherID.value === PASS) {
+    if (e.target.elements.FUNNYWORD.value === TIMEPASS) {
       try {
         setIsMakingNWCall(true);
         const response = await fetch(`${SERVER_LINK}/publishblog`, {
@@ -126,7 +126,7 @@ const PublisherPage = () => {
           <label>Publisher ID</label>
           <input
             type="password"
-            name="publisherID"
+            name="FUNNYWORD"
             placeholder="Enter Publisher ID to validate your identity as sahilk027"
             required
           />

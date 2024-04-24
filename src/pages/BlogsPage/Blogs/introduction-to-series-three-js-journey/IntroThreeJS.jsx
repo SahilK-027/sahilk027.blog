@@ -314,7 +314,7 @@ const IntroThreeJS = ({
             <div className="blog-section">
               <h3 className="blog-section-title">How to Get Involved? 🤝</h3>
               <p>
-                Oh, and here's the cherry on top – this entire seri is
+                Oh, and here's the cherry on top – this entire series is
                 absolutely free! Yup, you heard that right. All you need to do
                 is hit that <span>subscribe button</span> if you want to be the
                 first to know when I drop a new blog post. And hey, if you ever

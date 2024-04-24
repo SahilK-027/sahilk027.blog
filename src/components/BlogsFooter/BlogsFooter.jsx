@@ -27,7 +27,7 @@ const BlogsFooter = ({ theme }) => {
             project repository
           </a>{" "}
           star ⭐️ <br />
-          Feeling extra appreciative? Follow me on
+          Feeling extra appreciative? Follow me on{" "}
           <a
             href="https://github.com/SahilK-027"
             target="_blank"

@@ -307,7 +307,7 @@ const BlogSeries = ({ blogSeriesData }) => {
       <h2 className="section-header">Blog Series</h2>
       <div className="blog-series-container">
         {blogSeriesData.map((series, index) => (
-          <Link to={series.seriesUrl}>
+          <a href={series.seriesUrl}>
             <div key={index} className="blog-series-card">
               <h3 className="blog-series-card-header">{series.seriesTitle}</h3>
               <p className="blog-series-start-date">
@@ -317,20 +317,15 @@ const BlogSeries = ({ blogSeriesData }) => {
                 {series.seriesDescription}
               </p>
               <div className="buttons">
-                <Link to={series.seriesUrl}>
-                  <button className="btn">
-                    View Series &nbsp;{" "}
-                    <i className="fa-solid fa-up-right-from-square"></i>
-                  </button>
-                </Link>
-                <Link target="_blank" to={series.seriesDiscussion}>
+                <p>Series Community:</p>
+                <a target="_blank" href={series.seriesDiscussion}>
                   <button className="btn">
                     Discussion &nbsp; <i className="fa-solid fa-comments"></i>
                   </button>
-                </Link>
+                </a>
               </div>
             </div>
-          </Link>
+          </a>
         ))}
       </div>
     </>

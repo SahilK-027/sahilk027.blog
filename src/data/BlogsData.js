@@ -9,7 +9,7 @@ export const blogSeries = [
     selector: `three-js-journey`,
     seriesDiscussion:
       "https://github.com/sahilk027-blogs/three-js-journey-series/discussions",
-    blogsCollection: [], // blogNo
+    blogsCollection: [1], // blogNo
     startDate: "19th April 2024",
   },
 ];

@@ -70,30 +70,40 @@ const JourneyPage = ({
             <div className="section">
               <h2>All Published Blog Articles From the Series</h2>
               <div className="container">
-                <div className="blog-series-list">
-                  {currJourney.blogsCollection.map((blogID) => {
-                    const currBlog = blogPost.find(
-                      (blog) => blog.blogNo === blogID
-                    );
-                    return (
-                      <div className="series-item">
-                        <div className="timeline-middle">
-                          <div className="timeline-circle"></div>
+                {currJourney.blogsCollection.length ? (
+                  <div className="blog-series-list">
+                    {currJourney.blogsCollection.map((blogID) => {
+                      const currBlog = blogPost.find(
+                        (blog) => blog.blogNo === blogID
+                      );
+                      return (
+                        <div className="series-item">
+                          <div className="timeline-middle">
+                            <div className="timeline-circle"></div>
+                          </div>
+                          <div>
+                            <Link
+                              to={currBlog.blogUrl}
+                              key={currBlog.blogNo}
+                              className="blog-series-item"
+                            >
+                              <p>&nbsp;[ {currBlog.blogNo} ]</p>
+                              <h4>{currBlog.blogTitle}</h4>
+                            </Link>
+                          </div>
                         </div>
-                        <div>
-                          <Link
-                            to={currBlog.blogUrl}
-                            key={currBlog.blogNo}
-                            className="blog-series-item"
-                          >
-                            <p>&nbsp;[ {currBlog.blogNo} ]</p>
-                            <h4>{currBlog.blogTitle}</h4>
-                          </Link>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <div className="no-blogs">
+                    <p style={{ color: "var(--color-error)" }}>
+                      No blog articles have been published in this series yet.
+                      🤷‍♂️ Please subscribe to the series to get notified about
+                      new blog post releases.
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
           </>

@@ -12,7 +12,7 @@ import MustReadDiv from "../../../../components/MustReadDIV/MustReadDiv";
 const calculateTimeRemaining = () => {
   const now = new Date();
   // April 27th, 2024 at 9:00 PM
-  const targetDate = new Date("2023-04-27T21:00:00");
+  const targetDate = new Date("2024-04-27T21:00:00");
   const difference = targetDate - now;
 
   if (difference <= 0) {

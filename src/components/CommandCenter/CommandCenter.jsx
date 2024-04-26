@@ -38,11 +38,22 @@ const SearchBlogs = ({
         let searchedBlogs = blogPost;
 
         if (searchQuery !== "") {
+          // Filter the blogs based on the search query
           searchedBlogs = blogPost.filter((blog) =>
             blog.keywords.some((keyword) =>
               keyword.toLowerCase().includes(searchQuery.toLowerCase())
             )
           );
+
+          // If no results found, try matching with each word separately
+          if (searchedBlogs.length === 0) {
+            const searchWords = searchQuery.toLowerCase().split(" ");
+            searchedBlogs = blogPost.filter((blog) =>
+              blog.keywords.some((keyword) =>
+                searchWords.some((word) => keyword.toLowerCase().includes(word))
+              )
+            );
+          }
         }
 
         if (selectedFilter !== noFilter) {

@@ -3,6 +3,7 @@ import { animated, useSpring } from "react-spring";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import "./BlogLetter.scss";
+import SubscriberCount from "../SubscriberCount/SubscriberCount";
 
 /**
  * BlogLetter component
@@ -106,6 +107,7 @@ const BlogLetter = () => {
     <>
       <div className="blog-letter">
         <div className="blogletter-container">
+          <SubscriberCount />
           <form onSubmit={handleSubscriptionCall}>
             <input
               type="email"

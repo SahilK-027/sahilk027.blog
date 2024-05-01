@@ -1,0 +1,67 @@
+.sub-count-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  margin-top: 30px;
+  margin-left: 10px;
+  margin-bottom: 0px;
+
+  .count-para {
+    color: var(--color-text-secondary);
+  }
+
+  .subscribers-count {
+    color: var(--color-heart);
+
+    .dot-flashing {
+      position: relative;
+      left: 20px;
+      width: 8px;
+      height: 8px;
+      border-radius: 5px;
+      background-color: var;
+      color: var(--color-heart);
+      animation: dot-flashing 1s infinite linear alternate;
+      animation-delay: 0.5s;
+    }
+    .dot-flashing::before,
+    .dot-flashing::after {
+      content: "";
+      display: inline-block;
+      position: absolute;
+      top: 0;
+    }
+    .dot-flashing::before {
+      left: -15px;
+      width: 8px;
+      height: 8px;
+      border-radius: 5px;
+      background-color: var(--color-heart);
+      color: var(--color-heart);
+      animation: dot-flashing 1s infinite alternate;
+      animation-delay: 0s;
+    }
+    .dot-flashing::after {
+      left: 15px;
+      width: 8px;
+      height: 8px;
+      border-radius: 5px;
+      background-color: var(--color-heart);
+      color: var(--color-heart);
+      animation: dot-flashing 1s infinite alternate;
+      animation-delay: 1s;
+    }
+
+    @keyframes dot-flashing {
+      0% {
+        background-color: var(--color-heart);
+      }
+      50%,
+      100% {
+        background-color: rgba(238, 128, 255, 0.251);
+      }
+    }
+  }
+}

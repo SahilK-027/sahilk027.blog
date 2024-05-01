@@ -1,6 +1,6 @@
 // Importing necessary libraries and tools
 import React, { useEffect, useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 // Importing necessary components and pages
 import Navbar from "../../components/Navbar/Navbar";
@@ -15,6 +15,7 @@ import { mostRecentBlog } from "../../data/BlogsData";
 import { blogSeries } from "../../data/BlogsData";
 import Environment from "../../data/Environment";
 import { animated, useSpring } from "react-spring";
+import SubscriberCount from "../../components/SubscriberCount/SubscriberCount";
 
 /**
  * `BlogIntroTxt` component is the introductory text for the blogs page.
@@ -150,7 +151,7 @@ const BlogLetter = () => {
   }
   const handleSubscriptionCall = async (e) => {
     e.preventDefault();
-    const EMAIL_TEST = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    const EMAIL_TEST = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,7})+$/;
     const isValidMail = EMAIL_TEST.test(mail);
 
     if (!isValidMail) {
@@ -259,6 +260,8 @@ const BlogLetter = () => {
               Shaders, DataBase, and more.
             </li>
           </ul>
+
+          <SubscriberCount />
 
           <form onSubmit={handleSubscriptionCall}>
             <input

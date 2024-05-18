@@ -1,0 +1,72 @@
+.image-comparison {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  pointer-events: all !important;
+  cursor: ew-resize;
+
+  .image-container {
+    position: relative;
+    display: flex;
+    pointer-events: all;
+
+    img {
+      height: 100%;
+      object-fit: cover;
+      object-position: left;
+      cursor: ew-resize;
+    }
+
+    .left-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+    }
+
+    .right-image {
+      width: 100%;
+    }
+
+    .slider-line {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: #121316;
+    }
+
+    .slider-icon {
+      position: absolute;
+      top: 50%;
+      transform: translate(6%, -50%);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 35px;
+      height: 35px;
+      padding: 4px;
+      border-radius: 50%;
+      background-color: #121316;
+
+      i {
+        font-size: 18px;
+        color: #fff;
+      }
+    }
+  }
+
+  .slider {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+  }
+}
+
+.caption {
+  text-align: center;
+  color: var(--color-text-secondary-dark) !important;
+  font-size: 12px !important;
+}

@@ -9,7 +9,7 @@ export const blogSeries = [
     selector: `three-js-journey`,
     seriesDiscussion:
       "https://github.com/sahilk027-blogs/three-js-journey-series/discussions",
-    blogsCollection: [1], // blogNo
+    blogsCollection: [1, 2], // blogNo
     startDate: "19th April 2024",
   },
 ];
@@ -25,6 +25,7 @@ export const blogPost = [
     blogDate: "27th April 2024",
     selector: "introduction-to-series-three-js-journey",
     blogUrl: `/blogs/three-js-journey/introduction-to-series-three-js-journey`,
+    seriesUrl: `/blogs/three-js-journey`,
     keywords: [
       "Introduction to Series: Three.js Journey",
       "Three.js",
@@ -34,7 +35,25 @@ export const blogPost = [
       "Intro",
       "three js",
     ],
-    views: 0,
+  },
+  {
+    blogNo: 2,
+    seriesID: 1,
+    sequenceNumberInSeries: 2,
+    seriesTitle: "Three.js Journey",
+    filterTag: "Threejs Journey",
+    blogTitle: "Into the 3rd Dimension: Build Your First 3D Project",
+    blogDate: "19th May 2024",
+    selector: "into-the-3rd-dimension-build-your-first-3d-project",
+    blogUrl: `/blogs/three-js-journey/into-the-3rd-dimension-build-your-first-3d-project`,
+    seriesUrl: `/blogs/three-js-journey`,
+    keywords: [
+      `Into the 3rd Dimension: Build Your First 3D Project`,
+      "Three.js",
+      "Threejs Journey",
+      "First 3D Project",
+      "three js",
+    ],
   },
 ];
 

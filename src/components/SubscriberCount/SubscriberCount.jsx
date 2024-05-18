@@ -78,7 +78,7 @@ const SubscriberCount = () => {
       <div className="count-para">@sahilk-027 • </div>
       <div className="subscribers-count">
         {loadingSubscribersCount ? (
-          <div class="dot-flashing"></div>
+          <div className="dot-flashing"></div>
         ) : (
           <>{subscribersCount} subscribers</>
         )}

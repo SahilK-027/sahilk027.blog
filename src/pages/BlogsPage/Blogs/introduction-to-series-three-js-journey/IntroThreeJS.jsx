@@ -3,11 +3,11 @@ import Navbar from "../../../../components/Navbar/Navbar";
 import Footer from "../../../../components/Footer/Footer";
 import { blogPost } from "../../../../data/BlogsData";
 import { Link } from "react-router-dom";
-import "./IntroThreeJS.scss";
 import BlogsFooter from "../../../../components/BlogsFooter/BlogsFooter";
 import LeftSidebar from "../../../../components/LeftSideBar/LeftSidebar";
 import InfoDiv from "../../../../components/InfoDIV/InfoDiv";
 import MustReadDiv from "../../../../components/MustReadDIV/MustReadDiv";
+import "../Blogs.scss";
 
 const IntroThreeJS = ({
   openCMDCenter,
@@ -28,6 +28,7 @@ const IntroThreeJS = ({
       })
     );
   }, [currBlog]);
+
   const handleScroll = (e) => {
     const { scrollHeight, scrollTop, clientHeight } = document.documentElement;
 
@@ -111,8 +112,9 @@ const IntroThreeJS = ({
           setActiveSection={setActiveSection}
         />
         <div className="section-top">
-          <Link to={"/"}>
-            <i className="fa-solid fa-arrow-left-long back-link"></i>&nbsp; Home
+          <Link to={currBlog?.seriesUrl}>
+            <i className="fa-solid fa-arrow-left-long back-link"></i>&nbsp;
+            Journey
           </Link>
           <div className="container">
             <div className="blog-series-header">
@@ -128,7 +130,7 @@ const IntroThreeJS = ({
               plans with you, and also introduce myself properly.
             </p>
             <div className="blog-section">
-              <h3 className="blog-section-title">Why This Blog Series? 🤨</h3>
+              <h3 className="blog-section-title">Why This Blog Series?</h3>
               <p>
                 The main reason for this lengthy introduction is the fact that
                 this blog series is going to be quite big. It’s my commitment to
@@ -205,7 +207,7 @@ const IntroThreeJS = ({
               </p>
             </div>
             <div className="blog-section">
-              <h3 className="blog-section-title">Who Am I? 👀</h3>
+              <h3 className="blog-section-title">Who Am I?</h3>
               <p>
                 Let me talk about myself for a second. I'm Sahil, a
                 <span> front-end developer</span>, although I prefer to call
@@ -231,7 +233,7 @@ const IntroThreeJS = ({
               </p>
             </div>
             <div className="blog-section">
-              <h3 className="blog-section-title">What Will You Learn? 📚</h3>
+              <h3 className="blog-section-title">What Will You Learn?</h3>
               <p>
                 Buckle up, because we're diving deep into the world of Three.js!
                 Get ready to unlock the secrets of this powerful JavaScript
@@ -317,7 +319,7 @@ const IntroThreeJS = ({
             </div>
 
             <div className="blog-section">
-              <h3 className="blog-section-title">How to Get Involved? 🤝</h3>
+              <h3 className="blog-section-title">How to Get Involved?</h3>
               <p>
                 Oh, and here's the cherry on top – this entire series is
                 absolutely free! Yup, you heard that right. All you need to do

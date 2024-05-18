@@ -43,7 +43,7 @@ export const blogPost = [
     seriesTitle: "Three.js Journey",
     filterTag: "Threejs Journey",
     blogTitle: "Into the 3rd Dimension: Build Your First 3D Project",
-    blogDate: "19th May 2024",
+    blogDate: "18th May 2024",
     selector: "into-the-3rd-dimension-build-your-first-3d-project",
     blogUrl: `/blogs/three-js-journey/into-the-3rd-dimension-build-your-first-3d-project`,
     seriesUrl: `/blogs/three-js-journey`,

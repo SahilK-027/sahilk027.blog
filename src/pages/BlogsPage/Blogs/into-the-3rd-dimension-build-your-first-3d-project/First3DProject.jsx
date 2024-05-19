@@ -569,7 +569,7 @@ tick();
             </div>
 
             <div className="blog-section">
-              <h3>Some of my Favorite Three.js Projects</h3>{" "}
+              <h3 className="blog-section-title">Some of my Favorite Three.js Projects</h3>{" "}
               <p>
                 <div className="projects-grid">
                   <div className="project">

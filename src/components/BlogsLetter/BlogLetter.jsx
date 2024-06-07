@@ -107,7 +107,7 @@ const BlogLetter = () => {
     <>
       <div className="blog-letter">
         <div className="blogletter-container">
-          <SubscriberCount />
+          {/* <SubscriberCount /> */}
           <form onSubmit={handleSubscriptionCall}>
             <input
               type="email"

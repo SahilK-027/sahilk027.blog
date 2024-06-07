@@ -261,7 +261,7 @@ const BlogLetter = () => {
             </li>
           </ul>
 
-          <SubscriberCount />
+          {/* <SubscriberCount /> */}
 
           <form onSubmit={handleSubscriptionCall}>
             <input

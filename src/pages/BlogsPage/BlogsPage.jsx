@@ -32,7 +32,8 @@ const BlogIntroTxt = () => {
         Join me on this exciting journey. 🚀 Here, I share my experiences as a
         frontend developer, exploring <span> React</span>, <span>Angular</span>,{" "}
         <span>ThreeJS</span>, <span>WebGl</span>, <span>Shaders</span>,{" "}
-        <span>R3F</span>, <span>JavaScript</span>, and much more. 💻
+        <span>R3F</span>, <span>JavaScript</span>, <span>CS Fundamentals</span>{" "}
+        and much more. 💻
       </h1>
       <br />
     </div>
@@ -312,7 +313,16 @@ const BlogSeries = ({ blogSeriesData }) => {
         {blogSeriesData.map((series, index) => (
           <a href={series.seriesUrl}>
             <div key={index} className="blog-series-card">
-              <h3 className="blog-series-card-header">{series.seriesTitle}</h3>
+              <h3
+                style={{
+                  background: series.titleColor,
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                }}
+                className="blog-series-card-header"
+              >
+                {series.seriesTitle}
+              </h3>
               <p className="blog-series-start-date">
                 Publish Date: {series.startDate}
               </p>

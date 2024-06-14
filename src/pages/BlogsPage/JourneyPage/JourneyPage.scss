@@ -6,6 +6,7 @@
 
     .container {
       height: 100%;
+      min-height: 14vh;
       .blog-series-list {
         .series-item {
           display: flex;

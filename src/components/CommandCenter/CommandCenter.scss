@@ -240,20 +240,22 @@
             align-items: center;
             gap: 10px;
             width: 100%;
-            padding: 12px 10px;
-            margin-top: 4px;
+            padding: 12px 2px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
             border-radius: 8px;
             cursor: pointer;
             font-size: 15px;
-            color: var(--color-anchor);
+            color: var(--color-text-primary);
+            text-decoration: underline;
+            text-underline-offset: 5px;
+            text-decoration-color: var(--border-color);
 
             &:hover {
               transition: all 0.2s ease !important;
               color: var(--color-anchor);
-              background-color: var(--selection-bg-color);
+              text-decoration-color: var(--color-anchor);
             }
           }
         }

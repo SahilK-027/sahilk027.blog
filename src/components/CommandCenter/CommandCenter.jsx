@@ -184,10 +184,22 @@ const ItemCenter = ({
                 for blogs matching entered keyword
               </span>
               {searchedFilteredBlogs.map((blog, index) => (
-                <Link key={index} to={blog.blogUrl} onClick={closeCMDCenter}>
-                  <i className="fa-solid fa-blog"></i>
-                  {blog.blogTitle}
-                </Link>
+                <div style={{ display: "flex", marginTop: 4 }} key={index}>
+                  <span
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      fontSize: 15,
+                      fontWeight: 600,
+                      color: "var(--color-text-primary)",
+                    }}
+                  >
+                    {index + 1}.{" "}
+                  </span>
+                  <Link to={blog.blogUrl} onClick={closeCMDCenter}>
+                    {blog.blogTitle}
+                  </Link>
+                </div>
               ))}
             </div>
           ) : (

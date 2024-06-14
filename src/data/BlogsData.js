@@ -1,16 +1,32 @@
 export const blogSeries = [
   {
     seriesTitle: "Three.js Journey: Stepping Into The of 3D Web Development ☘️",
+    titleColor: `linear-gradient(to right, rgb(255 124 150), rgb(255 227 132))`,
     filterTag: "Threejs Journey",
     seriesID: 1,
     seriesDescription:
-      "Embark on an immersive journey into the world of Three.js, a powerful JavaScript library for creating stunning 3D visualizations and experiences on the web. This series of blog posts will guide you from the fundamentals to advanced techniques of Three.js, covering everything from setup to building complex scenes.",
+      "Embark on an immersive journey into the world of Three.js. This series of blog posts will guide you from the fundamentals to advanced techniques of Three.js, covering everything from setup to building complex scenes.",
     seriesUrl: `/blogs/three-js-journey`,
     selector: `three-js-journey`,
     seriesDiscussion:
       "https://github.com/sahilk027-blogs/three-js-journey-series/discussions",
     blogsCollection: [1, 2], // blogNo
     startDate: "19th April 2024",
+  },
+  {
+    seriesTitle:
+      "CS-Fundamentals: Bit Manipulation - Making friends with 1s and 0s! 🖥️",
+    titleColor: `linear-gradient(270deg, rgb(86 102 255), rgb(79 241 255))`,
+    filterTag: "Bit Manipulation",
+    seriesID: 2,
+    seriesDescription:
+      "Dive into the fun world of bit manipulation! Learn cool tricks like masking, shifting, and toggling bits. Perfect for boosting your coding skills and understanding the logic behind computer operations and algorithms.",
+    seriesUrl: `/blogs/cs-fundamentals-bit-manipulation`,
+    selector: `cs-fundamentals-bit-manipulation`,
+    seriesDiscussion:
+      "https://github.com/sahilk027-blogs/cs-fundamentals-bit-manipulation/discussions",
+    blogsCollection: [3], // blogNo
+    startDate: "17th June 2024",
   },
 ];
 
@@ -53,6 +69,27 @@ export const blogPost = [
       "Threejs Journey",
       "First 3D Project",
       "three js",
+    ],
+  },
+  {
+    blogNo: 3,
+    seriesID: 2,
+    sequenceNumberInSeries: 1,
+    seriesTitle: "Bit Manipulation",
+    filterTag: "Bit Manipulation",
+    blogTitle: "Getting Started with Bit Manipulation Techniques",
+    blogDate: "17th June 2024",
+    selector: "getting-started-with-bit-manipulation-techniques",
+    blogUrl: `/blogs/cs-fundamentals-bit-manipulation/getting-started-with-bit-manipulation-techniques`,
+    seriesUrl: `/blogs/cs-fundamentals-bit-manipulation`,
+    keywords: [
+      "Getting Started with Bit Manipulation Techniques",
+      "Bit Manipulation",
+      "CS Fundamentals",
+      "Bitwise Operators",
+      "Bitwise",
+      "bitmask",
+      "bitset",
     ],
   },
 ];

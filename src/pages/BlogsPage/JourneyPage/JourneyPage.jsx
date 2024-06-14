@@ -84,10 +84,10 @@ const JourneyPage = ({
                           <div>
                             <Link
                               to={currBlog.blogUrl}
-                              key={currBlog.blogNo}
+                              key={currBlog.sequenceNumberInSeries}
                               className="blog-series-item"
                             >
-                              <p>&nbsp;[ {currBlog.blogNo} ]</p>
+                              <p>&nbsp;[ {currBlog.sequenceNumberInSeries} ]</p>
                               <h4>{currBlog.blogTitle}</h4>
                             </Link>
                           </div>

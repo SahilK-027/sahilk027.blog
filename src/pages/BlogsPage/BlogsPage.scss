@@ -197,18 +197,6 @@
         padding: 24px;
         margin-bottom: 20px;
 
-        .blog-series-card-header {
-          background: linear-gradient(
-            270deg,
-            var(--gradient-blue) 30%,
-            var(--gradient-purple) 50%,
-            var(--gradient-pink) 70%,
-            var(--gradient-yellow) 94%
-          );
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-        }
-
         .blog-series-card-desc {
           font-size: 14px;
           margin-bottom: 10px;
@@ -235,9 +223,8 @@
         }
 
         &:hover {
-          transition: all 0.3s ease;
-          border: 1px solid var(--color-anchor);
-          box-shadow: 0 0 10px var(--shadow-color);
+          transition: all 0.35s ease;
+          box-shadow: 0 0 12px hsla(0, 0%, 100%, 0.385);
         }
       }
     }

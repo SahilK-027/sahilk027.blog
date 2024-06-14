@@ -58,7 +58,6 @@ const PublisherPage = () => {
           });
         }
       } catch (error) {
-        console.error("Error posting blog:", error);
         toast.error("An error occurred while posting blog.", {
           position: "top-center",
           autoClose: 3000,

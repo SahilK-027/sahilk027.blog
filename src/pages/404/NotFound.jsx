@@ -19,7 +19,6 @@ const NotFound = ({
     const currentPath = window.location.pathname;
     // Extract the text after the leading slash
     const URL = currentPath.substring(1);
-    console.log(URL);
     setRequestedURL(URL);
   }, []);
 

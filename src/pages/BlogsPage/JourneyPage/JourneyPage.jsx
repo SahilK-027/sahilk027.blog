@@ -1,9 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./JourneyPage.scss";
 import Navbar from "../../../components/Navbar/Navbar";
 import Footer from "../../../components/Footer/Footer";
 import { blogPost, blogSeries } from "../../../data/BlogsData";
 import { Link, useParams } from "react-router-dom";
+import Cookies from "js-cookie";
+import Tooltip from "../../../components/Tooltip/Tooltip";
 
 const NotFoundJourney = ({ journeyName }) => {
   return (
@@ -37,6 +39,7 @@ const JourneyPage = ({
   toggleTheme,
 }) => {
   const { journeyName } = useParams();
+  const [allReadBlogs, setAllReadBlogs] = useState([]);
 
   // Find the project object that matches the project name
   const currJourney = blogSeries.find(
@@ -45,7 +48,23 @@ const JourneyPage = ({
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    // Load read status from cookie when component mounts
+    const readBlogs = Object.keys(Cookies.get())
+      .filter((cookie) => cookie.includes("blogReadStatus"))
+      .map((cookie) => parseInt(cookie.replace("blogReadStatus", "")));
+    setAllReadBlogs(readBlogs);
   }, []);
+
+  // Function to mark a blog as read or delete the cookie if already marked as read
+  const handleBlogReadClick = (blogId) => {
+    if (allReadBlogs.includes(blogId)) {
+      Cookies.remove(`blogReadStatus${blogId}`);
+      setAllReadBlogs(allReadBlogs.filter((id) => id !== blogId));
+    } else {
+      Cookies.set(`blogReadStatus${blogId}`, `true`);
+      setAllReadBlogs([...allReadBlogs, blogId]);
+    }
+  };
 
   return (
     <>
@@ -76,20 +95,58 @@ const JourneyPage = ({
                       const currBlog = blogPost.find(
                         (blog) => blog.blogNo === blogID
                       );
+                      const isRead = allReadBlogs.includes(currBlog.blogNo);
+
                       return (
-                        <div className="series-item">
+                        <div className="series-item" key={currBlog.blogNo}>
                           <div className="timeline-middle">
                             <div className="timeline-circle"></div>
                           </div>
-                          <div>
+                          <div className="blog-series-item-container">
                             <Link
                               to={currBlog.blogUrl}
-                              key={currBlog.sequenceNumberInSeries}
                               className="blog-series-item"
                             >
                               <p>&nbsp;[ {currBlog.sequenceNumberInSeries} ]</p>
                               <h4>{currBlog.blogTitle}</h4>
                             </Link>
+                            {isRead ? (
+                              <Tooltip content="Mark as unread">
+                                <i
+                                  style={{
+                                    color: "var(--color-success)",
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    fontSize: "1.2rem",
+                                    cursor: "pointer",
+                                    transition: "color 0.3s ease",
+                                  }}
+                                  onClick={() =>
+                                    handleBlogReadClick(currBlog.blogNo)
+                                  }
+                                  className="fa-solid fa-circle-check"
+                                ></i>
+                              </Tooltip>
+                            ) : (
+                              <Tooltip content="Mark as Read">
+                                <i
+                                  style={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    color: "var(--color-text-secondary-dark)",
+                                    fontSize: "1.2rem",
+                                    cursor: "pointer",
+                                    transition: "color 0.3s ease",
+                                  }}
+                                  onClick={() =>
+                                    handleBlogReadClick(currBlog.blogNo)
+                                  }
+                                  className="fa-solid fa-circle-check"
+                                ></i>
+                              </Tooltip>
+                            )}
                           </div>
                         </div>
                       );

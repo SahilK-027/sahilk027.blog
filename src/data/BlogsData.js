@@ -25,7 +25,7 @@ export const blogSeries = [
     selector: `cs-fundamentals-bit-manipulation`,
     seriesDiscussion:
       "https://github.com/sahilk027-blogs/cs-fundamentals-bit-manipulation/discussions",
-    blogsCollection: [3], // blogNo
+    blogsCollection: [], // blogNo
     startDate: "17th June 2024",
   },
 ];
@@ -71,27 +71,27 @@ export const blogPost = [
       "three js",
     ],
   },
-  {
-    blogNo: 3,
-    seriesID: 2,
-    sequenceNumberInSeries: 1,
-    seriesTitle: "Bit Manipulation",
-    filterTag: "Bit Manipulation",
-    blogTitle: "Getting Started with Bit Manipulation Techniques",
-    blogDate: "17th June 2024",
-    selector: "getting-started-with-bit-manipulation-techniques",
-    blogUrl: `/blogs/cs-fundamentals-bit-manipulation/getting-started-with-bit-manipulation-techniques`,
-    seriesUrl: `/blogs/cs-fundamentals-bit-manipulation`,
-    keywords: [
-      "Getting Started with Bit Manipulation Techniques",
-      "Bit Manipulation",
-      "CS Fundamentals",
-      "Bitwise Operators",
-      "Bitwise",
-      "bitmask",
-      "bitset",
-    ],
-  },
+  // {
+  //   blogNo: 3,
+  //   seriesID: 2,
+  //   sequenceNumberInSeries: 1,
+  //   seriesTitle: "Bit Manipulation",
+  //   filterTag: "Bit Manipulation",
+  //   blogTitle: "Getting Started with Bit Manipulation Techniques",
+  //   blogDate: "17th June 2024",
+  //   selector: "getting-started-with-bit-manipulation-techniques",
+  //   blogUrl: `/blogs/cs-fundamentals-bit-manipulation/getting-started-with-bit-manipulation-techniques`,
+  //   seriesUrl: `/blogs/cs-fundamentals-bit-manipulation`,
+  //   keywords: [
+  //     "Getting Started with Bit Manipulation Techniques",
+  //     "Bit Manipulation",
+  //     "CS Fundamentals",
+  //     "Bitwise Operators",
+  //     "Bitwise",
+  //     "bitmask",
+  //     "bitset",
+  //   ],
+  // },
 ];
 
 export const mostRecentBlog = blogPost[blogPost.length - 1];

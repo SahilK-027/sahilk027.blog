@@ -25,8 +25,8 @@ export const blogSeries = [
     selector: `cs-fundamentals-bit-manipulation`,
     seriesDiscussion:
       "https://github.com/sahilk027-blogs/cs-fundamentals-bit-manipulation/discussions",
-    blogsCollection: [], // blogNo
-    startDate: "17th June 2024",
+    blogsCollection: [3], // blogNo
+    startDate: "15th June 2024",
   },
 ];
 
@@ -71,27 +71,26 @@ export const blogPost = [
       "three js",
     ],
   },
-  // {
-  //   blogNo: 3,
-  //   seriesID: 2,
-  //   sequenceNumberInSeries: 1,
-  //   seriesTitle: "Bit Manipulation",
-  //   filterTag: "Bit Manipulation",
-  //   blogTitle: "Getting Started with Bit Manipulation Techniques",
-  //   blogDate: "17th June 2024",
-  //   selector: "getting-started-with-bit-manipulation-techniques",
-  //   blogUrl: `/blogs/cs-fundamentals-bit-manipulation/getting-started-with-bit-manipulation-techniques`,
-  //   seriesUrl: `/blogs/cs-fundamentals-bit-manipulation`,
-  //   keywords: [
-  //     "Getting Started with Bit Manipulation Techniques",
-  //     "Bit Manipulation",
-  //     "CS Fundamentals",
-  //     "Bitwise Operators",
-  //     "Bitwise",
-  //     "bitmask",
-  //     "bitset",
-  //   ],
-  // },
+  {
+    blogNo: 3,
+    seriesID: 2,
+    sequenceNumberInSeries: 1,
+    seriesTitle: "Bit Manipulation",
+    filterTag: "Bit Manipulation",
+    blogTitle: "Let me answer why bit-manipulation?",
+    blogDate: "15th June 2024",
+    selector: "let-me-answer-why-bit-manipulation",
+    blogUrl: `/blogs/cs-fundamentals-bit-manipulation/let-me-answer-why-bit-manipulation`,
+    seriesUrl: `/blogs/cs-fundamentals-bit-manipulation`,
+    keywords: [
+      "Let me answer why bit-manipulation?",
+      "Bit Manipulation",
+      "CS Fundamentals",
+      "Computer Science",
+      "Algorithms",
+      "Bitwise Operators",
+    ],
+  },
 ];
 
 export const mostRecentBlog = blogPost[blogPost.length - 1];

@@ -1,0 +1,33 @@
+import React, { useEffect, useState } from "react";
+import "./BitsAnimation.scss";
+
+const BitsAnimation = () => {
+  const [lines, setLines] = useState([[], [], []]);
+
+  useEffect(() => {
+    const bitstring =
+      "01001001011001100101100101101111011101010100001101101111011011100111011001100101011100100111010001010100011010000110100101110011010000100110000101100011011010110101010001101111010100000110110001100001011010010110111001010100011001010111100001110100010110010110111101110101010000010111001001100101010000010111011101100101011100110110111101101101011001010010111001010011011001010110001101110010011001010111010001001101011001010111001101110011011000010110011101100101011100110100000101110010011001010100011001110101011011100101010001101111010001000110010101100011011011110110010001100101001011100100100101110011011011100010011101110100010010010111010000111111";
+
+    const splitBitStrings = [
+      bitstring.slice(0, bitstring.length / 3),
+      bitstring.slice(bitstring.length / 3, (2 * bitstring.length) / 3),
+      bitstring.slice((2 * bitstring.length) / 3),
+    ].map((str) => str.split(""));
+
+    setLines(splitBitStrings);
+  }, []);
+
+  return (
+    <div className="bit-container">
+      {lines.map((line, lineIndex) => (
+        <p className="bits" key={lineIndex}>
+          {line.map((bit, bitIndex) => (
+            <span key={bitIndex}>{bit}</span>
+          ))}
+        </p>
+      ))}
+    </div>
+  );
+};
+
+export default BitsAnimation;

@@ -3,6 +3,9 @@
   margin: 0 auto;
 
   .main-blog-content {
+    span {
+      color: var(--color-text-secondary);
+    }
     height: 100%;
     .blog-section {
       margin-top: 20px;
@@ -43,8 +46,8 @@
         }
       }
 
-      h4{
-        span{
+      h4 {
+        span {
           color: var(--color-pink);
         }
       }

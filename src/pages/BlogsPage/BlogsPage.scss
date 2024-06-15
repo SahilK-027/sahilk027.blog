@@ -190,11 +190,14 @@
   .blog-series {
     .blog-series-container {
       .blog-series-card {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
         background-color: var(--color-bg-box-container);
         border-radius: 10px;
         border: 1px solid var(--border-color);
         box-sizing: border-box;
-        padding: 24px;
+        padding: 18px 24px;
         margin-bottom: 20px;
 
         .blog-series-card-desc {
@@ -204,7 +207,8 @@
 
         .blog-series-start-date {
           font-size: 14px;
-          margin-bottom: 10px;
+          margin-bottom: 5px;
+          margin-top: 5px;
           color: var(--color-text-secondary);
         }
 
@@ -215,6 +219,19 @@
 
           button {
             font-size: 14px;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background-color: var(--color-bg-box-container);
+            color: var(--color-text-secondary);
+            cursor: pointer;
+
+            &:hover {
+              transition: box-shadow 0.3s ease, border 0.3s ease;
+              border: 1px solid var(--color-anchor);
+              color: var(--color-anchor);
+              box-shadow: 0 0 20px var(--shadow-color);
+            }
           }
 
           p {

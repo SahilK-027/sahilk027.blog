@@ -16,6 +16,7 @@ import { blogSeries } from "../../data/BlogsData";
 import Environment from "../../data/Environment";
 import { animated, useSpring } from "react-spring";
 import SubscriberCount from "../../components/SubscriberCount/SubscriberCount";
+import Tooltip from "../../components/Tooltip/Tooltip";
 
 /**
  * `BlogIntroTxt` component is the introductory text for the blogs page.
@@ -313,28 +314,28 @@ const BlogSeries = ({ blogSeriesData }) => {
         {blogSeriesData.map((series, index) => (
           <a href={series.seriesUrl}>
             <div key={index} className="blog-series-card">
-              <h3
-                style={{
-                  background: series.titleColor,
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                }}
-                className="blog-series-card-header"
-              >
-                {series.seriesTitle}
-              </h3>
-              <p className="blog-series-start-date">
-                Publish Date: {series.startDate}
-              </p>
-              <p className="blog-series-card-desc">
-                {series.seriesDescription}
-              </p>
+              <div className="blog-series-card-info">
+                <h3
+                  style={{
+                    background: series.titleColor,
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                  }}
+                  className="blog-series-card-header"
+                >
+                  {series.seriesTitle}
+                </h3>
+                <p className="blog-series-start-date">
+                  Publish Date: {series.startDate}
+                </p>
+              </div>
               <div className="buttons">
-                <p>Series Community:</p>
                 <a target="_blank" href={series.seriesDiscussion}>
-                  <button className="btn">
-                    Discussion &nbsp; <i className="fa-solid fa-comments"></i>
-                  </button>
+                  <Tooltip content="Discussion">
+                    <button>
+                      <i className="fa-solid fa-comments"></i>
+                    </button>
+                  </Tooltip>
                 </a>
               </div>
             </div>

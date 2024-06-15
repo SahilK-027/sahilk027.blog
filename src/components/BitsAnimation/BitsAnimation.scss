@@ -1,0 +1,32 @@
+.bit-container {
+  width: 100%;
+  overflow-x: hidden;
+  font-family: "Ubuntu Sans Mono", monospace !important;
+
+  .bits {
+    position: relative;
+    cursor: default;
+    display: flex;
+    flex-direction: row;
+    white-space: nowrap;
+    margin: 0;
+    line-height: 1.7rem;
+
+    span {
+      position: relative;
+      font-size: 16px;
+      color: var(--transparentshade);
+      transition: 1s;
+      user-select: none;
+
+      &:hover {
+        transition: 0s;
+        font-weight: 500;
+        color: var(--bit-clolor);
+        text-shadow: 0 0 10px #6835ff, 0 0 20px #7444ff, 0 0 40px #7444ff,
+          0 0 80px #7444ff, 0 0 160px #7444ff;
+        z-index: 11;
+      }
+    }
+  }
+}

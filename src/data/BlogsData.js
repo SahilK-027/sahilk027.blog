@@ -15,7 +15,7 @@ export const blogSeries = [
   },
   {
     seriesTitle:
-      "CS-Fundamentals: Bit Manipulation - Making friends with 1s and 0s! 🖥️",
+      "CS-Fundamentals: Bit Manipulation - Making friends with 0s and 1s! 🖥️",
     titleColor: `linear-gradient(270deg, rgb(86 102 255), rgb(79 241 255))`,
     filterTag: "Bit Manipulation",
     seriesID: 2,

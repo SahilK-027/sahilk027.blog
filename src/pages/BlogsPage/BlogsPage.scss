@@ -200,6 +200,10 @@
         padding: 18px 24px;
         margin-bottom: 20px;
 
+        .blog-series-card-header {
+          font-size: 22px;
+        }
+
         .blog-series-card-desc {
           font-size: 14px;
           margin-bottom: 10px;
@@ -296,6 +300,17 @@
             input {
               width: 95%;
             }
+          }
+        }
+      }
+    }
+
+    .blog-series {
+      .blog-series-container {
+        .blog-series-card {
+          .blog-series-card-header {
+            font-size: 16px;
+            font-weight: 600;
           }
         }
       }

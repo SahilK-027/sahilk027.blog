@@ -216,7 +216,7 @@ const App = () => {
               />
             }
           />
-          <Route path="/publisher" element={<PublisherPage />} />
+          {/* <Route path="/publisher" element={<PublisherPage />} /> */}
           <Route
             path="/*"
             element={

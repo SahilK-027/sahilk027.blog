@@ -22,9 +22,10 @@
       &:hover {
         transition: 0s;
         font-weight: 500;
-        color: var(--bit-clolor);
-        text-shadow: 0 0 10px #6835ff, 0 0 20px #7444ff, 0 0 40px #7444ff,
-          0 0 80px #7444ff, 0 0 160px #7444ff;
+        color: var(--bit-color);
+        text-shadow: 0 0 10px rgb(42, 255, 241), 0 0 20px rgb(42, 255, 241),
+          0 0 40px rgb(42, 255, 241), 0 0 80px rgb(42, 255, 241),
+          0 0 160px rgb(42, 255, 241);
         z-index: 11;
       }
     }

@@ -34,7 +34,10 @@ const SearchBlogs = ({
     const timeoutId = setTimeout(() => {
       setLoadingBlogs(true);
 
-      if (searchQuery !== "" || selectedFilter !== noFilter) {
+      if (
+        (searchQuery !== "" && searchQuery.trim().length > 0) ||
+        selectedFilter !== noFilter
+      ) {
         let searchedBlogs = blogPost;
 
         if (searchQuery !== "") {

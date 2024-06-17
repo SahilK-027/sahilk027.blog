@@ -97,7 +97,7 @@ export const blogPost = [
     sequenceNumberInSeries: 2,
     seriesTitle: "Bit Manipulation",
     filterTag: "Bit Manipulation",
-    blogTitle: "Getting Started with Bit Manipulation Techniques The Basics",
+    blogTitle: "Getting Started with Bit Manipulation Techniques (The Basics)",
     blogDate: "17th June 2024",
     selector: "getting-started-with-bit-manipulation-techniques-the-basics",
     blogUrl: `/blogs/cs-fundamentals-bit-manipulation/getting-started-with-bit-manipulation-techniques-the-basics`,

@@ -182,19 +182,25 @@ const GettingStartedWithBitManipulation = ({
                     <i class="fa-solid fa-arrow-right"></i>{" "}
                     <b>Decimal Number System (Base-10):</b> Set of symbols that
                     can be used to generate numbers: 0, 1, 2, 3, 4, 5, 6, 7, 8,
-                    9. {" => "} <b>Total 10</b>.
+                    9. {" => "} <b>Total symbols: 10</b>.
                   </li>
                   <li>
                     <i class="fa-solid fa-arrow-right"></i>{" "}
                     <b>Octal Number System (Base-8):</b> Set of symbols that can
                     be used to generate numbers: 0, 1, 2, 3, 4, 5, 6, 7.{" "}
-                    {" => "} <b>Total 8</b>.
+                    {" => "} <b>Total symbols: 8</b>.
                   </li>
                   <li>
                     <i class="fa-solid fa-arrow-right"></i>{" "}
                     <b>Hexadecimal Number System (Base-16):</b> Set of symbols
                     that can be used to generate numbers: 0, 1, 2, 3, 4, 5, 6,
-                    7, 8, 9, A, B, C, D, E, F {" => "} <b>Total 16</b>.
+                    7, 8, 9, A, B, C, D, E, F {" => "} <b>Total symbols: 16</b>.
+                  </li>
+                  <li>
+                    <i class="fa-solid fa-arrow-right"></i>{" "}
+                    <b>Binary Number System (Base-2):</b> Set of symbols that
+                    can be used to generate numbers: 0, 1 {" => "}{" "}
+                    <b>Total symbols: 2</b>.
                   </li>
                 </ul>
               </p>

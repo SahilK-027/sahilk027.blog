@@ -41,14 +41,13 @@
   position: relative;
   font-size: 14px;
   color: var(--color-text-secondary-dark);
-  transition: all 0.3s ease;
 }
 
 .section-name.active {
+  transition: all 0.3s ease;
   background: linear-gradient(50deg, #7383ff, #9674ff, #b379ff, #e979ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-weight: 500;
 }
 
 @media (max-width: 1160px) {

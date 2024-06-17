@@ -21,6 +21,7 @@ import JourneyPage from "./pages/BlogsPage/JourneyPage/JourneyPage";
 import IntroThreeJS from "./pages/BlogsPage/Blogs/ThreeJS Journey/introduction-to-series-three-js-journey/IntroThreeJS";
 import First3DProject from "./pages/BlogsPage/Blogs/ThreeJS Journey/into-the-3rd-dimension-build-your-first-3d-project/First3DProject";
 import BitManipulationIntro from "./pages/BlogsPage/Blogs/Bit Manipulation/let-me-answer-why-bit-manipulation/BitManipulationIntro";
+import GettingStartedWithBitManipulation from "./pages/BlogsPage/Blogs/Bit Manipulation/getting-started-with-bit-manipulation-techniques/GettingStartedBitManipulation";
 
 /**
  * `App` component is the root component of the application.
@@ -208,6 +209,18 @@ const App = () => {
             path="/blogs/:journeyName/let-me-answer-why-bit-manipulation"
             element={
               <BitManipulationIntro
+                openCMDCenter={openCMDCenter}
+                controlMusic={controlMusic}
+                isMusicPlaying={isMusicPlaying}
+                theme={theme}
+                toggleTheme={toggleTheme}
+              />
+            }
+          />
+          <Route
+            path="/blogs/:journeyName/getting-started-with-bit-manipulation-techniques-the-basics"
+            element={
+              <GettingStartedWithBitManipulation
                 openCMDCenter={openCMDCenter}
                 controlMusic={controlMusic}
                 isMusicPlaying={isMusicPlaying}

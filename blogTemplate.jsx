@@ -5,7 +5,7 @@ import Footer from "../../../../components/Footer/Footer";
 import { blogPost } from "../../../../data/BlogsData";
 import LeftSidebar from "../../../../components/LeftSideBar/LeftSidebar";
 import { Link } from "react-router-dom";
-import "../Blogs.scss";
+import "../../Blogs.scss";
 
 const NEWBLOG = ({
   openCMDCenter,

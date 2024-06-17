@@ -6,6 +6,12 @@
     span {
       color: var(--color-text-secondary);
     }
+
+    .open-txt {
+      padding: 24px 0;
+      padding-bottom: 4px;
+      font-size: 16px;
+    }
     height: 100%;
     .blog-section {
       margin-top: 20px;
@@ -43,6 +49,21 @@
         span {
           font-size: 16px;
           color: var(--color-text-primary);
+        }
+      }
+
+      .image {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        img {
+          width: 100%;
+          border-radius: 10px;
+          border: 1px solid #6a83ff80;
+        }
+        p {
+          color: var(--color-text-secondary);
         }
       }
 

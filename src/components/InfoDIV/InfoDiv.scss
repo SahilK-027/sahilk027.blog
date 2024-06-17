@@ -52,6 +52,12 @@
     li {
       margin: calc(0.725rem) 0;
       color: var(--color-text-primary);
+      b {
+        &::selection {
+          color: var(--color-info) !important;
+          background: var(--color-info-bg-light) !important;
+        }
+      }
       a {
         color: var(--color-info);
         text-decoration: underline;
@@ -73,6 +79,15 @@
         font-size: 16px;
         margin-right: 6px;
       }
+
+      &::selection {
+        color: var(--color-info) !important;
+        background: var(--color-info-bg-light) !important;
+      }
+    }
+    &::selection {
+      color: var(--color-info) !important;
+      background: var(--color-info-bg-light) !important;
     }
   }
 }

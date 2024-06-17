@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../../../../components/Navbar/Navbar";
-import Footer from "../../../../components/Footer/Footer";
-import { blogPost } from "../../../../data/BlogsData";
+import Navbar from "../../../../../components/Navbar/Navbar";
+import Footer from "../../../../../components/Footer/Footer";
+import { blogPost } from "../../../../../data/BlogsData";
 import { Link } from "react-router-dom";
-import BlogsFooter from "../../../../components/BlogsFooter/BlogsFooter";
-import LeftSidebar from "../../../../components/LeftSideBar/LeftSidebar";
-import InfoDiv from "../../../../components/InfoDIV/InfoDiv";
-import MustReadDiv from "../../../../components/MustReadDIV/MustReadDiv";
-import "../Blogs.scss";
+import BlogsFooter from "../../../../../components/BlogsFooter/BlogsFooter";
+import LeftSidebar from "../../../../../components/LeftSideBar/LeftSidebar";
+import InfoDiv from "../../../../../components/InfoDIV/InfoDiv";
+import MustReadDiv from "../../../../../components/MustReadDIV/MustReadDiv";
+import "../../Blogs.scss";
 
 const IntroThreeJS = ({
   openCMDCenter,

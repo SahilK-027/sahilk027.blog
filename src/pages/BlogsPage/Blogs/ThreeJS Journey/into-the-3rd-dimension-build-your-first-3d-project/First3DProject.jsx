@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../../../../components/Navbar/Navbar";
-import BlogsFooter from "../../../../components/BlogsFooter/BlogsFooter";
-import Footer from "../../../../components/Footer/Footer";
-import { blogPost } from "../../../../data/BlogsData";
-import LeftSidebar from "../../../../components/LeftSideBar/LeftSidebar";
+import Navbar from "../../../../../components/Navbar/Navbar";
+import BlogsFooter from "../../../../../components/BlogsFooter/BlogsFooter";
+import Footer from "../../../../../components/Footer/Footer";
+import { blogPost } from "../../../../../data/BlogsData";
+import LeftSidebar from "../../../../../components/LeftSideBar/LeftSidebar";
 import { Link } from "react-router-dom";
-import "../Blogs.scss";
-import BronoSimonVideo from "../../../../assets/videos/general/bruno-simon.mp4";
-import CoastalWorldVideo from "../../../../assets/videos/general/coastal-world.mp4";
-import LusionVideo from "../../../../assets/videos/general/lusion.mp4";
-import ActiveTheoryVideo from "../../../../assets/videos/general/active-theory.mp4";
-import InfoDiv from "../../../../components/InfoDIV/InfoDiv";
-import { cssSandpack, htmlSandpack } from "../../../../data/SandpackUtils";
-import CodeSnippet from "../../../../components/SyntaxHighlighter/CodeSnippet";
-import InsightDiv from "../../../../components/InsightDiv/InsightDIV";
-import ImageSlider from "../../../../components/ImageSlider/ImageSlider";
-import withLightImage from "../../../../assets/images/with-lights.png";
-import noLightImage from "../../../../assets/images/no-lights.png";
-import CodeSandpack from "../../../../components/CodeSandpack/CodeSandpack";
+import "../../Blogs.scss";
+import BronoSimonVideo from "../../../../../assets/videos/general/bruno-simon.mp4";
+import CoastalWorldVideo from "../../../../../assets/videos/general/coastal-world.mp4";
+import LusionVideo from "../../../../../assets/videos/general/lusion.mp4";
+import ActiveTheoryVideo from "../../../../../assets/videos/general/active-theory.mp4";
+import InfoDiv from "../../../../../components/InfoDIV/InfoDiv";
+import { cssSandpack, htmlSandpack } from "../../../../../data/SandpackUtils";
+import CodeSnippet from "../../../../../components/SyntaxHighlighter/CodeSnippet";
+import InsightDiv from "../../../../../components/InsightDiv/InsightDIV";
+import ImageSlider from "../../../../../components/ImageSlider/ImageSlider";
+import withLightImage from "../../../../../assets/images/with-lights.png";
+import noLightImage from "../../../../../assets/images/no-lights.png";
+import CodeSandpack from "../../../../../components/CodeSandpack/CodeSandpack";
 
 const First3DProject = ({
   openCMDCenter,

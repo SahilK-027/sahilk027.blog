@@ -311,6 +311,19 @@ const GettingStartedWithBitManipulation = ({
                 </p>
               </div>
 
+              <p>
+                So how do computers only speak in binary? How do they solve such
+                complex problems representing information only using binary?
+                Simply put, in a computer, 0 represents no electrical signal or
+                charges present, while 1 represents the presence of an
+                electrical charge in the memory. This is crucial because, inside
+                a computer, there are millions of tiny switches called
+                "transistors" - when these transistors are flipped on, they
+                represent 1, and when they are off, they represent 0. So,
+                essentially, the entire functioning of a computer is based on
+                millions of these little switches representing either 0 or 1.
+              </p>
+
               <MustReadDiv mustReadText={mustRead} />
 
               <p>

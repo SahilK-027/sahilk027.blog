@@ -22,6 +22,7 @@ import img6l from "../../../../../assets/images/blogs-images/Bit Manipulation/Bl
 import InfoDiv from "../../../../../components/InfoDIV/InfoDiv";
 import MustReadDiv from "../../../../../components/MustReadDIV/MustReadDiv";
 import CodeSnippet from "../../../../../components/SyntaxHighlighter/CodeSnippet";
+import BlogImage from "../../../../../components/BlogImage/BlogImage";
 
 const GettingStartedWithBitManipulation = ({
   openCMDCenter,
@@ -215,13 +216,13 @@ const GettingStartedWithBitManipulation = ({
                 system:
               </p>
 
-              <div className="image">
-                <img src={theme === "dark" ? img1 : img1l}></img>
-                <p>
-                  Fig(1.0) How do we actually generate integers in any number
-                  system.
-                </p>
-              </div>
+              <BlogImage
+                imgDark={img1}
+                imgLight={img1l}
+                theme={theme}
+                description={`Fig(1.0) How do we actually generate integers in any number
+                  system.`}
+              />
 
               <p>
                 In the Fig(1.0) above, we can clearly see that in the decimal
@@ -250,14 +251,19 @@ const GettingStartedWithBitManipulation = ({
                 system.
               </p>
 
-              <div className="image">
-                <img src={theme === "dark" ? img2 : img2l}></img>
-                <p>Fig(2.0) Number representation in Decimal number system.</p>
-              </div>
-              <div className="image">
-                <img src={theme === "dark" ? img3 : img3l}></img>
-                <p>Fig(3.0) Number representation in Octal number system.</p>
-              </div>
+              <BlogImage
+                imgDark={img2}
+                imgLight={img2l}
+                theme={theme}
+                description={`Fig(2.0) Number representation in Decimal number system.`}
+              />
+
+              <BlogImage
+                imgDark={img3}
+                imgLight={img3l}
+                theme={theme}
+                description={`Fig(3.0) Number representation in Octal number system.`}
+              />
 
               <p>
                 With the above example, I hope it is quite clear how the
@@ -303,13 +309,12 @@ const GettingStartedWithBitManipulation = ({
                 <b>"binary digit”</b>.
               </p>
 
-              <div className="image">
-                <img src={theme === "dark" ? img4 : img4l}></img>
-                <p>
-                  Fig(4.0) ON-OFF light bulb analogy to understand binary
-                  numbers.
-                </p>
-              </div>
+              <BlogImage
+                imgDark={img4}
+                imgLight={img4l}
+                theme={theme}
+                description={`Fig(4.0) ON-OFF light bulb analogy to understand binary numbers.`}
+              />
 
               <p>
                 So how do computers only speak in binary? How do they solve such
@@ -362,13 +367,12 @@ const GettingStartedWithBitManipulation = ({
                 You can infer more about this using the diagram below.
               </p>
 
-              <div className="image">
-                <img src={theme === "dark" ? img5 : img5l}></img>
-                <p>
-                  Fig(5.0) Binary representation of numbers and their
-                  permutations.
-                </p>
-              </div>
+              <BlogImage
+                imgDark={img5}
+                imgLight={img5l}
+                theme={theme}
+                description={`Fig(5.0) Binary representation of numbers and their permutations.`}
+              />
             </div>
 
             <div className="blog-section">
@@ -376,10 +380,12 @@ const GettingStartedWithBitManipulation = ({
                 Binay to Decimal & Decimal to Binary Conversion
               </h3>
               <p>Here's how to represent numbers in the binary system:</p>
-              <div className="image">
-                <img src={theme === "dark" ? img6 : img6l}></img>
-                <p>Fig(6.0) Binary to Decimal conversion.</p>
-              </div>
+              <BlogImage
+                imgDark={img6}
+                imgLight={img6l}
+                theme={theme}
+                description={`Fig(6.0) Binary to Decimal conversion.`}
+              />
               <p>
                 In the above diagram Fig(6.0) we have just seen the way to
                 convert binary to decimal. The method remains same, as we saw

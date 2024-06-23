@@ -698,9 +698,12 @@ This results in the binary representation of -5.`;
 
               <h4>Programming what we have learned so far:</h4>
               <CodeSnippet codeText={code4} theme={theme} language="cpp" />
-              <p>Output:</p>
-              <CodeSnippet codeText={code5} theme={theme} language="c" />
-
+              <BlogImage
+                imgDark={img7}
+                imgLight={img7l}
+                theme={theme}
+                description={`Fig(7.0) Output of the code snippet.`}
+              />
             </div>
 
             <div className="blog-section">

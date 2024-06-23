@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../../../../components/Navbar/Navbar";
-import BlogsFooter from "../../../../components/BlogsFooter/BlogsFooter";
-import Footer from "../../../../components/Footer/Footer";
-import { blogPost } from "../../../../data/BlogsData";
-import LeftSidebar from "../../../../components/LeftSideBar/LeftSidebar";
+import Navbar from "../../../../../components/Navbar/Navbar";
+import BlogsFooter from "../../../../../components/BlogsFooter/BlogsFooter";
+import Footer from "../../../../../components/Footer/Footer";
+import { blogPost } from "../../../../../data/BlogsData";
+import LeftSidebar from "../../../../../components/LeftSideBar/LeftSidebar";
 import { Link } from "react-router-dom";
 import "../../Blogs.scss";
 

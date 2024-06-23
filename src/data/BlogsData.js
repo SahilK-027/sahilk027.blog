@@ -25,7 +25,7 @@ export const blogSeries = [
     selector: `cs-fundamentals-bit-manipulation`,
     seriesDiscussion:
       "https://github.com/sahilk027-blogs/cs-fundamentals-bit-manipulation/discussions",
-    blogsCollection: [3, 4], // blogNo
+    blogsCollection: [3, 4, 5], // blogNo
     startDate: "15th June 2024",
   },
 ];
@@ -110,6 +110,27 @@ export const blogPost = [
       "Bitwise",
       "bitmask",
       "bitset",
+    ],
+  },
+  {
+    blogNo: 5,
+    seriesID: 2,
+    sequenceNumberInSeries: 3,
+    seriesTitle: "Bit Manipulation",
+    filterTag: "Bit Manipulation",
+    blogTitle: "Exploring Binary Arithmetic and Memory Representation",
+    blogDate: "23rd June 2024",
+    selector: "exploring-binary-arithmetic-and-memory-representation",
+    blogUrl: `/blogs/cs-fundamentals-bit-manipulation/exploring-binary-arithmetic-and-memory-representation`,
+    seriesUrl: `/blogs/cs-fundamentals-bit-manipulation`,
+    keywords: [
+      "Exploring Binary Arithmetic and Memory Representation",
+      "Bit Manipulation",
+      "CS Fundamentals",
+      "Binary Arithmetic",
+      "Memory Representation",
+      "Computer Science",
+      "Algorithms",
     ],
   },
 ];

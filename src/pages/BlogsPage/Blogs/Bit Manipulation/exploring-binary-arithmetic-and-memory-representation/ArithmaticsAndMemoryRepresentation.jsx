@@ -523,17 +523,17 @@ This results in the binary representation of -5.`;
                 draw it on a number line. What if we split this line into two
                 halves?
               </p>
+              <p>
+                Such that the first half will hold numbers from [0, 4294967295 / 2].
+                <br />
+                The second half will hold numbers from [-(4294967295 / 2), -1].
+              </p>
               <BlogImage
                 imgDark={img3}
                 imgLight={img3l}
                 theme={theme}
                 description={`Fig(3.0) Integer representation on a number line.`}
               />
-              <p>
-                So, the first half will hold numbers from [0, 4294967295 / 2].
-                <br />
-                The second half will hold numbers from [-(4294967295 / 2), -1].
-              </p>
               <p>
                 But 4294967295 in itself an odd number so we cannot divide it
                 completely by two. So more sophisticatedly we can divide our
@@ -569,7 +569,6 @@ This results in the binary representation of -5.`;
               <h3 className="blog-section-title">
                 Representation of signed integers in computer.
               </h3>
-              <h4 className="sub-title">1's Complement</h4>
               <p>
                 From what we have learned so far, it’s very easy to understand
                 how computers might represent unsigned integers. (i.e. Intergers

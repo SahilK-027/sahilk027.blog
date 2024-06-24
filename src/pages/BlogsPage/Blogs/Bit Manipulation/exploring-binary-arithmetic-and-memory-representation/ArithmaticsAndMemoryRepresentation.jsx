@@ -466,7 +466,6 @@ This results in the binary representation of -5.`;
               <h3 className="blog-section-title">
                 How Numbers are Represented in Computer
               </h3>
-              <h4 className="sub-title">1's Complement</h4>
               <p>
                 In computer science, one topic that has always confused me is
                 how numbers are stored in a computer. How can computers

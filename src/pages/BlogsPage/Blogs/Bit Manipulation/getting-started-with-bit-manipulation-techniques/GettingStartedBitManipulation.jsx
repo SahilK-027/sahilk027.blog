@@ -157,7 +157,14 @@ const GettingStartedWithBitManipulation = ({
           <div className="container">
             <div className="blog-series-header">
               <h1>{currBlog?.blogTitle}</h1>
-              <p className="blog-date">Published on: {currBlog?.blogDate}</p>
+              <div className="div-flex-row">
+                <p className="blog-date">
+                  📆 Published on: {currBlog?.blogDate}
+                </p>
+                <p className="blog-date">
+                  🤓 Readtime (Approx): {currBlog?.readtime}
+                </p>
+              </div>
             </div>
           </div>
           <div className="main-blog-content" onScroll={handleScroll}>

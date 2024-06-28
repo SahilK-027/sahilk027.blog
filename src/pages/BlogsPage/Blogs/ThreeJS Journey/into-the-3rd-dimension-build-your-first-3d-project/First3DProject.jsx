@@ -451,7 +451,14 @@ tick();
           <div className="container">
             <div className="blog-series-header">
               <h1>{currBlog?.blogTitle}</h1>
-              <p className="blog-date">Published on: {currBlog?.blogDate}</p>
+              <div className="div-flex-row">
+                <p className="blog-date">
+                  📆 Published on: {currBlog?.blogDate}
+                </p>
+                <p className="blog-date">
+                  🤓 Readtime (Approx): {currBlog?.readtime}
+                </p>
+              </div>
             </div>
           </div>
           <div className="main-blog-content" onScroll={handleScroll}>
@@ -569,7 +576,9 @@ tick();
             </div>
 
             <div className="blog-section">
-              <h3 className="blog-section-title">Some of my Favorite Three.js Projects</h3>{" "}
+              <h3 className="blog-section-title">
+                Some of my Favorite Three.js Projects
+              </h3>{" "}
               <p>
                 <div className="projects-grid">
                   <div className="project">

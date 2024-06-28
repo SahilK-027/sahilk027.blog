@@ -259,7 +259,14 @@ This results in the binary representation of -5.`;
           <div className="container">
             <div className="blog-series-header">
               <h1>{currBlog?.blogTitle}</h1>
-              <p className="blog-date">Published on: {currBlog?.blogDate}</p>
+              <div className="div-flex-row">
+                <p className="blog-date">
+                  📆 Published on: {currBlog?.blogDate}
+                </p>
+                <p className="blog-date">
+                  🤓 Readtime (Approx): {currBlog?.readtime}
+                </p>
+              </div>
             </div>
           </div>
           <div className="main-blog-content" onScroll={handleScroll}>
@@ -523,7 +530,8 @@ This results in the binary representation of -5.`;
                 halves?
               </p>
               <p>
-                Such that the first half will hold numbers from [0, 4294967295 / 2].
+                Such that the first half will hold numbers from [0, 4294967295 /
+                2].
                 <br />
                 The second half will hold numbers from [-(4294967295 / 2), -1].
               </p>

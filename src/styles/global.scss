@@ -292,6 +292,14 @@ ul {
   list-style-type: none;
 }
 
+.div-flex-row{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+}
+
 .spinner-loader {
   width: 20px;
   aspect-ratio: 1;

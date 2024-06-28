@@ -51,6 +51,7 @@ export const blogPost = [
       "Intro",
       "three js",
     ],
+    readtime: "7 minutes",
   },
   {
     blogNo: 2,
@@ -70,6 +71,7 @@ export const blogPost = [
       "First 3D Project",
       "three js",
     ],
+    readtime: "15 minutes",
   },
   {
     blogNo: 3,
@@ -90,6 +92,7 @@ export const blogPost = [
       "Algorithms",
       "Bitwise Operators",
     ],
+    readtime: "5 minutes",
   },
   {
     blogNo: 4,
@@ -111,6 +114,7 @@ export const blogPost = [
       "bitmask",
       "bitset",
     ],
+    readtime: "9 minutes",
   },
   {
     blogNo: 5,
@@ -132,6 +136,7 @@ export const blogPost = [
       "Computer Science",
       "Algorithms",
     ],
+    readtime: "14 minutes",
   },
 ];
 

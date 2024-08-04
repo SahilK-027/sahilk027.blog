@@ -8,6 +8,7 @@ import tr2024 from "../assets/images/projectThumbnails/trinity-2024.webp";
 import particlesGPGPU from "../assets/images/projectThumbnails/particles-gpgpu.webp";
 import ironmanHolograms from "../assets/images/projectThumbnails/ironman-holograms.webp";
 import waterColour from "../assets/images/projectThumbnails/water-colour.webp";
+import spaceDistortion from "../assets/images/projectThumbnails/space-distortion.webp";
 
 import tr2023Video from "../assets/videos/projectVideos/trinity-2023.mp4";
 import innovisionVideo from "../assets/videos/projectVideos/innovision.mp4";
@@ -19,6 +20,7 @@ import tr2024Video from "../assets/videos/projectVideos/trinity-2024.mp4";
 import particlesGPGPUVideo from "../assets/videos/projectVideos/particles-GPGPU.mp4";
 import ironmanHologramsVideo from "../assets/videos/projectVideos/ironman-holograms.mp4";
 import waterColourVideo from "../assets/videos/projectVideos/water-colour.mp4";
+import spaceDistortionVideo from "../assets/videos/projectVideos/space-distortion.mp4";
 
 export const Projects = [
   {
@@ -697,6 +699,44 @@ export const Projects = [
       {
         title: "Creative Experimentation",
         description: `Through the development I learned invaluable insights into the world of creative experimentation and the power of leveraging FBO noise. Working with FBO noise allowed me to simulate intricate textures and patterns, breathing life into the watercolor effect within the artwork. This experimentation process taught me to embrace curiosity and explore unconventional techniques to achieve desired visual outcomes. Additionally, I learned how to harness the flexibility of shaders to manipulate and transform digital canvases, unlocking endless creative possibilities.`,
+      },
+    ],
+  },
+  {
+    id: 11,
+    idSelector: "space-distortion",
+    name: "Space Distortion Simulation",
+    thumbnailUrl: spaceDistortion,
+    concept: ["images", "Shaders"],
+    projectUrl: "/projects/space-distortion",
+
+    // Detailed Description
+    projectTitle: "Space Distortion: Fluid Space Distortion Effect 🪐",
+    projectHref: "https://space-distortion-sk027.vercel.app/",
+    subtitle: `A stunning pointer event based fluid space distortion effect built using Three.js.`,
+    videoUrl: spaceDistortionVideo,
+    detailedDescription: [
+      `An immersive digital art built with Three.js, featuring a fluid space distortion effect that responds dynamically to users mouse interaction. This project uses custom WebGL shaders to achieve a mesmerizing visual experience.`,
+    ],
+    credits: [],
+    technicalDescription: [
+      `Three.js provides the foundation for rendering the fuild distortion simulator and facilitating user interaction.`,
+
+      `Custom WebGL shaders are used to create the fluid simulation, inspired by the capabilities of https://pixijs.com/. These shaders manipulate vertex and fragment data to achieve the fluid distortion effect.`,
+
+      `As users move their pointer across the screen, the fluid effect dynamically evolves, creating an engaging and immersive experience.`,
+    ],
+    techStack: [
+      {
+        technology: "Three.js",
+        useCase:
+          "Three.js is the core framework used to render the abstract mural, apply shaders, and handle user interaction.",
+      },
+    ],
+    learnings: [
+      {
+        title: "Creative Experimentation",
+        description: `This project allowed for exploration and innovation in fluid simulations and shader programming, enhancing skills in dynamic and interactive digital art creation.`,
       },
     ],
   },

@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { Suspense, useLayoutEffect, useRef } from "react";
+import { Suspense, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import {
   Center,
@@ -36,7 +36,6 @@ const Suzi = (props) => {
 // Component to animate the cube
 const AnimatedCube = () => {
   const cubeRef = useRef();
-
   useFrame((state, delta) => {
     if (cubeRef.current) {
       cubeRef.current.rotation.z += delta * 3;
@@ -80,16 +79,26 @@ const AnimatedBall = () => {
 };
 
 const SuzanneThreeBG = ({ theme }) => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(window.matchMedia("(max-width: 768px)").matches);
+  }, []);
   return (
     <div
       style={{
         width: "100%",
         height: 270,
-        background: "#121316",
       }}
     >
       <Suspense fallback={<CodeSandboxLoader theme={theme} />}>
-        <Canvas shadows camera={{ position: [3, 3.75, 5.5], fov: 35 }}>
+        <Canvas
+          shadows
+          camera={{
+            position: isMobile ? [4, 5, 8] : [3, 3.75, 6],
+            fov: 35,
+          }}
+        >
           <color
             attach="background"
             args={[theme === "dark" ? "#121316" : "#fff"]}

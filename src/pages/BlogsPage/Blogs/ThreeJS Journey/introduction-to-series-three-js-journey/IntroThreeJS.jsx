@@ -132,6 +132,7 @@ const IntroThreeJS = ({
           </div>
           {/* Blog series poster */}
           <SuzanneThreeBG theme={theme} toggleTheme={toggleTheme} />
+          {/* Blog content */}
           <div className="main-blog-content" onScroll={handleScroll}>
             <p>
               Hey there, welcome to my little corner of the internet! I'm so

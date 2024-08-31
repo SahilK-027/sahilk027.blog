@@ -1,0 +1,125 @@
+@use "sass:math";
+
+$size: 50px;
+
+.sb-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+
+    &.dark {
+        background-color: #121316;
+
+        .cube .sides * {
+            background-color: #8f70ff53;
+            border: math.div($size, 15) solid #ea9cff;
+        }
+
+        .text {
+            color: #fff;
+        }
+    }
+
+    &.light {
+        background-color: #fff;
+
+        .cube .sides * {
+            background-color: #7344ff50;
+            border: math.div($size, 15) solid black;
+        }
+
+        .text {
+            color: #000;
+        }
+    }
+
+    @keyframes rotate {
+        0% {
+            transform: rotateX(-37.5deg) rotateY(45deg);
+        }
+
+        50% {
+            transform: rotateX(-37.5deg) rotateY(405deg);
+        }
+
+        100% {
+            transform: rotateX(-37.5deg) rotateY(405deg);
+        }
+    }
+
+    .cube,
+    .cube * {
+        position: absolute;
+        width: $size;
+        height: $size;
+    }
+
+    .sides {
+        animation: rotate 3s ease infinite;
+        animation-delay: 0.8s;
+        transform-style: preserve-3d;
+        transform: rotateX(-37.5deg) rotateY(45deg);
+    }
+
+    .cube .sides * {
+        box-sizing: border-box;
+        border: math.div($size, 15) solid white;
+    }
+
+    @mixin side($name, $rotate, $i) {
+        .#{$name} {
+            animation: #{$name}-animation 3s ease infinite;
+            animation-delay: $i * 100ms;
+            transform: #{$rotate} translateZ(math.div($size, 1));
+            animation-fill-mode: forwards;
+            transform-origin: 50% 50%;
+        }
+
+        @keyframes #{$name}-animation {
+            0% {
+                opacity: 1;
+                transform: #{$rotate} translateZ(math.div($size, 1));
+            }
+
+            20% {
+                opacity: 1;
+                transform: #{$rotate} translateZ(math.div($size, 2));
+            }
+
+            70% {
+                opacity: 1;
+                transform: #{$rotate} translateZ(math.div($size, 2));
+            }
+
+            90% {
+                opacity: 1;
+                transform: #{$rotate} translateZ(math.div($size, 1));
+            }
+
+            100% {
+                opacity: 1;
+                transform: #{$rotate} translateZ(math.div($size, 1));
+            }
+        }
+    }
+
+    .cube .sides {
+        @include side("top", rotateX(90deg), 0);
+        @include side("bottom", rotateX(-90deg), 0);
+        @include side("front", rotateY(0deg), 1);
+        @include side("back", rotateY(-180deg), 1);
+        @include side("left", rotateY(-90deg), 1);
+        @include side("right", rotateY(90deg), 1);
+    }
+
+    .text {
+        margin-top: math.div($size, 1) * 3.75;
+        font-size: 0.8rem;
+        width: 100%;
+        font-weight: 200;
+        text-align: center;
+    }
+}

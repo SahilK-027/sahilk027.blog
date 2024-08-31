@@ -8,6 +8,7 @@ import LeftSidebar from "../../../../../components/LeftSideBar/LeftSidebar";
 import InfoDiv from "../../../../../components/InfoDIV/InfoDiv";
 import MustReadDiv from "../../../../../components/MustReadDIV/MustReadDiv";
 import "../../Blogs.scss";
+import SuzanneThreeBG from "../../../../../components/SuzanneThreeBG/SuzanneThreeBG";
 
 const IntroThreeJS = ({
   openCMDCenter,
@@ -129,6 +130,8 @@ const IntroThreeJS = ({
               </div>
             </div>
           </div>
+          {/* Blog series poster */}
+          <SuzanneThreeBG theme={theme} toggleTheme={toggleTheme} />
           <div className="main-blog-content" onScroll={handleScroll}>
             <p>
               Hey there, welcome to my little corner of the internet! I'm so

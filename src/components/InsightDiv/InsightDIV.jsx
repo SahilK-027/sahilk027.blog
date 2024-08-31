@@ -6,7 +6,7 @@ const InsightDiv = ({ insightText }) => {
     <div className="insight-div">
       <div className="icon">
         <Tooltip content="Insight">
-          <i class="fa-solid fa-lightbulb"></i>
+          <i className="fa-solid fa-lightbulb"></i>
         </Tooltip>
       </div>
       <p>👉 Insight: </p>{" "}

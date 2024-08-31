@@ -18,6 +18,7 @@ import ImageSlider from "../../../../../components/ImageSlider/ImageSlider";
 import withLightImage from "../../../../../assets/images/with-lights.png";
 import noLightImage from "../../../../../assets/images/no-lights.png";
 import CodeSandpack from "../../../../../components/CodeSandpack/CodeSandpack";
+import SuzanneThreeBG from "../../../../../components/SuzanneThreeBG/SuzanneThreeBG";
 
 const First3DProject = ({
   openCMDCenter,
@@ -461,6 +462,8 @@ tick();
               </div>
             </div>
           </div>
+          {/* Blog series poster */}
+          <SuzanneThreeBG theme={theme} toggleTheme={toggleTheme} />
           <div className="main-blog-content" onScroll={handleScroll}>
             <p>
               Have you ever looked at a website and thought, "How on earth did

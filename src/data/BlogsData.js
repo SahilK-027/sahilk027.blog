@@ -10,7 +10,7 @@ export const blogSeries = [
     selector: `three-js-journey`,
     seriesDiscussion:
       "https://github.com/sahilk027-blogs/three-js-journey-series/discussions",
-    blogsCollection: [1, 2], // blogNo
+    blogsCollection: [1, 2, 6], // blogNo
     startDate: "19th April 2024",
   },
   {
@@ -137,6 +137,25 @@ export const blogPost = [
       "Algorithms",
     ],
     readtime: "14 min",
+  },
+  {
+    blogNo: 6,
+    seriesID: 1,
+    sequenceNumberInSeries: 3,
+    seriesTitle: "Three.js Journey",
+    filterTag: "Threejs Journey",
+    blogTitle: "Building Sci-Fi Mystery Box: Introduction to Textures",
+    blogDate: "",
+    selector: "building-sci-fi-mystery-box-introduction-to-textures",
+    blogUrl: `/blogs/three-js-journey/building-sci-fi-mystery-box-introduction-to-textures`,
+    seriesUrl: `/blogs/three-js-journey`,
+    keywords: [
+      "Building Sci-Fi Mystery Box: Introduction to Textures",
+      "Three.js",
+      "Threejs Journey",
+      "Textures",
+    ],
+    readtime: "",
   },
 ];
 

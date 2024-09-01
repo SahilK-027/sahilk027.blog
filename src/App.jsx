@@ -23,6 +23,7 @@ import First3DProject from "./pages/BlogsPage/Blogs/ThreeJS Journey/into-the-3rd
 import BitManipulationIntro from "./pages/BlogsPage/Blogs/Bit Manipulation/let-me-answer-why-bit-manipulation/BitManipulationIntro";
 import GettingStartedWithBitManipulation from "./pages/BlogsPage/Blogs/Bit Manipulation/getting-started-with-bit-manipulation-techniques/GettingStartedBitManipulation";
 import ArithmaticsAndMemoryRepresentation from "./pages/BlogsPage/Blogs/Bit Manipulation/exploring-binary-arithmetic-and-memory-representation/ArithmaticsAndMemoryRepresentation";
+import TexturesBlog from "./pages/BlogsPage/Blogs/ThreeJS Journey/building-sci-fi-mystery-box-introduction-to-textures/Textures";
 
 /**
  * `App` component is the root component of the application.
@@ -234,6 +235,18 @@ const App = () => {
             path="/blogs/:journeyName/exploring-binary-arithmetic-and-memory-representation"
             element={
               <ArithmaticsAndMemoryRepresentation
+                openCMDCenter={openCMDCenter}
+                controlMusic={controlMusic}
+                isMusicPlaying={isMusicPlaying}
+                theme={theme}
+                toggleTheme={toggleTheme}
+              />
+            }
+          />
+          <Route
+            path="/blogs/:journeyName/building-sci-fi-mystery-box-introduction-to-textures"
+            element={
+              <TexturesBlog
                 openCMDCenter={openCMDCenter}
                 controlMusic={controlMusic}
                 isMusicPlaying={isMusicPlaying}

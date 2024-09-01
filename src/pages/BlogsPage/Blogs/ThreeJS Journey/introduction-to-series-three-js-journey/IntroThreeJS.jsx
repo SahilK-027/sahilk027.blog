@@ -134,7 +134,7 @@ const IntroThreeJS = ({
           <SuzanneThreeBG theme={theme} toggleTheme={toggleTheme} />
           {/* Blog content */}
           <div className="main-blog-content" onScroll={handleScroll}>
-            <p>
+            <p className="open-txt">
               Hey there, welcome to my little corner of the internet! I'm so
               excited to have you here. This isn't your usual informative blog
               post, instead, it's an opportunity for me to share my thoughts and

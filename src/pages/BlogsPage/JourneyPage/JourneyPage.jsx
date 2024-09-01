@@ -78,15 +78,19 @@ const JourneyPage = ({
       <div className="page blog-series-page">
         {currJourney ? (
           <>
-            <div className="section-top">
-              <div className="container">
+            <div className="journey-section-top section-top">
+              <Link to={"/"}>
+                <i className="fa-solid fa-arrow-left-long back-link"></i>&nbsp;
+                Home
+              </Link>
+              <div className="header-container">
                 <div className="blog-series-header">
                   <h1>{currJourney.seriesTitle}</h1>
                   <p>{currJourney.seriesDescription}</p>
                 </div>
               </div>
             </div>
-            <div className="section">
+            <div className="sub-section">
               <h2>All Published Blog Articles From the Series</h2>
               <div className="container">
                 {currJourney.blogsCollection.length ? (
@@ -95,7 +99,9 @@ const JourneyPage = ({
                       const currBlog = blogPost.find(
                         (blog) => blog.blogNo === blogID
                       );
-                      {/* const isRead = allReadBlogs.includes(currBlog.blogNo); */}
+                      {
+                        /* const isRead = allReadBlogs.includes(currBlog.blogNo); */
+                      }
 
                       return (
                         <div className="series-item" key={currBlog.blogNo}>

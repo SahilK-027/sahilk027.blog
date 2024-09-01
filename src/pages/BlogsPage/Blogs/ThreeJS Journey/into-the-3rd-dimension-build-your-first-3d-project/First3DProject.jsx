@@ -465,7 +465,7 @@ tick();
           {/* Blog series poster */}
           <SuzanneThreeBG theme={theme} toggleTheme={toggleTheme} />
           <div className="main-blog-content" onScroll={handleScroll}>
-            <p>
+            <p className="open-txt">
               Have you ever looked at a website and thought, "How on earth did
               they make this magic happen? 😲" Well, I can relate to that, I was
               constantly amazed by some mesmerising websites built by creative
@@ -481,7 +481,7 @@ tick();
             </p>
             <br />
             <br />
-            <p>
+            <p className="open-txt">
               Then, one fine day in December 2022, I stumbled upon{" "}
               <a
                 className="link"

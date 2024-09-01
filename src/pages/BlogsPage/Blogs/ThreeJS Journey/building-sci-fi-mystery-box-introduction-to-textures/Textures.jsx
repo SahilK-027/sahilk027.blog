@@ -7,6 +7,8 @@ import LeftSidebar from "../../../../../components/LeftSideBar/LeftSidebar";
 import { Link } from "react-router-dom";
 import "../../Blogs.scss";
 import SuzanneThreeBG from "../../../../../components/SuzanneThreeBG/SuzanneThreeBG";
+import CodeSandpack from "../../../../../components/CodeSandpack/CodeSandpack";
+import { cssSandpack, htmlSandpack, jsSandpack } from "./utils/codeProviders";
 
 const TexturesBlog = ({
   openCMDCenter,
@@ -21,21 +23,16 @@ const TexturesBlog = ({
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    setCurrBlog(
-      blogPost.find((blog) => {
-        return blog.blogNo === 6;
-      })
-    );
-  }, [currBlog]);
+    const blog = blogPost.find((blog) => blog.blogNo === 6);
+    setCurrBlog(blog);
+  }, []);
 
-  const handleScroll = (e) => {
+  const handleScroll = () => {
     const { scrollHeight, scrollTop, clientHeight } = document.documentElement;
-
     const fullHeight = scrollHeight - clientHeight;
     const scrolled = (scrollTop / fullHeight) * 100;
     setScrollPercentage(scrolled);
 
-    // Determine the active section based on scroll position
     const sections = document.querySelectorAll(".blog-section");
     sections.forEach((section, index) => {
       const { offsetTop, offsetHeight } = section;
@@ -47,15 +44,19 @@ const TexturesBlog = ({
       }
     });
   };
+
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  });
+  }, []);
 
-  /* ==========================================================
-      ! Please make sure you have at max 8 sections in the array
-  ========================================================== */
-  const sections = [];
+  const sections = []; // Ensure you populate this array with sections if needed
+
+  const fileTextureRender = {
+    "/index.js": { code: jsSandpack },
+    "/index.html": { code: htmlSandpack },
+    "/styles.css": { code: cssSandpack },
+  };
 
   return (
     <>
@@ -91,14 +92,18 @@ const TexturesBlog = ({
               </div>
             </div>
           </div>
-          {/* Blog series poster */}
           <SuzanneThreeBG theme={theme} />
-
           <div className="main-blog-content" onScroll={handleScroll}>
-            {/* ==========================================================
-               ! Change the content of the new blog here
-            ========================================================== */}
             <p className="open-txt">THIS IS NEW BLOG</p>
+            <div className="blog-section">
+              <h3 className="blog-section-title">The Final Render</h3>
+              <p>Here’s your first render!</p>
+              <CodeSandpack
+                files={fileTextureRender}
+                theme={theme}
+                layout="preview"
+              />
+            </div>
           </div>
         </div>
       </div>

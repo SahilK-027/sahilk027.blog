@@ -3,26 +3,31 @@
   margin: 0 auto;
 
   .main-blog-content {
+    padding-top: 0px;
+    padding-bottom: 24px;
+
     .open-txt {
-      padding: 24px 0;
+      padding-top: 4px;
       padding-bottom: 4px;
       font-size: 16px;
     }
+
     height: 100%;
+
     .blog-section {
       margin-top: 20px;
+
       .blog-section-title {
         font-size: 22px;
-        background: linear-gradient(
-          200deg,
-          var(--gradient-blue) 55%,
-          var(--gradient-purple) 75%,
-          var(--gradient-pink) 85%,
-          var(--gradient-yellow) 97%
-        );
+        background: linear-gradient(200deg,
+            var(--gradient-blue) 55%,
+            var(--gradient-purple) 75%,
+            var(--gradient-pink) 85%,
+            var(--gradient-yellow) 97%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
       }
+
       p {
         padding: 16px 0;
         font-size: 16px;
@@ -35,10 +40,12 @@
         ul {
           li {
             margin: calc(0.725rem) 0;
+
             b {
               font-weight: 500;
               color: var(--color-text-primary);
             }
+
             i {
               color: var(--color-anchor);
               font-size: 16px;
@@ -58,11 +65,13 @@
         justify-content: center;
         align-items: center;
         flex-direction: column;
+
         img {
           width: 100%;
           border-radius: 10px;
           border: 1px solid #6a83ff80;
         }
+
         p {
           color: var(--color-text-secondary);
         }
@@ -72,6 +81,7 @@
         font-size: 18px;
         margin: 18px 0;
         margin-bottom: 0px;
+
         span {
           color: var(--color-pink);
         }

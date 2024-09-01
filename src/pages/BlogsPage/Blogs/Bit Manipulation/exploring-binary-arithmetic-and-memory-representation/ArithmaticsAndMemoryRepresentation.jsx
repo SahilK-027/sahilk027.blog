@@ -269,8 +269,9 @@ This results in the binary representation of -5.`;
               </div>
             </div>
           </div>
+          {/* Blog series poster */}
+          <BitsAnimation />
           <div className="main-blog-content" onScroll={handleScroll}>
-            <BitsAnimation />
             <p className="open-txt">
               Welcome back to our bit manipulation series! 🙋‍♂️ In the previous
               blog, we dived into the basics of number systems and why computers

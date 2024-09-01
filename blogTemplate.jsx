@@ -93,6 +93,8 @@ const NEWBLOG = ({
               </div>
             </div>
           </div>
+          {/* Blog series poster */}
+                      
           <div className="main-blog-content" onScroll={handleScroll}>
             {/* ==========================================================
                ! Change the content of the new blog here

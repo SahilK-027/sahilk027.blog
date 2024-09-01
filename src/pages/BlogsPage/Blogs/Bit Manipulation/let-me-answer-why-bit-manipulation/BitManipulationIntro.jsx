@@ -94,27 +94,28 @@ const BitManipulationIntro = ({
               </div>
             </div>
           </div>
+          {/* Blog series poster */}
+          <BitsAnimation />
           <div className="main-blog-content" onScroll={handleScroll}>
-            <BitsAnimation />
+            <p className="open-txt">
+              This is just a small series intro kind of blog. As I don’t want to
+              start this series directly with “101010010110”. Also, it doesn't
+              feel right to not explain the reason behind starting this new
+              series before finishing my ongoing blog series "
+              <Link
+                className="link"
+                target="_blank"
+                to="/blogs/three-js-journey"
+              >
+                three-js-journey
+              </Link>
+              ". Don't worry, I won't discontinue that series; I will also add
+              new blogs there.
+            </p>
             <div className="blog-section">
               <h3 className="blog-section-title">
                 Introduction to the New Series
               </h3>
-              <p>
-                This is just a small series intro kind of blog. As I don’t want
-                to start this series directly with “101010010110”. Also, it
-                doesn't feel right to not explain the reason behind starting
-                this new series before finishing my ongoing blog series "
-                <Link
-                  className="link"
-                  target="_blank"
-                  to="/blogs/three-js-journey"
-                >
-                  three-js-journey
-                </Link>
-                ". Don't worry, I won't discontinue that series; I will also add
-                new blogs there.
-              </p>
               <p>
                 Why am I suddenly starting to write a new blog series about bit
                 manipulation? Well, the reason is simple. Instead of learning

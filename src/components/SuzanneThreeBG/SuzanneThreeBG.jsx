@@ -89,6 +89,7 @@ const SuzanneThreeBG = ({ theme }) => {
       style={{
         width: "100%",
         height: 270,
+        padding: "24px 0"
       }}
     >
       <Suspense fallback={<CodeSandboxLoader theme={theme} />}>

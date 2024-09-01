@@ -167,8 +167,9 @@ const GettingStartedWithBitManipulation = ({
               </div>
             </div>
           </div>
+          {/* Blog series poster */}
+          <BitsAnimation />
           <div className="main-blog-content" onScroll={handleScroll}>
-            <BitsAnimation />
             <p className="open-txt">
               Welcome to the first installment of our bit manipulation series
               😉! If you've ever wondered how computers handle the data at the

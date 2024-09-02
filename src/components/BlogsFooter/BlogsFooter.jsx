@@ -16,7 +16,8 @@ const BlogsFooter = ({ theme }) => {
           out on valuable information and exclusive updates—subscribe now to
           join our community of readers and stay connected!
         </span>
-        <BlogLetter />
+        {/* <BlogLetter /> */}
+        <br /> <br /> <br />
         <span className="footer-txt">
           Want to show your appreciation 😊? give this{" "}
           <a

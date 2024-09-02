@@ -422,9 +422,9 @@ const BlogsPage = ({
         <div className="section about-me">
           <AboutMe theme={theme} />
         </div>
-        <div className="section subscription">
+        {/* <div className="section subscription">
           <BlogLetter />
-        </div>
+        </div> */}
         <div className="section blog-series">
           <BlogSeries blogSeriesData={blogSeries} />
         </div>

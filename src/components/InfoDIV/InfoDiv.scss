@@ -32,8 +32,26 @@
         color: var(--color-info) !important;
         background: var(--color-info-bg-light) !important;
       }
+
+      button {
+        background-color: var(--color-info-bg-light);
+        border: 1px solid var(--color-info);
+        color: var(--color-text-primary);
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-size: 14px;
+        font-family: inherit;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &:hover {
+          background-color: var(--color-info-dark);
+          color: var(--color-info);
+        }
+      }
     }
   }
+
   .icon {
     position: absolute;
     display: flex;
@@ -49,16 +67,19 @@
     width: 30px;
     height: 30px;
   }
+
   ul {
     li {
       margin: calc(0.725rem) 0;
       color: var(--color-text-primary);
+
       b {
         &::selection {
           color: var(--color-info) !important;
           background: var(--color-info-bg-light) !important;
         }
       }
+
       a {
         color: var(--color-info);
         text-decoration: underline;
@@ -75,6 +96,7 @@
           background: var(--color-info-bg-light) !important;
         }
       }
+
       i {
         color: var(--color-info);
         font-size: 16px;
@@ -86,6 +108,7 @@
         background: var(--color-info-bg-light) !important;
       }
     }
+
     &::selection {
       color: var(--color-info) !important;
       background: var(--color-info-bg-light) !important;

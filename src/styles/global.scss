@@ -46,8 +46,7 @@
   --anchor-underline-color: #7f50ff6a;
   --blur-bg: #1213165a;
   --transparentshade: #ffffff40;
-  --loader-color: no-repeat
-    radial-gradient(circle closest-side, var(--color-text-secondary) 90%, #0000);
+  --loader-color: no-repeat radial-gradient(circle closest-side, var(--color-text-secondary) 90%, #0000);
 
   --gradient-yellow: #ffe0a2;
   --gradient-purple: #bf87ff;
@@ -92,8 +91,7 @@
   --anchor-underline-color: #7444ff6a;
   --blur-bg: #ffffffb3;
   --transparentshade: #00000040;
-  --loader-color: no-repeat
-    radial-gradient(circle closest-side, var(--color-text-secondary) 90%, #0000);
+  --loader-color: no-repeat radial-gradient(circle closest-side, var(--color-text-secondary) 90%, #0000);
 
   --gradient-yellow: #ffa703;
   --gradient-purple: #9232ff;
@@ -234,6 +232,7 @@ p {
 .btn:disabled {
   cursor: not-allowed;
   opacity: 0.8;
+
   &:hover {
     border: 1px solid transparent;
     box-shadow: none;
@@ -249,7 +248,7 @@ a {
   margin-bottom: 30px;
 }
 
-.blog-date{
+.blog-date {
   font-size: 16px;
 }
 
@@ -288,7 +287,7 @@ ul {
   list-style-type: none;
 }
 
-.div-flex-row{
+.div-flex-row {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -300,12 +299,12 @@ ul {
   width: 20px;
   aspect-ratio: 1;
   border-radius: 50%;
-  background: radial-gradient(farthest-side, var(--color-anchor) 94%, #0000)
-      top/8px 8px no-repeat,
+  background: radial-gradient(farthest-side, var(--color-anchor) 94%, #0000) top/8px 8px no-repeat,
     conic-gradient(#0000 30%, var(--color-anchor));
   -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 8px), #000 0);
   animation: l13 1s infinite linear;
 }
+
 @keyframes l13 {
   100% {
     transform: rotate(1turn);
@@ -345,4 +344,29 @@ ul {
   .section {
     margin: 60px 0 0 0;
   }
+}
+
+@keyframes textShine {
+  0% {
+    background-position: 0% 0%;
+  }
+
+  50% {
+    background-position: 100% 100%;
+  }
+
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
+.animated-gradient {
+  font-size: 14px;
+  background: linear-gradient(45deg, var(--bit-color), #49aaff, #907aff, #ff4d94);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-fill-color: transparent;
+  background-size: 200% auto;
+  animation: textShine 5s ease-in-out infinite;
 }

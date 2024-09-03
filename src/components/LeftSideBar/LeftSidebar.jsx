@@ -24,7 +24,7 @@ const LeftSidebar = ({
           <div
             key={index}
             className={`section-name ${
-              activeSection === index ? "active" : ""
+              activeSection === index ? "animated-gradient" : ""
             }`}
           >
             {section}

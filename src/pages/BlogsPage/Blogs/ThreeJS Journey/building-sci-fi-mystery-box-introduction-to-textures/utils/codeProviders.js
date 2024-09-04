@@ -6,6 +6,7 @@ export const htmlSandpack = `<html lang="en">
   </head>
 
   <body>
+    <div id="three-log"></div>
     <canvas class="webgl"></canvas>
     <script type="module" src="/index.js"></script>
   </body>

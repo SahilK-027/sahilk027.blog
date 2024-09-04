@@ -145,7 +145,7 @@ export const blogPost = [
     seriesTitle: "Three.js Journey",
     filterTag: "Threejs Journey",
     blogTitle: "Building Sci-Fi Mystery Box: Introduction to Textures",
-    blogDate: "",
+    blogDate: "4th September 2024",
     selector: "building-sci-fi-mystery-box-introduction-to-textures",
     blogUrl: `/blogs/three-js-journey/building-sci-fi-mystery-box-introduction-to-textures`,
     seriesUrl: `/blogs/three-js-journey`,
@@ -155,7 +155,7 @@ export const blogPost = [
       "Threejs Journey",
       "Textures",
     ],
-    readtime: "",
+    readtime: "15 mins",
   },
 ];
 

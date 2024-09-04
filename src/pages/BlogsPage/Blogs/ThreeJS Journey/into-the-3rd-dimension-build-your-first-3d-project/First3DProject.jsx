@@ -19,6 +19,7 @@ import noLightImage from "../../../../../assets/images/no-lights.png";
 import CodeSandpack from "../../../../../components/CodeSandpack/CodeSandpack";
 import SuzanneThreeBG from "../../../../../components/SuzanneThreeBG/SuzanneThreeBG";
 import { cssSandpack, htmlSandpack, jsSandpack } from "./utils/codeProviders";
+import { animated, useSpring } from "react-spring";
 
 const First3DProject = ({
   openCMDCenter,
@@ -30,6 +31,12 @@ const First3DProject = ({
   const [currBlog, setCurrBlog] = useState(null);
   const [activeSection, setActiveSection] = useState(null);
   const [scrollPercentage, setScrollPercentage] = useState(0);
+  const [isSidebarVisible, setIsSidebarVisible] = useState(true);
+
+  const sidebarAnimation = useSpring({
+    opacity: isSidebarVisible ? 1 : 0,
+    config: { tension: 100, friction: 50 },
+  });
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -58,6 +65,9 @@ const First3DProject = ({
         setActiveSection(index);
       }
     });
+
+    // Determine if the sidebar should be visible
+    setIsSidebarVisible(scrolled < 100);
   };
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
@@ -346,12 +356,16 @@ tick();
         pageTitle={currBlog?.blogTitle}
       />
       <div className="page blog-series-page">
-        <LeftSidebar
-          scrollPercentage={scrollPercentage}
-          activeSection={activeSection}
-          sections={sections}
-          setActiveSection={setActiveSection}
-        />
+        <animated.div className="left-sidebar" style={sidebarAnimation}>
+          {isSidebarVisible && (
+            <LeftSidebar
+              scrollPercentage={scrollPercentage}
+              activeSection={activeSection}
+              sections={sections}
+              setActiveSection={setActiveSection}
+            />
+          )}
+        </animated.div>
         <div className="section-top">
           <Link to={currBlog?.seriesUrl}>
             <i className="fa-solid fa-arrow-left-long back-link"></i>&nbsp;

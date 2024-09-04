@@ -8,18 +8,10 @@ const BlogsFooter = ({ theme }) => {
   return (
     <div className="footer-bg">
       <div className="footer-container">
-        <span className="footer-txt">
-          Enjoyed reading this article 🤓? Stay updated with the latest
-          insights, and news from my blog by subscribing to my blogsletter. By
-          subscribing, you'll receive regular updates directly to your inbox,
-          keeping you informed and engaged with the latest content. Don't miss
-          out on valuable information and exclusive updates—subscribe now to
-          join our community of readers and stay connected!
-        </span>
         {/* <BlogLetter /> */}
-        <br /> <br /> <br />
         <span className="footer-txt">
-          Want to show your appreciation 😊? give this{" "}
+          Enjoyed reading this article 🤓? Want to show your appreciation 😊?
+          give this{" "}
           <a
             href="https://github.com/SahilK-027/sahilk027.blog"
             target="_blank"

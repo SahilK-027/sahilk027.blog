@@ -25,6 +25,7 @@ import img6 from "../../../../../assets/images/blogs-images/Bit Manipulation/Blo
 import img6l from "../../../../../assets/images/blogs-images/Bit Manipulation/Blog3/6l.webp";
 import img7 from "../../../../../assets/images/blogs-images/Bit Manipulation/Blog3/7.webp";
 import img7l from "../../../../../assets/images/blogs-images/Bit Manipulation/Blog3/7l.webp";
+import { animated, useSpring } from "react-spring";
 
 const ArithmaticsAndMemoryRepresentation = ({
   openCMDCenter,
@@ -36,6 +37,7 @@ const ArithmaticsAndMemoryRepresentation = ({
   const [currBlog, setCurrBlog] = useState(null);
   const [activeSection, setActiveSection] = useState(null);
   const [scrollPercentage, setScrollPercentage] = useState(0);
+  const [isSidebarVisible, setIsSidebarVisible] = useState(true);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -45,6 +47,11 @@ const ArithmaticsAndMemoryRepresentation = ({
       })
     );
   }, [currBlog]);
+
+  const sidebarAnimation = useSpring({
+    opacity: isSidebarVisible ? 1 : 0,
+    config: { tension: 100, friction: 50 },
+  });
 
   const handleScroll = (e) => {
     const { scrollHeight, scrollTop, clientHeight } = document.documentElement;
@@ -64,6 +71,9 @@ const ArithmaticsAndMemoryRepresentation = ({
         setActiveSection(index);
       }
     });
+
+    // Determine if the sidebar should be visible
+    setIsSidebarVisible(scrolled < 100);
   };
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
@@ -245,12 +255,16 @@ This results in the binary representation of -5.`;
         pageTitle={currBlog?.blogTitle}
       />
       <div className="page blog-series-page">
-        <LeftSidebar
-          scrollPercentage={scrollPercentage}
-          activeSection={activeSection}
-          sections={sections}
-          setActiveSection={setActiveSection}
-        />
+        <animated.div className="left-sidebar" style={sidebarAnimation}>
+          {isSidebarVisible && (
+            <LeftSidebar
+              scrollPercentage={scrollPercentage}
+              activeSection={activeSection}
+              sections={sections}
+              setActiveSection={setActiveSection}
+            />
+          )}
+        </animated.div>
         <div className="section-top">
           <Link to={currBlog?.seriesUrl}>
             <i className="fa-solid fa-arrow-left-long back-link"></i>&nbsp;

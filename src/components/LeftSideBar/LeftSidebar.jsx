@@ -15,7 +15,7 @@ const LeftSidebar = ({
   const filledHeight = `${scrollPercentage}%`;
 
   return (
-    <div className="left-sidebar">
+    <>
       <div className="vertical-bar-container">
         <div className="vertical-line" style={{ height: filledHeight }}></div>
       </div>
@@ -31,7 +31,7 @@ const LeftSidebar = ({
           </div>
         ))}
       </div>
-    </div>
+    </>
   );
 };
 

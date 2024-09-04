@@ -36,7 +36,7 @@ const TexturesBlog = ({
   const [scrollPercentage, setScrollPercentage] = useState(0);
 
   useEffect(() => {
-    // window.scrollTo(0, 0);
+    window.scrollTo(0, 0);
     const blog = blogPost.find((blog) => blog.blogNo === 6);
     setCurrBlog(blog);
   }, []);

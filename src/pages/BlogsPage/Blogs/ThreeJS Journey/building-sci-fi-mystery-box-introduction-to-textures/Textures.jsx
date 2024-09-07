@@ -10,19 +10,19 @@ import SuzanneThreeBG from "../../../../../components/SuzanneThreeBG/SuzanneThre
 import CodeSandpack from "../../../../../components/CodeSandpack/CodeSandpack";
 import { cssSandpack, htmlSandpack, jsSandpack } from "./utils/codeProviders";
 import sciFiBoxVideo from "../../../../../assets/videos/general/sci-fi-box.mp4";
-import sciFiBoxThumbnail from "../../../../../assets/images/blogs-images/ThreeJS/Blog3/sci-fi-box-thumbnail.png";
+import sciFiBoxThumbnail from "../../../../../assets/images/blogs-images/ThreeJS/Blog3/sci-fi-box-thumbnail.webp";
 import BlogImage from "../../../../../components/BlogImage/BlogImage";
 import MustReadDiv from "../../../../../components/MustReadDIV/MustReadDiv";
 import CodeSnippet from "../../../../../components/SyntaxHighlighter/CodeSnippet";
 import InfoDiv from "../../../../../components/InfoDIV/InfoDiv";
-import ao from "./utils/assets/ao.png";
-import color from "./utils/assets/Color.png";
-import all from "./utils/assets/AllMaps.png";
-import height from "./utils/assets/displacement.png";
-import metal from "./utils/assets/metalness.png";
-import normal from "./utils/assets/Normal.png";
-import roughness from "./utils/assets/roughness.png";
-import uvImg from "./utils/assets/uv.jpg";
+import ao from "./utils/assets/ao.webp";
+import color from "./utils/assets/Color.webp";
+import all from "./utils/assets/AllMaps.webp";
+import height from "./utils/assets/displacement.webp";
+import metal from "./utils/assets/metalness.webp";
+import normal from "./utils/assets/Normal.webp";
+import roughness from "./utils/assets/roughness.webp";
+import uvImg from "./utils/assets/uv.webp";
 import { animated, useSpring } from "react-spring";
 
 const TexturesBlog = ({
@@ -133,13 +133,13 @@ const textureLoader = new THREE.TextureLoader(loadingManager);
 `;
   const textureLoader2 = `// Load textures
 const textures = {
-  ambientOcclusion: "https://i.ibb.co/GWJ36Pw/AO.jpg",
-  color: "https://i.ibb.co/PZFKrTV/COLOR.jpg",
-  height: "https://i.ibb.co/3TRptG3/HEIGHT.png",
-  metalness: "https://i.ibb.co/0JXpbCV/METALNESS.jpg",
-  normal: "https://i.ibb.co/D9pDc23/NORMAL.jpg",
-  roughness: "https://i.ibb.co/1vmWhFr/ROUGHNESS.jpg",
-  emissive: "https://i.ibb.co/jrr2XKF/EMMISIVE.jpg",
+  ambientOcclusion: "https://i.ibb.co/b39GPJK/AO.webp",
+  color: "https://i.ibb.co/s29KQb3/Color.webp",
+  height: "https://i.ibb.co/C57vdmZ/Height.webp",
+  metalness: "https://i.ibb.co/HzGhhSc/Metalness.webp",
+  normal: "https://i.ibb.co/LQfY9n1/normal.webp",
+  roughness: "https://i.ibb.co/FnyjDdB/roughness.webp",
+  emissive: "https://i.ibb.co/HGhsvfk/Emmision.webp",
 };
 
 const textureMap = {};
@@ -416,44 +416,44 @@ tick();`;
 
               <div className="multiple-image-container">
                 <BlogImage
-                  imgDark={"https://i.ibb.co/GWJ36Pw/AO.jpg"}
-                  imgLight={"https://i.ibb.co/GWJ36Pw/AO.jpg"}
+                  imgDark={"https://i.ibb.co/b39GPJK/AO.webp"}
+                  imgLight={"https://i.ibb.co/b39GPJK/AO.webp"}
                   theme={theme}
                   description={`AO`}
                 />
                 <BlogImage
-                  imgDark={"https://i.ibb.co/PZFKrTV/COLOR.jpg"}
-                  imgLight={"https://i.ibb.co/PZFKrTV/COLOR.jpg"}
+                  imgDark={"https://i.ibb.co/s29KQb3/Color.webp"}
+                  imgLight={"https://i.ibb.co/s29KQb3/Color.webp"}
                   theme={theme}
                   description={`Color`}
                 />
                 <BlogImage
-                  imgDark={"https://i.ibb.co/3TRptG3/HEIGHT.png"}
-                  imgLight={"https://i.ibb.co/3TRptG3/HEIGHT.png"}
+                  imgDark={"https://i.ibb.co/C57vdmZ/Height.webp"}
+                  imgLight={"https://i.ibb.co/C57vdmZ/Height.webp"}
                   theme={theme}
                   description={`Height`}
                 />
                 <BlogImage
-                  imgDark={"https://i.ibb.co/0JXpbCV/METALNESS.jpg"}
-                  imgLight={"https://i.ibb.co/0JXpbCV/METALNESS.jpg"}
+                  imgDark={"https://i.ibb.co/HzGhhSc/Metalness.webp"}
+                  imgLight={"https://i.ibb.co/HzGhhSc/Metalness.webp"}
                   theme={theme}
                   description={`Metalness`}
                 />
                 <BlogImage
-                  imgDark={"https://i.ibb.co/D9pDc23/NORMAL.jpg"}
-                  imgLight={"https://i.ibb.co/D9pDc23/NORMAL.jpg"}
+                  imgDark={"https://i.ibb.co/LQfY9n1/normal.webp"}
+                  imgLight={"https://i.ibb.co/LQfY9n1/normal.webp"}
                   theme={theme}
                   description={`Normal`}
                 />
                 <BlogImage
-                  imgDark={"https://i.ibb.co/1vmWhFr/ROUGHNESS.jpg"}
-                  imgLight={"https://i.ibb.co/1vmWhFr/ROUGHNESS.jpg"}
+                  imgDark={"https://i.ibb.co/FnyjDdB/roughness.webp"}
+                  imgLight={"https://i.ibb.co/FnyjDdB/roughness.webp"}
                   theme={theme}
                   description={`Roughness`}
                 />
                 <BlogImage
-                  imgDark={"https://i.ibb.co/jrr2XKF/EMMISIVE.jpg"}
-                  imgLight={"https://i.ibb.co/jrr2XKF/EMMISIVE.jpg"}
+                  imgDark={"https://i.ibb.co/HGhsvfk/Emmision.webp"}
+                  imgLight={"https://i.ibb.co/HGhsvfk/Emmision.webp"}
                   theme={theme}
                   description={`Emission`}
                 />

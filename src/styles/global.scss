@@ -370,3 +370,10 @@ ul {
   background-size: 200% auto;
   animation: textShine 5s ease-in-out infinite;
 }
+
+.sp-loading {
+  z-index: 0 !important;
+}
+.sp-error{
+  z-index: 0 !important;
+}

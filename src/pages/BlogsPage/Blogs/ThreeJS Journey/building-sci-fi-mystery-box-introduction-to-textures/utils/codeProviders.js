@@ -65,13 +65,13 @@ const textureLoader = new THREE.TextureLoader(loadingManager);
 
 // Load textures
 const textures = {
-  ambientOcclusion: "https://i.ibb.co/GWJ36Pw/AO.jpg",
-  color: "https://i.ibb.co/PZFKrTV/COLOR.jpg",
-  height: "https://i.ibb.co/3TRptG3/HEIGHT.png",
-  metalness: "https://i.ibb.co/0JXpbCV/METALNESS.jpg",
-  normal: "https://i.ibb.co/D9pDc23/NORMAL.jpg",
-  roughness: "https://i.ibb.co/1vmWhFr/ROUGHNESS.jpg",
-  emissive: "https://i.ibb.co/jrr2XKF/EMMISIVE.jpg",
+  ambientOcclusion: "https://i.ibb.co/b39GPJK/AO.webp",
+  color: "https://i.ibb.co/s29KQb3/Color.webp",
+  height: "https://i.ibb.co/C57vdmZ/Height.webp",
+  metalness: "https://i.ibb.co/HzGhhSc/Metalness.webp",
+  normal: "https://i.ibb.co/LQfY9n1/normal.webp",
+  roughness: "https://i.ibb.co/FnyjDdB/roughness.webp",
+  emissive: "https://i.ibb.co/HGhsvfk/Emmision.webp",
 };
 
 const textureMap = {};

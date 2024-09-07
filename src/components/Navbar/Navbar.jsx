@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react";
 import Tooltip from "../Tooltip/Tooltip";
 
 // Importing necessary assets and styles
-import logoForBlackBg from "../../assets/images/logoForBlackBg.png";
-import logoForWhiteBg from "../../assets/images/logoForWhiteBg.png";
+import logoForBlackBg from "../../assets/images/logoForBlackBg.webp";
+import logoForWhiteBg from "../../assets/images/logoForWhiteBg.webp";
 import CommandSVG from "../SVG-JSX/CommandSVG/CommandSVG";
 import "./Navbar.scss";
 import MusicSVG from "../SVG-JSX/MusicSVG/MusicSVG";

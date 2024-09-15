@@ -82,7 +82,7 @@ const AboutMe = ({ theme }) => {
             a creative web developer. I've always been fascinated by the amazing
             websites people create, and watching them made me want to build
             something similar. I've been exploring the world of web development
-            for a year and a half now, and with that, I learned lots of new
+            for over two years now, and with that, I learned lots of new
             technologies and built some{" "}
             <Link className="link" to="/projects">
               awesome projects

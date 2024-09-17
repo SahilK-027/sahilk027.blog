@@ -330,7 +330,7 @@ const BlogSeries = ({ blogSeriesData }) => {
                 </p>
               </div>
               <div className="buttons">
-                <a target="_blank" href="https://github.com/SahilK-027/sahilk027.blog/discussions">
+                <a target="_blank" href={series.discussionURL}>
                   <Tooltip content="Discussion">
                     <button>
                       <i className="fa-solid fa-comments"></i>

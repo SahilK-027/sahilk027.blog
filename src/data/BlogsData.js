@@ -10,6 +10,7 @@ export const blogSeries = [
     selector: `three-js-journey`,
     blogsCollection: [1, 2, 6], // blogNo
     startDate: "19th April 2024",
+    discussionURL: "https://github.com/SahilK-027/sahilk027.blog/discussions/4"
   },
   {
     seriesTitle:
@@ -23,6 +24,7 @@ export const blogSeries = [
     selector: `cs-fundamentals-bit-manipulation`,
     blogsCollection: [3, 4, 5], // blogNo
     startDate: "15th June 2024",
+    discussionURL: "https://github.com/SahilK-027/sahilk027.blog/discussions/5"
   },
 ];
 

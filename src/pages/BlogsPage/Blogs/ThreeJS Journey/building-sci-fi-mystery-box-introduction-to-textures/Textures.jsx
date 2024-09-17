@@ -479,7 +479,8 @@ tick();`;
                   </p>
                   <br>
                   <p class="div-flex-row">
-                    <a href="https://github.com/SahilK-027/sci-fi-3d-box-starter-code/archive/refs/heads/main.zip" type="button">Starter Code</button>
+                    <a href="https://github.com/SahilK-027/sci-fi-3d-box-starter-code/archive/refs/heads/main.zip">
+                      <button type="button">Starter Code</button>
                     </a>
                     <b class="animated-gradient">✨ If you wish you can use vite and try to code your own starter pack!</b>
                   </p>

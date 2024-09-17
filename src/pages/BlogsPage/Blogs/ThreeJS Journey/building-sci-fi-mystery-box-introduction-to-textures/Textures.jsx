@@ -479,7 +479,7 @@ tick();`;
                   </p>
                   <br>
                   <p class="div-flex-row">
-                    <a href="https://github.com/sahilk027-blogs/three-js-journey-series/tree/main/sci-fi-3d-box-starter-code" target="_blank">
+                    <a href="www.google.com" target="_blank">
                       <button type="button">Starter Code</button>
                     </a>
                     <b class="animated-gradient">✨ If you wish you can use vite and try to code your own starter pack!</b>

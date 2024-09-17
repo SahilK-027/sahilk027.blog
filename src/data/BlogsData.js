@@ -8,8 +8,6 @@ export const blogSeries = [
       "Embark on an immersive journey into the world of Three.js. This series of blog posts will guide you from the fundamentals to advanced techniques of Three.js, covering everything from setup to building complex scenes.",
     seriesUrl: `/blogs/three-js-journey`,
     selector: `three-js-journey`,
-    seriesDiscussion:
-      "https://github.com/sahilk027-blogs/three-js-journey-series/discussions",
     blogsCollection: [1, 2, 6], // blogNo
     startDate: "19th April 2024",
   },
@@ -23,8 +21,6 @@ export const blogSeries = [
       "Dive into the fun world of bit manipulation! Learn cool tricks like masking, shifting, and toggling bits. Perfect for boosting your coding skills and understanding the logic behind computer operations and algorithms.",
     seriesUrl: `/blogs/cs-fundamentals-bit-manipulation`,
     selector: `cs-fundamentals-bit-manipulation`,
-    seriesDiscussion:
-      "https://github.com/sahilk027-blogs/cs-fundamentals-bit-manipulation/discussions",
     blogsCollection: [3, 4, 5], // blogNo
     startDate: "15th June 2024",
   },

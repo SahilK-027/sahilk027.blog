@@ -267,7 +267,7 @@ const IntroThreeJS = ({
                 knowledge you need to become a Three.js wizard. From the{" "}
                 <span>basics to advanced techniques</span>, I'll cover it all,
                 one blog post at a time. With a comprehensive series of{" "}
-                <span>30+ blogs</span> planned, I'll leave no stone unturned.
+                <span>10+ blogs</span> planned, I'll leave no stone unturned.
                 Whether you're a complete beginner or a developer looking to
                 level up your skills, there's something here for everyone.
                 <br />

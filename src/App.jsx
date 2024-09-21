@@ -24,6 +24,7 @@ import BitManipulationIntro from "./pages/BlogsPage/Blogs/Bit Manipulation/let-m
 import GettingStartedWithBitManipulation from "./pages/BlogsPage/Blogs/Bit Manipulation/getting-started-with-bit-manipulation-techniques/GettingStartedBitManipulation";
 import ArithmaticsAndMemoryRepresentation from "./pages/BlogsPage/Blogs/Bit Manipulation/exploring-binary-arithmetic-and-memory-representation/ArithmaticsAndMemoryRepresentation";
 import TexturesBlog from "./pages/BlogsPage/Blogs/ThreeJS Journey/building-sci-fi-mystery-box-introduction-to-textures/Textures";
+import ParticlesBlog from "./pages/BlogsPage/Blogs/ThreeJS Journey/building-an-infinite-particle-background-intro-to-particle-system/Particles";
 
 /**
  * `App` component is the root component of the application.
@@ -247,6 +248,18 @@ const App = () => {
             path="/blogs/:journeyName/building-sci-fi-mystery-box-introduction-to-textures"
             element={
               <TexturesBlog
+                openCMDCenter={openCMDCenter}
+                controlMusic={controlMusic}
+                isMusicPlaying={isMusicPlaying}
+                theme={theme}
+                toggleTheme={toggleTheme}
+              />
+            }
+          />
+          <Route
+            path="/blogs/:journeyName/building-an-infinite-particle-background-intro-to-particle-system"
+            element={
+              <ParticlesBlog
                 openCMDCenter={openCMDCenter}
                 controlMusic={controlMusic}
                 isMusicPlaying={isMusicPlaying}

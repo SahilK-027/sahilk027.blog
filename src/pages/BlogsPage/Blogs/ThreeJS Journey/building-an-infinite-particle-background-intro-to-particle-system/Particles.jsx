@@ -7,8 +7,9 @@ import LeftSidebar from "../../../../../components/LeftSideBar/LeftSidebar";
 import { Link } from "react-router-dom";
 import "../../Blogs.scss";
 import { animated, useSpring } from "react-spring";
+import SuzanneThreeBG from "../../../../../components/SuzanneThreeBG/SuzanneThreeBG";
 
-const NEWBLOG = ({
+const ParticlesBlog = ({
   openCMDCenter,
   controlMusic,
   isMusicPlaying,
@@ -24,10 +25,7 @@ const NEWBLOG = ({
     window.scrollTo(0, 0);
     setCurrBlog(
       blogPost.find((blog) => {
-        /* ==========================================================
-            ! Change this to the blog number of the new blog
-        ========================================================== */
-        return blog.blogNo === 3;
+        return blog.blogNo === 7;
       })
     );
   }, [currBlog]);
@@ -64,9 +62,6 @@ const NEWBLOG = ({
     return () => window.removeEventListener("scroll", handleScroll);
   });
 
-  /* ==========================================================
-      ! Please make sure you have at max 8 sections in the array
-  ========================================================== */
   const sections = [];
 
   return (
@@ -107,13 +102,9 @@ const NEWBLOG = ({
               </div>
             </div>
           </div>
-          {/* Blog series poster */}
-
+          <SuzanneThreeBG theme={theme} />
           <div className="main-blog-content" onScroll={handleScroll}>
-            {/* ==========================================================
-               ! Change the content of the new blog here
-            ========================================================== */}
-            <p className="open-txt">THIS IS NEW BLOG</p>
+            <p className="open-txt">Publishing soon...!</p>
           </div>
         </div>
       </div>
@@ -123,4 +114,4 @@ const NEWBLOG = ({
   );
 };
 
-export default NEWBLOG;
+export default ParticlesBlog;

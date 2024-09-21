@@ -8,9 +8,9 @@ export const blogSeries = [
       "Embark on an immersive journey into the world of Three.js. This series of blog posts will guide you from the fundamentals to advanced techniques of Three.js, covering everything from setup to building complex scenes.",
     seriesUrl: `/blogs/three-js-journey`,
     selector: `three-js-journey`,
-    blogsCollection: [1, 2, 6], // blogNo
+    blogsCollection: [1, 2, 6, 7], // blogNo
     startDate: "19th April 2024",
-    discussionURL: "https://github.com/SahilK-027/sahilk027.blog/discussions/4"
+    discussionURL: "https://github.com/SahilK-027/sahilk027.blog/discussions/4",
   },
   {
     seriesTitle:
@@ -24,7 +24,7 @@ export const blogSeries = [
     selector: `cs-fundamentals-bit-manipulation`,
     blogsCollection: [3, 4, 5], // blogNo
     startDate: "15th June 2024",
-    discussionURL: "https://github.com/SahilK-027/sahilk027.blog/discussions/5"
+    discussionURL: "https://github.com/SahilK-027/sahilk027.blog/discussions/5",
   },
 ];
 
@@ -154,6 +154,27 @@ export const blogPost = [
       "Textures",
     ],
     readtime: "15 mins",
+  },
+  {
+    blogNo: 7,
+    seriesID: 1,
+    sequenceNumberInSeries: 4,
+    seriesTitle: "Three.js Journey",
+    filterTag: "Threejs Journey",
+    blogTitle:
+      "Building an Infinite Particle Background: Intro to Particle System",
+    blogDate: "-",
+    selector:
+      "building-an-infinite-particle-background-intro-to-particle-system",
+    blogUrl: `/blogs/three-js-journey/building-an-infinite-particle-background-intro-to-particle-system`,
+    seriesUrl: `/blogs/three-js-journey`,
+    keywords: [
+      "Building an Infinite Particle Background: Intro to Particle System",
+      "Three.js",
+      "Threejs Journey",
+      "Particles",
+    ],
+    readtime: "-",
   },
 ];
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./MusicSVG.scss";
 
 const MusicSVG = ({ controlMusic, isMusicPlaying }) => {

@@ -104,7 +104,7 @@ const ParticlesBlog = ({
           </div>
           <SuzanneThreeBG theme={theme} />
           <div className="main-blog-content" onScroll={handleScroll}>
-            <p className="open-txt">Publishing soon...!</p>
+            <p className="open-txt">Publishing On 2nd Oct 2024...Stay Tuned! </p>
           </div>
         </div>
       </div>

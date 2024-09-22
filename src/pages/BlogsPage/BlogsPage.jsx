@@ -312,7 +312,7 @@ const BlogSeries = ({ blogSeriesData }) => {
       <h2 className="section-header">Blog Series</h2>
       <div className="blog-series-container">
         {blogSeriesData.map((series, index) => (
-          <a href={series.seriesUrl}>
+          <Link to={series.seriesUrl}>
             <div key={index} className="blog-series-card">
               <div className="blog-series-card-info">
                 <h3
@@ -339,7 +339,7 @@ const BlogSeries = ({ blogSeriesData }) => {
                 </a>
               </div>
             </div>
-          </a>
+          </Link>
         ))}
       </div>
     </>

@@ -239,9 +239,8 @@ const IntroThreeJS = ({
                 myself a <span>creative web developer</span>. I've always been
                 fascinated by the amazing websites people create, and watching
                 them made me want to build something similar. I've been
-                exploring the world of web development for over two years
-                now, and with that, I learned lots of new technologies and built
-                some{" "}
+                exploring the world of web development for over two years now,
+                and with that, I learned lots of new technologies and built some{" "}
                 <Link className="link" to="/projects">
                   {" "}
                   awesome projects{" "}
@@ -274,49 +273,49 @@ const IntroThreeJS = ({
                 So, what exactly will you learn? Here's a sneak peek:
                 <ul>
                   <li>
-                    <i class="fa-solid fa-arrow-right"></i>{" "}
+                    <i className="fa-solid fa-arrow-right"></i>{" "}
                     <b>Getting Started with Three.js:</b> We'll kick things off
                     by laying down the foundation. You'll learn how to set up
                     your development environment, grasp the core concepts of
                     Three.js, and get comfortable with its workflow.
                   </li>
                   <li>
-                    <i class="fa-solid fa-arrow-right"></i>{" "}
+                    <i className="fa-solid fa-arrow-right"></i>{" "}
                     <b>Creating 3D Scenes:</b> Prepare to unleash your
                     creativity as we delve into the art of crafting breathtaking
                     3D scenes from scratch. From modeling and texturing to
                     lighting and scene composition, I'll cover it all.
                   </li>
                   <li>
-                    <i class="fa-solid fa-arrow-right"></i>{" "}
+                    <i className="fa-solid fa-arrow-right"></i>{" "}
                     <b>Animating Your Creations:</b> Watch your creations come
                     to life as we explore the magical world of animations.
                     Whether it's simple movements or complex interactions,
                     you'll learn how to breathe soul into your 3D masterpieces.
                   </li>
                   <li>
-                    <i class="fa-solid fa-arrow-right"></i>{" "}
+                    <i className="fa-solid fa-arrow-right"></i>{" "}
                     <b>Working with Materials and Shaders:</b> Ready to take
                     your visuals to the next level? We'll dive deep into the
                     realm of materials and shaders, teaching you how to add
                     depth, realism, and stunning visual effects to your scenes.
                   </li>
                   <li>
-                    <i class="fa-solid fa-arrow-right"></i>{" "}
+                    <i className="fa-solid fa-arrow-right"></i>{" "}
                     <b>Post-Processing:</b> Discover the secrets of
                     post-processing as we explore techniques to enhance the
                     visual fidelity of your renders, add cinematic effects, and
                     elevate your creations to new heights of awesomeness.
                   </li>
                   <li>
-                    <i class="fa-solid fa-arrow-right"></i>{" "}
+                    <i className="fa-solid fa-arrow-right"></i>{" "}
                     <b>Realistic Renders:</b> Ever wondered how to achieve
                     photorealistic renders in Three.js? We'll uncover the
                     techniques and best practices to make your scenes look like
                     they belong in a blockbuster movie.
                   </li>
                   <li>
-                    <i class="fa-solid fa-arrow-right"></i>{" "}
+                    <i className="fa-solid fa-arrow-right"></i>{" "}
                     <b>FBO, Particles, GPU Intensive Stuff:</b> Brace yourself
                     for a deep dive into the more advanced realms of Three.js.
                     From Frame Buffer Objects (FBO) to GPU-intensive particle
@@ -324,7 +323,7 @@ const IntroThreeJS = ({
                     take your projects to the next level.
                   </li>
                   <li>
-                    <i class="fa-solid fa-arrow-right"></i>{" "}
+                    <i className="fa-solid fa-arrow-right"></i>{" "}
                     <b>Optimizing Performance:</b> We'll wrap up our journey by
                     focusing on optimization techniques to ensure your creations
                     run like a well-oiled machine. Learn how to fine-tune your

@@ -10,6 +10,23 @@
       padding-top: 4px;
       padding-bottom: 4px;
       font-size: 16px;
+
+      ul {
+        li {
+          margin: calc(0.725rem) 0;
+
+          b {
+            font-weight: 500;
+            color: var(--color-text-primary);
+          }
+
+          i {
+            color: var(--color-anchor);
+            font-size: 16px;
+            margin-right: 6px;
+          }
+        }
+      }
     }
 
     height: 100%;
@@ -114,33 +131,6 @@
 
         span {
           color: var(--color-pink);
-        }
-      }
-
-      .projects-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 20px;
-        margin-top: 10px;
-      }
-
-      .project {
-        width: 100%;
-        text-align: center;
-
-        video {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          border-radius: 10px;
-          pointer-events: all;
-          cursor: pointer;
-        }
-      }
-
-      @media screen and (max-width: 768px) {
-        .projects-grid {
-          grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
         }
       }
     }

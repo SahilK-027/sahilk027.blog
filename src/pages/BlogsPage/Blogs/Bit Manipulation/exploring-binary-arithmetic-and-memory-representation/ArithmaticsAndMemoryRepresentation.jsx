@@ -315,17 +315,17 @@ This results in the binary representation of -5.`;
                 32-bit registers.
                 <ul>
                   <li>
-                    <i class="fa-solid fa-arrow-right"></i> <b>Bits:</b> The
+                    <i className="fa-solid fa-arrow-right"></i> <b>Bits:</b> The
                     smallest unit of data in a computer, a bit can be either 0
                     or 1.
                   </li>
                   <li>
-                    <i class="fa-solid fa-arrow-right"></i> <b>Bytes:</b> A
+                    <i className="fa-solid fa-arrow-right"></i> <b>Bytes:</b> A
                     group of 8 bits.
                   </li>
                   <li>
-                    <i class="fa-solid fa-arrow-right"></i> <b>Nibbles:</b> Half
-                    of a byte, consisting of 4 bits.
+                    <i className="fa-solid fa-arrow-right"></i> <b>Nibbles:</b>{" "}
+                    Half of a byte, consisting of 4 bits.
                   </li>
                 </ul>
               </p>
@@ -352,26 +352,27 @@ This results in the binary representation of -5.`;
                 despite this apparent inefficiency:
                 <ul>
                   <li>
-                    <i class="fa-solid fa-arrow-right"></i> <b>Power of Two:</b>{" "}
-                    Computers use binary (base-2) representation, and powers of
-                    two (2^n) fit naturally into this system. This makes
-                    operations simpler and more efficient.
+                    <i className="fa-solid fa-arrow-right"></i>{" "}
+                    <b>Power of Two:</b> Computers use binary (base-2)
+                    representation, and powers of two (2^n) fit naturally into
+                    this system. This makes operations simpler and more
+                    efficient.
                   </li>
                   <li>
-                    <i class="fa-solid fa-arrow-right"></i>{" "}
+                    <i className="fa-solid fa-arrow-right"></i>{" "}
                     <b>Hardware Design:</b> Using standard bit sizes simplifies
                     the design of hardware components like processors, memory,
                     and buses. It also standardizes how data is stored and
                     transferred.
                   </li>
                   <li>
-                    <i class="fa-solid fa-arrow-right"></i>{" "}
+                    <i className="fa-solid fa-arrow-right"></i>{" "}
                     <b>Addressing and Data Types:</b> Standard bit sizes align
                     with common data types and address lengths, making it easier
                     to handle data and memory addresses consistently.
                   </li>
                   <li>
-                    <i class="fa-solid fa-arrow-right"></i>{" "}
+                    <i className="fa-solid fa-arrow-right"></i>{" "}
                     <b>Compatibility:</b> Standardizing on larger register sizes
                     (like 64-bit) ensures compatibility across different
                     hardware architectures and software applications. It allows
@@ -379,7 +380,7 @@ This results in the binary representation of -5.`;
                     assuming they adhere to the same architecture.
                   </li>
                   <li>
-                    <i class="fa-solid fa-arrow-right"></i>{" "}
+                    <i className="fa-solid fa-arrow-right"></i>{" "}
                     <b>Future-Proofing:</b> As technology advances and memory
                     capacities increase, larger register sizes (64-bit) become
                     more practical and necessary. They provide more headroom for
@@ -404,21 +405,21 @@ This results in the binary representation of -5.`;
                 are the basic rules for binary addition:
                 <ul>
                   <li>
-                    <i class="fa-solid fa-arrow-right"></i> <b>0 + 0 = 0:</b>{" "}
-                    Adding zero to zero yields zero.
+                    <i className="fa-solid fa-arrow-right"></i>{" "}
+                    <b>0 + 0 = 0:</b> Adding zero to zero yields zero.
                   </li>
                   <li>
-                    <i class="fa-solid fa-arrow-right"></i> <b>0 + 1 = 1:</b>{" "}
-                    Adding zero to one yields one.
+                    <i className="fa-solid fa-arrow-right"></i>{" "}
+                    <b>0 + 1 = 1:</b> Adding zero to one yields one.
                   </li>
                   <li>
-                    <i class="fa-solid fa-arrow-right"></i> <b>1 + 0 = 1:</b>{" "}
-                    Adding one to zero yields one
+                    <i className="fa-solid fa-arrow-right"></i>{" "}
+                    <b>1 + 0 = 1:</b> Adding one to zero yields one
                   </li>
                   <li>
-                    <i class="fa-solid fa-arrow-right"></i> <b>1 + 1 = 10:</b>{" "}
-                    Adding one to one yields zero and a carry-over of one
-                    (equivalent to 2 in decimal).
+                    <i className="fa-solid fa-arrow-right"></i>{" "}
+                    <b>1 + 1 = 10:</b> Adding one to one yields zero and a
+                    carry-over of one (equivalent to 2 in decimal).
                   </li>
                 </ul>
               </p>
@@ -436,19 +437,19 @@ This results in the binary representation of -5.`;
                 binary subtraction:
                 <ul>
                   <li>
-                    <i class="fa-solid fa-arrow-right"></i> <b>0 - 0 = 0:</b>{" "}
-                    Subtracting zero from zero yields zero.
+                    <i className="fa-solid fa-arrow-right"></i>{" "}
+                    <b>0 - 0 = 0:</b> Subtracting zero from zero yields zero.
                   </li>
                   <li>
-                    <i class="fa-solid fa-arrow-right"></i> <b>1 - 0 = 1:</b>{" "}
-                    Subtracting zero from one yields one.
+                    <i className="fa-solid fa-arrow-right"></i>{" "}
+                    <b>1 - 0 = 1:</b> Subtracting zero from one yields one.
                   </li>
                   <li>
-                    <i class="fa-solid fa-arrow-right"></i> <b>1 - 1 = 0:</b>{" "}
-                    Subtracting one from one yields zero.
+                    <i className="fa-solid fa-arrow-right"></i>{" "}
+                    <b>1 - 1 = 0:</b> Subtracting one from one yields zero.
                   </li>
                   <li>
-                    <i class="fa-solid fa-arrow-right"></i> <b>0 - 1:</b>{" "}
+                    <i className="fa-solid fa-arrow-right"></i> <b>0 - 1:</b>{" "}
                     Requires borrowing from the next higher bit.
                   </li>
                 </ul>
@@ -674,16 +675,16 @@ This results in the binary representation of -5.`;
                 In a typical 32-bit system:
                 <ul>
                   <li>
-                    <i class="fa-solid fa-arrow-right"></i> The integer range is
-                    from <b> −2^31 to 2^31 − 1</b>.
+                    <i className="fa-solid fa-arrow-right"></i> The integer
+                    range is from <b> −2^31 to 2^31 − 1</b>.
                   </li>
                   <li>
-                    <i class="fa-solid fa-arrow-right"></i> The maximum integer
-                    value <b>(`INT_MAX`) is 2^31−1</b>.
+                    <i className="fa-solid fa-arrow-right"></i> The maximum
+                    integer value <b>(`INT_MAX`) is 2^31−1</b>.
                   </li>
                   <li>
-                    <i class="fa-solid fa-arrow-right"></i> The minimum integer
-                    value <b>(`INT_MIN`) is −2^31</b>.
+                    <i className="fa-solid fa-arrow-right"></i> The minimum
+                    integer value <b>(`INT_MIN`) is −2^31</b>.
                   </li>
                 </ul>
               </p>
@@ -692,12 +693,12 @@ This results in the binary representation of -5.`;
                 For a 32-bit integer:
                 <ul>
                   <li>
-                    <i class="fa-solid fa-arrow-right"></i> `INT_MAX`
+                    <i className="fa-solid fa-arrow-right"></i> `INT_MAX`
                     (2147483647) in binary is: `01111111 11111111 11111111
                     11111111`.
                   </li>
                   <li>
-                    <i class="fa-solid fa-arrow-right"></i> `INT_MIN`
+                    <i className="fa-solid fa-arrow-right"></i> `INT_MIN`
                     (-2147483648) in binary is: `10000000 00000000 00000000
                     00000000`.
                   </li>

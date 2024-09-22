@@ -348,7 +348,7 @@ tick();`;
                 common types of textures:
                 <ul>
                   <li>
-                    <i class="fa-solid fa-arrow-right"></i>{" "}
+                    <i className="fa-solid fa-arrow-right"></i>{" "}
                     <b>Ambient Occlusion (AO) Map:</b> Simulates the soft
                     shadows that occur in crevices, corners, and other areas
                     where ambient light is occluded or blocked. AO maps add
@@ -357,7 +357,7 @@ tick();`;
                     need for complex lighting calculations.
                   </li>
                   <li>
-                    <i class="fa-solid fa-arrow-right"></i>{" "}
+                    <i className="fa-solid fa-arrow-right"></i>{" "}
                     <b>Color (Diffuse) Map:</b> Determines the base color of the
                     surface. This is the most straightforward type of texture
                     map, applying the main color to the object. It gives the
@@ -365,16 +365,16 @@ tick();`;
                     patterns.
                   </li>
                   <li>
-                    <i class="fa-solid fa-arrow-right"></i> <b>Height Map:</b>{" "}
-                    Represents the elevation or depth of the surface. Height
-                    maps are often used for displacement mapping, where the
-                    geometry is physically altered based on the values in the
-                    texture. High values raise the surface, while low values
-                    create depressions, adding actual depth and complexity to
-                    the surface.
+                    <i className="fa-solid fa-arrow-right"></i>{" "}
+                    <b>Height Map:</b> Represents the elevation or depth of the
+                    surface. Height maps are often used for displacement
+                    mapping, where the geometry is physically altered based on
+                    the values in the texture. High values raise the surface,
+                    while low values create depressions, adding actual depth and
+                    complexity to the surface.
                   </li>
                   <li>
-                    <i class="fa-solid fa-arrow-right"></i>{" "}
+                    <i className="fa-solid fa-arrow-right"></i>{" "}
                     <b>Roughness Map:</b> Controls the smoothness or roughness
                     of the surface. Roughness maps influence how light interacts
                     with the surface by determining how sharp or blurred
@@ -383,7 +383,7 @@ tick();`;
                     roughness value will create a glossy, reflective surface.
                   </li>
                   <li>
-                    <i class="fa-solid fa-arrow-right"></i>{" "}
+                    <i className="fa-solid fa-arrow-right"></i>{" "}
                     <b>Metalness Map:</b> Defines which parts of the surface are
                     metallic and which are non-metallic. Metalness maps help
                     simulate the reflective properties of metals. A value of 1
@@ -394,22 +394,22 @@ tick();`;
                     achieve realistic effects.
                   </li>
                   <li>
-                    <i class="fa-solid fa-arrow-right"></i> <b>Normal Map:</b>{" "}
-                    Adds fine detail to the surface without changing the actual
-                    geometry. Normal maps simulate small surface details such as
-                    bumps, wrinkles, or grooves by altering the way light
-                    interacts with the surface. They give the illusion of
-                    complex surface detail while keeping the underlying geometry
-                    simple.
+                    <i className="fa-solid fa-arrow-right"></i>{" "}
+                    <b>Normal Map:</b> Adds fine detail to the surface without
+                    changing the actual geometry. Normal maps simulate small
+                    surface details such as bumps, wrinkles, or grooves by
+                    altering the way light interacts with the surface. They give
+                    the illusion of complex surface detail while keeping the
+                    underlying geometry simple.
                   </li>
                   <li>
-                    <i class="fa-solid fa-arrow-right"></i> <b>Emissive Map:</b>{" "}
-                    Makes parts of the surface appear to emit light. Emissive
-                    maps make certain areas of the texture glow as if they are
-                    self-illuminated, independent of the scene’s lighting. This
-                    effect is commonly used for things like glowing screens,
-                    neon signs, or any element that needs to appear as a light
-                    source.
+                    <i className="fa-solid fa-arrow-right"></i>{" "}
+                    <b>Emissive Map:</b> Makes parts of the surface appear to
+                    emit light. Emissive maps make certain areas of the texture
+                    glow as if they are self-illuminated, independent of the
+                    scene’s lighting. This effect is commonly used for things
+                    like glowing screens, neon signs, or any element that needs
+                    to appear as a light source.
                   </li>
                 </ul>
               </p>
@@ -771,24 +771,24 @@ tick();`;
                 Here’s a quick recap of what you have learned:
                 <ul>
                   <li>
-                    <i class="fa-solid fa-arrow-right"></i>{" "}
+                    <i className="fa-solid fa-arrow-right"></i>{" "}
                     <b>Texture Loading:</b> We learned how to load and manage
                     different types of textures, each adding a unique detail to
                     our mystery box.
                   </li>
                   <li>
-                    <i class="fa-solid fa-arrow-right"></i>{" "}
+                    <i className="fa-solid fa-arrow-right"></i>{" "}
                     <b>Applying Textures:</b> We applied these textures to our
                     3D object using MeshStandardMaterial, enhancing its realism
                     with maps for color, normal, height, and more.
                   </li>
                   <li>
-                    <i class="fa-solid fa-arrow-right"></i>{" "}
+                    <i className="fa-solid fa-arrow-right"></i>{" "}
                     <b>UV Unwrapping:</b> We understood the importance of UV
                     mapping in accurately projecting 2D textures onto 3D models.
                   </li>
                   <li>
-                    <i class="fa-solid fa-arrow-right"></i>{" "}
+                    <i className="fa-solid fa-arrow-right"></i>{" "}
                     <b>Adding Controls & Animation:</b> We used Orbit Controls
                     to give users the ability to interact with the scene and
                     explore from different angles. Finally, we added a fun disco

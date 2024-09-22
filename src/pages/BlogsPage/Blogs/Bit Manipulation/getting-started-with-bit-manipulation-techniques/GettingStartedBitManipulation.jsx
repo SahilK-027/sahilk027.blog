@@ -202,25 +202,25 @@ const GettingStartedWithBitManipulation = ({
                 used for different purposes, with the most common ones being:
                 <ul>
                   <li>
-                    <i class="fa-solid fa-arrow-right"></i>{" "}
+                    <i className="fa-solid fa-arrow-right"></i>{" "}
                     <b>Decimal Number System (Base-10):</b> Set of symbols that
                     can be used to generate numbers: 0, 1, 2, 3, 4, 5, 6, 7, 8,
                     9. {" => "} Total symbols: 10.
                   </li>
                   <li>
-                    <i class="fa-solid fa-arrow-right"></i>{" "}
+                    <i className="fa-solid fa-arrow-right"></i>{" "}
                     <b>Octal Number System (Base-8):</b> Set of symbols that can
                     be used to generate numbers: 0, 1, 2, 3, 4, 5, 6, 7.{" "}
                     {" => "} Total symbols: 8.
                   </li>
                   <li>
-                    <i class="fa-solid fa-arrow-right"></i>{" "}
+                    <i className="fa-solid fa-arrow-right"></i>{" "}
                     <b>Hexadecimal Number System (Base-16):</b> Set of symbols
                     that can be used to generate numbers: 0, 1, 2, 3, 4, 5, 6,
                     7, 8, 9, A, B, C, D, E, F {" => "} Total symbols: 16.
                   </li>
                   <li>
-                    <i class="fa-solid fa-arrow-right"></i>{" "}
+                    <i className="fa-solid fa-arrow-right"></i>{" "}
                     <b>Binary Number System (Base-2):</b> Set of symbols that
                     can be used to generate numbers: 0, 1 {" => "} Total
                     symbols: 2.
@@ -378,12 +378,12 @@ const GettingStartedWithBitManipulation = ({
                 For a binary number of length n:
                 <ul>
                   <li>
-                    <i class="fa-solid fa-arrow-right"></i> Each position in the
-                    number can be occupied by either a '0' or a '1'.
+                    <i className="fa-solid fa-arrow-right"></i> Each position in
+                    the number can be occupied by either a '0' or a '1'.
                   </li>
                   <li>
-                    <i class="fa-solid fa-arrow-right"></i> The total number of
-                    unique permutations for an n-bit binary number is 2^n.
+                    <i className="fa-solid fa-arrow-right"></i> The total number
+                    of unique permutations for an n-bit binary number is 2^n.
                   </li>
                 </ul>
                 You can infer more about this using the diagram below.

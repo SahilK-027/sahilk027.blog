@@ -20,6 +20,7 @@ import CodeSandpack from "../../../../../components/CodeSandpack/CodeSandpack";
 import SuzanneThreeBG from "../../../../../components/SuzanneThreeBG/SuzanneThreeBG";
 import { cssSandpack, htmlSandpack, jsSandpack } from "./utils/codeProviders";
 import { animated, useSpring } from "react-spring";
+import VideoGrid from "../../../../../components/VideoGrid/VideoGrid";
 
 const First3DProject = ({
   openCMDCenter,
@@ -73,16 +74,6 @@ const First3DProject = ({
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   });
-
-  // Function to toggle video playback
-  const toggleVideo = (videoId) => {
-    const video = document.getElementById(videoId);
-    if (video.paused) {
-      video.play();
-    } else {
-      video.pause();
-    }
-  };
 
   // ! Please make sure you have at max 8 sections in the array
   const sections = [
@@ -346,6 +337,25 @@ tick();
     },
   };
 
+  const videosData = {
+    "bruno-simon": {
+      url: "https://bruno-simon.com/",
+      video: BronoSimonVideo,
+    },
+    lusion: {
+      url: "https://lusion.co/",
+      video: LusionVideo,
+    },
+    "active-theory": {
+      url: "https://activetheory.net/",
+      video: ActiveTheoryVideo,
+    },
+    "coastal-world": {
+      url: "https://coastalworld.com/",
+      video: CoastalWorldVideo,
+    },
+  };
+
   return (
     <>
       <Navbar
@@ -447,7 +457,7 @@ tick();
                 closer look at our trusty sidekick—Three.JS!
                 <ul>
                   <li>
-                    <i class="fa-solid fa-arrow-right"></i>{" "}
+                    <i className="fa-solid fa-arrow-right"></i>{" "}
                     <b>Three.js in a Nutshell:</b> Three.js is a JavaScript
                     library that speaks the language of browsers, allowing you
                     to build awesome animated 3D experiences in a snap. Ever
@@ -464,7 +474,7 @@ tick();
                     a stage for dazzling 3D performances.
                   </li>
                   <li>
-                    <i class="fa-solid fa-arrow-right"></i>{" "}
+                    <i className="fa-solid fa-arrow-right"></i>{" "}
                     <b>No High-End PCs Required:</b> Forget about needing a
                     supercomputer for breathtaking 3D visuals. Three.js lets you
                     create jaw-dropping scenes with nothing but your everyday
@@ -474,7 +484,7 @@ tick();
                     your corner?
                   </li>
                   <li>
-                    <i class="fa-solid fa-arrow-right"></i>{" "}
+                    <i className="fa-solid fa-arrow-right"></i>{" "}
                     <b>Three.js Ecosystem:</b> Three.JS is an{" "}
                     <a
                       href="https://github.com/mrdoob/three.js"
@@ -487,7 +497,7 @@ tick();
                     and maintain this awesome library.
                   </li>
                   <li>
-                    <i class="fa-solid fa-arrow-right"></i>{" "}
+                    <i className="fa-solid fa-arrow-right"></i>{" "}
                     <b>Craft Anything, Anywhere:</b> Whether you're building a
                     game, directing a virtual music video, visualizing
                     scientific data, or want to build an interactive web
@@ -504,70 +514,7 @@ tick();
               <h3 className="blog-section-title">
                 Some of my Favorite Three.js Projects
               </h3>{" "}
-              <p>
-                <div className="projects-grid">
-                  <div className="project">
-                    <a
-                      href="https://bruno-simon.com/"
-                      target="_blank"
-                      onMouseEnter={() => toggleVideo("bruno-simon-video")}
-                      onMouseLeave={() => toggleVideo("bruno-simon-video")}
-                    >
-                      <video
-                        id="bruno-simon-video"
-                        src={BronoSimonVideo}
-                        loop
-                        className="project-video"
-                      ></video>
-                    </a>
-                  </div>
-                  <div className="project">
-                    <a
-                      href="https://lusion.co/"
-                      target="_blank"
-                      onMouseEnter={() => toggleVideo("lusion-video")}
-                      onMouseLeave={() => toggleVideo("lusion-video")}
-                    >
-                      <video
-                        id="lusion-video"
-                        src={LusionVideo}
-                        loop
-                        className="project-video"
-                      ></video>
-                    </a>
-                  </div>
-                  <div className="project">
-                    <a
-                      href="https://activetheory.net/"
-                      target="_blank"
-                      onMouseEnter={() => toggleVideo("active-theory-video")}
-                      onMouseLeave={() => toggleVideo("active-theory-video")}
-                    >
-                      <video
-                        id="active-theory-video"
-                        src={ActiveTheoryVideo}
-                        loop
-                        className="project-video"
-                      ></video>
-                    </a>
-                  </div>
-                  <div className="project">
-                    <a
-                      href="https://coastalworld.com/"
-                      target="_blank"
-                      onMouseEnter={() => toggleVideo("coastal-world-video")}
-                      onMouseLeave={() => toggleVideo("coastal-world-video")}
-                    >
-                      <video
-                        id="coastal-world-video"
-                        src={CoastalWorldVideo}
-                        loop
-                        className="project-video"
-                      ></video>
-                    </a>
-                  </div>
-                </div>
-              </p>
+              <VideoGrid videos={videosData} />
               <InfoDiv infoText={infoFavProjects} />
             </div>
 
@@ -581,7 +528,7 @@ tick();
               <p>
                 <ul>
                   <li>
-                    <i class="fa-regular fa-circle-dot"></i>{" "}
+                    <i className="fa-regular fa-circle-dot"></i>{" "}
                     <b> Scene - The Stage for Your 3D World:</b> In the world of
                     Three.js, a 'Scene' is the collection of all the objects,
                     the stage where you gather your 3D stuff to interact; it's
@@ -590,7 +537,7 @@ tick();
                   <CodeSnippet codeText={sceneCode} theme={theme} />
                   <br />
                   <li>
-                    <i class="fa-regular fa-circle-dot"></i>{" "}
+                    <i className="fa-regular fa-circle-dot"></i>{" "}
                     <b> Camera - Your virtual DSLR: </b> The 'Camera' determines
                     what part of the 3D world is visible to the user. The camera
                     is like eyes through which your audience will spectate the
@@ -600,14 +547,14 @@ tick();
                   <InsightDiv insightText={insightCamera} />
                   <br />
                   <li>
-                    <i class="fa-regular fa-circle-dot"></i>{" "}
+                    <i className="fa-regular fa-circle-dot"></i>{" "}
                     <b> Renderer - The Assistant: </b> The 'Renderer' transforms
                     your 3D scene into pixels visible on the screen.
                   </li>
                   <CodeSnippet codeText={rendererCode} theme={theme} />
                   <br />
                   <li>
-                    <i class="fa-regular fa-circle-dot"></i>{" "}
+                    <i className="fa-regular fa-circle-dot"></i>{" "}
                     <b>Geometry - The Building Blocks: </b> 'Geometry' is where
                     you define the shape and structure of your 3D objects. This
                     is like the blueprint for your 3D objects. There are many 3D
@@ -619,7 +566,7 @@ tick();
                   <CodeSnippet codeText={geometryCode} theme={theme} />
                   <br />
                   <li>
-                    <i class="fa-regular fa-circle-dot"></i>{" "}
+                    <i className="fa-regular fa-circle-dot"></i>{" "}
                     <b>Material - The Skin of Your Objects: </b> 'Material' is
                     the outer layer of your 3D objects, defining their
                     appearance. Like if you have a sphere and you want it to
@@ -631,7 +578,7 @@ tick();
                   <CodeSnippet codeText={materialCode} theme={theme} />
                   <br />
                   <li>
-                    <i class="fa-regular fa-circle-dot"></i>{" "}
+                    <i className="fa-regular fa-circle-dot"></i>{" "}
                     <b>Mesh - Bringing Geometry and Material Together: </b> I
                     define 'Mesh' as the marriage of geometry and material 😂,
                     creating a tangible 3D object. It creates the complete
@@ -643,7 +590,7 @@ tick();
                   <CodeSnippet codeText={meshCode} theme={theme} />
                   <br />
                   <li>
-                    <i class="fa-regular fa-circle-dot"></i>{" "}
+                    <i className="fa-regular fa-circle-dot"></i>{" "}
                     <b>Lights & shadows - Illuminating the Stage: </b>
                     Before explaining you about Lights and shadows let me tell
                     you a story of the invisible 3D model!

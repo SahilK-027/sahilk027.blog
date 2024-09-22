@@ -195,7 +195,17 @@ const ParticlesBlog = ({
                     <i className="fa-solid fa-arrow-right"></i>{" "}
                     <b>Texture Application: </b> Enhance your particles with
                     textures to create more realistic or stylized effects.
-                    Applying what we learned in the previous blog.
+                    Applying what we learned in the{" "}
+                    <Link
+                      className="link"
+                      to={
+                        "/blogs/three-js-journey/building-sci-fi-mystery-box-introduction-to-textures"
+                      }
+                      target="_blank"
+                    >
+                      previous blog
+                    </Link>
+                    .
                   </li>
                   <li>
                     <i className="fa-solid fa-arrow-right"></i>{" "}

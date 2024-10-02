@@ -367,7 +367,7 @@ const GetInTouch = () => {
           >
             sahilkandhare027@gmail.com
           </a>
-          . OR Follow me at{" "}
+          . OR explore more projects I have built here at{" "}
           <a
             target="_blank"
             className="link"

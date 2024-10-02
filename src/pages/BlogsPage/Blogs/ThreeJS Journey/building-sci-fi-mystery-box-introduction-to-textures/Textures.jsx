@@ -319,7 +319,7 @@ tick();`;
                 .
                 <br />
               </p>
-              <p>What we will build?</p>
+              <p>What will we build?</p>
               <div className="video-container">
                 <video
                   className="video"

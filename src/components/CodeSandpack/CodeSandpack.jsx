@@ -11,6 +11,7 @@ const CodeSandpack = ({ files, theme, layout = "preview" }) => {
         customSetup={{
           dependencies: {
             three: "latest",
+            "lil-gui": "latest"
           },
         }}
         files={files}

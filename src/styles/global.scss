@@ -374,6 +374,21 @@ ul {
 .sp-loading {
   z-index: 0 !important;
 }
-.sp-error{
+
+.sp-error {
   z-index: 0 !important;
+}
+
+code {
+  display: inline-block;
+  position: relative;
+  margin-bottom: 1px;
+  padding-left: 8px;
+  padding-right: 8px;
+  border-radius: 4px;
+  font-weight: 700;
+  color: #fff;
+  font-family: Roboto Mono, monospace;
+  background: #7444ff78;
+  font-size: .85rem;
 }

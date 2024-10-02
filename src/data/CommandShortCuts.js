@@ -63,7 +63,7 @@ export const cmdItems = [
       {
         href: "https://github.com/SahilK-027",
         icon: "fa-brands fa-github",
-        text: "Checkout My GitHub",
+        text: "Checkout my GitHub",
         target: "_blank",
       },
       {

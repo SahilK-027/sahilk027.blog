@@ -163,7 +163,7 @@ export const blogPost = [
     filterTag: "Threejs Journey",
     blogTitle:
       "Building an Infinite Particle Background: Intro to Particle System",
-    blogDate: "-",
+    blogDate: "2nd October 2024",
     selector:
       "building-an-infinite-particle-background-intro-to-particle-system",
     blogUrl: `/blogs/three-js-journey/building-an-infinite-particle-background-intro-to-particle-system`,
@@ -174,7 +174,7 @@ export const blogPost = [
       "Threejs Journey",
       "Particles",
     ],
-    readtime: "-",
+    readtime: "10 mins",
   },
 ];
 

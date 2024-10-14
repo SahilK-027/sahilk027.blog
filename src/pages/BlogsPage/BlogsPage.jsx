@@ -31,7 +31,7 @@ const BlogIntroTxt = () => {
       <br />
       <h1>
         Join me on this exciting journey. 🚀 Here, I share my experiences as a
-        frontend developer, exploring <span> React</span>, <span>Angular</span>,{" "}
+        software developer, exploring <span> React</span>, <span>Angular</span>,{" "}
         <span>ThreeJS</span>, <span>WebGl</span>, <span>Shaders</span>,{" "}
         <span>R3F</span>, <span>JavaScript</span>, <span>CS Fundamentals</span>{" "}
         and much more. 💻
@@ -78,8 +78,8 @@ const AboutMe = ({ theme }) => {
       <div className="about-me-container">
         <div className="left">
           <p>
-            Hello, I'm Sahil, a front-end developer, but I prefer to call myself
-            a creative web developer. I've always been fascinated by the amazing
+            Hello, I'm Sahil, a software developer, but I prefer to call myself
+            a creative developer. I've always been fascinated by the amazing
             websites people create, and watching them made me want to build
             something similar. I've been exploring the world of web development
             for over two years now, and with that, I learned lots of new
@@ -257,7 +257,7 @@ const BlogLetter = () => {
             </li>
             <li>
               <i className="fa-solid fa-circle-dot"></i> Tips and tricks to
-              enhance your skills as a developer in frontend development,
+              enhance your skills as a developer in software development,
               Three.JS, Competitive Programming, React Three Fiber, React,
               Shaders, DataBase, and more.
             </li>

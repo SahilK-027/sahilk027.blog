@@ -236,7 +236,7 @@ const IntroThreeJS = ({
               <p>
                 Let me talk about myself for a second. I'm Sahil, a
                 <span> front-end developer</span>, although I prefer to call
-                myself a <span>creative web developer</span>. I've always been
+                myself a <span>creative developer</span>. I've always been
                 fascinated by the amazing websites people create, and watching
                 them made me want to build something similar. I've been
                 exploring the world of web development for over two years now,

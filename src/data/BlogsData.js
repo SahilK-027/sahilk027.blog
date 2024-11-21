@@ -8,7 +8,7 @@ export const blogSeries = [
       "Embark on an immersive journey into the world of Three.js. This series of blog posts will guide you from the fundamentals to advanced techniques of Three.js, covering everything from setup to building complex scenes.",
     seriesUrl: `/blogs/three-js-journey`,
     selector: `three-js-journey`,
-    blogsCollection: [1, 2, 6, 7], // blogNo
+    blogsCollection: [1, 2, 6, 7, 8], // blogNo
     startDate: "19th April 2024",
     discussionURL: "https://github.com/SahilK-027/sahilk027.blog/discussions/4",
   },
@@ -175,6 +175,27 @@ export const blogPost = [
       "Particles",
     ],
     readtime: "10 mins",
+  },
+  {
+    blogNo: 8,
+    seriesID: 1,
+    sequenceNumberInSeries: 5,
+    seriesTitle: "Three.js Journey",
+    filterTag: "Threejs Journey",
+    blogTitle:
+      "Achieving Photorealism in 3D: A Guide to Realistic Rendering Techniques",
+    blogDate: "21st November 2024",
+    selector:
+      "achieving-photorealism-in-3d-a-guide-to-realistic-rendering-techniques",
+    blogUrl: `/blogs/three-js-journey/achieving-photorealism-in-3d-a-guide-to-realistic-rendering-techniques`,
+    seriesUrl: `/blogs/three-js-journey`,
+    keywords: [
+      "Achieving Photorealism in 3D: A Guide to Realistic Rendering Techniques",
+      "Realistic rendering",
+      "3D model",
+      "Three JS",
+    ],
+    readtime: "-",
   },
 ];
 

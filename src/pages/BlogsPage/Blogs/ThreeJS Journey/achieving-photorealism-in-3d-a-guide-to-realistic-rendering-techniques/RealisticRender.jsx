@@ -13,6 +13,7 @@ import img1 from "./utils/assets/1.webp";
 import img1l from "./utils/assets/1l.webp";
 import img2 from "./utils/assets/2.webp";
 import img2l from "./utils/assets/2l.webp";
+import InfoDiv from "../../../../../components/InfoDIV/InfoDiv";
 
 const RealisticRender = ({
   openCMDCenter,
@@ -212,6 +213,56 @@ const RealisticRender = ({
                 With that said, let’s dive in and transform your web-based 3D
                 models into visually stunning realistic render! 🏁
               </p>
+            </div>
+
+            <div className="blog-section">
+              <h3 className="blog-section-title">Setup for the code</h3>
+              <p>
+                To showcase realistic rendering techniques, you can use any 3D
+                model, but it’s ideal to pick one that comes with textures,
+                normal maps, and other details. For this example, we’ll use a{" "}
+                <a
+                  href="https://sketchfab.com/3d-models/sea-turtle-ddb6789834f0412090863e8fd3c0c4db"
+                  target="_blank"
+                  className="link"
+                >
+                  Sea Turtle
+                </a>{" "}
+                model from Sketchfab.
+              </p>
+              <p>
+                The model is lightweight—just 900KB after compression (including
+                all textures). This demonstrates that you don’t need heavy,
+                uncompressed models to achieve stunning results. A
+                well-optimized, small model can still deliver impressive
+                realism. I’ve already downloaded the Sea Turtle and saved it in
+                the <code>/static/models/</code> folder. It’s loaded and added
+                to the scene, ready to work with.
+              </p>
+              <p>
+                To refine our render, we’ll use lil-gui, a handy tool for
+                tweaking various parameters in real-time. This level of control
+                is essential when striving for a perfect render, allowing
+                adjustments to lighting, material properties, and
+                post-processing effects without diving back into the code
+                repeatedly.
+              </p>
+              <InfoDiv
+                infoText={`
+                  <p> Instead of starting from scratch, we’ll be building on top of what we have already learned so far in this series. To get started, download the starter files from github using the button below, setup the code by following readme and follow along by adding the provided code snippets into your <code>main.js</code> file in the specified order.</p>
+                  <br>
+                  <p class="div-flex-row">
+                    <a href="./utils/starter_code/realistic_render.zip" download>
+                      <button type="button">Starter Code</button>
+                    </a>
+                    <b class="animated-gradient">✨ If you wish you can use vite and try to code your own starter pack!</b>
+                  </p>
+                  <br/>
+                  <p>
+                  With this we will have the base setup from our starter code, which includes scene, setting up a camera, and adding a simple rotating cube.
+                  </p>
+                `}
+              />
             </div>
           </div>
         </div>

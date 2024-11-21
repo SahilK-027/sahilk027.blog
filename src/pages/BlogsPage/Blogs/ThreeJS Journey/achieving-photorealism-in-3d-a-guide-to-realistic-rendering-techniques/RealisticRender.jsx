@@ -71,7 +71,7 @@ const RealisticRender = ({
   /* ==========================================================
       ! Please make sure you have at max 8 sections in the array
   ========================================================== */
-  const sections = ["What we will learn?"];
+  const sections = ["What we will learn?", "Setup for the code"];
 
   return (
     <>
@@ -231,13 +231,13 @@ const RealisticRender = ({
                 model from Sketchfab.
               </p>
               <p>
-                The model is lightweight—just 900KB after compression (including
-                all textures). This demonstrates that you don’t need heavy,
+                I’ve already downloaded the Sea Turtle and saved it in the{" "}
+                <code>/static/models/</code> folder. The downloaded 3d model is
+                lightweight—just 900KB after compression (including all
+                textures). This demonstrates that you don’t need heavy,
                 uncompressed models to achieve stunning results. A
                 well-optimized, small model can still deliver impressive
-                realism. I’ve already downloaded the Sea Turtle and saved it in
-                the <code>/static/models/</code> folder. It’s loaded and added
-                to the scene, ready to work with.
+                realism. It’s loaded and added to the scene, ready to work with.
               </p>
               <p>
                 To refine our render, we’ll use lil-gui, a handy tool for

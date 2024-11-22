@@ -6,7 +6,18 @@
   padding: 24px;
   border-radius: 10px;
   position: relative;
-  margin-top: 20px;
+  margin: 20px 0;
+
+  h4 {
+    font-size: 22px;
+    margin-bottom: 12px;
+    font-weight: 600;
+
+    &::selection {
+      color: var(--color-insight) !important;
+      background: var(--color-insight-bg-light) !important;
+    }
+  }
 
   p {
     padding: 0 !important;
@@ -34,6 +45,7 @@
       }
     }
   }
+
   .icon {
     position: absolute;
     display: flex;
@@ -48,16 +60,19 @@
     width: 30px;
     height: 30px;
   }
+
   ul {
     li {
       margin: calc(0.725rem) 0;
       color: var(--color-text-primary) !important;
+
       b {
         &::selection {
           color: var(--color-insight) !important;
           background: var(--color-insight-bg-light) !important;
         }
       }
+
       a {
         color: var(--color-insight);
         text-decoration: underline;
@@ -82,10 +97,11 @@
 
       i {
         color: var(--color-insight) !important;
-        font-size: 100px;
+        font-size: 18px;
         margin-right: 6px;
       }
     }
+
     &::selection {
       color: var(--color-insight) !important;
       background: var(--color-insight-bg-light) !important;

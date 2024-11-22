@@ -16,6 +16,7 @@ import img1l from "./utils/assets/1l.webp";
 import img2 from "./utils/assets/2.webp";
 import img2l from "./utils/assets/2l.webp";
 import img3 from "./utils/assets/img3.webp";
+import InsightDiv from "../../../../../components/InsightDiv/InsightDIV";
 
 const RealisticRender = ({
   openCMDCenter,
@@ -96,6 +97,54 @@ initLoaders() {
   });
 }`;
 
+  const insightHDRIs = `<div>
+    <h4>HDR vs. LDR Environment Maps</h4>
+    <p>
+    Before jumping in, let’s talk about two types of environment maps you’ll come across: HDR and LDR.
+    </p>
+    <ul>
+      <li>
+        <i class="fa-solid fa-arrow-right"></i>
+        <b>HDR (High Dynamic Range): </b> HDR maps are like the heavyweights of environment maps. They come packed with detailed lighting data, covering a broad range of brightness levels. This makes them perfect for nailing subtle effects like soft sunlight, realistic shadows, and shiny reflections. But all that extra detail comes at a cost—they’re large in size and can be slow to render.
+      </li>
+      <li>
+        <i class="fa-solid fa-arrow-right"></i>
+        <b>LDR (Low Dynamic Range): </b> LDR maps, on the other hand, are the lightweight. They don’t carry as much lighting detail as HDR, but they’re small, compressed, and render much faster. If you’re building for the web, where performance is king, LDR maps are your go-to.
+      </li>
+    </ul>
+  </div>`;
+
+  const loadEnvironment = ` // Inside initLoader add cubeTextureLoader
+  initLoaders() {
+    // ... Old code
+    this.gltfLoader.setDRACOLoader(this.dracoLoader);
+
+    this.cubeTextureLoader = new THREE.CubeTextureLoader();
+  }
+  
+  // Create a new method instance this.loadEnvironment();
+    constructor() {
+    // ... Old code
+    this.loadEnvironment();
+    this.loadObject();
+    // ... Old code
+  }
+
+  // Load environment
+
+  loadEnvironment() {
+    this.environmentMap = this.cubeTextureLoader.load([
+      "/static/environmentMaps/beachEnv/px.png",
+      "/static/environmentMaps/beachEnv/nx.png",
+      "/static/environmentMaps/beachEnv/py.png",
+      "/static/environmentMaps/beachEnv/ny.png",
+      "/static/environmentMaps/beachEnv/pz.png",
+      "/static/environmentMaps/beachEnv/nz.png",
+    ]);
+
+    this.scene.background = this.environmentMap;
+    this.scene.environment = this.environmentMap;
+  }`;
   /* ==========================================================
       ! Please make sure you have at max 8 sections in the array
   ========================================================== */
@@ -343,6 +392,150 @@ initLoaders() {
                 getting the model to load successfully. Adding proper lighting
                 comes next. Remember to take it one step at a time—ensure the
                 model loads without errors before moving forward.
+              </p>
+              <h4>
+                <span>Step 2:</span> Adding a Cube Texture Environment Map
+              </h4>
+              <p>
+                Now that our model is loaded, it’s time to give it some life and
+                realism. Enter <code>environment maps</code> a game-changing
+                technique for making 3D objects look like they truly belong in a
+                scene. Whether it’s shiny metal surfaces, smooth glass, or
+                reflective textures, an environment map simulates how your
+                objects reflect their surroundings. This subtle touch goes a
+                long way in creating a realistic render.
+                <InsightDiv insightText={insightHDRIs} />
+                <br />
+                For high-quality HDRIs,{" "}
+                <a
+                  className="link"
+                  target="_blank"
+                  href="https://polyhaven.com/"
+                >
+                  Polyhaven
+                </a>{" "}
+                - is one of the best resources out there. In this example, I’ve
+                already downloaded an environment map called{" "}
+                <a
+                  className="link"
+                  target="_blank"
+                  href="https://polyhaven.com/a/umhlanga_sunrise"
+                >
+                  Umhlanga Sunrise
+                </a>{" "}
+                (8K HDR) from Polyhaven. The texture is already saved in the
+                <code>/static/environmentMaps/</code> folder, ready to go.
+                However, 8K HDR textures tend to be hefty—the original file is
+                around <code>93MB</code> , which is far from ideal for web
+                performance.
+              </p>
+
+              <p>
+                To optimize this, I used{" "}
+                <a
+                  className="link"
+                  target="_blank"
+                  href="https://matheowis.github.io/HDRI-to-CubeMap/"
+                >
+                  HDRI to CubeMap Converter
+                </a>{" "}
+                to generate cube map textures. The result? Compact textures that
+                are around
+                <code>400KB</code> each—a massive reduction without sacrificing
+                too much quality. This is a great example of why bigger isn’t
+                always better when it comes to web rendering. 😂
+              </p>
+
+              <h4>So, let's discuss now Why Go with LDR for Web Rendering?</h4>
+              <p>
+                When working on web-based 3D rendering, performance is
+                everything. Here’s why LDR maps often win out over HDR:
+                <ul>
+                  <li>
+                    <i className="fa-solid fa-arrow-right"></i>{" "}
+                    <b>Performance-Friendly: </b> On the web, we aim for a frame
+                    render time of 16ms or less to hit 60 FPS. LDR maps keep
+                    things snappy without sacrificing too much quality.
+                  </li>
+                  <li>
+                    <i className="fa-solid fa-arrow-right"></i>{" "}
+                    <b>Smaller File Sizes: </b> LDR maps are compressed, meaning
+                    they load faster and consume less bandwidth. Your users (and
+                    their devices) will thank you.
+                  </li>
+                  <li>
+                    <i className="fa-solid fa-arrow-right"></i>{" "}
+                    <b>Balanced Realism: </b> Sure, HDR looks amazing, but LDR
+                    can deliver impressive visuals too—perfect for small scenes
+                    or performance-constrained devices.
+                  </li>
+                </ul>
+                Bringing it all together, for our scene, we’ll stick with an LDR
+                environment map to keep everything smooth and responsive. Up
+                next, we’ll add the cube map to our scene and see the magic
+                happen as our model reflects its surroundings. Time to light it
+                up—let’s go! 🎨
+              </p>
+
+              <p>
+                Because these textures are composed of 6 images (like the faces
+                of a cube), we have to use a <code>CubeTextureLoader</code>.
+              </p>
+              <CodeSnippet
+                language={"javascript"}
+                codeText={loadEnvironment}
+                theme={theme}
+              />
+              <h4>Adding the Environment Map as a Background</h4>
+              <p>
+                The simplest way to add an environment map is by setting it as
+                the background of the scene. A basic approach would involve
+                creating a massive cube around your scene, applying the texture
+                to its interior faces, and calling it a day. While this works,
+                it's limited—serving only as a static background.
+                <br />
+                Thankfully, Three.js has a built-in feature that simplifies this
+                process. After creating both the <code>environmentMap</code> and
+                the scene, we can assign the map to the scene’s{" "}
+                <code>background</code> property like this:
+                <br />
+              </p>
+              <CodeSnippet
+                language={"bash"}
+                codeText={"scene.background = environmentMap"}
+                theme={theme}
+              />
+              <p>
+                This makes the map wrap around the entire scene, giving the
+                illusion of depth and context without the need for a physical
+                cube.
+              </p>
+
+              <h4>Using the Environment Map for Lighting</h4>
+              <p>
+                To achieve truly realistic rendering, we need the environment
+                map to not only serve as the backdrop but also act as a light
+                source for the model. In a previous step, we saw how to apply an
+                environment map to a material (like{" "}
+                <code>MeshStandardMaterial</code> ) using the{" "}
+                <code>envMap</code> property.
+                <br />
+                For scene-wide lighting, Three.js allows us to assign the same
+                environment map to the scene’s <code>environment</code>{" "}
+                property. This automatically lights up the model with the
+                environment map's colors and tones:
+              </p>
+              <CodeSnippet
+                language={"bash"}
+                codeText={"scene.environment = environmentMap"}
+                theme={theme}
+              />
+              <p>
+                With this dual functionality, your scene will not only look
+                cohesive but also interact with the environment map in ways that
+                enhance realism—reflecting light and shadows more naturally. In
+                the next step, we’ll continue refining our scene to bring out
+                even more photorealistic details.
               </p>
             </div>
           </div>

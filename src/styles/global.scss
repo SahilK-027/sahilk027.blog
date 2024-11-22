@@ -41,6 +41,7 @@
   --color-pink: #f763af;
   --color-anchor: #9771ff;
   --border-color: #282e3b;
+  --code-container-border-color: #243b4c;
   --selection-bg-color: rgba(47, 29, 107, 0.426);
   --shadow-color: #9771ff84;
   --anchor-underline-color: #7f50ff6a;
@@ -88,6 +89,7 @@
   --color-anchor: #7444ff;
   --color-pink: #f763af;
   --border-color: #d0d7de;
+  --code-container-border-color: #d0d7de;
   --selection-bg-color: rgba(209, 195, 255, 0.824);
   --shadow-color: #7444ff84;
   --anchor-underline-color: #7444ff6a;
@@ -111,7 +113,7 @@ html,
 body {
   width: 100vw;
   font-family: var(--font-family);
-  background-color: var(--color-bg-primary);
+  background-color: var(--color-bg-primary) !important;
   overflow-x: hidden;
 }
 

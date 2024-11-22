@@ -1,0 +1,19 @@
+.cm-editor,
+.sp-tabs,
+.cm-gutters,
+.sp-c-flHYPS {
+    background-color: var(--color-bg-box-container) !important;
+    font-size: 14px !important;
+}
+
+.cm-lineNumbers .cm-gutterElement {
+    padding: 0 8px 0 8px !important;
+}
+
+.cm-gutters {
+    color: #8994ae !important;
+
+    .cm-gutterElement {
+        font-size: 8px !important;
+    }
+}

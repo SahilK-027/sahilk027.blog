@@ -1,6 +1,7 @@
 import React, { memo } from "react";
 import { Sandpack } from "@codesandbox/sandpack-react";
 import { nightOwl } from "@codesandbox/sandpack-themes";
+import "./CodeSandPack.scss";
 
 const CodeSandpack = memo(({ files, theme, layout = "preview" }) => {
   return (

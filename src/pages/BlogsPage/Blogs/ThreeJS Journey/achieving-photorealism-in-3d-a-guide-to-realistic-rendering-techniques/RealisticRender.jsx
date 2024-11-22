@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Navbar from "../../../../../components/Navbar/Navbar";
 import BlogsFooter from "../../../../../components/BlogsFooter/BlogsFooter";
 import Footer from "../../../../../components/Footer/Footer";
@@ -299,17 +299,20 @@ createGround(color, ambientOcclusion, normal, roughness, metalness, height) {
     "Conclusion",
   ];
 
-  const fileTextureRender = {
-    "/index.js": {
-      code: jsSandpack,
-    },
-    "/index.html": {
-      code: htmlSandpack,
-    },
-    "/styles.css": {
-      code: cssSandpack,
-    },
-  };
+  const fileRealisticRender = useMemo(
+    () => ({
+      "/index.js": {
+        code: jsSandpack,
+      },
+      "/index.html": {
+        code: htmlSandpack,
+      },
+      "/styles.css": {
+        code: cssSandpack,
+      },
+    }),
+    []
+  );
 
   return (
     <>
@@ -938,7 +941,7 @@ createGround(color, ambientOcclusion, normal, roughness, metalness, height) {
               />
               <p>Here’s the final render! 😉</p>
               <CodeSandpack
-                files={fileTextureRender}
+                files={fileRealisticRender}
                 theme={theme}
                 layout="preview"
               />{" "}

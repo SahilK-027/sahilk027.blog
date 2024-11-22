@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Navbar from "../../../../../components/Navbar/Navbar";
 import BlogsFooter from "../../../../../components/BlogsFooter/BlogsFooter";
 import Footer from "../../../../../components/Footer/Footer";
@@ -99,17 +99,20 @@ const ParticlesBlog = ({
     "Conclusion: Your Journey into the World of Particles",
   ];
 
-  const fileTextureRender = {
-    "/index.js": {
-      code: jsSandpack,
-    },
-    "/index.html": {
-      code: htmlSandpack,
-    },
-    "/styles.css": {
-      code: cssSandpack,
-    },
-  };
+  const fileParticlesRender = useMemo(
+    () => ({
+      "/index.js": {
+        code: jsSandpack,
+      },
+      "/index.html": {
+        code: htmlSandpack,
+      },
+      "/styles.css": {
+        code: cssSandpack,
+      },
+    }),
+    []
+  );
 
   const installDep = `npm install lil-gui`;
   const constructor = `  constructor() {
@@ -576,7 +579,7 @@ const ParticlesBlog = ({
               </p>
               <p>Here’s the final render! 😉</p>{" "}
               <CodeSandpack
-                files={fileTextureRender}
+                files={fileParticlesRender}
                 theme={theme}
                 layout="preview"
               />{" "}

@@ -1,8 +1,8 @@
-import React from "react";
+import React, { memo } from "react";
 import { Sandpack } from "@codesandbox/sandpack-react";
 import { nightOwl } from "@codesandbox/sandpack-themes";
 
-const CodeSandpack = ({ files, theme, layout = "preview" }) => {
+const CodeSandpack = memo(({ files, theme, layout = "preview" }) => {
   return (
     <div style={{ padding: "10px 0" }}>
       <Sandpack
@@ -11,7 +11,7 @@ const CodeSandpack = ({ files, theme, layout = "preview" }) => {
         customSetup={{
           dependencies: {
             three: "latest",
-            "lil-gui": "latest"
+            "lil-gui": "latest",
           },
         }}
         files={files}
@@ -27,6 +27,6 @@ const CodeSandpack = ({ files, theme, layout = "preview" }) => {
       />
     </div>
   );
-};
+});
 
 export default CodeSandpack;

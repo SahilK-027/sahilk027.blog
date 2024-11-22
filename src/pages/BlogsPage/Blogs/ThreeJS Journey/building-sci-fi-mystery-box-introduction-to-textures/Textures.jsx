@@ -24,6 +24,7 @@ import normal from "./utils/assets/Normal.webp";
 import roughness from "./utils/assets/roughness.webp";
 import uvImg from "./utils/assets/uv.webp";
 import { animated, useSpring } from "react-spring";
+import { useMemo } from "react";
 
 const TexturesBlog = ({
   openCMDCenter,
@@ -229,17 +230,20 @@ geometry.setAttribute(
 
 tick();`;
 
-  const fileTextureRender = {
-    "/index.js": {
-      code: jsSandpack,
-    },
-    "/index.html": {
-      code: htmlSandpack,
-    },
-    "/styles.css": {
-      code: cssSandpack,
-    },
-  };
+  const fileTextureRender = useMemo(
+    () => ({
+      "/index.js": {
+        code: jsSandpack,
+      },
+      "/index.html": {
+        code: htmlSandpack,
+      },
+      "/styles.css": {
+        code: cssSandpack,
+      },
+    }),
+    []
+  );
 
   return (
     <>

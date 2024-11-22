@@ -21,6 +21,7 @@ import SuzanneThreeBG from "../../../../../components/SuzanneThreeBG/SuzanneThre
 import { cssSandpack, htmlSandpack, jsSandpack } from "./utils/codeProviders";
 import { animated, useSpring } from "react-spring";
 import VideoGrid from "../../../../../components/VideoGrid/VideoGrid";
+import { useMemo } from "react";
 
 const First3DProject = ({
   openCMDCenter,
@@ -325,17 +326,20 @@ const tick = () => {
 tick();
 `;
 
-  const filesFirstRender = {
-    "/index.js": {
-      code: jsSandpack,
-    },
-    "/index.html": {
-      code: htmlSandpack,
-    },
-    "/styles.css": {
-      code: cssSandpack,
-    },
-  };
+  const filesFirstRender = useMemo(
+    () => ({
+      "/index.js": {
+        code: jsSandpack,
+      },
+      "/index.html": {
+        code: htmlSandpack,
+      },
+      "/styles.css": {
+        code: cssSandpack,
+      },
+    }),
+    []
+  );
 
   const videosData = {
     "bruno-simon": {

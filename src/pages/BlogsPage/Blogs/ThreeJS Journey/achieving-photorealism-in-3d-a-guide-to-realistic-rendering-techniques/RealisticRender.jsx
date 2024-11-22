@@ -16,6 +16,7 @@ import img1l from "./utils/assets/1l.webp";
 import img2 from "./utils/assets/2.webp";
 import img2l from "./utils/assets/2l.webp";
 import img3 from "./utils/assets/img3.webp";
+import img4 from "./utils/assets/4.png";
 import InsightDiv from "../../../../../components/InsightDiv/InsightDIV";
 
 const RealisticRender = ({
@@ -145,6 +146,75 @@ initLoaders() {
     this.scene.background = this.environmentMap;
     this.scene.environment = this.environmentMap;
   }`;
+
+  const loadGround = ` // Inside initLoader add cubeTextureLoader
+initLoaders() {
+  // ... Old code
+  this.cubeTextureLoader = new THREE.CubeTextureLoader();
+  this.textureLoader = new THREE.TextureLoader();
+}
+
+// Inside loadObject load our ground
+loadObject() {
+  // Load ground textures
+  const color = this.textureLoader.load("/static/textures/ground/diff.jpg");
+  const ambientOcclusion = this.textureLoader.load(
+    "/static/textures/ground/ao.jpg"
+  );
+  const normal = this.textureLoader.load(
+    "/static/textures/ground/normal.jpg"
+  );
+  const roughness = this.textureLoader.load(
+    "/static/textures/ground/rough.jpg"
+  );
+  const metalness = this.textureLoader.load(
+    "/static/textures/ground/arm.jpg"
+  );
+  const height = this.textureLoader.load("/static/textures/ground/disp.jpg");
+
+  color.colorSpace = THREE.SRGBColorSpace;
+
+  this.gltfLoader.load("/static/models/turtle_compressed.glb", (gltf) => {
+    this.turtle = gltf.scene;
+    this.scene.add(this.turtle);
+
+    this.createGround(
+      color,
+      ambientOcclusion,
+      normal,
+      roughness,
+      metalness,
+      height
+    );
+  });
+}
+  
+// Create new method createGround
+createGround(color, ambientOcclusion, normal, roughness, metalness, height) {
+  const boundingBox = new THREE.Box3().setFromObject(this.turtle);
+
+  const groundMaterial = new THREE.MeshStandardMaterial({
+    map: color,
+    aoMap: ambientOcclusion,
+    normalMap: normal,
+    roughnessMap: roughness,
+    metalnessMap: metalness,
+    displacementMap: height,
+    displacementScale: 0.1,
+  });
+
+  const groundGeometry = new THREE.PlaneGeometry(15, 15, 100, 100);
+  groundGeometry.setAttribute(
+    "uv2",
+    new THREE.BufferAttribute(groundGeometry.attributes.uv.array, 2)
+  );
+
+  this.ground = new THREE.Mesh(groundGeometry, groundMaterial);
+  this.ground.rotation.x = -Math.PI / 2;
+  this.ground.position.y = boundingBox.min.y - 0.01;
+
+  this.scene.add(this.ground);
+}`;
   /* ==========================================================
       ! Please make sure you have at max 8 sections in the array
   ========================================================== */
@@ -536,6 +606,49 @@ initLoaders() {
                 enhance realism—reflecting light and shadows more naturally. In
                 the next step, we’ll continue refining our scene to bring out
                 even more photorealistic details.
+              </p>
+              <h4>
+                <span>Step 3:</span> Adding ground with textures
+              </h4>
+              <p>
+                One of the most annoying things when using an environment map as
+                the background is that objects often look like they're floating.
+                This happens because the environment map is set to appear
+                infinitely far away, and there's no sense of scale or a grounded
+                surface for the objects to sit on. To fix this, we need to
+                create a plane beneath the model, making it feel like part of
+                the environment, interacting with the surrounding lighting and
+                reflections.
+                <br />
+                <br />
+                By adding a textured ground, we not only give the model
+                something to “stand” on, but we also enhance the overall
+                immersion of the 3D scene. A realistic ground will help our
+                model blend seamlessly into the environment, making the entire
+                scene feel more cohesive. It also allows us to take full
+                advantage of the lighting and environment map to achieve the
+                best possible render.
+              </p>
+              <CodeSnippet
+                language={"javascript"}
+                codeText={loadGround}
+                theme={theme}
+              />
+              <p>
+                By now, we’ve added a textured and realistic ground beneath our
+                model, which helps prevent that "floating" feeling caused by the
+                environment map.
+              </p>
+              <BlogImage
+                imgDark={img4}
+                imgLight={img4}
+                theme={theme}
+                description={`Fig(4.0) Progress So Far. Normal lighting and simple render`}
+              />
+              <p>
+                So far the progress look okish, which not that bad but not that
+                great as well. Going forward we will try to make this scene
+                realistic, with good colors, lighting, shadow, sharp lines etc.
               </p>
             </div>
           </div>

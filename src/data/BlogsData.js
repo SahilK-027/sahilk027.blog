@@ -184,7 +184,7 @@ export const blogPost = [
     filterTag: "Threejs Journey",
     blogTitle:
       "Achieving Photorealism in 3D: A Guide to Realistic Rendering Techniques",
-    blogDate: "21st November 2024",
+    blogDate: "23rd November 2024",
     selector:
       "achieving-photorealism-in-3d-a-guide-to-realistic-rendering-techniques",
     blogUrl: `/blogs/three-js-journey/achieving-photorealism-in-3d-a-guide-to-realistic-rendering-techniques`,
@@ -195,7 +195,7 @@ export const blogPost = [
       "3D model",
       "Three JS",
     ],
-    readtime: "-",
+    readtime: "16 mins",
   },
 ];
 

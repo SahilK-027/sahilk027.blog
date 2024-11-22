@@ -11,13 +11,17 @@ import SuzanneThreeBG from "../../../../../components/SuzanneThreeBG/SuzanneThre
 import BlogImage from "../../../../../components/BlogImage/BlogImage";
 import InfoDiv from "../../../../../components/InfoDIV/InfoDiv";
 import CodeSnippet from "../../../../../components/SyntaxHighlighter/CodeSnippet";
+import InsightDiv from "../../../../../components/InsightDiv/InsightDIV";
+import ImageSlider from "../../../../../components/ImageSlider/ImageSlider";
+import { cssSandpack, htmlSandpack, jsSandpack } from "./utils/codeProvider";
 import img1 from "./utils/assets/1.webp";
 import img1l from "./utils/assets/1l.webp";
 import img2 from "./utils/assets/2.webp";
 import img2l from "./utils/assets/2l.webp";
 import img3 from "./utils/assets/img3.webp";
 import img4 from "./utils/assets/4.png";
-import InsightDiv from "../../../../../components/InsightDiv/InsightDIV";
+import img5 from "./utils/assets/5.png";
+import CodeSandpack from "../../../../../components/CodeSandpack/CodeSandpack";
 
 const RealisticRender = ({
   openCMDCenter,
@@ -115,7 +119,7 @@ initLoaders() {
     </ul>
   </div>`;
 
-  const loadEnvironment = ` // Inside initLoader add cubeTextureLoader
+  const loadEnvironment = `// Inside initLoader add cubeTextureLoader
   initLoaders() {
     // ... Old code
     this.gltfLoader.setDRACOLoader(this.dracoLoader);
@@ -147,7 +151,7 @@ initLoaders() {
     this.scene.environment = this.environmentMap;
   }`;
 
-  const loadGround = ` // Inside initLoader add cubeTextureLoader
+  const loadGround = `// Inside initLoader add cubeTextureLoader
 initLoaders() {
   // ... Old code
   this.cubeTextureLoader = new THREE.CubeTextureLoader();
@@ -216,13 +220,14 @@ createGround(color, ambientOcclusion, normal, roughness, metalness, height) {
   this.scene.add(this.ground);
 }`;
 
-  const toneMapping = ` setupRenderer() {
+  const toneMapping = `setupRenderer() {
   // ... old code
   this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
   this.renderer.toneMappingExposure = 1.5;
 }`;
-  const antiAliasing = ` setupRenderer() {
+
+  const antiAliasing = `setupRenderer() {
   this.renderer = new THREE.WebGLRenderer({
     canvas: this.canvas,
     alpha: true,
@@ -231,6 +236,58 @@ createGround(color, ambientOcclusion, normal, roughness, metalness, height) {
     antialias: true, 
   });
 }`;
+
+  const lightsAndShadows = `  constructor() {
+  // ... Old code
+  this.setupCamera();
+  this.setupLights();
+
+  // Add new methods
+  setupLights() {
+    // Directional Light
+    this.directionalLight = new THREE.DirectionalLight("#835520", 10);
+    this.directionalLight.position.set(-10, 5, 10);
+    this.scene.add(this.directionalLight);
+
+    // Directional Light Helper
+    // const directionalLightHelper = new THREE.DirectionalLightHelper(
+    //   this.directionalLight,
+    //   1.5
+    // ); // 1.5 is the size of the helper
+    // this.scene.add(directionalLightHelper);
+
+    // Ambient Light
+    this.ambientLight = new THREE.AmbientLight("#8a8a8a", 1);
+    this.scene.add(this.ambientLight);
+  }`;
+
+  const enableShadows = `  setupRenderer() {
+    // ... old code
+    this.renderer.toneMappingExposure = 1.5;
+    this.renderer.shadowMap.enabled = true;
+    this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+    // Activate it on the DirectionalLight
+    setupLights() {
+      // Directional Light
+      // Old code...
+      this.directionalLight.position.set(-10, 5, 10);
+      this.directionalLight.castShadow = true;
+      this.directionalLight.shadow.camera.far = 50;
+      this.directionalLight.shadow.mapSize.set(512, 512);
+      this.directionalLight.shadow.bias = -0.005;
+    }
+
+    // Activate it on objects
+    this.turtle.traverse((child) => {
+      if (child.isMesh) {
+        child.castShadow = true;
+        child.receiveShadow = true;
+      }
+    });
+
+    this.ground.receiveShadow = true; 
+  }`;
   /* ==========================================================
       ! Please make sure you have at max 8 sections in the array
   ========================================================== */
@@ -238,7 +295,21 @@ createGround(color, ambientOcclusion, normal, roughness, metalness, height) {
     "What we will learn?",
     "Setup for the code",
     "Let's write the code",
+    "Advanced Techniques and Applications",
+    "Conclusion",
   ];
+
+  const fileTextureRender = {
+    "/index.js": {
+      code: jsSandpack,
+    },
+    "/index.html": {
+      code: htmlSandpack,
+    },
+    "/styles.css": {
+      code: cssSandpack,
+    },
+  };
 
   return (
     <>
@@ -516,7 +587,6 @@ createGround(color, ambientOcclusion, normal, roughness, metalness, height) {
                 around <code>93MB</code> , which is far from ideal for web
                 performance.
               </p>
-
               <p>
                 To optimize this, I used{" "}
                 <a
@@ -532,7 +602,6 @@ createGround(color, ambientOcclusion, normal, roughness, metalness, height) {
                 too much quality. This is a great example of why bigger isn’t
                 always better when it comes to web rendering. 😂
               </p>
-
               <h4>So, let's discuss now Why Go with LDR for Web Rendering?</h4>
               <p>
                 When working on web-based 3D rendering, performance is
@@ -563,7 +632,6 @@ createGround(color, ambientOcclusion, normal, roughness, metalness, height) {
                 happen as our model reflects its surroundings. Time to light it
                 up—let’s go! 🎨
               </p>
-
               <p>
                 Because these textures are composed of 6 images (like the faces
                 of a cube), we have to use a <code>CubeTextureLoader</code>.
@@ -803,6 +871,187 @@ createGround(color, ambientOcclusion, normal, roughness, metalness, height) {
                 bright contrasts. By smoothing out these edges, your 3D render
                 will look much more polished and professional.
               </p>
+              <h4>
+                <span>Step 6:</span> Lights and shadows for illumination
+              </h4>
+              <p>
+                One important addition for a realistic render is to add shadows.
+                Since the environment map is like a light coming from every
+                direction, it can’t cast shadows. We need to add a light that
+                roughly matches the lighting of the environment map and use it
+                to cast shadows.
+              </p>
+              <CodeSnippet
+                language={"javascript"}
+                codeText={lightsAndShadows}
+                theme={theme}
+              />
+              <h4>Activate the shadows</h4>
+              <p>
+                Now that we have a light that can cast a shadow, toggle the
+                shadows on the WebGLRenderer instance. Then, change the shadow
+                type to <code>THREE.PCFSoftShadowMap</code>.
+              </p>
+              <CodeSnippet
+                language={"javascript"}
+                codeText={enableShadows}
+                theme={theme}
+              />
+              <h4>
+                <span>Step 7:</span> Final Adjustments
+              </h4>
+              <p>
+                With everything in place, it's time to fine-tune the details.
+                Experiment with values, explore different environment maps,
+                adjust shadow settings, and test various tone mapping options.
+                This is your creative playground—take your time to perfect the
+                scene.
+                <ul>
+                  <li>
+                    <i className="fa-solid fa-arrow-right"></i> Take breaks and
+                    revisit your render with fresh eyes.
+                  </li>
+                  <li>
+                    <i className="fa-solid fa-arrow-right"></i> Observe
+                    real-world references for accurate details.
+                  </li>
+                  <li>
+                    <i className="fa-solid fa-arrow-right"></i> Calibrate your
+                    screen to ensure colors are displayed correctly.
+                  </li>
+                  <li>
+                    <i className="fa-solid fa-arrow-right"></i> Share your work
+                    with friends or colleagues to get constructive feedback and
+                    an external perspective.
+                  </li>
+                </ul>
+                Here's a comparison highlighting how much realism we've added
+                while keeping performance at its peak with minimal resource
+                requirements:
+              </p>
+              <ImageSlider
+                leftImage={img4}
+                rightImage={img5}
+                caption={
+                  "Side-by-Side Comparison: Standard Scene vs. Enhanced Realism with Advanced Rendering Techniques"
+                }
+              />
+              <p>Here’s the final render! 😉</p>
+              <CodeSandpack
+                files={fileTextureRender}
+                theme={theme}
+                layout="preview"
+              />{" "}
+            </div>
+
+            <div className="blog-section">
+              <h3 className="blog-section-title">
+                Advanced Techniques and Applications
+              </h3>
+              <p>
+                Once you've mastered the basics of realistic 3D rendering, there
+                are several advanced techniques and applications that can take
+                your renders to the next level. These methods can further
+                enhance the realism of your scenes and open up new creative
+                possibilities for your projects.
+                <ul>
+                  <li>
+                    {" "}
+                    <i class="fa-solid fa-arrow-right"></i>
+                    <b>Physically Based Rendering (PBR): </b> One of the most
+                    powerful rendering techniques used in photorealism is
+                    Physically Based Rendering (PBR). This approach simulates
+                    the way light interacts with materials in the real world,
+                    taking into account properties like reflectivity, roughness,
+                    and refraction. By using PBR workflows, you can ensure that
+                    materials in your scene behave more realistically under
+                    different lighting conditions. Three.js offers built-in
+                    support for PBR materials, which allows you to achieve more
+                    accurate and dynamic results.
+                  </li>
+                  <li>
+                    {" "}
+                    <i class="fa-solid fa-arrow-right"></i>
+                    <b>Subsurface Scattering (SSS): </b> Subsurface scattering
+                    is an essential technique for simulating how light
+                    penetrates and diffuses within translucent materials like
+                    skin, wax, or marble. This effect is crucial for creating
+                    lifelike characters or organic objects. While it can be
+                    computationally intensive, it’s a must-try for projects
+                    aiming for photorealism in organic rendering.
+                    <br />
+                    In Three.js, you can implement basic subsurface scattering
+                    with MeshStandardMaterial and tweaking the subsurface
+                    property, although more advanced implementations might
+                    require custom shaders for better control and realism.
+                  </li>
+                  <li>
+                    {" "}
+                    <i class="fa-solid fa-arrow-right"></i>
+                    <b>Real-Time Reflections with Ray Tracing: </b> Ray tracing
+                    is an advanced rendering technique that simulates the path
+                    of light as it interacts with surfaces, allowing for
+                    reflections, refractions, and shadows with incredible
+                    realism. Real-time ray tracing is becoming increasingly
+                    viable on the web with advancements in hardware and
+                    software.
+                    <br />
+                    While Three.js doesn’t directly support full ray tracing,
+                    you can still simulate reflections in real-time using
+                    techniques like screen-space reflections (SSR) or cube map
+                    reflections. For complex reflections, consider combining ray
+                    tracing with environment maps or reflection probes to
+                    enhance realism.
+                  </li>
+                  <li>
+                    {" "}
+                    <i class="fa-solid fa-arrow-right"></i>
+                    <b>Post-Processing Effects : </b> Once you’ve set up your
+                    scene, post-processing effects can add the final touches of
+                    realism. These effects, applied after the scene is rendered,
+                    include things like bloom, depth of field, motion blur, and
+                    film grain. These effects can make your renders feel more
+                    cinematic and immersive.
+                    <br />
+                    Three.js offers a post-processing stack that allows you to
+                    easily add a variety of effects to your scene. By combining
+                    multiple post-processing passes, you can create a wide range
+                    of visual styles, from hyper-realistic to artistic.
+                  </li>
+                </ul>
+              </p>
+            </div>
+
+            <div className="blog-section">
+              <h3 className="blog-section-title">Conclusion</h3>
+              <p>
+                Creating photorealistic 3D renders in a web environment is no
+                small feat. By combining techniques like baking textures,
+                leveraging environment maps, and fine-tuning lighting and
+                shadows, you can transform your 3D scenes into visually
+                stunning, immersive experiences. Each of these elements—when
+                applied thoughtfully—bridges the gap between raw imports and
+                polished artistry.
+              </p>
+              <p>
+                As we’ve seen, achieving realism isn’t about using the heaviest
+                models or the most resource-intensive textures—it’s about
+                balance. Web-based rendering thrives on optimization,
+                creativity, and smart compromises, allowing us to deliver
+                engaging visuals while keeping performance in check.
+              </p>
+              <p>
+                Now, it’s your turn to experiment! Whether you’re building
+                product showcases, creating interactive art, or developing
+                immersive portfolios, the techniques covered here will help you
+                elevate your projects to the next level. Remember, the key lies
+                in iteration: adjust, refine, and let your creativity flow.
+              </p>
+              <p>
+                Keep exploring, and who knows? Your next render might just set a
+                new benchmark for web-based photorealism. 🌟
+              </p>
+              <p>Happy 3D rendering! 🎨</p>
             </div>
           </div>
         </div>

@@ -222,6 +222,15 @@ createGround(color, ambientOcclusion, normal, roughness, metalness, height) {
   this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
   this.renderer.toneMappingExposure = 1.5;
 }`;
+  const antiAliasing = ` setupRenderer() {
+  this.renderer = new THREE.WebGLRenderer({
+    canvas: this.canvas,
+    alpha: true,
+    // The antialias property must be set during the renderer's creation. 
+    // Changing it afterward won't have any effect.
+    antialias: true, 
+  });
+}`;
   /* ==========================================================
       ! Please make sure you have at max 8 sections in the array
   ========================================================== */
@@ -445,7 +454,8 @@ createGround(color, ambientOcclusion, normal, roughness, metalness, height) {
                 Since the model is compressed, we’ll also use the{" "}
                 <code>DRACOLoader</code>. If your model isn’t Draco-compressed,
                 you can skip this part and stick with just the GLTFLoader. We
-                need the <br /><br />
+                need the <br />
+                <br />
                 Now, let’s load the model, located at
                 <code>/static/models/turtle_compressed.glb</code>.
               </p>
@@ -589,7 +599,6 @@ createGround(color, ambientOcclusion, normal, roughness, metalness, height) {
                 illusion of depth and context without the need for a physical
                 cube.
               </p>
-
               <h4>Using the Environment Map for Lighting</h4>
               <p>
                 To achieve truly realistic rendering, we need the environment
@@ -732,6 +741,67 @@ createGround(color, ambientOcclusion, normal, roughness, metalness, height) {
                 dynamics and overall tone. <br /> <br />
                 Play around with this value to find the sweet spot where your
                 scene feels most lifelike—it's worth the effort!
+              </p>
+              <h4>
+                <span>Step 5:</span> Adding Antialiasing to renderer
+              </h4>
+              <p>
+                When rendering 3D scenes, you may sometimes notice a jagged,
+                stair-like effect along the edges of geometries, especially if
+                your screen has a low pixel ratio. This visual artifact, called
+                aliasing, occurs because the edges of 3D objects rarely align
+                perfectly with the pixel grid of your screen.
+              </p>
+              <h4>Why Does Aliasing Happen?</h4>
+              <p>
+                Rendering a pixel involves determining which geometry is visible
+                in that pixel, calculating its color, and then displaying that
+                color. However, since geometry edges typically don't align with
+                the vertical or horizontal lines of the pixel grid, you end up
+                with the jagged edges we call aliasing.
+              </p>
+              <p>
+                Common Solutions to Aliasing: Developers have tackled this
+                problem for years, and several methods have emerged to minimize
+                aliasing:
+                <ul>
+                  <li>
+                    <i class="fa-solid fa-arrow-right"></i>
+                    <b>Super Sampling Anti-Aliasing (SSAA): </b> This method
+                    increases the renderer's resolution by a factor (e.g.,
+                    doubling it). When the image is resized back to normal, each
+                    pixel's color is averaged from the colors of the rendered
+                    sub-pixels. This produces smooth edges but requires
+                    rendering up to 4x more pixels, which can cause performance
+                    issues.
+                  </li>
+                  <li>
+                    <i class="fa-solid fa-arrow-right"></i>
+                    <b>Multi Sampling Anti-Aliasing (MSAA): </b> MSAA focuses on
+                    the edges of geometries, rendering multiple values (e.g., 4)
+                    per pixel only on the edges. These values are averaged to
+                    produce the final pixel color. MSAA is far more efficient
+                    than SSAA because it minimizes the number of extra pixels
+                    being calculated.
+                    <br />
+                    <br />
+                    Most modern GPUs support MSAA, and Three.js makes it
+                    incredibly easy to enable. You just need to set the
+                    <code>antialias</code> property to <code>true</code> when
+                    creating your WebGL renderer.
+                  </li>
+                </ul>
+              </p>
+              <CodeSnippet
+                language={"javascript"}
+                codeText={antiAliasing}
+                theme={theme}
+              />
+              <p>
+                While our model may already look fine due to its high level of
+                detail, antialiasing is crucial for scenes with sharp edges or
+                bright contrasts. By smoothing out these edges, your 3D render
+                will look much more polished and professional.
               </p>
             </div>
           </div>

@@ -215,6 +215,13 @@ createGround(color, ambientOcclusion, normal, roughness, metalness, height) {
 
   this.scene.add(this.ground);
 }`;
+
+  const toneMapping = ` setupRenderer() {
+  // ... old code
+  this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  this.renderer.toneMappingExposure = 1.5;
+}`;
   /* ==========================================================
       ! Please make sure you have at max 8 sections in the array
   ========================================================== */
@@ -361,6 +368,7 @@ createGround(color, ambientOcclusion, normal, roughness, metalness, height) {
                 performance or vary depending on your model. Adapting to your
                 specific use case is key.
                 <br />
+                <br />
                 With that said, let’s dive in and transform your web-based 3D
                 models into visually stunning realistic render! 🏁
               </p>
@@ -437,7 +445,7 @@ createGround(color, ambientOcclusion, normal, roughness, metalness, height) {
                 Since the model is compressed, we’ll also use the{" "}
                 <code>DRACOLoader</code>. If your model isn’t Draco-compressed,
                 you can skip this part and stick with just the GLTFLoader. We
-                need the <br />
+                need the <br /><br />
                 Now, let’s load the model, located at
                 <code>/static/models/turtle_compressed.glb</code>.
               </p>
@@ -475,7 +483,6 @@ createGround(color, ambientOcclusion, normal, roughness, metalness, height) {
                 objects reflect their surroundings. This subtle touch goes a
                 long way in creating a realistic render.
                 <InsightDiv insightText={insightHDRIs} />
-                <br />
                 For high-quality HDRIs,{" "}
                 <a
                   className="link"
@@ -564,10 +571,12 @@ createGround(color, ambientOcclusion, normal, roughness, metalness, height) {
                 to its interior faces, and calling it a day. While this works,
                 it's limited—serving only as a static background.
                 <br />
+                <br />
                 Thankfully, Three.js has a built-in feature that simplifies this
                 process. After creating both the <code>environmentMap</code> and
                 the scene, we can assign the map to the scene’s{" "}
                 <code>background</code> property like this:
+                <br />
                 <br />
               </p>
               <CodeSnippet
@@ -589,6 +598,7 @@ createGround(color, ambientOcclusion, normal, roughness, metalness, height) {
                 environment map to a material (like{" "}
                 <code>MeshStandardMaterial</code> ) using the{" "}
                 <code>envMap</code> property.
+                <br />
                 <br />
                 For scene-wide lighting, Three.js allows us to assign the same
                 environment map to the scene’s <code>environment</code>{" "}
@@ -646,9 +656,82 @@ createGround(color, ambientOcclusion, normal, roughness, metalness, height) {
                 description={`Fig(4.0) Progress So Far. Normal lighting and simple render`}
               />
               <p>
-                So far the progress look okish, which not that bad but not that
-                great as well. Going forward we will try to make this scene
+                So far the progress look okayish, which not that bad but not
+                that great as well. Going forward we will try to make this scene
                 realistic, with good colors, lighting, shadow, sharp lines etc.
+              </p>
+              <h4>
+                <span>Step 4:</span> Enhancing the Tone with Tone mapping
+              </h4>
+              <p>
+                Tone mapping is an essential technique for achieving realistic
+                renders, especially when working with HDR and LDR textures.
+                While the HDR environment map provides rich lighting data, tone
+                mapping in Three.js helps us adjust the color and brightness to
+                make the scene look more natural and visually balanced.
+                <br />
+                <br />
+                In simple terms, tone mapping simulates how human eyes perceive
+                light and color. In 3D rendering, when using HDR images or high
+                dynamic range lighting, the colors often look too extreme or
+                unnatural. Tone mapping compresses these values into a range
+                that is suitable for display on standard monitors, giving a more
+                realistic look. To change the tone mapping, update the{" "}
+                <code>toneMapping</code> property on the WebGLRenderer.
+                <br />
+                <br />
+                Three.js gives us several tone mapping options to choose from,
+                each with its own effect on the scene:
+                <ul>
+                  <li>
+                    <i className="fa-solid fa-arrow-right"></i>{" "}
+                    <code>THREE.NoToneMapping</code> (default)
+                  </li>
+                  <li>
+                    <i className="fa-solid fa-arrow-right"></i>{" "}
+                    <code>THREE.LinearToneMapping</code>
+                  </li>
+                  <li>
+                    <i className="fa-solid fa-arrow-right"></i>{" "}
+                    <code>THREE.ReinhardToneMapping</code>
+                  </li>
+                  <li>
+                    <i className="fa-solid fa-arrow-right"></i>{" "}
+                    <code>THREE.CineonToneMapping</code>
+                  </li>
+                  <li>
+                    <i className="fa-solid fa-arrow-right"></i>{" "}
+                    <code>THREE.ACESFilmicToneMapping</code>
+                  </li>
+                </ul>
+                For our project, we’ll stick with{" "}
+                <code>THREE.ACESFilmicToneMapping</code>, as it strikes a
+                perfect balance between performance and visual quality!
+              </p>
+              <CodeSnippet
+                language={"javascript"}
+                codeText={toneMapping}
+                theme={theme}
+              />
+              <p>
+                Tone mapping doesn’t just balance light—it takes our scene
+                closer to photographic realism. Think of it as mimicking how a
+                camera with proper settings captures light. This technique
+                ensures that bright areas don’t appear overly harsh, and darker
+                areas retain subtle details, striking a beautiful balance in the
+                final render.
+                <br /> <br />A crucial aspect of tone mapping is the exposure
+                setting. With this, you control how much light is "let into" the
+                scene, much like adjusting a camera's aperture. This makes tone
+                mapping highly adaptable to different lighting conditions. A
+                higher exposure value brightens the scene, while a lower value
+                darkens it. To tweak this, update the{" "}
+                <code>toneMappingExposure</code> property directly on the
+                renderer. This simple adjustment has a significant impact on how
+                your scene looks, allowing you to fine-tune the lighting
+                dynamics and overall tone. <br /> <br />
+                Play around with this value to find the sweet spot where your
+                scene feels most lifelike—it's worth the effort!
               </p>
             </div>
           </div>

@@ -9,11 +9,13 @@ import "../../Blogs.scss";
 import { animated, useSpring } from "react-spring";
 import SuzanneThreeBG from "../../../../../components/SuzanneThreeBG/SuzanneThreeBG";
 import BlogImage from "../../../../../components/BlogImage/BlogImage";
+import InfoDiv from "../../../../../components/InfoDIV/InfoDiv";
+import CodeSnippet from "../../../../../components/SyntaxHighlighter/CodeSnippet";
 import img1 from "./utils/assets/1.webp";
 import img1l from "./utils/assets/1l.webp";
 import img2 from "./utils/assets/2.webp";
 import img2l from "./utils/assets/2l.webp";
-import InfoDiv from "../../../../../components/InfoDIV/InfoDiv";
+import img3 from "./utils/assets/img3.webp";
 
 const RealisticRender = ({
   openCMDCenter,
@@ -28,7 +30,7 @@ const RealisticRender = ({
   const [isSidebarVisible, setIsSidebarVisible] = useState(true);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 0);
     setCurrBlog(
       blogPost.find((blog) => {
         return blog.blogNo === 8;
@@ -68,10 +70,40 @@ const RealisticRender = ({
     return () => window.removeEventListener("scroll", handleScroll);
   });
 
+  const initLoader = `import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
+
+constructor() {
+  //...old code
+  this.initLoaders();
+  this.createScene();
+  //... old code
+}
+
+// Add it before createScene();
+initLoaders() {
+  this.gltfLoader = new GLTFLoader();
+  this.dracoLoader = new DRACOLoader();
+  this.dracoLoader.setDecoderPath("/static/draco/");
+  this.dracoLoader.setDecoderConfig({ type: "js" });
+  this.gltfLoader.setDRACOLoader(this.dracoLoader);
+}`;
+
+  const loadObject = `loadObject() {
+  this.gltfLoader.load("/static/models/turtle_compressed.glb", (gltf) => {
+      this.turtle = gltf.scene;
+      this.scene.add(this.turtle);
+  });
+}`;
+
   /* ==========================================================
       ! Please make sure you have at max 8 sections in the array
   ========================================================== */
-  const sections = ["What we will learn?", "Setup for the code"];
+  const sections = [
+    "What we will learn?",
+    "Setup for the code",
+    "Let's write the code",
+  ];
 
   return (
     <>
@@ -263,6 +295,55 @@ const RealisticRender = ({
                   </p>
                 `}
               />
+            </div>
+
+            <div className="blog-section">
+              <h3 className="blog-section-title">Let's write the code</h3>
+              <h4>
+                <span>Step 1:</span> Loading the 3D model
+              </h4>
+              <p>
+                Let’s start by loading our Sea Turtle model. First, we’ll
+                instantiate the <b>GLTFLoader</b> . To keep things organized,
+                we’ll group all our loaders into a new method called{" "}
+                <code>initLoaders</code> . This approach ensures everything is
+                neatly managed in one place.
+              </p>
+              <CodeSnippet
+                language={"javascript"}
+                codeText={initLoader}
+                theme={theme}
+              />
+              <p>
+                Since the model is compressed, we’ll also use the{" "}
+                <code>DRACOLoader</code>. If your model isn’t Draco-compressed,
+                you can skip this part and stick with just the GLTFLoader. We
+                need the <br />
+                Now, let’s load the model, located at
+                <code>/static/models/turtle_compressed.glb</code>.
+              </p>
+              <CodeSnippet
+                language={"javascript"}
+                codeText={loadObject}
+                theme={theme}
+              />
+              <p>
+                When you first load it, the model will appear completely black.
+              </p>
+              <BlogImage
+                imgDark={img3}
+                imgLight={img3}
+                theme={theme}
+                description={`Fig(3.0) Render results`}
+              />
+              <p>
+                That’s because its materials are instances of{" "}
+                <code>MeshStandardMaterial</code> , which depend on lighting to
+                display properly. For now, we’ll leave it as it is and focus on
+                getting the model to load successfully. Adding proper lighting
+                comes next. Remember to take it one step at a time—ensure the
+                model loads without errors before moving forward.
+              </p>
             </div>
           </div>
         </div>

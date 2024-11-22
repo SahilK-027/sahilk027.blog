@@ -7,7 +7,7 @@
   padding: 0;
   box-sizing: border-box;
   transition: background-color 0.3s ease, border-color 0.3s ease, fill 0.3s ease,
-    stroke 0.3s ease, background 0.3s ease;
+    stroke 0.3s ease, background 0.3s ease, color 0.3s ease;
 }
 
 /* Global variables */
@@ -53,6 +53,8 @@
   --gradient-blue: #9ce8ff;
   --gradient-pink: #f093b0;
 
+  --code-txt-bg-color: #7444ff78;
+  --code-txt-color: #fff;
   --code-border-color: #243b4c;
   --bit-color: rgb(42, 255, 241);
 }
@@ -98,6 +100,8 @@
   --gradient-blue: #2c88ff;
   --gradient-pink: #ff6d9c;
 
+  --code-txt-bg-color: #5728c5;
+  --code-txt-color: #fff;
   --code-border-color: #efefef;
   --bit-color: rgb(0, 128, 119);
 }
@@ -387,8 +391,8 @@ code {
   padding-right: 8px;
   border-radius: 4px;
   font-weight: 700;
-  color: #fff;
+  color: var(--code-txt-color);
   font-family: Roboto Mono, monospace;
-  background: #7444ff78;
+  background: var(--code-txt-bg-color);
   font-size: .85rem;
 }

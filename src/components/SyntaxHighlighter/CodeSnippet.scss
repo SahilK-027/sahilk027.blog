@@ -1,16 +1,38 @@
 .code-snippet-container {
   position: relative;
+
   .code {
-    border: 1px solid var(--code-border-color);
-    border-radius: 4px;
-    box-shadow: 0px 0px 20px 10px #00000008;
-    .token {
-      font-size: 13px !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 4px !important;
+    box-shadow: 0px 0px 20px 10px #00000008 !important;
+    font-family: "Fira Code", monospace !important;
+    background-color: var(--color-bg-box-container) !important;
+    font-size: 14px !important;
+    padding: 1.5em !important;
+
+    .language-javascript,
+    .language-js,
+    .language-bash {
+      background-color: var(--color-bg-box-container) !important;
+      text-shadow: none !important;
     }
+
+    .token {
+      font-family: "Fira Code", monospace !important;
+      font-weight: 500;
+      font-size: 14px !important;
+      text-shadow: none !important;
+    }
+
     .linenumber {
-      font-size: 9px !important;
-      padding-right: 10px !important;
-      color: #4d4d4d !important;
+      font-size: 10x !important;
+      padding-right: 20px !important;
+      font-weight: 200 !important;
+      color: #8994ae !important;
+    }
+
+    span {
+      font-size: 12px;
     }
   }
 
@@ -30,10 +52,12 @@
     cursor: pointer;
     font-size: 12px;
     transition: all 0.3s ease;
+
     .fa-check {
       color: var(--color-success);
       font-size: 16px;
     }
+
     &:hover {
       background-color: var(--color-border);
       color: var(--color-success);

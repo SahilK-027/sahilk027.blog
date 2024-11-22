@@ -36,7 +36,7 @@ const RealisticRender = ({
   const [isSidebarVisible, setIsSidebarVisible] = useState(true);
 
   useEffect(() => {
-    // window.scrollTo(0, 0);
+    window.scrollTo(0, 0);
     setCurrBlog(
       blogPost.find((blog) => {
         return blog.blogNo === 8;

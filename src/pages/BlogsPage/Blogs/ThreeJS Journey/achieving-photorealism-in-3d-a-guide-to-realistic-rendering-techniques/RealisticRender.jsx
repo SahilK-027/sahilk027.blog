@@ -404,16 +404,9 @@ createGround(color, ambientOcclusion, normal, roughness, metalness, height) {
             <div className="blog-section">
               <h3 className="blog-section-title">What we will learn?</h3>
               <p>
-                Baking alone isn’t always enough for truly realistic renders.
-                Whether you’re showcasing a real-life product, presenting a
-                portfolio as a 3D artist, or simply striving for visual
-                fidelity, achieving a life-like appearance requires a
-                combination of techniques. Factors like lighting, environment
-                mapping, shadows, and material properties all play critical
-                roles—and when not handled correctly, even a great model can
-                look underwhelming. In this blog, we’ll explore how to render
-                imported 3D models with stunning realism. We’ll dive into
-                essential strategies, including:
+                In this blog, we’ll explore how to render imported 3D models
+                with stunning realism. We’ll dive into essential strategies,
+                including:
                 <ul>
                   <li>
                     <i className="fa-solid fa-arrow-right"></i>{" "}
@@ -527,8 +520,8 @@ createGround(color, ambientOcclusion, normal, roughness, metalness, height) {
               <p>
                 Since the model is compressed, we’ll also use the{" "}
                 <code>DRACOLoader</code>. If your model isn’t Draco-compressed,
-                you can skip this part and stick with just the GLTFLoader. We
-                need the <br />
+                you can skip this part and stick with just the GLTFLoader.
+                <br />
                 <br />
                 Now, let’s load the model, located at
                 <code>/static/models/turtle_compressed.glb</code>.

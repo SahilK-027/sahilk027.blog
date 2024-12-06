@@ -346,21 +346,18 @@ const IntroThreeJS = ({
               <h3 className="blog-section-title">How to Get Involved?</h3>
               <p>
                 Oh, and here's the cherry on top – this entire series is
-                absolutely free! Yup, you heard that right. All you need to do
-                is hit that <span>subscribe button</span> if you want to be the
-                first to know when I drop a new blog post. And hey, if you ever
-                find yourself scratching your head or stuck on a tricky concept,
-                head over to my{" "}
+                absolutely free! Yup, you heard that right. If you ever find
+                yourself scratching your head or stuck on a tricky concept, head
+                over to{" "}
                 <a
-                  href="https://github.com/sahilk027-blogs"
+                  href="https://github.com/SahilK-027/sahilk027.blog/discussions"
                   target="_blank"
                   className="link"
                 >
-                  GitHub organization
+                  GitHub discussions
                 </a>{" "}
-                . I've set up separate repositories for each blog post, complete
-                with discussion sections where you can connect with fellow
-                learners, ask burning questions, and share your insights.
+                . With discussion section, you can connect with fellow learners,
+                ask burning questions, and share your insights.
               </p>
 
               <p>

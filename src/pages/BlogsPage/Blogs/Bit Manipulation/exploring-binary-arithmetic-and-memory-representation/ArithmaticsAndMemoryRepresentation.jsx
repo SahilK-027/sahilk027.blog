@@ -738,8 +738,9 @@ This results in the binary representation of -5.`;
                 architecture but also underscores the significance of meticulous
                 data handling in technological applications. Stay tuned for our
                 next installment, where we'll delve into advanced binary
-                arithmetic and practical applications in computing!
+                arithmetic and practical applications!
               </p>
+              <p>Happy bit computing!</p>
             </div>
           </div>
         </div>

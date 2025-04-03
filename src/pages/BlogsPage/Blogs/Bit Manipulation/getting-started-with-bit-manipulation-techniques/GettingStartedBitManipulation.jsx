@@ -447,6 +447,7 @@ const GettingStartedWithBitManipulation = ({
                 as we delve further into the world of binary operations in my
                 upcoming bit streams!
               </p>
+              <p>Happy coding!</p>
             </div>
           </div>
         </div>

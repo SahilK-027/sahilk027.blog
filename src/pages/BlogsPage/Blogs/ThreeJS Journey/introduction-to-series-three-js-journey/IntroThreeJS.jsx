@@ -366,7 +366,7 @@ const IntroThreeJS = ({
                 adventurer. Get ready to roll up your sleeves, unleash your
                 inner creative genius, and dive headfirst into the enchanting
                 world of 3D web development. It's going to be one heck of a
-                ride!
+                ride! Happy 3D dev Journey!
               </p>
             </div>
           </div>

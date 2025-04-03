@@ -801,6 +801,7 @@ tick();`;
                   </li>
                 </ul>
               </p>
+              <p>Happy coding!</p>
             </div>
           </div>
         </div>

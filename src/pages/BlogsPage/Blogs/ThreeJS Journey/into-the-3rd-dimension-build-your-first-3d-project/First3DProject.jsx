@@ -829,7 +829,7 @@ tick();
                 <br />
                 So, fellow developer, let your curiosity guide you, your
                 creativity fuel you, and your passion for learning push you
-                forward. 🚀
+                forward. Happy coding 🚀!
               </p>
             </div>
           </div>

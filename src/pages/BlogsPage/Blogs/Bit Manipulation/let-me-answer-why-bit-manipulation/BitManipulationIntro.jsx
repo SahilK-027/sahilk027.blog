@@ -243,6 +243,7 @@ const BitManipulationIntro = ({
                 toolkit. Let's embark on this journey of understanding the very
                 language that computers speak, one bit at a time.
               </p>
+              <p>Happy learning! 🤓</p>
             </div>
           </div>
         </div>

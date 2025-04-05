@@ -26,6 +26,20 @@ export const blogSeries = [
     startDate: "15th June 2024",
     discussionURL: "https://github.com/SahilK-027/sahilk027.blog/discussions/5",
   },
+  {
+    seriesTitle:
+      "Random writings: Writing anything off-topic what's on my mind 🧠",
+    titleColor: `linear-gradient(270deg, #9dff75, #ffd204)`,
+    filterTag: "Random writings",
+    seriesID: 3,
+    seriesDescription:
+      "A place where I write whatever's on my mind. No specific topic—just random thoughts, ideas, and anything I feel like sharing.",
+    seriesUrl: `/blogs/random-writings`,
+    selector: `random-writings`,
+    blogsCollection: [9], // blogNo
+    startDate: "5th April 2025",
+    discussionURL: "https://github.com/SahilK-027/sahilk027.blog/discussions/5",
+  },
 ];
 
 export const blogPost = [
@@ -196,6 +210,26 @@ export const blogPost = [
       "Three JS",
     ],
     readtime: "16 mins",
+  },
+  {
+    blogNo: 9,
+    seriesID: 3,
+    sequenceNumberInSeries: 1,
+    seriesTitle: "Random writings",
+    filterTag: "Random writings",
+    blogTitle:
+      "Zero: The Number That Isn’t a Number, or Is It? 🤨",
+    blogDate: "5th April 2025",
+    selector:
+      "zero-the-number-that-isnt-a-number-or-its-it",
+    blogUrl: `/blogs/random-writings/zero-the-number-that-isnt-a-number-or-its-it`,
+    seriesUrl: `/blogs/random-writings`,
+    keywords: [
+      "Zero: The Number That Isn’t a Number, or Is It? 🤨",
+      "Random writings",
+      "Aryabhata",
+    ],
+    readtime: "-",
   },
 ];
 

@@ -32,7 +32,7 @@ const BlogIntroTxt = () => {
       <h1>
         Join me on this exciting journey. 🚀 Here, I share my experiences as a
         software developer, exploring <span> React</span>, <span>Angular</span>,{" "}
-        <span>ThreeJS</span>, <span>WebGl</span>, <span>Shaders</span>,{" "}
+        <span>ThreeJS</span>, <span>WebGL</span>, <span>Shaders</span>,{" "}
         <span>R3F</span>, <span>JavaScript</span>, <span>CS Fundamentals</span>{" "}
         and much more. 💻
       </h1>

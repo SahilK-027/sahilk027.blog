@@ -123,6 +123,7 @@ const SearchBlogs = ({
                 <div
                   className="series-container"
                   onClick={() => handleFilterSelection(series.filterTag)}
+                  key={series.seriesID}
                 >
                   <i
                     className={`fa-solid fa-check ${

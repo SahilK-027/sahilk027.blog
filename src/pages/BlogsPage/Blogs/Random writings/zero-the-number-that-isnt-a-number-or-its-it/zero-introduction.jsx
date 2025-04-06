@@ -126,7 +126,7 @@ Brahmagupta’s Brahmasphutasiddhanta was written in 628 CE and is one of the mo
   const infoNote1 = `
 <div>
 <p>
-In one of blogs I have already explained this concept of binary representation, if you ant to know more you can read more about it <a style="cursor: pointer" target="_blank" href="/blogs/cs-fundamentals-bit-manipulation/getting-started-with-bit-manipulation-techniques-the-basics">here</a>.
+In one of blogs I have already explained this concept of binary representation, if you want to know more you can read more about it <a style="cursor: pointer" target="_blank" href="/blogs/cs-fundamentals-bit-manipulation/getting-started-with-bit-manipulation-techniques-the-basics">here</a>.
 </p>
 </div>
 `;
@@ -745,7 +745,7 @@ In one of blogs I have already explained this concept of binary representation, 
             <div className="blog-section">
               <h3 className="blog-section-title">The Invention of an Idea</h3>
               <p>
-                Here’s the truth: Zero wasn’t discovered or introduced it was so
+                Here’s the truth: Zero wasn’t discovered or introduced it was so {" "}
                 <span className="bold-text">invented</span>. Not in the sense of
                 stumbling upon a new planet or digging up a fossil. It was
                 something far more radical a concept entirely by thought. Zero

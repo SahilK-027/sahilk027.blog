@@ -30,11 +30,11 @@ const BlogIntroTxt = () => {
       </h1>
       <br />
       <h1>
-        Join me on this exciting journey. 🚀 Here, I share my experiences as a
-        software developer, exploring <span> React</span>, <span>Angular</span>,{" "}
-        <span>ThreeJS</span>, <span>WebGL</span>, <span>Shaders</span>,{" "}
-        <span>R3F</span>, <span>JavaScript</span>, <span>CS Fundamentals</span>{" "}
-        and much more. 💻
+        Join me on this exciting journey. 🚀 Here, I write my experiences,
+        exploring <span>technology</span>, <span>CS Fundamentals</span>. Along
+        the way, I’ll be sharing what I learn, what excites me, and sometimes,
+        just whatever’s bouncing around in my head — from ideas and thought
+        experiments to stories. 😜
       </h1>
       <br />
     </div>

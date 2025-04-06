@@ -10,7 +10,6 @@ export const blogSeries = [
     selector: `three-js-journey`,
     blogsCollection: [1, 2, 6, 7, 8], // blogNo
     startDate: "19th April 2024",
-    discussionURL: "https://github.com/SahilK-027/sahilk027.blog/discussions/4",
   },
   {
     seriesTitle:
@@ -24,7 +23,6 @@ export const blogSeries = [
     selector: `cs-fundamentals-bit-manipulation`,
     blogsCollection: [3, 4, 5], // blogNo
     startDate: "15th June 2024",
-    discussionURL: "https://github.com/SahilK-027/sahilk027.blog/discussions/5",
   },
   {
     seriesTitle:
@@ -38,7 +36,6 @@ export const blogSeries = [
     selector: `random-writings`,
     blogsCollection: [9], // blogNo
     startDate: "5th April 2025",
-    discussionURL: "https://github.com/SahilK-027/sahilk027.blog/discussions/5",
   },
 ];
 
@@ -219,7 +216,7 @@ export const blogPost = [
     filterTag: "Random writings",
     blogTitle:
       "Zero: The Number That Isn’t a Number, or Is It? 🤨",
-    blogDate: "5th April 2025",
+    blogDate: "6th April 2025",
     selector:
       "zero-the-number-that-isnt-a-number-or-its-it",
     blogUrl: `/blogs/random-writings/zero-the-number-that-isnt-a-number-or-its-it`,

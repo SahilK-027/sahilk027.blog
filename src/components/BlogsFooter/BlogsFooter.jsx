@@ -10,33 +10,23 @@ const BlogsFooter = ({ theme }) => {
       <div className="footer-container">
         {/* <BlogLetter /> */}
         <span className="footer-txt">
-          Enjoyed reading this article 🤓? Want to show your appreciation 😊?
-          give this{" "}
-          <a
-            href="https://github.com/SahilK-027/sahilk027.blog"
-            target="_blank"
-            className="link"
-          >
-            project repository
-          </a>{" "}
-          star ⭐️ <br />
-          If you're interested in seeing more of my work, feel free to check out
+          Enjoyed reading this article 🤓?
+          If you're interested in seeing more of my similar work, feel free to check out
           my{" "}
           <a
             href="https://github.com/SahilK-027"
             target="_blank"
             className="link"
           >
-            GitHub
-          </a>{" "}
-          ! I appreciate the support! 😂
+            GitHub!
+          </a>
         </span>
         <br />
         <span className="footer-txt">
           Have doubts or question regarding this article? Feel free to reach out
           to me on{" "}
           <a
-            href="https://github.com/sahilk027-blogs"
+            href="https://github.com/SahilK-027/sahilk027.blog/discussions"
             target="_blank"
             className="link"
           >

@@ -329,15 +329,6 @@ const BlogSeries = ({ blogSeriesData }) => {
                   Publish Date: {series.startDate}
                 </p>
               </div>
-              <div className="buttons">
-                <a target="_blank" href={series.discussionURL}>
-                  <Tooltip content="Discussion">
-                    <button>
-                      <i className="fa-solid fa-comments"></i>
-                    </button>
-                  </Tooltip>
-                </a>
-              </div>
             </div>
           </Link>
         ))}

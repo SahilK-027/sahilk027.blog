@@ -26,6 +26,7 @@ import ArithmaticsAndMemoryRepresentation from "./pages/BlogsPage/Blogs/Bit Mani
 import TexturesBlog from "./pages/BlogsPage/Blogs/ThreeJS Journey/building-sci-fi-mystery-box-introduction-to-textures/Textures";
 import ParticlesBlog from "./pages/BlogsPage/Blogs/ThreeJS Journey/building-an-infinite-particle-background-intro-to-particle-system/Particles";
 import RealisticRender from "./pages/BlogsPage/Blogs/ThreeJS Journey/achieving-photorealism-in-3d-a-guide-to-realistic-rendering-techniques/RealisticRender";
+import ZeroIntroduction from "./pages/BlogsPage/Blogs/Random writings/zero-the-number-that-isnt-a-number-or-its-it/zero-introduction";
 
 /**
  * `App` component is the root component of the application.
@@ -281,6 +282,19 @@ const App = () => {
               />
             }
           />
+          <Route
+            path="/blogs/:journeyName/zero-the-number-that-isnt-a-number-or-its-it"
+            element={
+              <ZeroIntroduction
+                openCMDCenter={openCMDCenter}
+                controlMusic={controlMusic}
+                isMusicPlaying={isMusicPlaying}
+                theme={theme}
+                toggleTheme={toggleTheme}
+              />
+            }
+          />
+        
           {/* <Route path="/publisher" element={<PublisherPage />} /> */}
           <Route
             path="/*"

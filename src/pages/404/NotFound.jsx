@@ -38,12 +38,14 @@ const NotFound = ({
         </h1>
         <p>
           The requested URL{" "}
-          <span className="requested-URL">/{requestedURL}</span> was not found
-          on this server. That's all I know.🤦‍♂️!
+          <strong style={{
+            color: 'var(--code-txt-color)'
+          }}>/{requestedURL}</strong> was not found
+          on this server. 🤦‍♂️!
         </p>
         <br />
         <p>
-          Don't worry I got you! Click{" "}
+          Don't worry! Click{" "}
           <Link className="link" to="/">
             here
           </Link>{" "}

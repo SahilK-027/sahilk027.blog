@@ -226,7 +226,7 @@ export const blogPost = [
       "Random writings",
       "Aryabhata",
     ],
-    readtime: "-",
+    readtime: "12 min",
   },
 ];
 

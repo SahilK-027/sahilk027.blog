@@ -7,6 +7,28 @@
   border-radius: 10px;
   position: relative;
 
+  ul {
+    &::selection {
+      color: var(--color-heart) !important;
+      background: var(--color-heart-bg-light) !important;
+    }
+
+    li {
+      &::selection {
+        color: var(--color-heart) !important;
+        background: var(--color-heart-bg-light) !important;
+      }
+    }
+
+    b {
+      &::selection {
+        color: var(--color-heart) !important;
+        background: var(--color-heart-bg-light) !important;
+      }
+    }
+  }
+
+
   p {
     padding: 0 !important;
     color: var(--color-text-primary);
@@ -33,6 +55,7 @@
       }
     }
   }
+
   .icon {
     position: absolute;
     display: flex;
@@ -48,10 +71,12 @@
     width: 30px;
     height: 30px;
   }
+
   ul {
     li {
       margin: calc(0.725rem) 0;
       color: var(--color-text-primary);
+
       a {
         color: var(--color-heart);
         text-decoration: underline;
@@ -68,6 +93,7 @@
           background: var(--color-heart-bg-light) !important;
         }
       }
+
       i {
         color: var(--color-heart);
         font-size: 16px;

@@ -398,3 +398,14 @@ code {
   background: var(--code-txt-bg-color);
   font-size: .85rem;
 }
+
+.fa-quote-left {
+  transition: none !important;
+  font-size: 50px;
+  padding-left: 6px;
+  color: var(--color-text-secondary);
+}
+
+.bold-text {
+  color: var(--color-text-primary)
+}

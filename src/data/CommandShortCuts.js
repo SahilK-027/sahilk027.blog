@@ -50,7 +50,7 @@ export const cmdItems = [
         target: "_target",
       },
       {
-        href: "https://www.dropbox.com/scl/fi/o9ks6egn520k1qycbzw0s/resume.pdf?rlkey=p7b0d25l1an8grc1hixtddc34&dl=0",
+        href: "https://www.dropbox.com/scl/fi/6d224bxcx097fzj0mvter/sahil_k_may_2025.pdf?rlkey=mvmbi16wbfilpzfhfxmfmynhc&st=gi7q6jc3&dl=0",
         icon: "fa-regular fa-file-lines",
         text: "Download my resume",
         target: "_blank",

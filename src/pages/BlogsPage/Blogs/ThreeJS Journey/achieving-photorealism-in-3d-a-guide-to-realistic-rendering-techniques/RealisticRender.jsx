@@ -739,7 +739,8 @@ createGround(color, ambientOcclusion, normal, roughness, metalness, height) {
               <p>
                 Tone mapping is an essential technique for achieving realistic
                 renders, especially when working with HDR and LDR textures.
-                While the HDR environment map provides rich lighting data, tone
+                While the HDR environment map provides rich lighting data, ex. sunlight in HDR map
+                might represent 1000 as brightness scale and small lamp as 1 on scale, tone
                 mapping in Three.js helps us adjust the color and brightness to
                 make the scene look more natural and visually balanced.
                 <br />
@@ -749,7 +750,8 @@ createGround(color, ambientOcclusion, normal, roughness, metalness, height) {
                 dynamic range lighting, the colors often look too extreme or
                 unnatural. Tone mapping compresses these values into a range
                 that is suitable for display on standard monitors, giving a more
-                realistic look. To change the tone mapping, update the{" "}
+                realistic look. It will remap say [0, 1000] range of HDR lighting
+                to more manageable [0, 1] range. To change the tone mapping, update the{" "}
                 <code>toneMapping</code> property on the WebGLRenderer.
                 <br />
                 <br />

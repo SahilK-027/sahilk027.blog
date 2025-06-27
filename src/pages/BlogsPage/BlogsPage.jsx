@@ -33,7 +33,7 @@ const BlogIntroTxt = () => {
         Join me on this exciting journey. 🚀 Here, I write my experiences,
         exploring <span>technology</span>, <span>CS Fundamentals</span>. Along
         the way, I’ll be sharing what I learn, what excites me, and sometimes,
-        just whatever’s bouncing around in my head — from ideas and thought
+        just whatever’s bouncing around in my head, from ideas and thought
         experiments to stories. 😜
       </h1>
       <br />

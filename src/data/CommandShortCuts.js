@@ -49,12 +49,12 @@ export const cmdItems = [
         text: "Suggest a topic for blog",
         target: "_target",
       },
-      {
-        href: "https://www.dropbox.com/scl/fi/6d224bxcx097fzj0mvter/sahil_k_may_2025.pdf?rlkey=mvmbi16wbfilpzfhfxmfmynhc&st=gi7q6jc3&dl=0",
-        icon: "fa-regular fa-file-lines",
-        text: "Download my resume",
-        target: "_blank",
-      },
+      // {
+      //   href: "#",
+      //   icon: "fa-regular fa-file-lines",
+      //   text: "Download my resume",
+      //   target: "_blank",
+      // },
     ],
   },
   {

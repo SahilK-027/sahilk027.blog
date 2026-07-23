@@ -1,29 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar";
-import Footer from "../../components/Footer/Footer";
+import { GLYPH_PATHS } from "../../data/glyphPaths";
 import "./NotFound.scss";
-import { Link } from "react-router-dom";
 
-const NotFound = ({
-  openCMDCenter,
-  controlMusic,
-  isMusicPlaying,
-  theme,
-  toggleTheme,
-}) => {
-  const [requestedURL, setRequestedURL] = useState("");
+// The brand primitives, knocked over: a couple of glyphs lie tipped at odd
+// angles — the shelf equivalent of a missing page.
+const TIPPED = [-8, 24, 0, -90, 12, 116];
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    // Get the current path from window.location.pathname
-    const currentPath = window.location.pathname;
-    // Extract the text after the leading slash
-    const URL = currentPath.substring(1);
-    setRequestedURL(URL);
-  }, []);
+/**
+ * Standalone full-viewport 404 — just navbar and centered content, no footer.
+ */
+const NotFound = ({ openCMDCenter, controlMusic, isMusicPlaying, theme }) => {
+  const { pathname } = useLocation();
 
   return (
-    <>
+    <div className="not-found-screen">
       <Navbar
         openCMDCenter={openCMDCenter}
         controlMusic={controlMusic}
@@ -31,29 +23,70 @@ const NotFound = ({
         theme={theme}
         pageTitle="404 Page Not Found"
       />
-      <div className="page not-found-page">
-        <h1>
-          <span className="error-no">Error 404:</span>{" "}
-          <span className="rem-h1">Ohh No...😬!</span>
-        </h1>
-        <p>
-          The requested URL{" "}
-          <strong style={{
-            color: 'var(--code-txt-color)'
-          }}>/{requestedURL}</strong> was not found
-          on this server. 🤦‍♂️!
+      <main className="nf-main">
+        <p className="nf-kicker">
+          <span className="nf-kicker__dot" aria-hidden="true" />
+          Error 404 — page not found
         </p>
-        <br />
-        <p>
-          Don't worry! Click{" "}
-          <Link className="link" to="/">
-            here
-          </Link>{" "}
-          to go back home.
-        </p>
-      </div>
-      <Footer toggleTheme={toggleTheme} />
-    </>
+        <svg
+          className="nf-code"
+          viewBox="0 0 300 100"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <text
+            x="50%"
+            y="50%"
+            textAnchor="middle"
+            dominantBaseline="central"
+          >
+            404
+          </text>
+        </svg>
+        <h1 className="nf-title">This page drifted off the grid.</h1>
+
+        <dl className="nf-index" aria-label="Request details">
+          <div className="nf-index__row">
+            <dt>Requested</dt>
+            <span className="nf-index__leader" aria-hidden="true" />
+            <dd className="nf-path">{pathname}</dd>
+          </div>
+          <div className="nf-index__row">
+            <dt>Status</dt>
+            <span className="nf-index__leader" aria-hidden="true" />
+            <dd>not shelved</dd>
+          </div>
+        </dl>
+
+        <div className="nf-shelf" aria-hidden="true">
+          {GLYPH_PATHS.map((d, i) => (
+            <svg
+              key={i}
+              viewBox="0 0 24 24"
+              style={{ "--i": i, "--tip": `${TIPPED[i]}deg` }}
+            >
+              {d.split("M").filter(Boolean).map((seg, j) => (
+                <path key={j} d={`M${seg}`} pathLength="1" />
+              ))}
+            </svg>
+          ))}
+        </div>
+
+        <div className="nf-actions">
+          <Link to="/">
+            <i className="fa-solid fa-arrow-left" aria-hidden="true"></i>
+            Back to the archive
+          </Link>
+          <button onClick={openCMDCenter}>
+            Search posts
+            <span className="nf-kbd" aria-hidden="true">
+              <kbd>⌘</kbd>
+              <kbd>K</kbd>
+            </span>
+          </button>
+        </div>
+      </main>
+    </div>
   );
 };
 

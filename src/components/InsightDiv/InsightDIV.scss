@@ -35,7 +35,7 @@
       text-decoration-color: var(--color-insight-border);
 
       &:hover {
-        transition: all 0.3s ease;
+        transition: all var(--dur-base) var(--ease);
         text-decoration-color: var(--color-insight);
       }
 
@@ -80,7 +80,7 @@
         text-decoration-color: var(--color-insight-border) !important;
 
         &:hover {
-          transition: all 0.3s ease;
+          transition: all var(--dur-base) var(--ease);
           text-decoration-color: var(--color-insight) !important;
         }
 

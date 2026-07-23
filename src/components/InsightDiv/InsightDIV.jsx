@@ -1,7 +1,8 @@
 import Tooltip from "../Tooltip/Tooltip";
 import "./InsightDIV.scss";
 
-const InsightDiv = ({ insightText }) => {
+// `children` = new MDX API. `insightText` (HTML string) kept for legacy blogs.
+const InsightDiv = ({ insightText, children }) => {
   return (
     <div className="insight-div">
       <div className="icon">
@@ -10,7 +11,11 @@ const InsightDiv = ({ insightText }) => {
         </Tooltip>
       </div>
       <p>👉 Insight: </p>{" "}
-      <div dangerouslySetInnerHTML={{ __html: insightText }} />
+      {children ? (
+        <div>{children}</div>
+      ) : (
+        <div dangerouslySetInnerHTML={{ __html: insightText }} />
+      )}
     </div>
   );
 };

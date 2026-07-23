@@ -24,16 +24,66 @@
     <meta name="author" content="Sahil K" />
     <meta name="keywords" content="Sahil K, Sahil Kandhare, Sahil Kandhare Blog, Sahil K's Blog, SK027" />
 
-    <!-- Font Awesome -->
+    <!-- Fonts: all Google families in one request, loaded non-render-blocking
+         via the print-media swap trick (with <noscript> fallback). -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fira+Code:wght@300..700&display=swap"
-      rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Inter:wght@100..900&family=Ubuntu+Sans+Mono:ital,wght@0,400..700;1,400..700&display=swap"
+      media="print" onload="this.media='all'" />
+    <noscript>
+      <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Inter:wght@100..900&family=Ubuntu+Sans+Mono:ital,wght@0,400..700;1,400..700&display=swap" />
+    </noscript>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      media="print" onload="this.media='all'" />
+    <noscript>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    </noscript>
+    <!-- Critical background: painted before any JS/CSS bundle arrives, so a
+         refresh never flashes white (dark) or dark (light). Values mirror
+         --bg in global.scss — keep in sync. -->
+    <style>
+      html { background-color: #0e0e0e; }
+      html[data-theme="light"] { background-color: #ffffff; }
+    </style>
     <title>Sahil K's Blog</title>
   </head>
 
   <body>
+    <!-- Apply saved theme + accent before paint to avoid a flash of the wrong
+         look (FOUC). Accent presets mirror src/data/accents.js — keep in sync. -->
+    <script>
+      (function () {
+        try {
+          var m = document.cookie.match(/(?:^|;\s*)theme=([^;]+)/);
+          var t = m ? decodeURIComponent(m[1]) : "dark";
+          document.documentElement.dataset.theme = t;
+        } catch (e) {
+          document.documentElement.dataset.theme = "dark";
+        }
+        try {
+          var accents = {
+            "violet": [258, 88, 66],
+            "electric-blue": [212, 95, 60],
+            "orange": [26, 90, 58],
+            "green": [152, 65, 48],
+            "red": [4, 82, 60],
+            "pink": [330, 85, 62]
+          };
+          var am = document.cookie.match(/(?:^|;\s*)accent=([^;]+)/);
+          var name = am ? decodeURIComponent(am[1]) : "violet";
+          var a = accents[name] || accents["violet"];
+          var root = document.documentElement;
+          root.style.setProperty("--accent-h", String(a[0]));
+          root.style.setProperty("--accent-s", a[1] + "%");
+          root.style.setProperty("--accent-base-l", a[2] + "%");
+          root.dataset.accent = accents[name] ? name : "violet";
+        } catch (e) {}
+      })();
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

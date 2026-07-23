@@ -1,65 +1,266 @@
-.navbar {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px calc((100% - 920px) / 2);
-  background-color: var(--blur-bg);
-  backdrop-filter: blur(20px);
+/* Floating navbar — editorial plate: squared corners, mono wordmark,
+   hairline borders. Matches the book/index language of the landing page. */
+.navbar-wrap {
   position: fixed;
   top: 0;
   left: 0;
-  border-bottom: 1px solid var(--border-color);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 20px 16px 0;
   z-index: 3;
+  pointer-events: none;
+}
 
-  .logo-container {
+.navbar {
+  pointer-events: auto;
+  width: auto;
+  max-width: calc(100vw - 32px);
+  display: flex;
+  align-items: center;
+  gap: 48px;
+  padding: 8px 8px 8px 20px;
+  background-color: var(--blur-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  transition: box-shadow 0.3s ease;
+
+  &.navbar--scrolled {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  }
+
+  .brand {
     display: flex;
     align-items: center;
+    gap: 10px;
+    min-width: 0;
+    text-decoration: none;
+    padding-left: 2px;
 
     .logo {
-      width: 52px;
-      height: 52px;
-      margin-left: 8px;
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      flex-shrink: 0;
+      transition: transform 0.2s ease;
     }
 
-    .page-title {
-      width: 45vw;
-      font-size: 20px;
-      font-weight: 500;
-      margin-left: 20px;
+    &:hover .logo {
+      transform: scale(1.06) rotate(-4deg);
+    }
+
+    .wordmark {
+      font-family: "Fira Code", monospace;
+      font-size: 0.88rem;
+      font-weight: 550;
+      letter-spacing: -0.01em;
       color: var(--color-text-primary-dark);
       white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+
+      .wordmark-dot {
+        color: var(--accent);
+        font-weight: 500;
+      }
     }
   }
 
   .navigation-container {
     display: flex;
-    gap: 10px;
-    justify-content: center;
+    gap: 6px;
     align-items: center;
+    flex-shrink: 0;
+
+    /* Shared compact button style — squared, hairline, mono details */
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      height: 38px;
+      background: transparent;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      transition: border-color 0.2s ease, color 0.2s ease;
+
+      i {
+        font-size: 14px;
+      }
+
+      &:hover,
+      &.active {
+        border-color: var(--accent-faint);
+        color: var(--accent);
+      }
+    }
+
+    .cmd-btn {
+      padding: 0 10px 0 14px;
+
+      i {
+        font-size: 13px;
+      }
+
+      /* Keycap plates — same gesture as the command-center shortcut keys */
+      .cmd-btn__label {
+        display: flex;
+        gap: 3px;
+
+        kbd {
+          font-family: "Fira Code", monospace;
+          font-size: 13px;
+          font-weight: 500;
+          line-height: 1;
+          min-width: 26px;
+          height: 26px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border: 1px solid var(--border-color);
+          border-radius: 5px;
+          background: var(--selection-bg-color);
+          color: inherit;
+          transition: border-color 0.2s ease;
+        }
+      }
+
+      &:hover .cmd-btn__label kbd {
+        border-color: var(--accent-faint);
+      }
+    }
+
+    .icon-btn {
+      width: 38px;
+      padding: 0;
+    }
+
+    /* Music button — normalize to match nav-btn squares */
+    .music-icon-container {
+      height: 38px;
+      width: 38px;
+      padding: 0;
+      margin: 0;
+      border-radius: 10px;
+
+      .music-icon {
+        width: 18px;
+        height: 18px;
+      }
+    }
+
+    .appearance {
+      position: relative;
+
+      .appearance-popover {
+        position: absolute;
+        top: calc(100% + 22px);
+        // Align with the navbar capsule's right edge (past the music button
+        // and the capsule's own padding), not the palette button.
+        right: -52px;
+        min-width: 290px;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        background-color: color-mix(in srgb, var(--bg) 92%, transparent);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid var(--border-color);
+        border-radius: 14px;
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+
+        .appearance-row {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 16px;
+
+          /* Index-row gesture: mono label, dotted leader, control */
+          .appearance-label {
+            font-family: "Fira Code", monospace;
+            font-size: 0.68rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            color: var(--color-text-secondary);
+          }
+
+          &::after {
+            content: "";
+            order: 1;
+            flex: 1;
+            border-bottom: 1px dotted var(--color-text-secondary);
+            opacity: 0.35;
+            transform: translateY(-2px);
+          }
+
+          .theme-toggle,
+          .accent-picker {
+            order: 2;
+          }
+
+          .theme-toggle {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            font-size: 12px;
+            font-weight: 500;
+            background: var(--accent-subtle);
+            border: 1px solid transparent;
+            border-radius: 8px;
+            color: var(--color-text-primary-dark);
+            cursor: pointer;
+            transition: border-color 0.2s ease;
+
+            &:hover {
+              border-color: var(--accent-faint);
+            }
+          }
+        }
+      }
+    }
   }
 }
 
 @media (max-width: 768px) {
+  .navbar-wrap {
+    padding: 14px 10px 0;
+  }
+
   .navbar {
-    .logo-container {
+    padding: 6px 6px 6px 16px;
+    gap: 28px;
+
+    .brand {
       .logo {
-        width: 44px;
-        height: 44px;
-        margin-left: 8px;
+        width: 26px;
+        height: 26px;
       }
 
-      .page-title {
-        width: 55vw;
-        font-size: 18px;
-        font-weight: 500;
-        margin-left: 10px;
-        color: var(--color-text-primary-dark);
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+      .wordmark {
+        font-size: 0.8rem;
+      }
+    }
+
+    .navigation-container {
+      .cmd-btn {
+        width: 34px;
+        padding: 0;
+
+        .cmd-btn__label {
+          display: none;
+        }
+      }
+
+      .nav-btn,
+      .icon-btn,
+      .music-icon-container {
+        height: 34px;
+        width: 34px;
       }
     }
   }

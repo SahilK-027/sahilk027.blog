@@ -1,0 +1,58 @@
+// Boot splash: the hero wireframe glyph family in a row, gray on black. Load
+// progress lights them left to right in the single active accent — one glyph
+// per sixth. No arc, no draw animation, no chrome.
+$gray: #3a3a3a;
+
+.app-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: grid;
+  place-items: center;
+  background: #000;
+  opacity: 1;
+  transition: opacity 0.45s ease; // FADE in AppLoader.jsx
+
+  &--fading {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  &__row {
+    display: flex;
+    gap: 18px;
+  }
+
+  &__glyph {
+    width: 40px;
+    height: 40px;
+    overflow: visible;
+
+    path {
+      fill: none;
+      stroke: $gray;
+      stroke-width: 0.9;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: stroke 0.6s ease;
+    }
+
+    // Each glyph lights to its own hue, rotated off the active accent so the
+    // palette still retunes when the accent changes.
+    &--on path {
+      stroke: hsl(
+        calc(var(--accent-h) + var(--hue)) var(--accent-s) var(--accent-base-l)
+      );
+    }
+  }
+
+  @media (max-width: 480px) {
+    &__row {
+      gap: 12px;
+    }
+    &__glyph {
+      width: 32px;
+      height: 32px;
+    }
+  }
+}

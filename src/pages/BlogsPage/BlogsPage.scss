@@ -1,318 +1,466 @@
 .blogsPage-container {
   .hero {
-    .intro-container {
-      h1 {
-        color: var(--color-text-secondary);
+    // Pinned while the sheet below scrolls over it — the parallax layer.
+    position: sticky;
+    top: 0;
+    z-index: 0;
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
 
-        span {
-          color: var(--color-text-primary);
-        }
-
-        .wave {
-          animation-name: wave-animation;
-          /* Refers to the name of your @keyframes element below */
-          animation-duration: 2.5s;
-          /* Change to speed up or slow down */
-          animation-iteration-count: infinite;
-          /* Never stop waving :) */
-          transform-origin: 70% 70%;
-          /* Pivot around the bottom-left palm */
-          display: inline-block;
-        }
-
-        @keyframes wave-animation {
-          0% {
-            transform: rotate(0deg);
-          }
-
-          10% {
-            transform: rotate(14deg);
-          }
-
-          /* The following five values can be played with to make the waving more or less extreme */
-          20% {
-            transform: rotate(-8deg);
-          }
-
-          30% {
-            transform: rotate(14deg);
-          }
-
-          40% {
-            transform: rotate(-4deg);
-          }
-
-          50% {
-            transform: rotate(10deg);
-          }
-
-          60% {
-            transform: rotate(0deg);
-          }
-
-          /* Reset for the last half to pause */
-          100% {
-            transform: rotate(0deg);
-          }
-        }
-      }
+    .hero-content {
+      will-change: transform, opacity;
     }
 
-    .navigation-buttons {
-      display: flex;
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 1140px;
+      margin: 0 auto;
+      // Book-spread composition: copy on the left page, journal index on the
+      // right page, spine between. Bottom padding reserves a band for the
+      // physics pile so both pages float clear of the shapes.
+      padding: 110px 24px min(13vh, 130px);
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+      gap: 64px;
       align-items: center;
-      gap: 16px;
-      padding: 20px 0px;
-    }
-  }
 
-  .about-me {
-    .about-me-container {
-      display: flex;
-      gap: 16px;
+      .hero-page--right {
+        position: relative;
+        // The spine: a soft gradient rule between the two pages.
+        padding-left: 64px;
 
-      .left {
-        width: 50%;
-      }
-
-      .right {
-        display: flex;
-        flex-direction: column;
-        width: 50%;
-
-        .signature-container {
-          align-self: flex-end;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          pointer-events: none;
-          margin-right: 20px;
-          flex: 1;
-          color: var(--color-text-primary);
-          flex-direction: row;
+        &::before {
+          content: "";
+          position: absolute;
+          left: 0;
+          top: 8%;
+          bottom: 8%;
+          width: 1px;
+          background: linear-gradient(
+            to bottom,
+            transparent,
+            var(--border) 25%,
+            var(--border) 75%,
+            transparent
+          );
         }
       }
-    }
-  }
 
-  .subscription {
-    .blog-letter {
-      background-color: var(--color-bg-box-container);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 48px;
-      border-radius: 10px;
-      border: 1px solid var(--border-color);
-      box-sizing: border-box;
+      .hero-kicker {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        color: var(--text-2);
+        margin-bottom: 22px;
 
-      .blogletter-container {
-        width: 100%;
-        box-sizing: border-box;
-
-        .icons {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          margin-bottom: 40px;
-
-          .icon-plane {
-            color: var(--color-text-secondary);
-            font-size: 40px;
-          }
+        .hero-kicker__dot {
+          width: 7px;
+          height: 7px;
+          border-radius: 50%;
+          background: var(--accent);
+          box-shadow: 0 0 10px var(--accent-faint);
         }
 
-        h3 {
-          margin: 20px 0;
-        }
-
-        p {
-          margin: 20px 0;
-          margin-bottom: 10px;
-          font-size: 16px;
-        }
-
-        ul {
-          li {
-            .fa-circle-dot {
-              color: var(--color-anchor);
-              margin-right: 10px;
-            }
-
-            margin: 14px 10px;
-          }
-        }
-
-        form {
-          display: flex;
-          gap: 10px;
-          align-items: center;
-          justify-content: center;
-          margin-top: 18px;
-
-          input {
-            flex: 1;
-            padding: 8px 20px;
-            height: 100%;
-            background-color: #1d202a;
-            border: 1px solid var(--border-color);
-            color: var(--color-text-primary);
-            font-size: 14px;
-            font-family: var(--font-family);
-            outline: none;
-            background: none;
-            border-radius: 10px;
-
-            &::placeholder {
-              color: var(--color-text-secondary-dark);
-              font-size: 14px;
-            }
-
-            &:focus {
-              border: 1px solid var(--color-anchor);
-              box-shadow: 0 0 10px var(--shadow-color);
-            }
-          }
-        }
-
-        #thanks {
-          margin: 0;
-          padding: 30px 0;
-          padding-bottom: 0px;
-          padding-left: 8px;
-          color: var(--color-heart);
+        .hero-kicker__sep {
+          width: 24px;
+          height: 1px;
+          background: var(--text-3);
         }
       }
-    }
-  }
 
-  .blog-series {
-    .blog-series-container {
-      .blog-series-card {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        background-color: var(--color-bg-box-container);
-        border-radius: 10px;
-        border: 1px solid var(--border-color);
-        box-sizing: border-box;
-        padding: 18px 24px;
+      .hero-title {
+        font-size: clamp(2rem, 3.2vw, 2.6rem);
+        font-weight: 650;
+        line-height: 1.12;
+        letter-spacing: -0.03em;
+        max-width: 15em;
         margin-bottom: 20px;
+        text-wrap: balance;
 
-        .blog-series-card-header {
-          font-size: 20px;
+        .hero-title__accent {
+          color: var(--text-2);
+        }
+      }
+
+      .hero-sub {
+        font-size: var(--fs-body);
+        line-height: 1.65;
+        color: var(--text-2);
+        max-width: 33em;
+        margin-bottom: 28px;
+      }
+
+      // Right page: mono table-of-contents card with dotted leaders.
+      .hero-index {
+        font-family: "Fira Code", monospace;
+
+        .hero-index__heading {
+          font-size: 0.7rem;
+          text-transform: uppercase;
+          letter-spacing: 0.22em;
+          color: var(--text-3);
+          margin-bottom: 22px;
         }
 
-        .blog-series-card-desc {
-          font-size: 14px;
-          margin-bottom: 10px;
-        }
-
-        .blog-series-start-date {
-          font-size: 14px;
-          margin-bottom: 5px;
-          margin-top: 5px;
-          color: var(--color-text-secondary);
-        }
-
-        .buttons {
+        .hero-index__rows {
           display: flex;
-          align-items: center;
-          gap: 10px;
+          flex-direction: column;
+          gap: 16px;
+          margin: 0 0 34px;
+        }
 
-          button {
-            font-size: 14px;
-            padding: 10px;
-            border-radius: 10px;
-            border: 1px solid var(--border-color);
-            background-color: var(--color-bg-box-container);
-            color: var(--color-text-secondary);
-            cursor: pointer;
+        .hero-index__row {
+          display: flex;
+          align-items: baseline;
+          gap: 10px;
+          font-size: 0.82rem;
+
+          dt {
+            flex-shrink: 0;
+            color: var(--text-3);
+          }
+
+          .hero-index__leader {
+            flex: 1;
+            border-bottom: 1px dotted var(--text-3);
+            opacity: 0.5;
+            transform: translateY(-3px);
+          }
+
+          dd {
+            flex-shrink: 0;
+            margin: 0;
+            color: var(--text-1);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+          }
+
+          .hero-index__pulse {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 8px var(--accent-faint);
+            animation: hero-scroll-pulse 2.2s ease-in-out infinite;
+          }
+        }
+
+        .hero-index__latest {
+          .hero-index__latest-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.22em;
+            color: var(--accent);
+            margin-bottom: 12px;
+          }
+
+          a {
+            display: block;
+            font-family: var(--font-body, inherit);
+            font-size: 0.92rem;
+            font-weight: 550;
+            line-height: 1.45;
+            letter-spacing: -0.01em;
+            color: var(--text-1);
+            margin-bottom: 10px;
+            text-wrap: balance;
+            transition: color var(--dur-base) var(--ease);
+
+            i {
+              font-size: 0.7em;
+              margin-left: 8px;
+              color: var(--text-3);
+              transition: transform var(--dur-base) var(--ease),
+                color var(--dur-base) var(--ease);
+            }
 
             &:hover {
-              transition: box-shadow 0.3s ease, border 0.3s ease;
-              border: 1px solid var(--color-anchor);
-              color: var(--color-anchor);
-              box-shadow: 0 0 20px var(--shadow-color);
+              color: var(--accent);
+
+              i {
+                color: var(--accent);
+                transform: translateX(3px);
+              }
             }
           }
 
-          p {
-            font-size: 14px;
+          .hero-index__latest-meta {
+            font-size: 0.72rem;
+            color: var(--text-3);
           }
         }
+      }
 
-        &:hover {
-          transition: all 0.35s ease;
-          box-shadow: 0 0 12px hsla(0, 0%, 100%, 0.385);
+      // Text links, not buttons — reads editorial rather than product CTA.
+      .hero-links {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 28px;
+
+        a {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          font-size: 0.92rem;
+          font-weight: 550;
+          color: var(--text-2);
+          transition: color var(--dur-base) var(--ease);
+
+          i {
+            font-size: 0.72em;
+            color: var(--text-3);
+            transition: transform var(--dur-base) var(--ease),
+              color var(--dur-base) var(--ease);
+          }
+
+          &:hover {
+            color: var(--text-1);
+
+            i {
+              color: var(--accent);
+            }
+          }
+
+          &:first-child:hover i {
+            transform: translateY(2px);
+          }
+
+          &:last-child:hover i {
+            transform: translate(2px, -2px);
+          }
+        }
+      }
+
+    }
+
+    // Bottom strip lives OVER the pile, so both ends sit in frosted-glass
+    // chips that stay legible against any shape arrangement.
+    .hero-meta {
+      position: absolute;
+      z-index: 3;
+      left: 0;
+      right: 0;
+      bottom: 22px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      padding: 0 28px;
+      pointer-events: none;
+
+      .hero-meta__scroll {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.16em;
+        color: var(--text-2);
+        padding: 10px 16px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: color-mix(in srgb, var(--bg) 55%, transparent);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+
+        .hero-meta__line {
+          display: block;
+          width: 1px;
+          height: 18px;
+          background: linear-gradient(to bottom, transparent, var(--text-2));
+          animation: hero-scroll-pulse 2.2s ease-in-out infinite;
+        }
+      }
+
+      .hero-meta__socials {
+        display: flex;
+        gap: 4px;
+        padding: 6px 8px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: color-mix(in srgb, var(--bg) 55%, transparent);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        pointer-events: auto;
+
+        a {
+          font-size: 0.82rem;
+          font-weight: 500;
+          color: var(--text-2);
+          padding: 4px 10px;
+          border-radius: 999px;
+          transition: color var(--dur-base) var(--ease),
+            background var(--dur-base) var(--ease);
+
+          &:hover {
+            color: var(--accent);
+            background: color-mix(in srgb, var(--accent) 10%, transparent);
+          }
         }
       }
     }
   }
 
-  .get-in-touch {
-    .get-in-touch-container {
-      i {
-        color: var(--gradient-pink);
-      }
+  // The sheet: full-bleed surface that slides over the pinned hero.
+  .landing-sheet {
+    position: relative;
+    z-index: 2;
+    background: var(--bg);
+    border-radius: 32px 32px 0 0;
+    box-shadow: 0 -24px 80px rgba(0, 0, 0, 0.35);
+    overflow: hidden;
+    // Bottom breathing room lives INSIDE the sheet so it meets the footer
+    // flush — no bare body background showing between them.
+    padding-bottom: 96px;
+
+    .landing-main {
+      position: relative;
+      z-index: 1;
+      margin-bottom: 0;
     }
   }
-}
 
-.blog-section-title {
-  margin-top: 2em;
-}
 
-@media (max-width: 768px) {
-  .blogsPage-container {
-    .about-me {
-      .about-me-container {
+  .landing-main {
+    .log-section {
+      position: relative;
+      margin-top: 0;
+      padding-top: 64px;
+      scroll-margin-top: 0;
+
+      .log-header {
         display: flex;
         flex-direction: column;
         gap: 16px;
+        margin-bottom: 48px;
 
-        .left {
-          width: 100%;
-        }
+        .section-kicker {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          font-size: 0.8rem;
+          font-weight: 500;
+          text-transform: uppercase;
+          letter-spacing: 0.14em;
+          color: var(--text-3);
 
-        .right {
-          width: 100%;
-        }
-      }
-    }
-
-    .subscription {
-      .blog-letter {
-        padding: 20px;
-
-        .blogletter-container {
-          width: 100%;
-          box-sizing: border-box;
-
-          .icons {
-            margin-bottom: 20px;
+          .section-kicker__dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--accent);
           }
+        }
 
-          form {
-            box-sizing: border-box;
+        .log-header-row {
+          display: flex;
+          align-items: baseline;
+          justify-content: space-between;
+          gap: 20px;
 
-            input {
-              width: 95%;
+          .log-title {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 12px;
+            font-size: clamp(1.4rem, 2.4vw, 1.8rem);
+            font-weight: 650;
+            letter-spacing: -0.02em;
+
+            .log-count {
+              font-family: "Fira Code", monospace;
+              font-size: 0.78rem;
+              font-weight: 500;
+              color: var(--text-3);
+              border: 1px solid var(--border);
+              border-radius: 999px;
+              padding: 3px 11px;
+              vertical-align: middle;
             }
           }
         }
       }
     }
+  }
+}
 
-    .blog-series {
-      .blog-series-container {
-        .blog-series-card {
-          .blog-series-card-header {
-            font-size: 16px;
-            font-weight: 600;
-          }
+// Landing only: the sheet carries its own bottom padding, so the footer
+// sits flush against it (other pages keep the footer's default margin).
+.blogsPage-container + .site-footer {
+  margin-top: 0;
+  // Sit above the sheet's box-shadow so it doesn't wash over the footer.
+  position: relative;
+  z-index: 3;
+}
+
+@keyframes hero-scroll-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scaleY(0.6);
+    transform-origin: top;
+  }
+  50% {
+    opacity: 1;
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+}
+
+@media (max-width: 768px) {
+  .blogsPage-container .hero {
+    min-height: 100vh;
+    min-height: 100svh;
+
+    .hero-content {
+      padding: 96px 20px min(12vh, 110px);
+      grid-template-columns: minmax(0, 1fr);
+      gap: 40px;
+
+      .hero-title {
+        font-size: clamp(2.1rem, 8.5vw, 2.6rem);
+      }
+
+      .hero-sub {
+        margin-bottom: 28px;
+      }
+
+      .hero-links {
+        gap: 22px;
+      }
+
+      // Single column: spine turns into a horizontal rule above the index.
+      .hero-page--right {
+        padding-left: 0;
+        padding-top: 32px;
+
+        &::before {
+          top: 0;
+          bottom: auto;
+          left: 0;
+          right: 30%;
+          width: auto;
+          height: 1px;
+          background: linear-gradient(to right, var(--border), transparent);
         }
+      }
+    }
+
+    .hero-meta {
+      bottom: 16px;
+      padding: 0 16px;
+
+      .hero-meta__scroll {
+        display: none;
       }
     }
   }

@@ -1,53 +1,92 @@
 .left-sidebar {
   position: fixed;
-  top: 27%;
-  left: 0;
-  width: 200px;
-  height: 100vh;
-  display: flex;
-  align-items: start;
-  padding-top: 20px;
-}
+  top: 180px;
+  left: max(24px, calc((100vw - 820px) / 2 - 260px));
+  width: 220px;
 
-.vertical-bar-container {
-  margin: 0 20px;
-  width: 2px;
-  height: 300px;
-  background: var(--color-text-secondary-dark-2);
-
-  .vertical-line {
-    position: relative;
-    background-image: linear-gradient(
-      to bottom,
-      #44efff,
-      #449eff,
-      #445aff,
-      #7444ff,
-      #9544ff,
-      #e044ff,
-      #ff44e9,
-      #ff4498
-    );
+  .toc-label {
+    font-family: "Fira Code", monospace;
+    font-size: 0.68rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--text-3);
+    margin-bottom: 16px;
   }
-}
 
-.section-names {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
+  .toc-body {
+    display: flex;
+    gap: 16px;
 
-.section-name {
-  position: relative;
-  font-size: 14px;
-  color: var(--color-text-secondary-dark);
-}
+    .toc-track {
+      flex-shrink: 0;
+      width: 2px;
+      border-radius: 2px;
+      background: var(--border);
+      overflow: hidden;
 
-.section-name.active {
-  transition: all 0.3s ease;
-  background: linear-gradient(50deg, #7383ff, #9674ff, #b379ff, #e979ff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+      .toc-track__fill {
+        width: 100%;
+        background: var(--accent);
+        border-radius: 2px;
+      }
+    }
+
+    .toc-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+
+      li {
+        margin: 0;
+        line-height: 1.4;
+      }
+
+      .toc-item {
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+        font-family: var(--font-family);
+        font-size: 0.82rem;
+        line-height: 1.4;
+        text-align: left;
+        color: var(--text-3);
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        transition: color var(--dur-base) var(--ease),
+          transform var(--dur-base) var(--ease);
+
+        .toc-item__no {
+          flex-shrink: 0;
+          font-family: "Fira Code", monospace;
+          font-size: 0.66rem;
+          color: var(--text-3);
+          opacity: 0.7;
+          transition: color var(--dur-base) var(--ease);
+        }
+
+        &:hover {
+          color: var(--text-1);
+          transform: translateX(4px);
+        }
+
+        &.toc-item--active {
+          color: var(--text-1);
+          font-weight: 500;
+
+          .toc-item__no {
+            color: var(--accent);
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
 }
 
 @media (max-width: 1160px) {

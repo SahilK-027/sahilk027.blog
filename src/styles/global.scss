@@ -1,117 +1,220 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu+Sans+Mono:ital,wght@0,400..700;1,400..700&display=swap");
+// Google Fonts are loaded via <link> in index.html (non-blocking) instead of
+// render-blocking @import here.
 
 /* Resetting default styles */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  transition: background-color 0.3s ease, border-color 0.3s ease, fill 0.3s ease,
-    stroke 0.3s ease, background 0.3s ease, color 0.3s ease;
+  transition: background-color var(--dur-base) var(--ease), border-color var(--dur-base) var(--ease), fill var(--dur-base) var(--ease),
+    stroke var(--dur-base) var(--ease), background var(--dur-base) var(--ease), color var(--dur-base) var(--ease);
+}
+
+/* Theme switch uses the View Transitions API (see toggleTheme). The whole page
+   is snapshotted before/after and crossfaded as ONE uniform layer, so borders,
+   container backgrounds, and images all fade together regardless of each
+   component's own transition rules. This is what fixed the staggered/glitchy
+   look — per-element transitions could never be made to agree. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: var(--dur-slow);
+  animation-timing-function: ease;
+}
+
+/* While the crossfade runs, freeze per-element transitions so nothing tweens
+   underneath the snapshot and pops when the overlay is removed. */
+:root.theme-switching *,
+:root.theme-switching *::before,
+:root.theme-switching *::after {
+  transition: none !important;
 }
 
 /* Global variables */
+/* Motion tokens — one scale for the whole app. Use these instead of ad-hoc
+   durations so interactions stay consistent (and theme fades stay in sync).
+   fast = icon/tap feedback, base = default UI, slow = large cards/panels. */
+:root {
+  --dur-fast: 0.15s;
+  --dur-base: 0.3s;
+  --dur-slow: 0.4s;
+  --ease: ease;
+}
+
+/* ---------------------------------------------------------------------------
+   Design tokens — monochrome base + single user-switchable accent.
+   Accent is stored as raw HSL channels so every variant (solid, subtle bg,
+   underline, glow) derives from the same three numbers. The AccentPicker
+   swaps --accent-h/s/l at runtime; a pre-paint script in index.html restores
+   the saved accent from the `accent` cookie before first render.
+--------------------------------------------------------------------------- */
+
 /* Default theme - Dark */
 :root {
-  --color-bg-primary: #010314;
-  --color-bg-box-container: #0f111f;
-  --color-bg-box-container-dark: #151c2a;
-  --color-text-primary: #e2eafd;
-  --color-text-primary-dark: #e1eafd;
-  --color-text-secondary: #9fa7b9;
-  --color-text-secondary-dark: #60677a;
-  --color-text-secondary-dark-2: #60677a58;
-  --color-error: #ff375f;
-  --color-heart: #f1a1ff;
-  --color-heart-border: #aa66b4d2;
-  --color-heart-bg-light: #f1a1ff1e;
-  --color-heart-bg: #f1a1ff28;
-  --color-warning: #ffa115;
-  --color-warning-bg: #ffa11536;
-  --color-success: #00b8a3;
-  --color-info: #0b84ff;
-  --color-info-border: #0253a5;
-  --color-info-bg-light: #0b85ff29;
-  --color-info-bg: #0b85ff15;
-  --color-insight: #fc843f;
-  --color-insight-border: #fc843fa4;
-  --color-insight-bg-light: #ff9e672e;
-  --color-insight-bg: #ff90503e;
+  /* Accent — default: violet. JS (AccentPicker / index.html pre-paint script)
+     swaps h/s/l; the light theme darkens every accent via --accent-l-shift. */
+  --accent-h: 258;
+  --accent-s: 88%;
+  --accent-base-l: 66%;
+  --accent-l-shift: 0%;
+  --accent-l: calc(var(--accent-base-l) - var(--accent-l-shift));
+  --accent: hsl(var(--accent-h) var(--accent-s) var(--accent-l));
+  --accent-subtle: hsl(var(--accent-h) var(--accent-s) var(--accent-l) / 0.12);
+  --accent-faint: hsl(var(--accent-h) var(--accent-s) var(--accent-l) / 0.4);
+
+  /* Monochrome scale */
+  --bg: #0e0e0e;
+  --bg-subtle: #161616;
+  --bg-raised: #1c1c1c;
+  --text-1: #e6e8ec;
+  --text-2: #9aa1ab;
+  --text-3: #5c6470;
+  --border: #232830;
+
+  /* Fluid type scale */
+  --fs-hero: clamp(2.2rem, 5vw, 3.4rem);
+  --fs-h2: clamp(1.35rem, 2.5vw, 1.6rem);
+  --fs-body: 1.05rem;
+  --fs-small: 0.875rem;
+
+  /* Legacy aliases — recolor old components/article pages for free */
+  --color-bg-primary: var(--bg);
+  --color-bg-box-container: var(--bg-subtle);
+  --color-bg-box-container-dark: var(--bg-raised);
+  --color-text-primary: var(--text-1);
+  --color-text-primary-dark: var(--text-1);
+  --color-text-secondary: var(--text-2);
+  --color-text-secondary-dark: var(--text-3);
+  --color-text-secondary-dark-2: #5c647058;
+  --color-error: #e5484d;
+  --color-heart: #d685e0;
+  --color-heart-border: #a066b480;
+  --color-heart-bg-light: #d685e01e;
+  --color-heart-bg: #d685e028;
+  --color-warning: #d9a344;
+  --color-warning-bg: #d9a34430;
+  --color-success: #3dae8c;
+  --color-info: #5b9dd9;
+  --color-info-border: #3a688f;
+  --color-info-bg-light: #5b9dd929;
+  --color-info-bg: #5b9dd915;
+  --color-insight: #d98e5f;
+  --color-insight-border: #d98e5fa4;
+  --color-insight-bg-light: #d98e5f2e;
+  --color-insight-bg: #d98e5f3e;
   --font-family: "Inter", sans-serif;
-  --color-pink: #f763af;
-  --color-anchor: #9771ff;
-  --border-color: #282e3b;
-  --code-container-border-color: #243b4c;
-  --selection-bg-color: rgba(47, 29, 107, 0.426);
-  --shadow-color: #9771ff84;
-  --anchor-underline-color: #7f50ff6a;
-  --blur-bg: #1213165a;
+  --color-pink: var(--accent);
+  --color-anchor: var(--accent);
+  --border-color: var(--border);
+  --code-container-border-color: var(--border);
+  --selection-bg-color: hsl(var(--accent-h) var(--accent-s) var(--accent-l) / 0.22);
+  --shadow-color: hsl(var(--accent-h) var(--accent-s) var(--accent-l) / 0.35);
+  --anchor-underline-color: hsl(var(--accent-h) var(--accent-s) var(--accent-l) / 0.4);
+  --blur-bg: #0e0e0e5a;
   --transparentshade: #ffffff40;
   --loader-color: no-repeat radial-gradient(circle closest-side, var(--color-text-secondary) 90%, #0000);
 
-  --gradient-yellow: #ffe0a2;
-  --gradient-purple: #bf87ff;
-  --gradient-blue: #9ce8ff;
-  --gradient-pink: #f093b0;
+  /* Legacy gradient vars kept as flat muted tones (no gradients in new design) */
+  --gradient-yellow: var(--text-2);
+  --gradient-purple: var(--accent);
+  --gradient-blue: var(--text-2);
+  --gradient-pink: var(--text-2);
 
-  --code-txt-bg-color: #7444ff78;
-  --code-txt-color: #fff;
-  --code-border-color: #243b4c;
-  --bit-color: rgb(42, 255, 241);
+  --code-txt-bg-color: var(--accent-subtle);
+  --code-txt-color: var(--text-1);
+  --code-border-color: var(--border);
+  --bit-color: var(--accent);
+
+  /* Syntax tokens (dark) — harmonized to the active accent: every color is a
+     hue rotation off --accent-h, so picking a new accent retunes all code
+     blocks (Prism + Sandpack) while staying readable. */
+  --token-plain: hsl(var(--accent-h) 14% 80%);
+  --token-comment: hsl(var(--accent-h) 8% 50%);
+  --token-punctuation: hsl(var(--accent-h) 10% 62%);
+  --token-keyword: hsl(var(--accent-h) 88% 76%);
+  --token-string: hsl(calc(var(--accent-h) + 130) 45% 66%);
+  --token-function: hsl(calc(var(--accent-h) - 45) 85% 72%);
+  --token-number: hsl(calc(var(--accent-h) + 55) 80% 70%);
+  --token-operator: hsl(var(--accent-h) 50% 72%);
+  --token-tag: hsl(calc(var(--accent-h) + 25) 75% 74%);
+  --token-property: hsl(calc(var(--accent-h) + 170) 45% 66%);
 }
 
 /* Light theme */
 [data-theme="light"] {
-  --color-bg-primary: #f0f2f5;
-  --color-bg-box-container: #fff;
-  --color-bg-box-container-dark: #fff;
-  --color-text-primary: #333;
-  --color-text-primary-dark: #242424;
-  --color-text-secondary: #6b7280;
-  --color-text-secondary-dark: #60677a9c;
-  --color-text-secondary-dark: #60677a;
-  --color-error: #ff375f;
-  --color-heart: #ff47b9;
-  --color-heart-border: #aa66b4d2;
-  --color-heart-bg-light: #f1a1ff1e;
-  --color-heart-bg: #f1a1ff28;
-  --color-warning: #ffa115;
-  --color-success: #00b8a3;
-  --color-info: #0b84ff;
-  --color-info-border: #0253a5;
-  --color-info-bg-light: #0b85ff29;
-  --color-info-bg: #0b85ff15;
-  --color-insight: #fc843f;
-  --color-insight-border: #fc843fa4;
-  --color-insight-bg-light: #ff9e672e;
-  --color-insight-bg: #ff90503e;
+  /* Accent — darker for contrast on white */
+  --accent-l-shift: 12%;
+
+  --bg: #ffffff;
+  --bg-subtle: #f6f7f9;
+  --bg-raised: #f0f1f4;
+  --text-1: #16181d;
+  --text-2: #565d68;
+  --text-3: #8a919c;
+  --border: #e4e7ec;
+
+  --color-bg-primary: var(--bg);
+  --color-bg-box-container: var(--bg-subtle);
+  --color-bg-box-container-dark: var(--bg-raised);
+  --color-text-primary: var(--text-1);
+  --color-text-primary-dark: var(--text-1);
+  --color-text-secondary: var(--text-2);
+  --color-text-secondary-dark: var(--text-3);
+  --color-error: #d33d43;
+  --color-heart: #b45cc0;
+  --color-heart-border: #a066b480;
+  --color-heart-bg-light: #b45cc01e;
+  --color-heart-bg: #b45cc028;
+  --color-warning: #b07d2a;
+  --color-warning-bg: #b07d2a26;
+  --color-success: #21856a;
+  --color-info: #3a76ad;
+  --color-info-border: #6fa2cf;
+  --color-info-bg-light: #3a76ad29;
+  --color-info-bg: #3a76ad12;
+  --color-insight: #b96c3d;
+  --color-insight-border: #b96c3da4;
+  --color-insight-bg-light: #b96c3d24;
+  --color-insight-bg: #b96c3d30;
   --font-family: "Inter", sans-serif;
-  --color-anchor: #7444ff;
-  --color-pink: #f763af;
-  --border-color: #d0d7de;
-  --code-container-border-color: #d0d7de;
-  --selection-bg-color: rgba(209, 195, 255, 0.824);
-  --shadow-color: #7444ff84;
-  --anchor-underline-color: #7444ff6a;
+  --color-anchor: var(--accent);
+  --color-pink: var(--accent);
+  --border-color: var(--border);
+  --code-container-border-color: var(--border);
+  --selection-bg-color: hsl(var(--accent-h) var(--accent-s) var(--accent-l) / 0.18);
+  --shadow-color: hsl(var(--accent-h) var(--accent-s) var(--accent-l) / 0.3);
+  --anchor-underline-color: hsl(var(--accent-h) var(--accent-s) var(--accent-l) / 0.4);
   --blur-bg: #ffffffb3;
   --transparentshade: #00000040;
   --loader-color: no-repeat radial-gradient(circle closest-side, var(--color-text-secondary) 90%, #0000);
 
-  --gradient-yellow: #ffa703;
-  --gradient-purple: #9232ff;
-  --gradient-blue: #2c88ff;
-  --gradient-pink: #ff6d9c;
+  --gradient-yellow: var(--text-2);
+  --gradient-purple: var(--accent);
+  --gradient-blue: var(--text-2);
+  --gradient-pink: var(--text-2);
 
-  --code-txt-bg-color: #5728c5;
-  --code-txt-color: #fff;
-  --code-border-color: #efefef;
-  --bit-color: rgb(0, 128, 119);
+  --code-txt-bg-color: var(--accent-subtle);
+  --code-txt-color: var(--text-1);
+  --code-border-color: var(--border);
+  --bit-color: var(--accent);
+
+  /* Syntax tokens (light) — same accent-derived hues, darkened for contrast
+     on white. */
+  --token-plain: hsl(var(--accent-h) 14% 30%);
+  --token-comment: hsl(var(--accent-h) 8% 58%);
+  --token-punctuation: hsl(var(--accent-h) 10% 45%);
+  --token-keyword: hsl(var(--accent-h) 75% 44%);
+  --token-string: hsl(calc(var(--accent-h) + 130) 55% 33%);
+  --token-function: hsl(calc(var(--accent-h) - 45) 72% 42%);
+  --token-number: hsl(calc(var(--accent-h) + 55) 72% 37%);
+  --token-operator: hsl(var(--accent-h) 45% 42%);
+  --token-tag: hsl(calc(var(--accent-h) + 25) 68% 39%);
+  --token-property: hsl(calc(var(--accent-h) + 170) 55% 33%);
 }
 
 /* Body styles */
 html,
 body {
-  width: 100vw;
+  width: 100%;
   font-family: var(--font-family);
   background-color: var(--color-bg-primary) !important;
   overflow-x: hidden;
@@ -119,10 +222,6 @@ body {
 
 body {
   color: var(--color-text-primary);
-}
-
-html {
-  scroll-behavior: smooth;
 }
 
 html.no-scroll {
@@ -174,8 +273,9 @@ h3,
 h4,
 h5,
 h6 {
-  font-weight: 500;
-  line-height: 1.6;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.02em;
   color: var(--color-text-primary);
 }
 
@@ -206,11 +306,10 @@ p {
   text-underline-offset: 0.2em;
   text-decoration-color: var(--anchor-underline-color);
   font-weight: 500;
-  font-style: italic;
 }
 
 .link:hover {
-  transition: all 0.3s ease;
+  transition: all var(--dur-base) var(--ease);
   text-decoration-color: var(--color-anchor);
 }
 
@@ -230,7 +329,7 @@ p {
 }
 
 .btn:hover {
-  transition: box-shadow 0.3s ease, border 0.3s ease;
+  transition: box-shadow var(--dur-base) var(--ease), border var(--dur-base) var(--ease);
   border: 1px solid var(--color-anchor);
   box-shadow: 0 0 20px var(--shadow-color);
 }
@@ -366,15 +465,10 @@ ul {
   }
 }
 
+/* Formerly a multicolor animated gradient — now a calm accent highlight. */
 .animated-gradient {
   font-size: 14px;
-  background: linear-gradient(45deg, var(--bit-color), #49aaff, #907aff, #ff4d94);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-fill-color: transparent;
-  background-size: 200% auto;
-  animation: textShine 5s ease-in-out infinite;
+  color: var(--accent);
 }
 
 .sp-loading {

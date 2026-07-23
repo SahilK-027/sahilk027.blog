@@ -45,7 +45,7 @@
 }
 
 .music-icon-container:hover .music-icon {
-    transition: all 0.1s ease;
+    transition: all var(--dur-fast) var(--ease);
     fill: var(--color-anchor);
 }
 

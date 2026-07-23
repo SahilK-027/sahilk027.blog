@@ -1,0 +1,59 @@
+.cursor-trail {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+
+  .cursor-trail__glyph {
+    position: absolute;
+    fill: none;
+    // Centered on spawn point; tumbles from --rot to --rot-end while
+    // drifting (--dx/--dy) along the cursor's direction of travel.
+    translate: -50% -50%;
+    animation: cursor-trail-tumble 1.4s var(--ease) forwards;
+
+    path {
+      stroke: var(--text-3);
+      stroke-width: 1;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 1;
+      stroke-dashoffset: 1;
+      // Draw in, hold, then ERASE out the other end (dashoffset past 0):
+      // sketched, then rubbed out — never a flat opacity fade.
+      animation: cursor-trail-sketch 1.4s linear forwards;
+    }
+
+    &.is-accent path {
+      stroke: var(--accent);
+    }
+  }
+}
+
+@keyframes cursor-trail-tumble {
+  from {
+    opacity: 0.65;
+    transform: translate(0, 0) rotate(var(--rot, 0deg));
+  }
+  to {
+    opacity: 0.25;
+    transform: translate(var(--dx, 0px), var(--dy, 0px))
+      rotate(var(--rot-end, 0deg));
+  }
+}
+
+@keyframes cursor-trail-sketch {
+  0% {
+    stroke-dashoffset: 1;
+  }
+  28% {
+    stroke-dashoffset: 0;
+  }
+  62% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: -1;
+  }
+}

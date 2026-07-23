@@ -1,391 +1,205 @@
-// Importing necessary libraries and tools
-import React, { useEffect, useState } from "react";
-import { toast } from "react-toastify";
+import { Suspense, lazy, useEffect, useRef } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 
-// Importing necessary components and pages
 import Navbar from "../../components/Navbar/Navbar";
-
-// Importing styling and assets
-import "./BlogsPage.scss";
 import Footer from "../../components/Footer/Footer";
-import { Link } from "react-router-dom";
-import SignatureForBlackBg from "../../components/SVG-JSX/SignatureForBlackBg/SignatureForBlackBg";
-import SignatureForWhiteBg from "../../components/SVG-JSX/SignatureForWhiteBg/SignatureForWhiteBg";
-import { mostRecentBlog } from "../../data/BlogsData";
-import { blogSeries } from "../../data/BlogsData";
-import Environment from "../../data/Environment";
-import { animated, useSpring } from "react-spring";
-import SubscriberCount from "../../components/SubscriberCount/SubscriberCount";
-import Tooltip from "../../components/Tooltip/Tooltip";
+import TagFilter from "../../components/TagFilter/TagFilter";
+import YearLog from "../../components/YearLog/YearLog";
+import CursorTrail from "../../components/CursorTrail/CursorTrail";
+import { postsByDateDesc } from "../../data/posts";
+import { scrollToTarget } from "../../hooks/useLenis";
 
-/**
- * `BlogIntroTxt` component is the introductory text for the blogs page.
- * @returns {JSX.Element} - JSX for the BlogIntroTxt component
- */
-const BlogIntroTxt = () => {
-  return (
-    <div className="intro-container">
-      <h1>
-        Hey there <span className="wave">👋</span> ! I'm <span>Sahil K.</span>
-      </h1>
-      <br />
-      <h1>
-        Join me on this exciting journey. 🚀 Here, I write my experiences,
-        exploring <span>technology</span>, <span>CS Fundamentals</span>. Along
-        the way, I’ll be sharing what I learn, what excites me, and sometimes,
-        just whatever’s bouncing around in my head, from ideas and thought
-        experiments to stories. 😜
-      </h1>
-      <br />
-    </div>
-  );
-};
+import "./BlogsPage.scss";
 
-/**
- *  NavigationButtons component
- * @returns {JSX.Element} - NavigationButtons component
- */
-const NavigationButtons = () => {
-  return (
-    <div className="navigation-buttons">
-      <Link to="/projects">
-        <button className="btn">
-          My Work{" "}
-          <i
-            style={{ marginLeft: 8 }}
-            className="fa-regular fa-circle-check"
-          ></i>
-        </button>
-      </Link>
-      <a target="_blank" href="https://github.com/SahilK-027">
-        <button className="btn">
-          @SahilK-027{" "}
-          <i style={{ marginLeft: 8 }} className="fa-brands fa-github"></i>
-        </button>
-      </a>
-    </div>
-  );
-};
+// Heavy three.js chunk stays out of the critical path — the page renders
+// instantly and the physics pile fades in when its code arrives.
+const PhysicsHero = lazy(() =>
+  import("../../components/PhysicsHero/PhysicsHero")
+);
 
-/**
- * AboutMe component
- * @returns {JSX.Element} - AboutMe component
- */
-const AboutMe = ({ theme }) => {
-  return (
-    <>
-      <h2 className="section-header">About Me</h2>
-      <div className="about-me-container">
-        <div className="left">
-          <p>
-            Hello, I'm Sahil, a software developer, but I prefer to call myself
-            a creative developer. I've always been fascinated by the amazing
-            websites people create, and watching them made me want to build
-            something similar. I've been exploring the world of web development
-            for over two years now, and with that, I learned lots of new
-            technologies and built some{" "}
-            <Link className="link" to="/projects">
-              awesome projects
-            </Link>{" "}
-            along the way! So with this blog page, I want to share my
-            experiences and discoveries with you.
-          </p>
-          <br />
-          <p>
-            I don't just build cool front-ends, though. I also work on
-            Full-Stack web applications. I've explored Python-Flask, node.js,
-            MongoDB, AI, ML, OpenCV, and Compiler Design. Feel free to discuss
-            any of these topics with me.
-          </p>
-        </div>
-        <div className="right">
-          <p>
-            My journey in computer programming started with C++, a language that
-            holds a special place in my heart. It laid the foundation for my
-            problem-solving abilities. However, it's JavaScript that truly
-            ignites my creativity. With JavaScript, I have the freedom to
-            transform ideas into interactive web experiences and push the
-            boundaries of what's possible in web development.
-          </p>
-          <br />
-          <p>
-            With that said, let's embark on this journey together and make
-            meaningful contributions to the digital landscape.
-          </p>
-          <br />
-          <div className="signature-container">
-            —{" "}
-            <div className="signature">
-              {theme === "dark" ? (
-                <SignatureForBlackBg />
-              ) : (
-                <SignatureForWhiteBg />
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
-  );
-};
-
-/**
- * BlogLetter component
- * @returns {JSX.Element} - BlogLetter component
- */
-const BlogLetter = () => {
-  const [mail, setMail] = useState("");
-  const [isMakingNWCall, setIsMakingNWCall] = useState(false);
-  const [success, setSuccess] = useState(false);
-
-  // Define animation properties
-  const thanksAnimation = useSpring({
-    opacity: success ? 1 : 0,
-    transform: success ? "translateY(0px)" : "translateY(-20px)",
-  });
-
-  const env = Environment;
-  let SERVER_LINK = "";
-  if (env === "development") {
-    SERVER_LINK = "http://localhost:2710";
-  } else if (env === "production") {
-    SERVER_LINK = "https://api-sk-blog-server.vercel.app";
-  }
-  const handleSubscriptionCall = async (e) => {
-    e.preventDefault();
-    const EMAIL_TEST = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,7})+$/;
-    const isValidMail = EMAIL_TEST.test(mail);
-
-    if (!isValidMail) {
-      toast.error("Please enter a valid email address. 👀", {
-        position: "top-center",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
-      return;
-    }
-    try {
-      setIsMakingNWCall(true);
-      const response = await fetch(`${SERVER_LINK}/subscribe`, {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: mail,
-        }),
-      });
-
-      if (response.ok) {
-        toast.success("Thank you for subscribing to my blogs 🙇‍♂️!", {
-          position: "top-center",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: false,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        });
-        setSuccess(true);
-      } else {
-        const error = await response.json();
-        toast.info(error.message, {
-          position: "top-center",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        });
-        return;
-      }
-    } catch (error) {
-      toast.error(
-        "Oops 😬! Something went wrong on server side. Please try again later.",
-        {
-          position: "top-center",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
+// Parallax depth: the hero is sticky (scroll speed 0) while the sheet below
+// slides over it at full speed; the copy additionally sinks and fades so the
+// hero recedes instead of just getting wiped.
+const useHeroParallax = (fadeRef, driftRefs) => {
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    let raf = 0;
+    let parked = false;
+    const onScroll = () => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        const y = window.scrollY;
+        // Deep in the page the hero is invisible under the sheet — skip the
+        // style writes entirely instead of restyling a hidden layer.
+        const deep = y > window.innerHeight * 1.5;
+        if (deep && parked) return;
+        parked = deep;
+        const p = Math.min(y / window.innerHeight, 1);
+        // The whole hero layer — canvas included — fades as one, so the
+        // shapes recede with the copy instead of floating over the sheet.
+        if (fadeRef.current) {
+          fadeRef.current.style.opacity = String(Math.max(1 - p * 1.15, 0));
         }
-      );
-    } finally {
-      setIsMakingNWCall(false);
-    }
-  };
+        for (const ref of driftRefs) {
+          if (ref.current) {
+            ref.current.style.transform = `translateY(${y * 0.3}px)`;
+          }
+        }
+      });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(raf);
+    };
+    // Refs are stable tuples created once in Hero.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+};
+
+const Hero = () => {
+  const latest = postsByDateDesc[0];
+  const heroRef = useRef(null);
+  const contentRef = useRef(null);
+  const metaRef = useRef(null);
+  useHeroParallax(heroRef, [contentRef, metaRef]);
+  const entryCount = postsByDateDesc.length;
+  const firstEntryYear = postsByDateDesc[postsByDateDesc.length - 1]?.date.slice(
+    0,
+    4
+  );
+  // Total shelf time: sum of per-post read times ("7 min" → 7).
+  const totalMinutes = postsByDateDesc.reduce(
+    (sum, p) => sum + (parseInt(p.readtime, 10) || 0),
+    0
+  );
+  const shelfTime =
+    totalMinutes >= 60
+      ? `${Math.floor(totalMinutes / 60)}h ${totalMinutes % 60}m`
+      : `${totalMinutes}m`;
 
   return (
-    <>
-      <h2 className="section-header">Blogsletter</h2>
-      <div className="blog-letter">
-        <div className="blogletter-container">
-          <div className="icons">
-            <i className="fa-solid fa-paper-plane icon-plane"></i>
-          </div>
-          <h3>
-            Subscribe to my blogsletter to receive the latest blog news
-            delivered directly to your inbox
-          </h3>
-          <p>
-            Stay Updated with the{" "}
-            <Link className="link" to={mostRecentBlog.blogUrl}>
-              Latest Blog
-            </Link>{" "}
-            News, Containing:
+    <header className="hero" ref={heroRef}>
+      <Suspense fallback={null}>
+        <PhysicsHero />
+      </Suspense>
+      <div className="hero-content" ref={contentRef}>
+        <div className="hero-page hero-page--left">
+          <p className="hero-kicker">
+            <span className="hero-kicker__dot" aria-hidden="true" />
+            Sahil Kandhare
+            <span className="hero-kicker__sep" aria-hidden="true" />
+            Creative Developer
           </p>
-          <ul>
-            <li>
-              <i className="fa-solid fa-circle-dot"></i> Insights into my latest
-              projects, ideas, and discoveries.
-            </li>
-            <li>
-              <i className="fa-solid fa-circle-dot"></i> Latest news as soon as
-              I publish a new blog.
-            </li>
-            <li>
-              <i className="fa-solid fa-circle-dot"></i> Tips and tricks to
-              enhance your skills as a developer in software development,
-              Three.JS, Competitive Programming, React Three Fiber, React,
-              Shaders, DataBase, and more.
-            </li>
-          </ul>
-
-          {/* <SubscriberCount /> */}
-
-          <form onSubmit={handleSubscriptionCall}>
-            <input
-              type="email"
-              placeholder="@ Enter your email address"
-              required
-              onChange={(e) => setMail(e.target.value)}
-            />
-            <button
-              className="btn"
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
+          <h1 className="hero-title">
+            Field notes from a curious mind,{" "}
+            <span className="hero-title__accent">
+              one rabbit hole at a time.
+            </span>
+          </h1>
+          <p className="hero-sub">
+            Three.js, WebGL and shaders, CS fundamentals — and whatever else
+            curiosity drags me into — written the way I wish someone had
+            explained it to me.
+          </p>
+          <div className="hero-links">
+            <a
+              href="#writing-log"
+              onClick={(e) => {
+                e.preventDefault();
+                // Land at the section top itself — the sheet edge (and its
+                // rounded corners) ends up 64px past the viewport top, so no
+                // sliver of the hero can remain visible.
+                scrollToTarget("#writing-log", 0);
               }}
-              type="submit"
-              disabled={isMakingNWCall}
             >
-              {isMakingNWCall ? (
-                <div className="spinner-loader"></div>
-              ) : (
-                <span>Subscribe</span>
-              )}
-            </button>
-          </form>
-          {success ? (
-            <animated.p id="thanks" style={thanksAnimation}>
-              Thanks for subscribing 💖! You will receive welcome mail soon!
-            </animated.p>
-          ) : (
-            <></>
+              Browse the archive
+              <i className="fa-solid fa-arrow-down" aria-hidden="true"></i>
+            </a>
+            <a
+              target="_blank"
+              rel="noreferrer"
+              href="https://github.com/SahilK-027"
+            >
+              GitHub
+              <i
+                className="fa-solid fa-arrow-up-right-from-square"
+                aria-hidden="true"
+              ></i>
+            </a>
+          </div>
+        </div>
+        <aside className="hero-page hero-page--right hero-index">
+          <p className="hero-index__heading">Index</p>
+          <dl className="hero-index__rows">
+            <div className="hero-index__row">
+              <dt>Entries</dt>
+              <span className="hero-index__leader" aria-hidden="true" />
+              <dd>{String(entryCount).padStart(2, "0")}</dd>
+            </div>
+            <div className="hero-index__row">
+              <dt>Writing since</dt>
+              <span className="hero-index__leader" aria-hidden="true" />
+              <dd>{firstEntryYear}</dd>
+            </div>
+            <div className="hero-index__row">
+              <dt>Shelf time</dt>
+              <span className="hero-index__leader" aria-hidden="true" />
+              <dd>{shelfTime}</dd>
+            </div>
+            <div className="hero-index__row">
+              <dt>Status</dt>
+              <span className="hero-index__leader" aria-hidden="true" />
+              <dd>
+                <span className="hero-index__pulse" aria-hidden="true" />
+                Exploring
+              </dd>
+            </div>
+          </dl>
+          {latest && (
+            <div className="hero-index__latest">
+              <p className="hero-index__latest-label">Freshly inked</p>
+              <Link to={latest.url}>
+                {latest.title}
+                <i className="fa-solid fa-arrow-right" aria-hidden="true"></i>
+              </Link>
+              <p className="hero-index__latest-meta">
+                {latest.displayDate} · {latest.readtime} read
+              </p>
+            </div>
           )}
+        </aside>
+      </div>
+      <div className="hero-meta" ref={metaRef}>
+        <span className="hero-meta__scroll" aria-hidden="true">
+          <span className="hero-meta__line" />
+          Scroll
+        </span>
+        <div className="hero-meta__socials">
+          <a
+            target="_blank"
+            rel="noreferrer"
+            href="https://www.linkedin.com/in/sahilk027/"
+          >
+            LinkedIn
+          </a>
+          <a
+            target="_blank"
+            rel="noreferrer"
+            href="https://x.com/SahilK027"
+            aria-label="X (Twitter)"
+          >
+            <span aria-hidden="true">𝕏</span>
+          </a>
+          <a href="mailto:sahilkandhare027@gmail.com">Email</a>
         </div>
       </div>
-    </>
+    </header>
   );
 };
 
-/**
- * BlogSeries component
- * @returns {JSX.Element} - BlogSeries component
- */
-const BlogSeries = ({ blogSeriesData }) => {
-  return (
-    <>
-      <h2 className="section-header">Blog Series</h2>
-      <div className="blog-series-container">
-        {blogSeriesData.map((series, index) => (
-          <Link to={series.seriesUrl}>
-            <div key={index} className="blog-series-card">
-              <div className="blog-series-card-info">
-                <h3
-                  style={{
-                    background: series.titleColor,
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                  }}
-                  className="blog-series-card-header"
-                >
-                  {series.seriesTitle}
-                </h3>
-                <p className="blog-series-start-date">
-                  Publish Date: {series.startDate}
-                </p>
-              </div>
-            </div>
-          </Link>
-        ))}
-      </div>
-    </>
-  );
-};
-
-/**
- * GetInTouch component
- * @returns {JSX.Element} - GetInTouch component
- */
-const GetInTouch = () => {
-  return (
-    <>
-      <h2 className="section-header">Get In Touch</h2>
-      <div className="get-in-touch-container">
-        <p>
-          Have a question or want to suggest a topic for blog series or a post?
-        </p>
-        <p>
-          Write me at{" "}
-          <a
-            target="_blank"
-            className="link"
-            href="mailto:sahilkandhare027@gmail.com"
-          >
-            sahilkandhare027@gmail.com
-          </a>
-          . OR explore more projects I have built here at{" "}
-          <a
-            target="_blank"
-            className="link"
-            href="https://github.com/SahilK-027"
-          >
-            @SahilK-027
-          </a>
-          . OR 💡 Suggest idea for next blog series or post at{" "}
-          <a
-            target="_blank"
-            className="link"
-            href="https://github.com/SahilK-027/sahilk027.blog/discussions"
-          >
-            Discussions
-          </a>
-          .
-        </p>
-      </div>
-    </>
-  );
-};
-
-/**
- *  BlogsPage component
- * @param {*} param0
- * @returns {JSX.Element} - BlogsPage component
- */
 const BlogsPage = ({
   openCMDCenter,
   controlMusic,
@@ -393,9 +207,18 @@ const BlogsPage = ({
   theme,
   toggleTheme,
 }) => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeTag = searchParams.get("tag");
+
+  const setTag = (tag) => {
+    if (tag) setSearchParams({ tag }, { replace: true });
+    else setSearchParams({}, { replace: true });
+  };
+
+  const visiblePosts = activeTag
+    ? postsByDateDesc.filter((p) => p.tags.includes(activeTag))
+    : postsByDateDesc;
+
   return (
     <>
       <Navbar
@@ -403,24 +226,30 @@ const BlogsPage = ({
         controlMusic={controlMusic}
         isMusicPlaying={isMusicPlaying}
         theme={theme}
-        pageTitle="Hello 👋 ! I'm Sahil"
+        pageTitle="Sahil K — blog"
       />
-      <div className="blogsPage-container page">
-        <div className="section-top hero">
-          <BlogIntroTxt />
-          <NavigationButtons />
-        </div>
-        <div className="section about-me">
-          <AboutMe theme={theme} />
-        </div>
-        {/* <div className="section subscription">
-          <BlogLetter />
-        </div> */}
-        <div className="section blog-series">
-          <BlogSeries blogSeriesData={blogSeries} />
-        </div>
-        <div className="section get-in-touch">
-          <GetInTouch />
+      <div className="blogsPage-container">
+        <Hero />
+        <div className="landing-sheet">
+          <CursorTrail />
+          <main className="page landing-main">
+            <section className="log-section" id="writing-log">
+              <div className="log-header">
+              <p className="section-kicker">
+                <span className="section-kicker__dot" aria-hidden="true" />
+                The archive
+              </p>
+              <div className="log-header-row">
+                <h2 className="log-title">
+                  Writing log
+                  <span className="log-count">{visiblePosts.length}</span>
+                </h2>
+              </div>
+              <TagFilter activeTag={activeTag} onSelect={setTag} />
+            </div>
+              <YearLog posts={visiblePosts} onTagClick={setTag} />
+            </section>
+          </main>
         </div>
       </div>
       <Footer toggleTheme={toggleTheme} />

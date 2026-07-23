@@ -1,0 +1,33 @@
+.physics-hero {
+  position: absolute;
+  inset: 0;
+  // Above the hero copy: shapes occlude the text, the pile reads as the
+  // front layer of the composition. Pointer-events stay off so links work.
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  animation: physics-hero-in 1.2s ease 0.15s forwards;
+
+  // R3F's internal wrapper sets inline pointer-events/touch-action, which
+  // beats the parent's `none` — force the whole subtree click-through.
+  * {
+    pointer-events: none !important;
+  }
+
+  canvas {
+    display: block;
+  }
+}
+
+@keyframes physics-hero-in {
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .physics-hero {
+    animation: none;
+    opacity: 1;
+  }
+}

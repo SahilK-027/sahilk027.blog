@@ -1,7 +1,8 @@
 import Tooltip from "../Tooltip/Tooltip";
 import "./MustReadDiv.scss";
 
-const MustReadDiv = ({ mustReadText }) => {
+// `children` = new MDX API. `mustReadText` (HTML string) kept for legacy blogs.
+const MustReadDiv = ({ mustReadText, children }) => {
   return (
     <div className="must-read-div">
       <div className="icon">
@@ -10,7 +11,11 @@ const MustReadDiv = ({ mustReadText }) => {
         </Tooltip>
       </div>
       <p>👉 Must Read: </p>{" "}
-      <div dangerouslySetInnerHTML={{ __html: mustReadText }} />
+      {children ? (
+        <div>{children}</div>
+      ) : (
+        <div dangerouslySetInnerHTML={{ __html: mustReadText }} />
+      )}
     </div>
   );
 };

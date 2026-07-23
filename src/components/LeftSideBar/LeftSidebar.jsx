@@ -1,37 +1,42 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./LeftSidebar.scss";
 
-const LeftSidebar = ({
-  scrollPercentage,
-  activeSection,
-  sections,
-  setActiveSection,
-}) => {
-  useEffect(() => {
-    if (scrollPercentage === 0) {
-      setActiveSection(null);
-    }
-  }, [scrollPercentage, activeSection]);
-  const filledHeight = `${scrollPercentage}%`;
+/**
+ * Article TOC rail: reading-progress track + clickable section list.
+ * Hidden below 1160px (no room next to the article column).
+ */
+const LeftSidebar = ({ scrollPercentage, activeSection, sections, onSelect }) => {
+  if (!sections.length) return null;
 
   return (
-    <>
-      <div className="vertical-bar-container">
-        <div className="vertical-line" style={{ height: filledHeight }}></div>
-      </div>
-      <div className="section-names">
-        {sections.map((section, index) => (
+    <nav className="left-sidebar" aria-label="On this page">
+      <p className="toc-label">Index</p>
+      <div className="toc-body">
+        <div className="toc-track" aria-hidden="true">
           <div
-            key={index}
-            className={`section-name ${
-              activeSection === index ? "animated-gradient" : ""
-            }`}
-          >
-            {section}
-          </div>
-        ))}
+            className="toc-track__fill"
+            style={{ height: `${scrollPercentage}%` }}
+          />
+        </div>
+        <ul className="toc-list">
+          {sections.map((section, index) => (
+            <li key={index}>
+              <button
+                className={`toc-item ${
+                  activeSection === index ? "toc-item--active" : ""
+                }`}
+                onClick={() => onSelect(index)}
+              >
+                <span className="toc-item__no" aria-hidden="true">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                {section}
+              </button>
+            </li>
+          ))}
+        </ul>
       </div>
-    </>
+    </nav>
   );
 };
 

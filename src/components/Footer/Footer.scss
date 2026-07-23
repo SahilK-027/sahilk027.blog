@@ -1,75 +1,251 @@
-.footer-content {
-  border-top: 1px solid var(--border-color);
-  width: 100%;
-  text-align: center;
-  line-height: 1.5rem;
-  font-size: 14px;
-  color: var(--color-text-secondary-dark);
+.site-footer {
+  margin-top: 120px;
+  border-top: 1px solid var(--border);
+  background: var(--bg-subtle);
 
-  .page {
+  .footer-inner {
     max-width: 920px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 72px 20px 56px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    gap: 20px;
+    gap: 48px;
 
-    .right {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      justify-content: center;
+    .footer-cta {
+      max-width: 30em;
 
-      .checkbox {
-        opacity: 0;
-        position: absolute;
-      }
-
-      .checkbox-label {
-        border: 1px solid var(--border-color);
-        background-color: var(--color-bg-box-container);
-        width: 50px;
-        height: 24px;
-        border-radius: 50px;
-        position: relative;
-        padding: 5px;
-        cursor: pointer;
-        display: flex;
-        justify-content: space-between;
+      .footer-kicker {
+        display: inline-flex;
         align-items: center;
+        gap: 10px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        color: var(--text-3);
+        margin-bottom: 18px;
+
+        .footer-kicker__dot {
+          width: 7px;
+          height: 7px;
+          border-radius: 50%;
+          background: var(--accent);
+        }
       }
 
-      .fa-moon {
-        color: var(--color-anchor);
+      .footer-heading {
+        font-size: clamp(1.5rem, 2.8vw, 2rem);
+        font-weight: 650;
+        letter-spacing: -0.03em;
+        line-height: 1.25;
+        margin-bottom: 22px;
+        text-wrap: balance;
       }
 
-      .fa-sun {
-        color: var(--color-anchor);
-      }
+      .footer-email {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        font-size: var(--fs-body);
+        font-weight: 550;
+        color: var(--text-1);
+        border-bottom: 1px solid var(--accent-faint);
+        padding-bottom: 4px;
+        transition: color var(--dur-base) var(--ease),
+          border-color var(--dur-base) var(--ease);
 
-      .checkbox-label .ball {
-        background-color: var(--color-text-primary);
-        width: 18px;
-        height: 18px;
-        position: absolute;
-        left: 4px;
-        top: 2px;
-        border-radius: 50%;
-        transition: transform 0.2s linear;
-      }
+        i {
+          font-size: 0.8em;
+          color: var(--accent);
+          transition: transform var(--dur-base) var(--ease);
+        }
 
-      .checkbox:checked+.checkbox-label .ball {
-        transform: translateX(24px);
+        &:hover {
+          color: var(--accent);
+          border-color: var(--accent);
+
+          i {
+            transform: translateX(4px);
+          }
+        }
       }
     }
 
-    .left {
-      span {
+    .footer-columns {
+      display: flex;
+      gap: 64px;
+      flex-shrink: 0;
+
+      .footer-col {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+
+        .footer-col__title {
+          font-family: "Fira Code", monospace;
+          font-size: 0.7rem;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.22em;
+          color: var(--text-3);
+          margin-bottom: 6px;
+        }
+
         a {
-          font-size: 14px;
+          font-size: 0.95rem;
+          font-weight: 500;
+          color: var(--text-2);
+          width: fit-content;
+          transition: color var(--dur-base) var(--ease);
+
+          &:hover {
+            color: var(--accent);
+          }
         }
       }
+    }
+  }
+
+  // The shelf: the six brand primitives resting as hairline drawings on a
+  // baseline, drawing themselves in when the footer scrolls into view.
+  .footer-shelf {
+    position: relative;
+    max-width: 920px;
+    margin: 0 auto;
+    // Shapes rest directly on the footer-bar's top border — that's their
+    // baseline; no second line needed.
+    padding: 0 20px 10px;
+    display: flex;
+    align-items: flex-end;
+    gap: 34px;
+
+    .footer-shelf__glyph {
+      width: 26px;
+      height: 26px;
+      fill: none;
+
+      path {
+        stroke: var(--text-3);
+        stroke-width: 1;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-dasharray: 1;
+        stroke-dashoffset: 1;
+        transition: stroke var(--dur-base) var(--ease);
+      }
+
+      // Hover: a lazy full turn, inked in accent.
+      transition: transform 0.9s var(--ease);
+
+      &:hover {
+        transform: rotate(360deg);
+
+        path {
+          stroke: var(--accent);
+        }
+      }
+    }
+
+    &.drawn .footer-shelf__glyph path {
+      animation: shelf-draw 0.9s var(--ease) forwards;
+      animation-delay: calc(var(--i, 0) * 140ms);
+    }
+  }
+
+  .footer-bar {
+    border-top: 1px solid var(--border);
+
+    .footer-bar__inner {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+
+      .footer-copy {
+        font-family: "Fira Code", monospace;
+        font-size: 0.75rem;
+        color: var(--text-3);
+
+        .fa-heart {
+          color: var(--accent);
+          font-size: 0.8em;
+        }
+      }
+
+      .footer-top-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-family: var(--font-family);
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: var(--text-2);
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        transition: color var(--dur-base) var(--ease);
+
+        i {
+          font-size: 0.8em;
+          transition: transform var(--dur-base) var(--ease);
+        }
+
+        &:hover {
+          color: var(--accent);
+
+          i {
+            transform: translateY(-2px);
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes shelf-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-footer .footer-shelf .footer-shelf__glyph {
+    transition: none;
+
+    path {
+      stroke-dashoffset: 0;
+      animation: none !important;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .site-footer {
+    margin-top: 80px;
+
+    .footer-inner {
+      flex-direction: column;
+      gap: 40px;
+      padding: 56px 20px 44px;
+    }
+
+    .footer-shelf {
+      gap: 24px;
+
+      .footer-shelf__glyph {
+        width: 22px;
+        height: 22px;
+      }
+    }
+
+    .footer-bar .footer-bar__inner {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
     }
   }
 }

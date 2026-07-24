@@ -1,0 +1,145 @@
+.bsw {
+  &-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  &-seg,
+  &-quick {
+    display: flex;
+    gap: 8px;
+
+    button {
+      padding: 7px 14px;
+      font-family: Roboto Mono, monospace;
+      font-size: 0.8rem;
+      background: var(--bg);
+      color: var(--text-2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all var(--dur-base) var(--ease);
+
+      &:hover {
+        border-color: var(--accent);
+      }
+
+      &.active {
+        background: var(--accent-subtle);
+        border-color: var(--accent);
+        color: var(--text-1);
+      }
+    }
+  }
+
+  /* All switches share the row width equally — no wrap, no scroll. */
+  &-row {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 22px;
+  }
+
+  &-switch {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+    padding: 12px 2px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: Roboto Mono, monospace;
+    transition: border-color var(--dur-base) var(--ease),
+      background var(--dur-base) var(--ease);
+
+    /* Subtle byte/nibble separation without breaking equal widths. */
+    &.nibble {
+      margin-left: 8px;
+    }
+
+    .bsw-bulb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--bg-raised);
+      transition: all var(--dur-base) var(--ease);
+    }
+
+    .bsw-bit {
+      font-size: 1.05rem;
+      color: var(--text-3);
+    }
+
+    .bsw-power {
+      font-size: 0.62rem;
+      color: var(--text-3);
+      white-space: nowrap;
+    }
+
+    &.on {
+      border-color: var(--accent);
+      background: var(--accent-subtle);
+
+      .bsw-bulb {
+        background: var(--accent);
+        border-color: var(--accent);
+        box-shadow: 0 0 12px 2px var(--shadow-color);
+      }
+
+      .bsw-bit {
+        color: var(--accent);
+      }
+
+      .bsw-power {
+        color: var(--text-2);
+      }
+    }
+
+    &:hover {
+      border-color: var(--accent);
+    }
+  }
+
+  &-readout {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+
+    div {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .bsw-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-3);
+    }
+
+    .bsw-value {
+      font-family: Roboto Mono, monospace;
+      font-size: 1.25rem;
+      color: var(--text-1);
+
+      &.mono {
+        letter-spacing: 0.05em;
+        word-break: break-all;
+      }
+    }
+  }
+
+  sup {
+    font-size: 0.7em;
+  }
+}

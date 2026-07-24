@@ -52,6 +52,13 @@
     padding-bottom: 28px;
     border-bottom: 1px solid var(--border);
 
+    // Per-blog hero SVG sits between the title and the header's bottom border.
+    .blog-poster svg {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
     // Entry line: an accent "Entry NN" badge on the left, muted date · read
     // time on the right. No stretched leader — reads clean and wraps sanely.
     .blog-kicker {

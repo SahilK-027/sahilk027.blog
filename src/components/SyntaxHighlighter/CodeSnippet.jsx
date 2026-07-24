@@ -16,8 +16,32 @@ import "./CodeSnippet.scss";
 // + flips with light/dark. Same approach as the reference blog.
 const EMPTY_THEME = { plain: {}, styles: [] };
 
+// Pretty display names for the header badge. The `language` prop still feeds
+// Prism its grammar key (js, bash, ...); this only changes what the reader sees.
+const LANG_LABELS = {
+  js: "JavaScript",
+  javascript: "JavaScript",
+  jsx: "JavaScript",
+  ts: "TypeScript",
+  tsx: "TypeScript",
+  bash: "Bash",
+  sh: "Shell",
+  glsl: "GLSL",
+  c: "C",
+  cpp: "C++",
+  css: "CSS",
+  scss: "SCSS",
+  html: "HTML",
+  json: "JSON",
+  text: "Text",
+};
+
 const CodeSnippet = ({ codeText, language = "javascript" }) => {
   const [copied, setCopied] = useState(false);
+  const langKey = language?.toLowerCase() || "";
+  const langLabel =
+    LANG_LABELS[langKey] ||
+    (langKey ? langKey[0].toUpperCase() + langKey.slice(1) : language);
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(codeText).then(
@@ -41,7 +65,7 @@ const CodeSnippet = ({ codeText, language = "javascript" }) => {
       <div className="code-snippet-header">
         <span className="code-lang">
           <span className="code-lang__dot" aria-hidden="true" />
-          {language}
+          {langLabel}
         </span>
         <button
           className="copy-code"

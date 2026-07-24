@@ -51,11 +51,15 @@ export const useLenis = () => {
       smoothWheel: true,
       wheelMultiplier: 0.9, // slightly lighter wheel so the glide reads longer
       lerp: 0.075, // low lerp = more inertia / smoother catch-up
-      // Let native scroll win inside the code sandbox (editor / console) and any
-      // element opting out with data-lenis-prevent. Without this, Lenis eats the
-      // wheel and scrolls the page instead of the code.
-      prevent: (node) =>
-        node?.closest?.(".code-sandpack, [data-lenis-prevent]") != null,
+      // Let native scroll win only inside elements that explicitly opt out with
+      // data-lenis-prevent. We deliberately do NOT list the code editor here:
+      // fully excluding it from Lenis meant scrolling over a short pane (or past
+      // its top/bottom) left the page stuck, because the wheel never reached Lenis.
+      // Instead CodeSandpack does an edge-aware handoff (a wheel listener that only
+      // consumes the event while the pane can still scroll that way, otherwise lets
+      // it bubble here). The preview pane also keeps Lenis; its scroll-guard overlay
+      // handles the iframe swallowing wheel events.
+      prevent: (node) => node?.closest?.("[data-lenis-prevent]") != null,
     });
     return () => {
       lenis?.destroy();

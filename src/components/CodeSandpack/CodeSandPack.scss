@@ -294,6 +294,49 @@
     flex: 1;
   }
 
+  // Preview wrapper hosts the iframe + a scroll guard overlay. The iframe eats
+  // wheel events (cross-origin), which kills Lenis page scroll; the overlay
+  // catches them instead so the page scrolls smoothly. Click hands the wheel
+  // back to the iframe for interactive demos.
+  .sp-preview-wrap {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+    flex-direction: column;
+  }
+
+  .sp-preview-scrollguard {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 12px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-family: var(--font-family);
+    // Overlay stays transparent but intercepts the wheel; the label fades in on
+    // hover so it isn't intrusive over the running demo.
+    span {
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      color: var(--color-text-primary);
+      background: color-mix(in srgb, var(--color-bg-box-container-dark) 85%, transparent);
+      border: 1px solid var(--border-color);
+      opacity: 0;
+      transform: translateY(4px);
+      transition: opacity var(--dur-base) var(--ease),
+        transform var(--dur-base) var(--ease);
+    }
+    &:hover span {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
   // ---- Console pane ----
   .sp-console {
     display: flex;

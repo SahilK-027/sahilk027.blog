@@ -2,36 +2,24 @@
 blogNo: 3
 ---
 
-import img1 from "./utils/assets/1.webp";
-import img1l from "./utils/assets/1l.webp";
-import img2 from "./utils/assets/2.webp";
-import img2l from "./utils/assets/2l.webp";
-import img3 from "./utils/assets/3.webp";
-import img3l from "./utils/assets/3l.webp";
-import img4 from "./utils/assets/4.webp";
-import img4l from "./utils/assets/4l.webp";
-import img5 from "./utils/assets/5.webp";
-import img5l from "./utils/assets/5l.webp";
-import img6 from "./utils/assets/6.webp";
-import img6l from "./utils/assets/6l.webp";
-import img7 from "./utils/assets/7.webp";
-import img7l from "./utils/assets/7l.webp";
+import Blog3Thumbnail from "./utils/Thumbnail";
+
+export const poster = <Blog3Thumbnail />;
 
 <Intro>
-Welcome back to our bit manipulation series! 🙋‍♂️ In the previous blog, we dived
-into the basics of number systems and why computers speak the language of 0s and
-1s. Today, we will build on that foundation by exploring how numbers are
-represented in computer memory and diving into binary operations. Let's get
-started!
+This one is all about how numbers actually live inside computer memory and how
+binary operations work on them. A quick grounding in number systems and why
+computers speak in 0s and 1s helps here, but we'll build up whatever we need as
+we go. Let's get started!
 </Intro>
 
 ### Bits and Bytes in the Computer Memory
 
 <InfoNote>
-In the last blog, we learned about how computers interpret binary numbers as a
-series of ON and OFF states using transistors as switches. Each of these binary
-states is called a "bit" (short for Binary digit). Computers use sets of these
-bits to store and process numerical data.
+Computers interpret binary numbers as a series of ON and OFF states using
+transistors as switches. Each of these binary states is called a "bit" (short
+for Binary digit). Computers use sets of these bits to store and process
+numerical data.
 </InfoNote>
 
 #### Where do computers store all these bits?
@@ -49,7 +37,7 @@ computer with a 32-bit architecture has 32-bit registers.
   <li><i className="fa-solid fa-arrow-right"></i> <b>Nibbles:</b> Half of a byte, consisting of 4 bits.</li>
 </ul>
 
-<BlogImage imgDark={img1} imgLight={img1l} description="Fig(1.0) How 32 bit register stores numbers." />
+<RegisterBits />
 
 You might have observed one thing, to store the number 14 computer would only
 need 4 bits, but usually we use standardized bit architectures such as min
@@ -159,6 +147,11 @@ to perform both addition and subtraction operations easily.
      "2's complement:" 11111010 + 1 = 11111011
 ```
 
+Try it yourself below. Pick any number, flip its bits, add 1, and watch how the
+result reads back as the negative:
+
+<TwosComplement />
+
 <InfoNote>
 One thing to note is that the 2's complement represents the negative of a
 number. Do you want to know why? We will discuss this in the upcoming sections.
@@ -196,9 +189,8 @@ maximum value that we can store inside a 32-bit integer? You might say that if
 this bit array has a maximum size of 32 bits, then to get the maximum number, we
 should set all 32 bits to 1. Absolutely right 👍.
 
-So the maximum 32-bit integer number becomes all 32 1s.
-
-<BlogImage imgDark={img2} imgLight={img2l} description="Fig(2.0) UINT_MAX value representation in 32-bit integer." />
+So the maximum 32-bit integer number becomes all 32 1s. Hit "Set all bits" in
+the widget above to see it.
 
 This number is 4294967295, which in C++ as a programming language is called
 UINT_MAX. Now, if I ask what can be the minimum value we can store inside a
@@ -218,8 +210,6 @@ we split this line into two halves?
 Such that the first half will hold numbers from [0, 4294967295 / 2]. The second
 half will hold numbers from [-(4294967295 / 2), -1].
 
-<BlogImage imgDark={img3} imgLight={img3l} description="Fig(3.0) Integer representation on a number line." />
-
 But 4294967295 in itself an odd number so we cannot divide it completely by two.
 So more sophisticatedly we can divide our ranges as: <b>[-2714483648, -1] —- [0,
 2714483647]</b> So if you want to know the total numbers in this range are:
@@ -233,8 +223,6 @@ negative numbers in 32-bit INTEGER.
 So finally we got our way out. The solution is to represent the negative numbers
 and positive numbers in a computer. But this solution ended up creating two
 whole new categories of numbers. Signed Integers and Unsigned Integers.
-
-<BlogImage imgDark={img4} imgLight={img4l} description="Fig(4.0) Signed and Unsigned Integer grouping." />
 
 ### Representation of signed integers in computer.
 
@@ -262,11 +250,9 @@ They gave this 32nd bit (MSB)the bit name SIGN-BIT. If for any signed integer
 the MSBth bit is 0 means the number is positive and if the MSBth bit is 1 it is
 a negative number.
 
-<BlogImage imgDark={img5} imgLight={img5l} description="Fig(5.0) Cyclic nature of signed integers." />
+<IntegerCycle />
 
-<BlogImage imgDark={img6} imgLight={img6l} description="Fig(6.0) Cyclic nature of signed integers." />
-
-From the above two diagrams, we can easily see the cyclic nature of integers.
+From the number line above, we can easily see the cyclic nature of integers.
 
 ### Cyclic nature of integer representation. Why does 2s complement represent negative numbers?
 
@@ -378,7 +364,40 @@ int main() {
 }
 ```
 
-<BlogImage imgDark={img7} imgLight={img7l} description="Fig(7.0) Output of the code snippet." />
+Running it prints:
+
+```text
+Unsigned Integers
+0  : 00000000000000000000000000000000
+1  : 00000000000000000000000000000001
+2  : 00000000000000000000000000000010
+5  : 00000000000000000000000000000101
+UINT_MAX (4294967295): 11111111111111111111111111111111
+
+Signed integers Cyclic Nature
+0: 00000000000000000000000000000000
+1: 00000000000000000000000000000001
+2: 00000000000000000000000000000010
+3: 00000000000000000000000000000011
+4: 00000000000000000000000000000100
+INT_MAX (2147483647): 01111111111111111111111111111111
+
+INT_MIN (-2147483648): 10000000000000000000000000000000
+INT_MIN + 1 (-2147483647): 10000000000000000000000000000001
+INT_MIN + 2 (-2147483646): 10000000000000000000000000000010
+INT_MIN + 3 (-2147483645): 10000000000000000000000000000011
+INT_MIN + 4 (-2147483644): 10000000000000000000000000000100
+-1: 11111111111111111111111111111111
+
+Negative integer representation 2s complement
+-5: 11111111111111111111111111111011
+Positive integer representation:
+5: 00000000000000000000000000000101
+Negative numbers are represented using two's complement.
+For example, -5 is represented as the two's complement of 5.
+To get the two's complement: invert all bits of 5 and add 1.
+This results in the binary representation of -5.
+```
 
 ### Conclusion
 
@@ -386,8 +405,6 @@ In this blog, we've explored how computers store and manipulate binary data in
 memory, emphasizing standardization, efficiency, and the critical role of
 logical operations. Understanding these foundational concepts not only enhances
 our grasp of computer architecture but also underscores the significance of
-meticulous data handling in technological applications. Stay tuned for our next
-installment, where we'll delve into advanced binary arithmetic and practical
-applications!
+meticulous data handling in technological applications.
 
 Happy bit computing!

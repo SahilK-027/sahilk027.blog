@@ -129,8 +129,8 @@ const BlogLayout = ({ meta, poster, children }) => {
               <ShareBar title={meta?.title} />
             </div>
             <h1 className="blog-title">{meta?.title}</h1>
+            {poster && <div className="blog-poster">{poster}</div>}
           </header>
-          {poster}
           <div className="main-blog-content" ref={contentRef}>
             <MDXProvider components={mdxComponents}>{children}</MDXProvider>
           </div>

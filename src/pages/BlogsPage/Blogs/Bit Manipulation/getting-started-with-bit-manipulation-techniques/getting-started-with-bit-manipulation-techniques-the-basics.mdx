@@ -2,33 +2,20 @@
 blogNo: 2
 ---
 
-import img1 from "./utils/assets/1.webp";
-import img1l from "./utils/assets/1l.webp";
-import img2 from "./utils/assets/2.webp";
-import img2l from "./utils/assets/2l.webp";
-import img3 from "./utils/assets/3.webp";
-import img3l from "./utils/assets/3l.webp";
-import img4 from "./utils/assets/4.webp";
-import img4l from "./utils/assets/4l.webp";
-import img5 from "./utils/assets/5.webp";
-import img5l from "./utils/assets/5l.webp";
-import img6 from "./utils/assets/6.webp";
-import img6l from "./utils/assets/6l.webp";
+import Blog2Thumbnail from "./utils/Thumbnail";
+
+export const poster = <Blog2Thumbnail />;
 
 <Intro>
-Welcome to the first installment of our bit manipulation series 😉! If you've
-ever wondered how computers handle the data at the most fundamental level like
-at the core memory and CPU level, then you're in the right place. But before we
+Ever wondered how computers handle data at the most fundamental level, right
+down to the core memory and CPU? Then you're in the right place. But before we
 start with 10010101110s, let me answer the WHY first.
 </Intro>
 
-### Why am I starting with bit manipulation?
-
 The reason is simple. Instead of learning something else first, why not learn
 the language that the computer understands? I'm not saying we should learn
-machine language (you can if you want though, all the best for that 😉). But I
-think we should always start by understanding the fundamentals right from the
-beginning.
+machine language (you can if you want though). But I think we should always
+start by understanding the fundamentals right from the beginning.
 
 One of the mistakes I made was considering bit manipulation as a very advanced
 topic in computer science. If we go back to 2021, when I wanted to learn
@@ -49,19 +36,17 @@ bitmasks to solve very difficult problems. I enjoy seeing operators like `>>`,
 it, but we avoid them because we think they're hard to understand. However, now
 I know they are not as hard as I used to think. I came across this thought on the
 internet stating that **bit manipulation and bitwise operators are difficult to
-understand, but only if you don't understand how computers work**. Personally, I
-find it shameful that even as a computer engineer, I don't understand the
-language that computers speak. So, I finally learned it. And so I have decided to
-write down all my learnings for you to benefit from!
+understand, but only if you don't understand how computers work**. So I finally
+learned it. And so I have decided to write down all my learnings for you to
+benefit from.
 
-Throughout this entire series, I will make an effort to answer all the WHYs you
-may have. Why does this work? Why do computers only understand 0s and 1s? Why
-can't a computer understand decimal numbers? If at any point I fail to clearly
-explain the reason, please feel free to ask your questions in the GitHub
-discussion section. I don't want any unanswered question staying in your mind
-after reading this series, stopping you from using bit manipulation in your code.
-That's why I'm writing this series in the first place. So let's start from the
-ground up, one bit at a time.
+Throughout this blog, I will make an effort to answer all the WHYs you may have.
+Why does this work? Why do computers only understand 0s and 1s? Why can't a
+computer understand decimal numbers? If at any point I fail to clearly explain
+the reason, please feel free to ask your questions in the GitHub discussion
+section. I don't want any unanswered question staying in your mind after reading
+this, stopping you from using bit manipulation in your code. So let's start from
+the ground up, one bit at a time.
 
 ### Number Systems & Number Representation
 
@@ -84,9 +69,9 @@ permutations and combinations of these decimal digits. Let's take a closer look
 with an example of how we can generate numbers in any number system using the
 principles of permutation and combination of symbols in that system:
 
-<BlogImage imgDark={img1} imgLight={img1l} description="Fig(1.0) How do we actually generate integers in any number system." />
+<NumberSystemExplorer />
 
-In the Fig(1.0) above, we can clearly see that in the decimal number system, the
+In the explorer above, we can clearly see that in the decimal number system, the
 number 8 comes after the number 7, whereas in the octal number system, the
 number 10 comes after the number 7. So, are the numbers octal(10) and
 decimal(8) identical? The short answer is yes, they are the same.
@@ -101,13 +86,12 @@ other hand, the radix of an octal number system is 8 because there are 8 unique
 digits (0-7) in it.
 
 So, how is this radix helpful? The radix of any number system can be used to
-convert a number from that system to any other system.
+convert a number from that system to any other system. Try switching the base in
+the explorer above: the same value gets rebuilt as digit times radix raised to
+its place, and the place values are exactly what change from one system to the
+next.
 
-<BlogImage imgDark={img2} imgLight={img2l} description="Fig(2.0) Number representation in Decimal number system." />
-
-<BlogImage imgDark={img3} imgLight={img3l} description="Fig(3.0) Number representation in Octal number system." />
-
-With the above example, I hope it is quite clear how the representation in
+With this, I hope it is quite clear how the representation in
 different number systems works. In the decimal number system, we have the units
 place, tens place, hundreds place, and thousands place. Today, with this radix
 concept, you really understand why it is the way it is.
@@ -140,7 +124,7 @@ which can be either high voltage or low voltage. This is why the binary system,
 which has the digits 0 and 1, is used. The term <b>"bit"</b> actually originated
 from <b>"binary digit"</b>.
 
-<BlogImage imgDark={img4} imgLight={img4l} description="Fig(4.0) ON-OFF light bulb analogy to understand binary numbers." />
+<BitSwitches />
 
 So how do computers only speak in binary? How do they solve such complex
 problems representing information only using binary? Simply put, in a computer, 0
@@ -176,17 +160,17 @@ For a binary number of length n:
   <li><i className="fa-solid fa-arrow-right"></i> The total number of unique permutations for an n-bit binary number is 2^n.</li>
 </ul>
 
-You can infer more about this using the diagram below.
-
-<BlogImage imgDark={img5} imgLight={img5l} description="Fig(5.0) Binary representation of numbers and their permutations." />
+Go back to the switches above and change the bit width: a 4-bit board gives you
+2^4 = 16 unique states, an 8-bit board gives 2^8 = 256, and so on. That counter
+is the 2^n permutation idea in action.
 
 ### Binay to Decimal & Decimal to Binary Conversion
 
 Here's how to represent numbers in the binary system:
 
-<BlogImage imgDark={img6} imgLight={img6l} description="Fig(6.0) Binary to Decimal conversion." />
+<BinaryDecimalConverter />
 
-In the above diagram Fig(6.0) we have just seen the way to convert binary to
+In the converter above we have just seen the way to convert binary to
 decimal. The method remains same, as we saw previously for octal to decimal
 conversion as well. Just Radix changes.
 
@@ -235,12 +219,11 @@ correct positions, with the last remainder as the MSB.
 
 ### Conclusion
 
-In this blog, we've explored why computers exclusively use 0s and 1s—known as
-the binary system—to represent and process data. Understanding binary's
+In this blog, we've explored why computers exclusively use 0s and 1s (known as
+the binary system) to represent and process data. Understanding binary's
 fundamentals, from its place value system to the roles of LSB and MSB,
-illuminates how computers manage and manipulate information at its core. This
-foundational understanding sets the stage for deeper insights into binary
-arithmetic and practical applications in computing. Stay tuned as we delve
-further into the world of binary operations in my upcoming bit streams!
+illuminates how computers manage and manipulate information at its core. That
+foundation is what makes binary arithmetic and everything built on top of it
+finally click into place.
 
 Happy coding!

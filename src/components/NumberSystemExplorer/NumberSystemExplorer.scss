@@ -1,0 +1,135 @@
+.nse {
+  &-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+
+  &-bases {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+
+    button {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+      padding: 8px 12px;
+      background: var(--bg);
+      color: var(--text-2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all var(--dur-base) var(--ease);
+
+      em {
+        font-family: Roboto Mono, monospace;
+        font-style: normal;
+        font-size: 0.65rem;
+        letter-spacing: 0.06em;
+        color: var(--text-3);
+      }
+
+      &:hover {
+        border-color: var(--accent);
+      }
+
+      &.active {
+        background: var(--accent-subtle);
+        border-color: var(--accent);
+        color: var(--text-1);
+
+        em {
+          color: var(--accent);
+        }
+      }
+    }
+  }
+
+  &-readout {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 16px 0 18px;
+    font-family: Roboto Mono, monospace;
+
+    .nse-num {
+      font-size: 1.6rem;
+      color: var(--text-1);
+    }
+
+    .nse-sub {
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-3);
+    }
+
+    .nse-eq {
+      font-size: 1.4rem;
+      color: var(--text-3);
+      margin: 0 4px;
+    }
+  }
+
+  &-places {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+
+  &-place {
+    flex: 1 0 auto;
+    min-width: 58px;
+    text-align: center;
+    padding: 10px 8px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-family: Roboto Mono, monospace;
+
+    .nse-digit {
+      font-size: 1.3rem;
+      color: var(--accent);
+    }
+
+    .nse-power {
+      font-size: 0.72rem;
+      color: var(--text-3);
+      margin: 4px 0;
+    }
+
+    .nse-contrib {
+      font-size: 0.85rem;
+      color: var(--text-2);
+      border-top: 1px solid var(--border);
+      padding-top: 4px;
+    }
+  }
+
+  &-expansion {
+    font-family: Roboto Mono, monospace;
+    font-size: 0.9rem;
+    line-height: 1.9;
+    color: var(--text-2);
+    word-break: break-word;
+
+    em {
+      font-style: normal;
+      color: var(--text-3);
+    }
+
+    strong {
+      color: var(--accent);
+    }
+  }
+
+  sup {
+    font-size: 0.7em;
+  }
+}

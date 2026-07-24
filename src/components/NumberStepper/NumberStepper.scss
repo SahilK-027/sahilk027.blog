@@ -1,0 +1,72 @@
+.stepper {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  &-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-3);
+  }
+
+  &-box {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    padding: 3px;
+    width: fit-content;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    transition: border-color var(--dur-base) var(--ease);
+
+    &:focus-within {
+      border-color: var(--accent);
+    }
+
+    button {
+      display: grid;
+      place-items: center;
+      width: 32px;
+      height: 32px;
+      border: none;
+      border-radius: 50%;
+      background: transparent;
+      color: var(--text-2);
+      cursor: pointer;
+      font-size: 0.78rem;
+      transition: all var(--dur-fast) var(--ease);
+
+      &:hover:not(:disabled) {
+        background: var(--accent-subtle);
+        color: var(--accent);
+      }
+
+      &:disabled {
+        opacity: 0.35;
+        cursor: not-allowed;
+      }
+    }
+
+    input {
+      width: 72px;
+      text-align: center;
+      border: none;
+      background: transparent;
+      color: var(--text-1);
+      font-family: Roboto Mono, monospace;
+      font-size: 1.05rem;
+      outline: none;
+
+      /* Hide native number spinners; the -/+ buttons replace them. */
+      -moz-appearance: textfield;
+      appearance: textfield;
+      &::-webkit-outer-spin-button,
+      &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+    }
+  }
+}

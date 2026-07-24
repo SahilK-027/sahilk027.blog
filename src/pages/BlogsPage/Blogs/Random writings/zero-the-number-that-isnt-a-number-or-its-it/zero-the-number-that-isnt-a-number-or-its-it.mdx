@@ -3,22 +3,21 @@ blogNo: 7
 ---
 
 import Random from "../../../../../components/Random/Random";
-import img1l from "./utils/assets/1l.png";
-import img1d from "./utils/assets/1d.png";
+import Blog7Thumbnail from "./utils/Thumbnail";
 import img2l from "./utils/assets/2l.png";
 import img2d from "./utils/assets/2d.png";
 
-export const poster = (
-  <Random
-    message={`
-      "Jab Zero diya mere Bharat ne, Bharat ne mere Bharat ne, Duniya ko tab ginti aayi
-      Taaron ki bhasha Bharat ne Duniya ko pehle sikhlaayi
-      Deta na dashamlav Bharat toh Yoon chaand pe jaana mushkil tha
-      Dharti aur chaand ki doori ka Andaaza lagana mushkil tha"
-      \n
-      (Only when my India invented the Zero, only then the world learnt counting. The language of the stars, India taught that first to the world. Had India not invented the decimal point, it would've been difficult to reach the moon. Even estimating the distance between Earth and the Moon would've been a challenge.)`}
-  />
-);
+export const poster = <Blog7Thumbnail />;
+
+<Random
+  message={`
+    "Jab Zero diya mere Bharat ne, Bharat ne mere Bharat ne, Duniya ko tab ginti aayi
+    Taaron ki bhasha Bharat ne Duniya ko pehle sikhlaayi
+    Deta na dashamlav Bharat toh Yoon chaand pe jaana mushkil tha
+    Dharti aur chaand ki doori ka Andaaza lagana mushkil tha"
+    \n
+    (Only when my India invented the Zero, only then the world learnt counting. The language of the stars, India taught that first to the world. Had India not invented the decimal point, it would've been difficult to reach the moon. Even estimating the distance between Earth and the Moon would've been a challenge.)`}
+/>
 
 <Intro>
 These or similar lines, filled with rhythm and pride, have echoed through
@@ -56,8 +55,6 @@ more it started to bother me. Because if Zero is just another number, why does
 it hold this almost mythic status in math? And if it's not just a number, then...
 what exactly is it?
 </Intro>
-
-<BlogImage imgDark={img1d} imgLight={img1l} description="Fig(1.0) Understanding Invention of Zero" />
 
 ### The World Without Zero
 

@@ -1,0 +1,134 @@
+.icy {
+  &-readout {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 22px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  &-r-binary {
+    font-family: Roboto Mono, monospace;
+    font-size: 1.6rem;
+    letter-spacing: 0.1em;
+    color: var(--text-1);
+  }
+
+  &-r-item {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+
+    em {
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      font-style: normal;
+    }
+
+    strong {
+      font-family: Roboto Mono, monospace;
+      font-size: 1.15rem;
+      color: var(--text-1);
+    }
+  }
+
+  &-track-wrap {
+    margin-bottom: 20px;
+  }
+
+  &-track {
+    display: flex;
+    gap: 5px;
+  }
+
+  &-cell {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    padding: 12px 2px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all var(--dur-base) var(--ease);
+
+    &.neg {
+      border-style: dashed;
+    }
+
+    &:hover {
+      border-color: var(--accent);
+    }
+
+    &.active {
+      background: var(--accent);
+      border-color: var(--accent);
+
+      .icy-cell-num,
+      .icy-cell-bin {
+        color: var(--bg);
+      }
+    }
+  }
+
+  &-cell-num {
+    font-family: Roboto Mono, monospace;
+    font-size: 1rem;
+    color: var(--text-1);
+  }
+
+  &-cell-bin {
+    font-family: Roboto Mono, monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.04em;
+    color: var(--text-3);
+  }
+
+  &-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 18px;
+
+    button {
+      padding: 9px 22px;
+      font-family: Roboto Mono, monospace;
+      font-size: 0.9rem;
+      background: var(--bg);
+      color: var(--text-1);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all var(--dur-base) var(--ease);
+
+      &:hover {
+        border-color: var(--accent);
+        background: var(--accent-subtle);
+      }
+    }
+  }
+
+  &-caption {
+    margin: 0;
+    padding: 14px 16px;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--text-2);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    transition: all var(--dur-base) var(--ease);
+
+    &.hot {
+      border-color: var(--accent);
+      background: var(--accent-subtle);
+      color: var(--text-1);
+    }
+  }
+}

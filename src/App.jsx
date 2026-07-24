@@ -8,7 +8,6 @@ import BlogsPage from "./pages/BlogsPage/BlogsPage";
 import NotFound from "./pages/404/NotFound";
 import CommandCenter from "./components/CommandCenter/CommandCenter";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
-import AccentBlast from "./components/AccentBlast/AccentBlast";
 import AppLoader from "./components/AppLoader/AppLoader";
 
 // Importing necessary data
@@ -104,7 +103,6 @@ const App = () => {
 
           <Route path="/*" element={<NotFound {...commonProps} />} />
         </Routes>
-        <AccentBlast />
         {isCommandCenterOpen && (
           <CommandCenter closeCMDCenter={closeCMDCenter} />
         )}

@@ -1,0 +1,92 @@
+.twc {
+  &-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 16px;
+    margin-bottom: 22px;
+  }
+
+  &-hint {
+    flex: 1 1 200px;
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--text-2);
+  }
+
+  &-stage {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 14px;
+
+    &.result .twc-cell.on {
+      box-shadow: 0 0 12px 1px var(--shadow-color);
+    }
+  }
+
+  &-stage-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-3);
+  }
+
+  &-row {
+    display: flex;
+    gap: 5px;
+  }
+
+  &-cell {
+    width: 34px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Roboto Mono, monospace;
+    font-size: 1rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-3);
+    transition: all var(--dur-base) var(--ease);
+
+    &.on {
+      border-color: var(--accent);
+      background: var(--accent-subtle);
+      color: var(--accent);
+    }
+
+    /* Sign bit (MSB) gets a distinct outline. */
+    &.sign {
+      position: relative;
+      border-width: 2px;
+      border-color: var(--text-2);
+
+      &.on {
+        border-color: var(--accent);
+      }
+    }
+  }
+
+  &-readout {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 20px;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+    font-size: 0.95rem;
+    color: var(--text-1);
+
+    .mono {
+      font-family: Roboto Mono, monospace;
+      letter-spacing: 0.05em;
+    }
+  }
+
+  &-note {
+    font-size: 0.82rem;
+    color: var(--text-3);
+  }
+}

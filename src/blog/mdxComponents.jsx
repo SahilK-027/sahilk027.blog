@@ -4,6 +4,12 @@ import MustReadDiv from "../components/MustReadDIV/MustReadDiv";
 import InsightDiv from "../components/InsightDiv/InsightDIV";
 import BlogImage from "../components/BlogImage/BlogImage";
 import BitsAnimation from "../components/BitsAnimation/BitsAnimation";
+import NumberSystemExplorer from "../components/NumberSystemExplorer/NumberSystemExplorer";
+import BitSwitches from "../components/BitSwitches/BitSwitches";
+import BinaryDecimalConverter from "../components/BinaryDecimalConverter/BinaryDecimalConverter";
+import RegisterBits from "../components/RegisterBits/RegisterBits";
+import TwosComplement from "../components/TwosComplement/TwosComplement";
+import IntegerCycle from "../components/IntegerCycle/IntegerCycle";
 import CodeSnippet from "../components/SyntaxHighlighter/CodeSnippet";
 import CodeSandpack from "../components/CodeSandpack/CodeSandpack";
 import ImageSlider from "../components/ImageSlider/ImageSlider";
@@ -69,6 +75,12 @@ export const mdxComponents = {
   BlogImage,
   // Rich embeds — available in every blog with no per-file import
   BitsAnimation,
+  NumberSystemExplorer,
+  BitSwitches,
+  BinaryDecimalConverter,
+  RegisterBits,
+  TwosComplement,
+  IntegerCycle,
   CodeSnippet,
   CodeSandpack,
   ImageSlider,

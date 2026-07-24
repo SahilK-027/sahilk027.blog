@@ -2,20 +2,12 @@
 blogNo: 1
 ---
 
-import BronoSimonVideo from "./utils/assets/bruno-simon.mp4";
-import CoastalWorldVideo from "./utils/assets/coastal-world.mp4";
-import LusionVideo from "./utils/assets/lusion.mp4";
-import ActiveTheoryVideo from "./utils/assets/active-theory.mp4";
 import withLightImage from "./utils/assets/with-lights.webp";
 import noLightImage from "./utils/assets/no-lights.webp";
 import { cssSandpack, htmlSandpack, jsSandpack } from "./utils/codeProviders";
+import Blog1Thumbnail from "./utils/Thumbnail";
 
-export const videosData = {
-  "bruno-simon": { url: "https://bruno-simon.com/", video: BronoSimonVideo },
-  lusion: { url: "https://lusion.co/", video: LusionVideo },
-  "active-theory": { url: "https://activetheory.net/", video: ActiveTheoryVideo },
-  "coastal-world": { url: "https://coastalworld.com/", video: CoastalWorldVideo },
-};
+export const poster = <Blog1Thumbnail />;
 
 export const filesStep2 = {
   "/index.js": {
@@ -33,8 +25,8 @@ export const filesFirstRender = {
 
 <Intro>
 Have you ever looked at a website and thought, "How on earth did they make this
-magic happen? 😲" Well, I can relate to that, I was constantly amazed by some
-mesmerising websites built by creative web dev studios out there. And let's be
+magic happen? 😲" Well, I can relate to that, I've always been mesmerised by the
+websites that creative web dev studios put out there. And let's be
 real, a visit to
 [awwwards.com](http://awwwards.com/) for me was always like stepping into a candy
 store of inspiration. In my free time, I'd linger there, watching the pixelated
@@ -47,73 +39,59 @@ Simon's](https://bruno-simon.com/) mind-bending portfolio. It wasn't your normal
 website where you scroll and browse; it was an immersive playground of colours,
 physics, and sheer interactivity. I don't know whether it was the physics, the
 vibrant colours, the seamless movements, or the joy of driving a virtual car
-through a website, whatever it was, I knew one thing for sure—I had to learn how
-to create such a wonder. And so began my journey into the world of
-[Three.js,](https://threejs.org/) Fast forward to today, and here I am, having
-dived headfirst into the world of 3D web development. What started as a quest to
+through a website, whatever it was, I knew one thing for sure: I had to learn how
+to create such a wonder. And so began my journey into
+[Three.js](https://threejs.org/). Fast forward to today, and here I am, having
+dived headfirst into 3D web development. What started as a quest to
 unravel the mysteries behind Bruno Simon's portfolio turned into a delightful
 journey of learning, experimenting, and making my slice of 3D wonder. And guess
-what? I've decided to share the incredible things I've learned along the way with
-you all. Buckle up, my fellow developers, because I'm about to take you on a ride
-through the mesmerizing world of 3D web development. Let's turn your curiosity
-into creation and build something truly awesome together!
+what? In this blog I want to share what I've learned getting started, so you can
+skip some of the head-scratching I went through. So buckle up, fellow developers.
+Let's turn that curiosity into creation and build your first 3D scene together!
 </Intro>
 
-### Why this series, and who's writing it?
+### Why this blog, and who's writing it?
 
-Before we dive in, a quick word on why this whole series exists. When I started
-learning Three.js and WebGL, I struggled a lot at first. Don't get me wrong –
+Before we dive in, a quick word on why this blog exists. When I started
+learning Three.js and WebGL, I struggled a lot at first. Don't get me wrong,
 the [Three.js community](https://discourse.threejs.org/) is fantastic, but even
 with their support, I still found myself wandering through endless internet
 rabbit holes, searching for wisdom to piece together the intricate puzzle of 3D
 development.
 
-Picture this: you've got a brilliant idea for a website, you want to create a
-mesmerising, interactive landing page. You think, "let's add mind-blowing fluid
-simulations", you're excited, but suddenly you're like, "Umm, but how?" That's
-exactly where I found myself with my project,
-[Trinity 2024](https://trinity-2024.vercel.app). After digging through countless
-blog posts, I stumbled upon a gem of wisdom that lit up my path. It was like
-finding the missing puzzle piece.
-
-<InfoNote>
-No doubt I will be writing a blog on this topic but till then if you want to
-check out which blog post I referred to while building fluid simulation for
-Trinity 2024 head over to this
-[blog](https://mofu-dev.com/en/blog/stable-fluids/) post.
-</InfoNote>
-
-I built the website eventually, but it took me a lot of time. And that got me
-thinking - why keep all this hard-earned knowledge to myself when I could share
-it with all of you? As a software developer, I believe that once you know the
-<span>why and what of something</span>, the <span>how</span> should never be an
-obstacle standing in the way of doing it. And that's why I'm writing this series.
+Here's the honest part though: the flashy stuff you see out there, GPGPU particle
+systems, fluid simulations, complex shaders, ray marching, physics playgrounds,
+isn't something you build on day one. That kind of work comes from years of stacking up small
+wins, one project at a time, and there's no shortcut that skips the fundamentals.
+So this blog starts where I wish someone had started me: the basics. Get these
+solid, and the fancy stuff slowly stops looking like magic and starts looking
+like the next step you can actually reach. That's why I'm writing this.
 
 Quick intro: I'm Sahil, a <span>creative developer</span>. I've been exploring
 web development for a few years, built some [awesome projects](/projects) along
-the way, and I also work on <span>Full-Stack</span> apps — Python-Flask, node.js,
+the way, and I also work on <span>Full-Stack</span> apps like Python-Flask, node.js,
 MongoDB, AI, ML, OpenCV, Compiler Design and much more. Feel free to discuss any
 of these with me.
 
-Over the course of this series I plan to cover, one blog post at a time:
+To give you the lay of the land, here are the big areas worth exploring as you go
+deeper into 3D on the web:
 
 <ul>
-  <li><i className="fa-solid fa-arrow-right"></i> <b>Getting Started with Three.js:</b> setting up your dev environment, the core concepts, and getting comfortable with its workflow.</li>
-  <li><i className="fa-solid fa-arrow-right"></i> <b>Creating 3D Scenes:</b> modeling, texturing, lighting, and scene composition from scratch.</li>
-  <li><i className="fa-solid fa-arrow-right"></i> <b>Animating Your Creations:</b> from simple movements to complex interactions.</li>
-  <li><i className="fa-solid fa-arrow-right"></i> <b>Materials and Shaders:</b> adding depth, realism, and stunning visual effects to your scenes.</li>
-  <li><i className="fa-solid fa-arrow-right"></i> <b>Post-Processing:</b> techniques to enhance visual fidelity and add cinematic effects.</li>
-  <li><i className="fa-solid fa-arrow-right"></i> <b>Realistic Renders:</b> the techniques and best practices behind photorealistic output.</li>
-  <li><i className="fa-solid fa-arrow-right"></i> <b>FBO, Particles, GPU Intensive Stuff:</b> Frame Buffer Objects and GPU-intensive particle systems.</li>
-  <li><i className="fa-solid fa-arrow-right"></i> <b>Optimizing Performance:</b> fine-tuning your code and rendering for smooth, high-performance experiences.</li>
+  <li><i className="fa-solid fa-arrow-right"></i> <b>The Fundamentals:</b> scene, camera, renderer, the render loop, geometry and meshes, and how WebGL draws your code onto a canvas.</li>
+  <li><i className="fa-solid fa-arrow-right"></i> <b>Materials, Textures & Lighting:</b> PBR materials, UV mapping and texture maps, lights and shadows, and image-based lighting with environment maps.</li>
+  <li><i className="fa-solid fa-arrow-right"></i> <b>Models, Animation & Interaction:</b> the glTF/Blender pipeline, camera controls, tweening with GSAP and AnimationMixer, and raycasting for hover/click.</li>
+  <li><i className="fa-solid fa-arrow-right"></i> <b>Shaders (GLSL):</b> the vertex and fragment stages, custom ShaderMaterial, and extending built-in materials for effects you can't get otherwise.</li>
+  <li><i className="fa-solid fa-arrow-right"></i> <b>GPU-Heavy Effects:</b> render targets and FBOs, GPGPU particle systems, and post-processing passes like bloom, depth of field, and color grading.</li>
+  <li><i className="fa-solid fa-arrow-right"></i> <b>Physics & Realistic Rendering:</b> physics engines for collisions and simulation, plus tone mapping, color management, and HDRI for photorealism.</li>
+  <li><i className="fa-solid fa-arrow-right"></i> <b>Performance:</b> instancing, cutting draw calls, LOD, frustum culling, and disposing resources to hold a steady frame rate.</li>
 </ul>
 
 <MustRead>
-While FBO, Shaders and Post processing are some of the fascinating topics, this
-blog will not focus on them yet. These are rather advanced topics and each
-deserves its own blog post.
+FBO, Shaders and Post-processing are some of the most fascinating topics in 3D,
+but they're advanced enough that this getting-started blog won't touch them. Each
+deserves a deep dive of its own.
 
-👉 But your curious mind can further read more about them here:
+👉 If your curious mind wants a head start, here's some great reading:
 
 <ul>
   <li><i className="fa-solid fa-arrow-right"></i> <a href="https://barradeau.com/blog/?p=621" target="_blank" rel="noopener noreferrer">FBO particles</a></li>
@@ -121,19 +99,17 @@ deserves its own blog post.
   <li><i className="fa-solid fa-arrow-right"></i> <a href="https://tympanus.net/codrops/2022/11/29/sketchy-pencil-effect-with-three-js-post-processing/" target="_blank" rel="noopener noreferrer">Post-Processing</a></li>
 </ul>
 
-😉 Don't worry, I will be writing blogs on these topics in the future. So stay
-tuned!
+😉 Take your time with these once you're comfortable with the basics below.
 </MustRead>
 
-And here's the cherry on top – this entire series is absolutely free. If you ever
-find yourself stuck on a tricky concept, head over to
+And if you ever find yourself stuck on a tricky concept, head over to
 [GitHub discussions](https://github.com/SahilK-027/sahilk027.blog/discussions) to
 connect with fellow learners, ask burning questions, and share your insights.
 
 ### Meet Three.js: Your Coolest Sidekick
 
 Now that we've set the stage for our 3D journey, let's take a closer look at our
-trusty sidekick—Three.JS!
+trusty sidekick, Three.JS!
 
 <ul>
   <li><i className="fa-solid fa-arrow-right"></i> <b>Three.js in a Nutshell:</b> Three.js is a JavaScript library that speaks the language of browsers, allowing you to build awesome animated 3D experiences in a snap. Ever heard of <a target="_blank" rel="noopener noreferrer" href="https://en.wikipedia.org/wiki/WebGL">WebGL</a>? (Don't worry if you haven't 🤓) It's like the secret sauce behind the scenes, and Three.js uses it to make your browser a stage for dazzling 3D performances.</li>
@@ -141,120 +117,6 @@ trusty sidekick—Three.JS!
   <li><i className="fa-solid fa-arrow-right"></i> <b>Three.js Ecosystem:</b> Three.JS is an <a href="https://github.com/mrdoob/three.js" target="_blank" rel="noopener noreferrer">open-source project</a> hosted on GitHub where web developers alike gather to build and maintain this awesome library.</li>
   <li><i className="fa-solid fa-arrow-right"></i> <b>Craft Anything, Anywhere:</b> Whether you're building a game, directing a virtual music video, visualizing scientific data, or want to build an interactive web experience, Three.js is your versatile paintbrush for the digital canvas. No need for a special device. If you have a functioning laptop and a browser, you're all set to start your creativity wherever and whenever you want.</li>
 </ul>
-
-### Some of my Favorite Three.js Projects
-
-<VideoGrid videos={videosData} />
-
-<InfoNote>
-<p>Just four? I know, it's like trying to pick just one flavor of ice cream at an all-you-can-eat buffet - impossible! But hey, I've managed to narrow the list down to these four gems amidst the vast sea of creativity out there. But wait, don't worry! I've got a long list of other jaw-dropping projects that deserve their moment in the spotlight. It's like having a playlist with endless hits, but for web development. So, to keep this blog on track and avoid going down the rabbit hole, I've limited myself to just these four. But hey, I promise to spill the beans on all the other mind-blowing projects I've stumbled upon.</p>
-<p>👉 Here is a list of some mesmerizing web experiences to watch out for:</p>
-<ul>
-  <li><i className="fa-solid fa-arrow-right"></i> <a href="https://midwam.com/en" target="_blank" rel="noopener noreferrer">Midwam</a></li>
-  <li><i className="fa-solid fa-arrow-right"></i> <a href="https://www.oculus.com/medal-of-honor/" target="_blank" rel="noopener noreferrer">Medal of Honor</a></li>
-  <li><i className="fa-solid fa-arrow-right"></i> <a href="https://heraclosgame.com/" target="_blank" rel="noopener noreferrer">Heraclos Game</a></li>
-  <li><i className="fa-solid fa-arrow-right"></i> <a href="https://bambukstudio.com/" target="_blank" rel="noopener noreferrer">Bambuk Studio</a></li>
-  <li><i className="fa-solid fa-arrow-right"></i> <a href="https://www.knguru.de/en" target="_blank" rel="noopener noreferrer">Knguru</a></li>
-</ul>
-<p>😉 Take some time and make sure that you visit them all!</p>
-</InfoNote>
-
-### The ABCs of Three.js
-
-Alright, let's dig into the fundamental building blocks of Three.js.
-
-<InfoNote>
-In this section, I will be writing some basic lines of code no need to code them
-along the way they are just there so that you will get familiar. Otherwise, we
-will start building our 3D playground in the next section.
-</InfoNote>
-
-<ul>
-  <li><i className="fa-regular fa-circle-dot"></i> <b> Scene - The Stage for Your 3D World:</b> In the world of Three.js, a 'Scene' is the collection of all the objects, the stage where you gather your 3D stuff to interact; it's where you'll place your objects, lights, and cameras.</li>
-</ul>
-
-```js
-// How to set up the scene?
-const scene = new THREE.Scene();
-```
-
-<ul>
-  <li><i className="fa-regular fa-circle-dot"></i> <b> Camera - Your virtual DSLR: </b> The 'Camera' determines what part of the 3D world is visible to the user. The camera is like eyes through which your audience will spectate the 3D world.</li>
-</ul>
-
-```js
-// How to set up the camera?
-const camera = new THREE.PerspectiveCamera(
-  75,
-  window.innerWidth / window.innerHeight,
-  0.1,
-  1000
-);
-```
-
-<Insight>
-What are all those numbers? Let's break it down:
-
-<ul>
-  <li><i className="fa-solid fa-arrow-right"></i> <b>Field of View (75): </b> The field of view is the extent of the observable world that is seen at any given moment. It's specified in degrees along the vertical axis. A higher value results in a wider field of view, providing a more expansive view of the 3D scene.</li>
-  <li><i className="fa-solid fa-arrow-right"></i> <b>Aspect Ratio (window.innerWidth / window.innerHeight): </b> The aspect ratio is the ratio of the camera's width to its height. It is typically set to the width of the browser window divided by the height, ensuring that the scene appears undistorted based on the dimensions of the viewing area.</li>
-  <li><i className="fa-solid fa-arrow-right"></i> <b>Near Clipping Plane (0.1): </b> The near clipping plane represents the closest distance from the camera at which objects are visible.</li>
-  <li><i className="fa-solid fa-arrow-right"></i> <b>Far Clipping Plane (1000): </b> The far clipping plane is the farthest distance at which objects are visible. Objects beyond this distance won't be rendered.</li>
-</ul>
-</Insight>
-
-<ul>
-  <li><i className="fa-regular fa-circle-dot"></i> <b> Renderer - The Assistant: </b> The 'Renderer' transforms your 3D scene into pixels visible on the screen.</li>
-</ul>
-
-```js
-// How to set up the renderer?
-const renderer = new THREE.WebGLRenderer();
-renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement);
-```
-
-<ul>
-  <li><i className="fa-regular fa-circle-dot"></i> <b>Geometry - The Building Blocks: </b> 'Geometry' is where you define the shape and structure of your 3D objects. This is like the blueprint for your 3D objects. There are many 3D as well as 2D geometries that Three.js provides like cones, torus, cubes, circles, and hearts but I will let you discover those. Head over to this link to get to know more about Three.js geometries.</li>
-</ul>
-
-```js
-// How to create the geometry?
-const geometry = new THREE.BoxGeometry();
-```
-
-<ul>
-  <li><i className="fa-regular fa-circle-dot"></i> <b>Material - The Skin of Your Objects: </b> 'Material' is the outer layer of your 3D objects, defining their appearance. Like if you have a sphere and you want it to look like our globe then you can add that particular Material to your geometry. Materials are not something crazy stuff they are just JPG or PNG image files or can also be colors that you wanna define, that's it!</li>
-</ul>
-
-```js
-// How to create a material?
-const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-```
-
-<ul>
-  <li><i className="fa-regular fa-circle-dot"></i> <b>Mesh - Bringing Geometry and Material Together: </b> I define 'Mesh' as the marriage of geometry and material 😂, creating a tangible 3D object. It creates the complete renderable object. If Geometry == Skeleton && Material == Flesh and skin then Mesh == Complete Body</li>
-</ul>
-
-```js
-// How to create a mesh?
-// Combine geometry and material to create a mesh
-const cube = new THREE.Mesh(geometry, material);
-scene.add(cube);
-```
-
-<ul>
-  <li><i className="fa-regular fa-circle-dot"></i> <b>Lights & shadows - Illuminating the Stage: </b> Before explaining you about Lights and shadows let me tell you a story of the invisible 3D model! So in 2023, I was building my first 3D website <a href="https://trinity-2023.vercel.app/" target="_blank" rel="noopener noreferrer">Trinity-2023</a>, all excited. The canvas and background both were black. I imported the 3D model of a fighter drone (Trinity bot as we call it) and added it to the scene. But wait, where is it? I was confused, what did I do wrong? I was left scratching my head for hours, changing the blender export setting, deleting the imported file, and re-importing it. But nothing was actually happening. Hours passed by, and I was trying to figure out the mystery. Why is my model invisible? Then, I read a post on the internet. Someone had dropped a simple truth bomb – "Don't forget the lights." Lights? Really? I add lights to the scene, and boom! There it is – my 3D model, finally visible. I can almost hear a cheer from my computer. Lesson learned: Lights are like the sunshine for 3D stuff. Without them, your creations are just hiding in the shadows. So, note to self and fellow coders: When things go invisible, turn on the lights! 🌟😅 Lights and shadows add realism and depth to your 3D scene If it's not already dark.</li>
-</ul>
-
-<ImageSlider leftImage={withLightImage} rightImage={noLightImage} caption="Comparison of Scene with lights and shadows and Scene without lights and shadows." />
-
-```js
-// How to add lights?
-const light = new THREE.DirectionalLight(0xffffff, 1);
-light.position.set(1, 1, 1).normalize();
-scene.add(light);
-```
 
 ### Setting Up the Project
 
@@ -276,10 +138,10 @@ npm run dev
 
 <CodeSandpack files={filesStep2} layout="preview" />
 
-After console logging the the THREE variable you can notice it contains most of
+After console logging the THREE variable you can notice it contains most of
 the classes and properties you might need on a Three.js project. Unfortunately,
-not all classes are inside this variable, but we will see later how to access
-them.
+not all classes live inside this variable; some are imported directly from the
+`three` package (via addons) as and when you need them.
 
 <InfoNote>
 <p>Don't worry, for some time we won't be seeing anything until we add all the required things to build our scene, so just make sure to follow along! And as the HTML-css files will remain the same I will only add JS snippets below</p>
@@ -294,6 +156,8 @@ them.
 */
 import './styles.css';
 import * as THREE from 'three';
+// OrbitControls lives in the addons, so we import it directly (see Step 9).
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 // console.log(THREE);
 
 /**
@@ -304,8 +168,9 @@ const canvas = document.querySelector("canvas.webgl");
 
 <h4 className="sub-title"><span>Step 4:</span> Define your 3D scene</h4>
 
-You place your objects, models, particles, lights, etc. in it, and at some point,
-you ask Three.js to render that scene. To create a scene, use the
+The scene is the stage of your 3D world, the container that holds everything: your
+objects, lights, and cameras. You place things in it, and at some point you ask
+Three.js to render that scene. To create one, use the
 [Scene](https://threejs.org/docs/index.html#api/en/scenes/Scene) class:
 
 ```js
@@ -315,40 +180,92 @@ you ask Three.js to render that scene. To create a scene, use the
 * Scene
 */
 const scene = new THREE.Scene();
+// A deep indigo background + matching fog give the scene depth and mood.
+scene.background = new THREE.Color("#0f1020");
+scene.fog = new THREE.Fog("#0f1020", 7, 16);
 ```
 
 <h4 className="sub-title"><span>Step 5:</span> Mesh = Geometry + Material</h4>
 
-To create that cool purple sphere, we need to create a geometry and a material
-and then combine them to create a mesh. There are many geometries and many
-materials, but we will keep things simple for now and create a
-[SphereGeometry](https://threejs.org/docs/index.html?q=sphere#api/en/geometries/SphereGeometry)
-and a
-[MeshPhongMaterial](https://threejs.org/docs/index.html?q=MeshPhongMaterial#api/en/materials/MeshPhongMaterial).
+Every visible object in Three.js is a **mesh**, and a mesh is just two things
+combined:
+
+<ul>
+  <li><i className="fa-regular fa-circle-dot"></i> <b>Geometry</b> is the shape, the blueprint or skeleton of your object (cubes, spheres, torus, and many more).</li>
+  <li><i className="fa-regular fa-circle-dot"></i> <b>Material</b> is how that surface looks and reacts to light. It can be a flat color, or it can wrap an image (a texture, like a JPG or PNG) around the geometry, the skin over the skeleton.</li>
+</ul>
+
+Put them together and you get the complete, renderable body: the mesh. Instead of a
+plain sphere, let's make something cooler for our first object: a
+[TorusKnotGeometry](https://threejs.org/docs/index.html?q=torusknot#api/en/geometries/TorusKnotGeometry),
+whose twists catch the light beautifully as it spins. We'll pair it with a
+[MeshStandardMaterial](https://threejs.org/docs/index.html?q=MeshStandardMaterial#api/en/materials/MeshStandardMaterial),
+a physically based (PBR) material where `roughness` controls how polished the
+surface looks and `metalness` how metallic it is. We'll also drop in a floor plane
+so the knot has something to cast a shadow onto.
 
 ```js
 // ... Previous code
 
 /*
-* Create Your Mesh
+* Objects
 */
-// 3 parameters that correspond to the sphere's size
-// radius, width segments, height segments :
-const geometry = new THREE.SphereGeometry(0.8, 32, 16);
+// TorusKnotGeometry(radius, tube, tubularSegments, radialSegments)
+const knot = new THREE.Mesh(
+  new THREE.TorusKnotGeometry(0.6, 0.2, 220, 32),
+  new THREE.MeshStandardMaterial({
+    color: "#8a5cff",
+    roughness: 0.3,
+    metalness: 0.35,
+  })
+);
+knot.position.y = 0.4;
+knot.castShadow = true;
+scene.add(knot);
 
-// A material for shiny surfaces with specular highlights.
-//  All we need is to specify its color property and wireframe mode
-const material = new THREE.MeshPhongMaterial({
-  color: "#7444ff",
-  wireframe: true,
-});
-const mesh = new THREE.Mesh(geometry, material);
-
-// You can now add your mesh to the scene by using the add(...) method:
-scene.add(mesh);
+// A floor to catch the knot's shadow.
+const floor = new THREE.Mesh(
+  new THREE.PlaneGeometry(20, 20),
+  new THREE.MeshStandardMaterial({ color: "#15161d", roughness: 0.85, metalness: 0.1 })
+);
+floor.rotation.x = -Math.PI / 2;
+floor.position.y = -1;
+floor.receiveShadow = true;
+scene.add(floor);
 ```
 
+<InfoNote>
+We picked `MeshStandardMaterial` because it's PBR: it reacts to light realistically
+and gives those soft, shiny highlights. If we'd used `MeshBasicMaterial` instead, it
+would show a flat color and ignore lights entirely, handy for a quick "is it working?"
+check, but not what we want now that we're about to light the scene. `castShadow`
+and `receiveShadow` mark which objects throw shadows and which catch them; we still
+have to switch shadows on in the renderer (Step 8) for them to appear.
+
+One thing to know: a fully metallic surface (`metalness: 1`) mostly shows
+*reflections* of its surroundings, so without an environment map it just looks dark.
+We keep `metalness` moderate here so the coloured lights read richly on the surface;
+adding real reflections with an environment map is a great thing to explore next.
+</InfoNote>
+
 <h4 className="sub-title"><span>Step 6:</span> Let's add lights</h4>
+
+Quick story on why this step matters. Back in 2023 I was building my first 3D
+website, [Trinity-2023](https://trinity-2023.vercel.app/), with a black background
+and canvas. I imported a fighter drone model (the Trinity bot), added it to the
+scene, and... nothing. Where was it? I scratched my head for hours: tweaking the
+Blender export settings, deleting and re-importing the file. Then I read a post
+that dropped a simple truth bomb: "Don't forget the lights." I added a light, and
+boom, there it was, finally visible. Lesson learned: lights are the sunshine of
+the 3D world. With a lit material like ours, no lights means your creation just
+hides in the dark. They're also what give a scene its realism and depth. 🌟😅
+
+<ImageSlider leftImage={withLightImage} rightImage={noLightImage} caption="Comparison of Scene with lights and shadows and Scene without lights and shadows." />
+
+We'll layer a few lights so the knot reads as a real, solid object: a soft ambient
+fill, a hemisphere light for a natural sky/ground gradient, one warm directional
+"key" light that casts the shadow, and two coloured point lights (pink and cyan) on
+opposite sides for a modern two-tone rim glow.
 
 ```js
 // ... Previous code
@@ -356,27 +273,45 @@ scene.add(mesh);
 /*
 * Lights
 */
-const ambientLight = new THREE.AmbientLight(0x404040); // soft white light
-const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-const hemisphereLight = new THREE.HemisphereLight(0x7444ff, 0xff00bb, 0.5);
-const pointLight = new THREE.PointLight(0x7444ff, 1, 100);
-pointLight.position.set(0, 3, 4);
-
+// Soft base fill so shadows aren't pitch black.
+const ambientLight = new THREE.AmbientLight("#7f9bff", 0.3);
 scene.add(ambientLight);
-scene.add(directionalLight);
+
+// Sky/ground tint for a natural gradient.
+const hemisphereLight = new THREE.HemisphereLight("#6ea8ff", "#20143a", 0.5);
 scene.add(hemisphereLight);
-scene.add(pointLight);
+
+// Warm key light: the one that actually casts the shadow.
+const keyLight = new THREE.DirectionalLight("#fff4e6", 3.2);
+keyLight.position.set(4, 6, 4);
+keyLight.castShadow = true;
+keyLight.shadow.mapSize.set(2048, 2048);
+keyLight.shadow.radius = 4;
+keyLight.shadow.bias = -0.0001;
+keyLight.shadow.camera.near = 1;
+keyLight.shadow.camera.far = 25;
+scene.add(keyLight);
+
+// Two coloured accent lights for a modern two-tone rim glow.
+const pinkLight = new THREE.PointLight("#ff3fb4", 18, 18);
+pinkLight.position.set(-4, 1.5, -2);
+scene.add(pinkLight);
+
+const cyanLight = new THREE.PointLight("#22d3ee", 12, 18);
+cyanLight.position.set(4, -0.5, 2);
+scene.add(cyanLight);
 ```
 
 <h4 className="sub-title"><span>Step 7:</span> Camera</h4>
 
-The camera is not visible. It's more like a theoretical point of view. When we
-will do a render of your scene, it will be from that camera's point of view. You
-can have multiple cameras just like on a movie set, and you can switch between
-those cameras as you please. Usually, we only use one camera. There are different
-types of cameras, and we will talk about these in a future lesson. For now, we
-simply need a camera that handles perspective (making close objects look more
-prominent than far objects).
+The camera is not visible. It's more like a theoretical point of view: when we
+render the scene, it's from that camera's vantage point. You can have multiple
+cameras just like on a movie set and switch between them, but usually one is
+enough. There are different types of cameras (the [Three.js docs](https://threejs.org/docs/index.html#api/en/cameras/PerspectiveCamera)
+are a great reference for the rest); for now we just need one that handles
+perspective, making close objects look bigger than far ones. We'll lift it up and
+back a little and point it at the origin so we see both the knot and its shadow on
+the floor.
 
 ```js
 // ... Previous code
@@ -388,20 +323,34 @@ const sizes = {
   width: window.innerWidth,
   height: window.innerHeight
 };
-// PerspectiveCamera(aFOV, AspectRtio)
-//
-const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height);
-camera.position.z = 3;
+// PerspectiveCamera(fov, aspectRatio, near, far)
+const camera = new THREE.PerspectiveCamera(45, sizes.width / sizes.height, 0.1, 100);
+camera.position.set(0, 1.2, 5);
+camera.lookAt(0, 0, 0);
 scene.add(camera);
 ```
 
+<Insight>
+`PerspectiveCamera` takes four values. Here's what each one means:
+
+<ul>
+  <li><i className="fa-solid fa-arrow-right"></i> <b>Field of View (45): </b> how much of the world the camera sees, in degrees along the vertical axis. A higher value gives a wider, more expansive view; a lower one feels more zoomed-in and less distorted.</li>
+  <li><i className="fa-solid fa-arrow-right"></i> <b>Aspect Ratio (width / height): </b> the ratio of the camera's width to its height. Setting it to the window's width divided by height keeps the scene from looking stretched or squashed.</li>
+  <li><i className="fa-solid fa-arrow-right"></i> <b>Near Clipping Plane (0.1): </b> the closest distance at which objects are still visible.</li>
+  <li><i className="fa-solid fa-arrow-right"></i> <b>Far Clipping Plane (100): </b> the farthest distance objects are visible; anything beyond it isn't rendered.</li>
+</ul>
+
+`camera.lookAt(0, 0, 0)` simply aims the camera at the centre of the scene.
+</Insight>
+
 <h4 className="sub-title"><span>Step 8:</span> Renderer</h4>
 
-The renderer's job is to do the render. Bet you didn't see that coming! We will
-simply ask the renderer to render our scene from the camera's point of view, and
-the result will be drawn into a canvas. You can create the canvas by yourself, or
-let the renderer generate it and then add it to your page. For this exercise, we
-will add the canvas to the HTML and send it to the renderer.
+The renderer's job is to do the render. Bet you didn't see that coming! We hand it
+our scene and camera, and it draws the result into the canvas. A few extra settings
+level it up: `antialias` smooths jagged edges, `setPixelRatio` keeps it crisp on
+high-density screens without over-rendering, `shadowMap.enabled` is what finally
+turns on the shadows we set up earlier, and `toneMapping` maps the bright highlights
+to nicer, film-like tones.
 
 ```js
 // ... Previous code
@@ -411,39 +360,87 @@ will add the canvas to the HTML and send it to the renderer.
 */
 const renderer = new THREE.WebGLRenderer({
   canvas: canvas,
-  alpha: true
+  antialias: true
 });
 renderer.setSize(sizes.width, sizes.height);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.1;
 ```
 
-<h4 className="sub-title"><span>Step 9:</span> Update the renderer on each frame</h4>
+<h4 className="sub-title"><span>Step 9:</span> Let the user look around (OrbitControls)</h4>
 
-In real-time 3D applications, it's crucial to continuously render the scene to
-provide smooth visual updates. This loop ensures that the scene is redrawn at the
-appropriate frame rate, typically 60 frames per second (FPS) for smooth
-animations. By updating the position, rotation, and other properties of objects
-in the scene gradually over time (based on deltaTime), animations appear smooth
-and natural to the viewer's eye. Without this time-based approach, animations
-might appear choppy or inconsistent, especially on devices with varying frame
-rates.
+Our scene already spins on its own, but it's much more fun if the viewer can move
+the camera themselves. `OrbitControls` is a helper that turns click-drag into
+orbiting, scroll into zoom, and right-drag into panning, all around a target point.
+It isn't part of the core `THREE` object, which is why we imported it from the addons
+back in Step 3. We attach it to the camera and the renderer's canvas, and turn on
+`enableDamping` for a smooth, weighted feel (that one needs `controls.update()` in
+the animation loop, which we'll add next).
 
 ```js
 // ... Previous code
 
 /*
-* Update the renderer on each frame
+* Controls
+*/
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+```
+
+<h4 className="sub-title"><span>Step 10:</span> Handle window resize</h4>
+
+Right now the size and aspect ratio are read once, at startup. If the window
+changes size the scene would stretch, so we listen for `resize` and update the
+camera's aspect ratio and the renderer's size to match.
+
+```js
+// ... Previous code
+
+/*
+* Handle resize
+*/
+window.addEventListener("resize", () => {
+  sizes.width = window.innerWidth;
+  sizes.height = window.innerHeight;
+
+  // Update the camera's aspect ratio, then tell it to recompute its projection.
+  camera.aspect = sizes.width / sizes.height;
+  camera.updateProjectionMatrix();
+
+  // Resize the render and keep the pixel ratio capped.
+  renderer.setSize(sizes.width, sizes.height);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+});
+```
+
+<h4 className="sub-title"><span>Step 11:</span> Update the renderer on each frame</h4>
+
+A 3D scene isn't a single snapshot; it's redrawn many times a second (typically 60
+FPS) so motion looks smooth. We do that with a loop: `requestAnimationFrame` asks the
+browser to call our `tick` function before every repaint. The key trick is to drive
+animation by *time*, not by frame count. `THREE.Clock` gives us `elapsedTime` (seconds
+since start), so the knot spins at the same real-world speed whether the device runs
+at 30 FPS or 120.
+
+```js
+// ... Previous code
+
+/*
+* Animate on each frame
 */
 const clock = new THREE.Clock();
-let previousTime = 0;
 const tick = () => {
   const elapsedTime = clock.getElapsedTime();
-  const deltaTime = elapsedTime - previousTime;
-  previousTime = elapsedTime;
 
-  // Animate the mesh
-  mesh.rotation.x += deltaTime * 0.7;
-  mesh.rotation.y += deltaTime * 0.7;
-  mesh.rotation.z += deltaTime * 0.7;
+  // Tumble the knot so its twists catch the light and the shadow shifts.
+  knot.rotation.x = elapsedTime * 0.3;
+  knot.rotation.y = elapsedTime * 0.5;
+
+  // Apply the damped controls every frame.
+  controls.update();
 
   renderer.render(scene, camera);
 
@@ -459,13 +456,14 @@ Here's your first render!
 
 ### Conclusion
 
-Congratulations on taking your first steps into the mesmerizing world of 3D web
-development with Three.js! Throughout this article, you've delved into the
-fundamentals of creating immersive 3D scenes, learned to use the power of lights,
-materials, geometries, and cameras, and even added interactive controls to your
-scenes. As you continue your exploration of Three.js and 3D web development,
-remember that practice, curiosity, and persistence are keys. Embrace the
-challenges, celebrate your successes, and don't hesitate to dive deeper into the
-vast resources available, including documentation, tutorials, and online
-communities. So, fellow developer, let your curiosity guide you, your creativity
-fuel you, and your passion for learning push you forward. Happy coding 🚀!
+Congratulations on taking your first steps into 3D on the web! In this blog
+you've gone from an empty page to a shiny, tumbling torus knot lit and casting a
+real shadow, and along the way you've met the core pieces you'll use in every
+Three.js project: the scene, camera, and renderer, plus geometry, PBR materials,
+lights, shadows, and OrbitControls to fly around it. That foundation is exactly
+what the fancier stuff, shaders,
+particles, and post-processing, is built on top of. Next, the best move is to keep
+tinkering: swap the geometry, change the roughness and metalness, move the lights,
+and see what happens. The [Three.js docs](https://threejs.org/docs/)
+and [examples](https://threejs.org/examples/) are a great place to wander from
+here. Happy coding 🚀!

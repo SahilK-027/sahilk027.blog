@@ -569,3 +569,36 @@ code {
 .bold-text {
   color: var(--color-text-primary)
 }
+/* ── Interactive blog widgets (NumberSystemExplorer, BitSwitches, converter) ── */
+.widget-shell {
+  width: 100%;
+  border: 1px solid var(--border);
+  background: var(--bg-subtle);
+  border-radius: 14px;
+  padding: 22px;
+  margin: 12px 0;
+
+  .widget-kicker {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: Roboto Mono, monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 18px;
+
+    &::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 2px;
+      background: var(--accent);
+    }
+  }
+
+  .accent {
+    color: var(--accent);
+  }
+}

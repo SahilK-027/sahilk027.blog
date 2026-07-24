@@ -1,18 +1,19 @@
 .blogsPage-container {
   .hero {
-    // Pinned while the sheet below scrolls over it — the parallax layer.
-    position: sticky;
+    // Lusion-style: the hero is FIXED to the viewport — it never scrolls. The
+    // sheet below starts one screen down and climbs up over it, so it reads as
+    // the archive sliding onto a frozen hero, not the page scrolling away.
+    position: fixed;
     top: 0;
+    left: 0;
+    right: 0;
     z-index: 0;
-    min-height: 100vh;
-    min-height: 100svh;
+    height: 100vh;
+    height: 100svh;
     display: flex;
     align-items: center;
     overflow: hidden;
-
-    .hero-content {
-      will-change: transform, opacity;
-    }
+    will-change: transform;
 
     .hero-content {
       position: relative;
@@ -55,7 +56,7 @@
         display: inline-flex;
         align-items: center;
         gap: 10px;
-        font-size: 0.8rem;
+        font-size: var(--fs-small);
         font-weight: 500;
         text-transform: uppercase;
         letter-spacing: 0.14em;
@@ -78,13 +79,12 @@
       }
 
       .hero-title {
-        font-size: clamp(2rem, 3.2vw, 2.6rem);
+        font-size: var(--fs-title-1);
         font-weight: 650;
         line-height: 1.12;
         letter-spacing: -0.03em;
         max-width: 15em;
         margin-bottom: 20px;
-        text-wrap: balance;
 
         .hero-title__accent {
           color: var(--text-2);
@@ -104,7 +104,7 @@
         font-family: "Fira Code", monospace;
 
         .hero-index__heading {
-          font-size: 0.7rem;
+          font-size: var(--fs-kicker);
           text-transform: uppercase;
           letter-spacing: 0.22em;
           color: var(--text-3);
@@ -122,7 +122,7 @@
           display: flex;
           align-items: baseline;
           gap: 10px;
-          font-size: 0.82rem;
+          font-size: var(--fs-small);
 
           dt {
             flex-shrink: 0;
@@ -157,7 +157,7 @@
 
         .hero-index__latest {
           .hero-index__latest-label {
-            font-size: 0.7rem;
+            font-size: var(--fs-kicker);
             text-transform: uppercase;
             letter-spacing: 0.22em;
             color: var(--accent);
@@ -167,13 +167,15 @@
           a {
             display: block;
             font-family: var(--font-body, inherit);
-            font-size: 0.92rem;
+            font-size: var(--fs-body-sm);
             font-weight: 550;
             line-height: 1.45;
             letter-spacing: -0.01em;
             color: var(--text-1);
             margin-bottom: 10px;
-            text-wrap: balance;
+            // Fill the line and wrap only when out of room — `balance` forced
+            // two even lines even when one fit.
+            text-wrap: pretty;
             transition: color var(--dur-base) var(--ease);
 
             i {
@@ -195,7 +197,7 @@
           }
 
           .hero-index__latest-meta {
-            font-size: 0.72rem;
+            font-size: var(--fs-kicker);
             color: var(--text-3);
           }
         }
@@ -212,7 +214,7 @@
           display: inline-flex;
           align-items: center;
           gap: 8px;
-          font-size: 0.92rem;
+          font-size: var(--fs-body-sm);
           font-weight: 550;
           color: var(--text-2);
           transition: color var(--dur-base) var(--ease);
@@ -244,77 +246,16 @@
 
     }
 
-    // Bottom strip lives OVER the pile, so both ends sit in frosted-glass
-    // chips that stay legible against any shape arrangement.
-    .hero-meta {
-      position: absolute;
-      z-index: 3;
-      left: 0;
-      right: 0;
-      bottom: 22px;
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      padding: 0 28px;
-      pointer-events: none;
-
-      .hero-meta__scroll {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        font-size: 0.72rem;
-        text-transform: uppercase;
-        letter-spacing: 0.16em;
-        color: var(--text-2);
-        padding: 10px 16px;
-        border-radius: 999px;
-        border: 1px solid var(--border);
-        background: color-mix(in srgb, var(--bg) 55%, transparent);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-
-        .hero-meta__line {
-          display: block;
-          width: 1px;
-          height: 18px;
-          background: linear-gradient(to bottom, transparent, var(--text-2));
-          animation: hero-scroll-pulse 2.2s ease-in-out infinite;
-        }
-      }
-
-      .hero-meta__socials {
-        display: flex;
-        gap: 4px;
-        padding: 6px 8px;
-        border-radius: 999px;
-        border: 1px solid var(--border);
-        background: color-mix(in srgb, var(--bg) 55%, transparent);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        pointer-events: auto;
-
-        a {
-          font-size: 0.82rem;
-          font-weight: 500;
-          color: var(--text-2);
-          padding: 4px 10px;
-          border-radius: 999px;
-          transition: color var(--dur-base) var(--ease),
-            background var(--dur-base) var(--ease);
-
-          &:hover {
-            color: var(--accent);
-            background: color-mix(in srgb, var(--accent) 10%, transparent);
-          }
-        }
-      }
-    }
   }
 
   // The sheet: full-bleed surface that slides over the pinned hero.
   .landing-sheet {
     position: relative;
     z-index: 2;
+    // Hero is fixed (out of flow), so reserve one screen of scroll room here:
+    // the sheet starts below the fold and rises up over the frozen hero.
+    margin-top: 100vh;
+    margin-top: 100svh;
     background: var(--bg);
     border-radius: 32px 32px 0 0;
     box-shadow: 0 -24px 80px rgba(0, 0, 0, 0.35);
@@ -348,7 +289,7 @@
           display: inline-flex;
           align-items: center;
           gap: 10px;
-          font-size: 0.8rem;
+          font-size: var(--fs-small);
           font-weight: 500;
           text-transform: uppercase;
           letter-spacing: 0.14em;
@@ -372,13 +313,13 @@
             display: inline-flex;
             align-items: baseline;
             gap: 12px;
-            font-size: clamp(1.4rem, 2.4vw, 1.8rem);
+            font-size: var(--fs-title-2);
             font-weight: 650;
             letter-spacing: -0.02em;
 
             .log-count {
               font-family: "Fira Code", monospace;
-              font-size: 0.78rem;
+              font-size: var(--fs-kicker);
               font-weight: 500;
               color: var(--text-3);
               border: 1px solid var(--border);
@@ -422,26 +363,85 @@
     min-height: 100svh;
 
     .hero-content {
-      padding: 96px 20px min(12vh, 110px);
+      padding: 72px 20px min(8vh, 72px);
       grid-template-columns: minmax(0, 1fr);
-      gap: 40px;
+      gap: 20px;
+
+      // Frosted scrim: the canvas now sits BEHIND the copy on mobile, so a
+      // blurred wash of the page bg mutes the shapes under the text. The blur
+      // itself has a hard rectangular boundary — a background gradient can't
+      // soften it, so the scrim is full VIEWPORT width (no side seam) and its
+      // top/bottom blur edges are feathered with a mask (which DOES fade the
+      // backdrop-filter). Uniform tint; the mask does all the feathering.
+      &::before {
+        content: "";
+        position: absolute;
+        top: -32px;
+        bottom: -32px;
+        left: 50%;
+        width: 100vw;
+        transform: translateX(-50%);
+        z-index: -1;
+        background: color-mix(in srgb, var(--bg) 72%, transparent);
+        backdrop-filter: blur(7px);
+        -webkit-backdrop-filter: blur(7px);
+        mask-image: linear-gradient(
+          to bottom,
+          transparent 0%,
+          #000 14%,
+          #000 86%,
+          transparent 100%
+        );
+        -webkit-mask-image: linear-gradient(
+          to bottom,
+          transparent 0%,
+          #000 14%,
+          #000 86%,
+          transparent 100%
+        );
+        pointer-events: none;
+      }
+
+      // Tightened rhythm so the full copy AND the index fit one 100svh screen
+      // on short phones (iPhone SE, 375×667) without scrolling.
+      .hero-kicker {
+        font-size: var(--fs-micro);
+        margin-bottom: 14px;
+      }
 
       .hero-title {
-        font-size: clamp(2.1rem, 8.5vw, 2.6rem);
+        font-size: var(--fs-title-2);
+        margin-bottom: 14px;
       }
 
       .hero-sub {
-        margin-bottom: 28px;
+        font-size: var(--fs-body-sm);
+        line-height: 1.5;
+        margin-bottom: 18px;
       }
 
       .hero-links {
-        gap: 22px;
+        flex-wrap: nowrap;
+        gap: 11px;
+        font-size: var(--fs-small);
+
+        a {
+          font-size: var(--fs-small);
+          gap: 5px;
+          white-space: nowrap;
+        }
+
+        // Social links: drop the trailing arrow icons on mobile so all five
+        // links (archive + GitHub/LinkedIn/𝕏/Email) fit on a single row.
+        a:not(:first-child) i {
+          display: none;
+        }
       }
 
       // Single column: spine turns into a horizontal rule above the index.
       .hero-page--right {
         padding-left: 0;
-        padding-top: 32px;
+        padding-top: 18px;
 
         &::before {
           top: 0;
@@ -453,15 +453,7 @@
           background: linear-gradient(to right, var(--border), transparent);
         }
       }
-    }
 
-    .hero-meta {
-      bottom: 16px;
-      padding: 0 16px;
-
-      .hero-meta__scroll {
-        display: none;
-      }
     }
   }
 }

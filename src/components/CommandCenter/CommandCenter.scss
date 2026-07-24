@@ -138,7 +138,7 @@
 
           h5 {
             font-family: "Fira Code", monospace;
-            font-size: 0.66rem;
+            font-size: var(--fs-micro);
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.18em;
@@ -351,7 +351,7 @@
           .result-count {
             display: block;
             font-family: "Fira Code", monospace;
-            font-size: 0.68rem;
+            font-size: var(--fs-micro);
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.2em;
@@ -424,7 +424,7 @@
 
           .cmd-empty__label {
             font-family: "Fira Code", monospace;
-            font-size: 0.68rem;
+            font-size: var(--fs-micro);
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.2em;
@@ -478,7 +478,7 @@
         // Section headings read like the hero index: mono, spaced caps.
         h4 {
           font-family: "Fira Code", monospace;
-          font-size: 0.68rem;
+          font-size: var(--fs-micro);
           font-weight: 600;
           text-transform: uppercase;
           letter-spacing: 0.2em;

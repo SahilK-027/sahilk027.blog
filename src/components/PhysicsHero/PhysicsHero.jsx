@@ -6,6 +6,7 @@ import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment
 import { mergeGeometries } from "three/examples/jsm/utils/BufferGeometryUtils.js";
 import { useApp } from "../../context/AppContext";
 import { getAccent } from "../../data/accents";
+import { isAppReady, onAppReady } from "../../hooks/appReady";
 import "./PhysicsHero.scss";
 
 // Perf tier: mobile / low-end devices get fewer bodies and a tighter DPR.
@@ -98,46 +99,53 @@ const tubeFrame = (solid, radius) => {
 // solid and scaffold versions of the same form tumble together.
 // Every collider is a SPHERE (`cr`): spheres roll past each other and
 // never wedge — the 3D geometry is purely visual.
+// `geo(s)` builds the shape at size multiplier `s`; the sphere collider
+// radius `cr` is scaled by the same `s` at body-creation time. Shrinking `s`
+// on narrow viewports lets more shapes share a small floor without clutter.
 const GROUPS = [
   // ---- solids (smooth or too complex to frame) ----
-  { geo: () => new THREE.SphereGeometry(0.24, 20, 16), cr: 0.24, count: 22 },
-  { geo: () => new THREE.TorusGeometry(0.19, 0.08, 12, 24), cr: 0.24, count: 14 },
+  { geo: (s) => new THREE.SphereGeometry(0.24 * s, 20, 16), cr: 0.24, count: 22 },
   {
-    geo: () => new THREE.CylinderGeometry(0.17, 0.17, 0.38, 18),
+    geo: (s) => new THREE.TorusGeometry(0.19 * s, 0.08 * s, 12, 24),
+    cr: 0.24,
+    count: 14,
+  },
+  {
+    geo: (s) => new THREE.CylinderGeometry(0.17 * s, 0.17 * s, 0.38 * s, 18),
     cr: 0.2,
     count: 14,
   },
   {
-    geo: () => new THREE.CapsuleGeometry(0.13, 0.22, 6, 12),
+    geo: (s) => new THREE.CapsuleGeometry(0.13 * s, 0.22 * s, 6, 12),
     cr: 0.18,
     count: 10,
   },
-  { geo: () => new THREE.IcosahedronGeometry(0.24, 0), cr: 0.23, count: 14 },
-  { geo: () => new THREE.DodecahedronGeometry(0.24, 0), cr: 0.22, count: 10 },
-  { geo: () => new THREE.BoxGeometry(0.36, 0.36, 0.36), cr: 0.23, count: 14 },
-  { geo: () => new THREE.ConeGeometry(0.22, 0.42, 18), cr: 0.2, count: 12 },
-  { geo: () => new THREE.TetrahedronGeometry(0.26, 0), cr: 0.17, count: 8 },
+  { geo: (s) => new THREE.IcosahedronGeometry(0.24 * s, 0), cr: 0.23, count: 14 },
+  { geo: (s) => new THREE.DodecahedronGeometry(0.24 * s, 0), cr: 0.22, count: 10 },
+  { geo: (s) => new THREE.BoxGeometry(0.36 * s, 0.36 * s, 0.36 * s), cr: 0.23, count: 14 },
+  { geo: (s) => new THREE.ConeGeometry(0.22 * s, 0.42 * s, 18), cr: 0.2, count: 12 },
+  { geo: (s) => new THREE.TetrahedronGeometry(0.26 * s, 0), cr: 0.17, count: 8 },
   // ---- frames (simple edge graphs → clean scaffolds) ----
   {
-    geo: () => tubeFrame(new THREE.BoxGeometry(0.36, 0.36, 0.36), 0.028),
+    geo: (s) => tubeFrame(new THREE.BoxGeometry(0.36 * s, 0.36 * s, 0.36 * s), 0.028 * s),
     cr: 0.23,
     count: 9,
     frame: true,
   },
   {
-    geo: () => tubeFrame(new THREE.ConeGeometry(0.22, 0.42, 6), 0.026),
+    geo: (s) => tubeFrame(new THREE.ConeGeometry(0.22 * s, 0.42 * s, 6), 0.026 * s),
     cr: 0.2,
     count: 8,
     frame: true,
   },
   {
-    geo: () => tubeFrame(new THREE.TetrahedronGeometry(0.26, 0), 0.03),
+    geo: (s) => tubeFrame(new THREE.TetrahedronGeometry(0.26 * s, 0), 0.03 * s),
     cr: 0.17,
     count: 7,
     frame: true,
   },
   {
-    geo: () => tubeFrame(new THREE.OctahedronGeometry(0.25, 0), 0.028),
+    geo: (s) => tubeFrame(new THREE.OctahedronGeometry(0.25 * s, 0), 0.028 * s),
     cr: 0.2,
     count: 8,
     frame: true,
@@ -168,40 +176,70 @@ const Env = () => {
   return null;
 };
 
+// Walls are OVERSIZED once (they span far past any viewport) and only ever
+// TRANSLATED — cannon can't resize a body's collider args after creation, so
+// a fixed-size slab that slides is the only way to track a live resize. They
+// are Kinematic: moving a kinematic body carries real velocity into the
+// solver, so shrinking the viewport physically shoves the existing pile
+// inward instead of re-dropping it. WALL/2 must exceed the largest half-
+// extent the hero can ever reach.
+const WALL = 2; // slab thickness
+const SPAN = 80; // slab length — well past any viewport half-extent
+
 /* ------------------------------------------------------------------ */
-/* Static bounds: floor at hero bottom + side walls. Translation is    */
-/* locked to the xy plane, so no front/back walls needed.              */
+/* Kinematic bounds: floor at hero bottom + side walls, repositioned to */
+/* the live viewport each resize. Translation is locked to xy, so no    */
+/* front/back walls needed.                                             */
 /* ------------------------------------------------------------------ */
 const Bounds = ({ hw, hh }) => {
-  const t = 2; // wall thickness
-  useBox(() => ({
-    args: [hw * 2 + t * 2, t, 4],
-    position: [0, -hh - t / 2, 0],
-    type: "Static",
+  const [, floor] = useBox(() => ({
+    args: [SPAN, WALL, 4],
+    position: [0, -hh - WALL / 2, 0],
+    type: "Kinematic",
   }));
-  useBox(() => ({
-    args: [t, hh * 8, 4],
-    position: [-hw - t / 2, 0, 0],
-    type: "Static",
+  const [, left] = useBox(() => ({
+    args: [WALL, SPAN, 4],
+    position: [-hw - WALL / 2, 0, 0],
+    type: "Kinematic",
   }));
-  useBox(() => ({
-    args: [t, hh * 8, 4],
-    position: [hw + t / 2, 0, 0],
-    type: "Static",
+  const [, right] = useBox(() => ({
+    args: [WALL, SPAN, 4],
+    position: [hw + WALL / 2, 0, 0],
+    type: "Kinematic",
   }));
+  // Ease walls toward the target size instead of snapping. A teleported
+  // kinematic wall carries near-infinite implied velocity and flings/tunnels
+  // shapes out through the boundary — over a few resizes the pile visibly
+  // thins. Lerping keeps wall speed low: shapes get gently nudged, never
+  // ejected.
+  const cur = useRef({ fy: -hh - WALL / 2, lx: -hw - WALL / 2, rx: hw + WALL / 2 });
+  useFrame(() => {
+    const c = cur.current;
+    c.fy += (-hh - WALL / 2 - c.fy) * 0.08;
+    c.lx += (-hw - WALL / 2 - c.lx) * 0.08;
+    c.rx += (hw + WALL / 2 - c.rx) * 0.08;
+    floor.position.set(0, c.fy, 0);
+    left.position.set(c.lx, 0, 0);
+    right.position.set(c.rx, 0, 0);
+  });
   return null;
 };
 
 // Ceiling mounts separately, AFTER the rain-in: shapes spawn above the
 // canvas and fall through where it will be, then the lid seals the
-// container so nothing gets flung out the top.
-const Ceiling = ({ hw, hh }) => {
-  const t = 2;
-  useBox(() => ({
-    args: [hw * 2 + t * 2, t, 4],
-    position: [0, hh + t / 2, 0],
-    type: "Static",
+// container so nothing gets flung out the top. Same kinematic slab, tracked
+// to the live top edge.
+const Ceiling = ({ hh }) => {
+  const [, lid] = useBox(() => ({
+    args: [SPAN, WALL, 4],
+    position: [0, hh + WALL / 2, 0],
+    type: "Kinematic",
   }));
+  const cur = useRef(hh + WALL / 2);
+  useFrame(() => {
+    cur.current += (hh + WALL / 2 - cur.current) * 0.08;
+    lid.position.set(0, cur.current, 0);
+  });
   return null;
 };
 
@@ -295,7 +333,7 @@ const PointerBall = () => {
 /* One instanced mesh + N physics bodies sharing one material.         */
 /* ------------------------------------------------------------------ */
 const ShapeGroup = ({ group, specs, material, allowSleep }) => {
-  const geometry = useMemo(group.geo, [group]);
+  const geometry = useMemo(() => group.geo(1), [group]);
   useEffect(() => () => geometry.dispose(), [geometry]);
 
   const [ref] = useSphere(
@@ -332,16 +370,25 @@ const ShapeGroup = ({ group, specs, material, allowSleep }) => {
   );
 };
 
-const Pile = ({ hw, hh, theme, accent, lowTier, reducedMotion, touch }) => {
-  const scale = lowTier ? 0.5 : 0.8;
+const Pile = ({ hw, hh, theme, accent, reducedMotion, started }) => {
+  // Spawn layout is frozen to the viewport at MOUNT. Live hw/hh still flow to
+  // the walls (which reposition and shove the pile as the window drags), so a
+  // resize pushes the existing pile instead of re-dropping it. Shapes are a
+  // FIXED world size — narrow viewports look smaller because the camera dollies
+  // back (see Scene), fitting more world into frame. Count is constant.
+  const spawn = useRef({ hw, hh }).current;
+  const scale = 0.8; // count multiplier: fixed, width-independent
 
   // Lid seals once the rain-in is done (worst-case fall is ~2s with the
-  // 10×hh spawn column).
+  // 10×hh spawn column). The clock only starts once `started` flips — while
+  // the loader owns the screen the sim is paused and nothing has fallen yet,
+  // so sealing then would trap shapes mid-air above the viewport.
   const [sealed, setSealed] = useState(false);
   useEffect(() => {
+    if (!started) return undefined;
     const id = setTimeout(() => setSealed(true), 3600);
     return () => clearTimeout(id);
-  }, []);
+  }, [started]);
 
   // Deterministic specs, split per group into marble / glass / accent so
   // each subset renders as its own instanced mesh with the right material.
@@ -349,7 +396,9 @@ const Pile = ({ hw, hh, theme, accent, lowTier, reducedMotion, touch }) => {
   const groupSpecs = useMemo(() => {
     const rand = mulberry32(20260723);
     return GROUPS.map((group) => {
-      const count = Math.max(4, Math.round(group.count * scale));
+      // Floor of 5 keeps every shape type well-represented even at the
+      // smallest width.
+      const count = Math.max(5, Math.round(group.count * scale));
       const marble = [];
       const glass = [];
       const accentSpecs = [];
@@ -359,8 +408,8 @@ const Pile = ({ hw, hh, theme, accent, lowTier, reducedMotion, touch }) => {
           // squared roll skews spawn heights low, so the rain opens dense
           // and tapers into stragglers (fast → slow).
           position: [
-            (rand() * 2 - 1) * hw * 0.94,
-            hh + 0.6 + Math.pow(rand(), 2) * hh * 9,
+            (rand() * 2 - 1) * spawn.hw * 0.94,
+            spawn.hh + 0.6 + Math.pow(rand(), 2) * spawn.hh * 9,
             0,
           ],
           rotation: [rand() * Math.PI, rand() * Math.PI, rand() * Math.PI],
@@ -463,7 +512,7 @@ const Pile = ({ hw, hh, theme, accent, lowTier, reducedMotion, touch }) => {
       <directionalLight position={[-5, 2, -3]} intensity={m.fill} />
       <Bounds hw={hw} hh={hh} />
       {sealed && <Ceiling hw={hw} hh={hh} />}
-      {!reducedMotion && !touch && <PointerBall />}
+      {!reducedMotion && <PointerBall />}
       {groupSpecs.map(({ group, subsets }, gi) =>
         subsets.map(
           (specs, si) =>
@@ -475,7 +524,11 @@ const Pile = ({ hw, hh, theme, accent, lowTier, reducedMotion, touch }) => {
                 group={group}
                 specs={specs}
                 material={materials[si]}
-                allowSleep={touch}
+                // Sleep only when there's no pointer plow at all (reduced
+                // motion). Touch now drives PointerBall too, and a kinematic
+                // ball can't wake a sleeping body — so the pile must stay
+                // awake to react to a finger drag.
+                allowSleep={reducedMotion}
               />
             )
         )
@@ -484,11 +537,29 @@ const Pile = ({ hw, hh, theme, accent, lowTier, reducedMotion, touch }) => {
   );
 };
 
-// Reads the r3f viewport (world units at z=0) and sizes the physics bounds
-// to exactly match the visible hero.
+// Narrow viewports dolly the camera BACK so the fixed-size shapes appear
+// smaller and more of them fit — no per-shape scaling, no re-drop. Bounds are
+// derived from the resulting camera distance so the walls always frame the
+// visible area. Everything is live, so resizing just moves the camera + walls
+// and the existing pile settles into the new frame.
+const REST_Z = 10; // camera distance on wide screens
 const Scene = (props) => {
-  const { viewport } = useThree();
-  return <Pile hw={viewport.width / 2} hh={viewport.height / 2} {...props} />;
+  const { camera, size } = useThree();
+  // Pull back below 1100px, capped so the zoom stays gentle (not huge).
+  const targetZ = REST_Z * Math.max(1, Math.min(1.3, 1100 / size.width));
+  // Ease the camera toward the target instead of snapping — resizing glides.
+  useFrame(() => {
+    const dz = targetZ - camera.position.z;
+    if (Math.abs(dz) > 0.001) {
+      camera.position.z += dz * 0.03;
+      camera.updateProjectionMatrix();
+    }
+  });
+  // Walls frame the FINAL distance so the pile has stable bounds while the
+  // camera eases in.
+  const hh = Math.tan(((camera.fov * Math.PI) / 180) / 2) * targetZ;
+  const hw = hh * (size.width / size.height);
+  return <Pile hw={hw} hh={hh} {...props} />;
 };
 
 /**
@@ -502,18 +573,25 @@ const Scene = (props) => {
 const PhysicsHero = () => {
   const { theme, accent } = useApp();
   const containerRef = useRef(null);
+  // `running` gates the render loop — off only when the hero is truly
+  // offscreen or the tab is hidden. `paused` gates ONLY the physics sim and
+  // flips when the sticky hero is covered by the sheet scrolling over it.
+  // Keeping the render loop alive across cover/uncover avoids a frameloop
+  // wake spike; pausing physics (not the loop) means cannon resumes without
+  // replaying accumulated wall-time — no catch-up hitch on scroll-up.
   const [running, setRunning] = useState(true);
+  const [paused, setPaused] = useState(false);
+  // Rain-in holds until the AppLoader's reveal transition finishes, so shapes
+  // never fall behind the splash. Bodies spawn above the viewport and just
+  // wait (sim frozen); when this flips they drop onto the revealed page.
+  const [started, setStarted] = useState(isAppReady);
+  useEffect(() => onAppReady(() => setStarted(true)), []);
 
   const lowTier = useMemo(() => isLowTier(), []);
   const reducedMotion = useMemo(
     () => window.matchMedia("(prefers-reduced-motion: reduce)").matches,
     []
   );
-  const touch = useMemo(
-    () => window.matchMedia("(pointer: coarse)").matches,
-    []
-  );
-
   // Stop render + physics stepping when the hero is offscreen, tab hidden,
   // or the sticky hero is fully covered by the sheet scrolling over it
   // (IntersectionObserver can't see occlusion, so coverage is scroll-based).
@@ -522,14 +600,26 @@ const PhysicsHero = () => {
     if (!node) return undefined;
     let visible = true;
     let covered = false;
-    const sync = () => setRunning(visible && !covered && !document.hidden);
+    const sync = () => {
+      setRunning(visible && !document.hidden);
+      setPaused(covered);
+    };
     const io = new IntersectionObserver(([entry]) => {
       visible = entry.isIntersecting;
       sync();
     });
     io.observe(node);
+    // Pause physics once the sticky hero is fully covered by the sheet.
+    // Hysteresis so the sim un-pauses slightly before the hero re-enters view
+    // on scroll-up (spike, if any, lands under the sheet) and re-pauses only
+    // well past the hero so the thresholds don't chatter.
     const onScroll = () => {
-      const nowCovered = window.scrollY > node.clientHeight;
+      const buffer = window.innerHeight;
+      const uncoverAt = node.clientHeight + buffer * 0.5;
+      const coverAt = node.clientHeight + buffer;
+      const nowCovered = covered
+        ? window.scrollY > uncoverAt
+        : window.scrollY > coverAt;
       if (nowCovered !== covered) {
         covered = nowCovered;
         sync();
@@ -560,8 +650,17 @@ const PhysicsHero = () => {
       >
         <Env />
         <Physics
+          isPaused={paused || !started}
           gravity={[0, -16, 0]}
           broadphase="SAP"
+          // Cap catch-up: after the loop pauses (hero covered) and resumes on
+          // scroll-up, cannon would replay the whole accumulated dt in a
+          // single frame — up to 10 collision-solve substeps at once = a
+          // main-thread spike right at the reveal. Small step + low
+          // maxSubSteps bounds that burst so resume can't hitch. Backing off
+          // the sim by a hair when frames drop is invisible for a bg pile.
+          step={1 / 60}
+          maxSubSteps={2}
           // Lively rain-in: real bounce on impact. Linear damping (on the
           // bodies) bleeds energy each hop so the pile still settles instead
           // of vibrating forever (sleep is off); extra iterations settle the
@@ -578,7 +677,7 @@ const PhysicsHero = () => {
             accent={accent}
             lowTier={lowTier}
             reducedMotion={reducedMotion}
-            touch={touch}
+            started={started}
           />
         </Physics>
       </Canvas>

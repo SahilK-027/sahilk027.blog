@@ -1,5 +1,6 @@
-/* Floating navbar — editorial plate: squared corners, mono wordmark,
-   hairline borders. Matches the book/index language of the landing page. */
+/* Floating navbar — editorial index plate: sharp hairline corners, mono
+   wordmark, a wireframe primitive mark and a live status dot. Speaks the same
+   language as the hero index card and the footer glyph shelf. */
 .navbar-wrap {
   position: fixed;
   top: 0;
@@ -18,17 +19,27 @@
   max-width: calc(100vw - 32px);
   display: flex;
   align-items: center;
-  gap: 48px;
-  padding: 8px 8px 8px 20px;
+  gap: 20px;
+  padding: 8px 8px 8px 16px;
   background-color: var(--blur-bg);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--border-color);
-  border-radius: 14px;
-  transition: box-shadow 0.3s ease;
+  /* Sharp editorial corner — echoes the hero index card / footer, not a pill. */
+  border-radius: 6px;
+  transition: box-shadow var(--dur-base) var(--ease),
+    border-color var(--dur-base) var(--ease);
 
   &.navbar--scrolled {
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  }
+
+  /* Left cluster: brand mark + wordmark + live status. */
+  .nav-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-width: 0;
   }
 
   .brand {
@@ -37,23 +48,39 @@
     gap: 10px;
     min-width: 0;
     text-decoration: none;
-    padding-left: 2px;
 
-    .logo {
-      width: 30px;
-      height: 30px;
-      border-radius: 8px;
+    /* Wireframe cube mark — hairline stroke, draws in on mount. */
+    .brand-glyph {
+      width: 26px;
+      height: 26px;
+      fill: none;
       flex-shrink: 0;
-      transition: transform 0.2s ease;
+      transition: transform 0.9s var(--ease);
+
+      path {
+        stroke: var(--color-text-secondary);
+        stroke-width: 1.2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-dasharray: 1;
+        stroke-dashoffset: 1;
+        animation: nav-glyph-draw 0.9s var(--ease) forwards;
+        transition: stroke var(--dur-base) var(--ease);
+      }
     }
 
-    &:hover .logo {
-      transform: scale(1.06) rotate(-4deg);
+    /* Hover: a lazy full turn, inked in accent — same reward as the shelf. */
+    &:hover .brand-glyph {
+      transform: rotate(360deg);
+
+      path {
+        stroke: var(--accent);
+      }
     }
 
     .wordmark {
       font-family: "Fira Code", monospace;
-      font-size: 0.88rem;
+      font-size: var(--fs-body-sm);
       font-weight: 550;
       letter-spacing: -0.01em;
       color: var(--color-text-primary-dark);
@@ -71,6 +98,7 @@
     gap: 6px;
     align-items: center;
     flex-shrink: 0;
+    margin-left: auto;
 
     /* Shared compact button style — squared, hairline, mono details */
     .nav-btn {
@@ -81,10 +109,11 @@
       height: 38px;
       background: transparent;
       border: 1px solid var(--border-color);
-      border-radius: 10px;
+      border-radius: 5px;
       color: var(--color-text-secondary);
       cursor: pointer;
-      transition: border-color 0.2s ease, color 0.2s ease;
+      transition: border-color var(--dur-base) var(--ease),
+        color var(--dur-base) var(--ease), background var(--dur-base) var(--ease);
 
       i {
         font-size: 14px;
@@ -94,6 +123,7 @@
       &.active {
         border-color: var(--accent-faint);
         color: var(--accent);
+        background: var(--accent-subtle);
       }
     }
 
@@ -120,10 +150,10 @@
           align-items: center;
           justify-content: center;
           border: 1px solid var(--border-color);
-          border-radius: 5px;
+          border-radius: 4px;
           background: var(--selection-bg-color);
           color: inherit;
-          transition: border-color 0.2s ease;
+          transition: border-color var(--dur-base) var(--ease);
         }
       }
 
@@ -143,7 +173,7 @@
       width: 38px;
       padding: 0;
       margin: 0;
-      border-radius: 10px;
+      border-radius: 5px;
 
       .music-icon {
         width: 18px;
@@ -169,7 +199,7 @@
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
         border: 1px solid var(--border-color);
-        border-radius: 14px;
+        border-radius: 6px;
         box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
 
         .appearance-row {
@@ -181,7 +211,7 @@
           /* Index-row gesture: mono label, dotted leader, control */
           .appearance-label {
             font-family: "Fira Code", monospace;
-            font-size: 0.68rem;
+            font-size: var(--fs-micro);
             font-weight: 500;
             text-transform: uppercase;
             letter-spacing: 0.18em;
@@ -211,10 +241,10 @@
             font-weight: 500;
             background: var(--accent-subtle);
             border: 1px solid transparent;
-            border-radius: 8px;
+            border-radius: 5px;
             color: var(--color-text-primary-dark);
             cursor: pointer;
-            transition: border-color 0.2s ease;
+            transition: border-color var(--dur-base) var(--ease);
 
             &:hover {
               border-color: var(--accent-faint);
@@ -226,23 +256,37 @@
   }
 }
 
+/* Draw the wireframe mark in on mount — one clean pass. */
+@keyframes nav-glyph-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navbar .brand .brand-glyph path {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+}
+
 @media (max-width: 768px) {
   .navbar-wrap {
     padding: 14px 10px 0;
   }
 
   .navbar {
-    padding: 6px 6px 6px 16px;
-    gap: 28px;
+    padding: 6px 6px 6px 14px;
+    gap: 14px;
 
     .brand {
-      .logo {
-        width: 26px;
-        height: 26px;
+      .brand-glyph {
+        width: 24px;
+        height: 24px;
       }
 
       .wordmark {
-        font-size: 0.8rem;
+        font-size: var(--fs-small);
       }
     }
 

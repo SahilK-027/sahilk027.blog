@@ -78,7 +78,7 @@ const Footer = () => {
               rel="noreferrer"
               href="https://github.com/SahilK-027/sahilk027.blog/discussions"
             >
-              GitHub Discussions
+              Discussions
             </a>
             <a href="mailto:sahilkandhare027@gmail.com">Email</a>
           </div>

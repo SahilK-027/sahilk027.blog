@@ -24,7 +24,7 @@
       align-items: center;
       gap: 10px;
       font-family: "Fira Code", monospace;
-      font-size: 0.7rem;
+      font-size: var(--fs-kicker);
       font-weight: 500;
       text-transform: uppercase;
       letter-spacing: 0.18em;
@@ -62,7 +62,7 @@
     }
 
     .nf-title {
-      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-size: var(--fs-title-2);
       font-weight: 650;
       letter-spacing: -0.03em;
       margin-bottom: 28px;
@@ -81,7 +81,7 @@
         display: flex;
         align-items: baseline;
         gap: 10px;
-        font-size: 0.82rem;
+        font-size: var(--fs-small);
         text-align: left;
 
         dt {
@@ -166,7 +166,7 @@
         border: none;
         padding: 0;
         font-family: var(--font-family);
-        font-size: 0.95rem;
+        font-size: var(--fs-body-sm);
         font-weight: 550;
         color: var(--text-2);
         cursor: pointer;
@@ -195,7 +195,7 @@
 
         kbd {
           font-family: "Fira Code", monospace;
-          font-size: 0.72rem;
+          font-size: var(--fs-kicker);
           min-width: 22px;
           height: 22px;
           padding: 0 5px;

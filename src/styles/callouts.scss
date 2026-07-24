@@ -1,0 +1,198 @@
+/* ---------------------------------------------------------------------------
+   Unified callout system. Info / Insight / Must-read are ONE family: same
+   surface, shape, spacing and typographic voice. They are tuned to the theme
+   — every colour derives from the live --accent (recolours with the accent
+   picker) — so a callout reads as a first-class part of the page, not a loud
+   coloured box glued on. Variants differ only by icon + label + a faint hue
+   rotation off the accent, keeping them distinguishable without breaking the
+   palette.
+--------------------------------------------------------------------------- */
+.callout {
+  // Default (Note) uses the pure accent. Variants rotate the hue slightly.
+  --callout-h: var(--accent-h);
+  --callout-accent: hsl(var(--callout-h) var(--accent-s) var(--accent-l));
+  --callout-soft: hsl(var(--callout-h) var(--accent-s) var(--accent-l) / 0.12);
+  --callout-line: hsl(var(--callout-h) var(--accent-s) var(--accent-l) / 0.5);
+
+  position: relative;
+  margin: 30px 0;
+  padding: 18px 22px 18px 20px;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--callout-accent);
+  border-radius: 12px;
+  background: var(--bg-subtle);
+
+  // Variants are distinct SHADES drawn from the accent's own palette — a small
+  // hue nudge + lightness shift, never a jump to an unrelated colour. Note = the
+  // pure accent; Insight/Must-read stay unmistakably in the same family (a red
+  // accent yields red/coral/rose, never yellow).
+  &.callout--insight {
+    --callout-h: calc(var(--accent-h) + 16);
+    --callout-accent: hsl(var(--callout-h) var(--accent-s) calc(var(--accent-l) + 6%));
+  }
+  &.callout--mustread {
+    --callout-h: calc(var(--accent-h) - 16);
+    --callout-accent: hsl(var(--callout-h) calc(var(--accent-s) - 10%) calc(var(--accent-l) - 4%));
+  }
+
+  .callout__head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+
+    .callout__icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      flex-shrink: 0;
+      border-radius: 7px;
+      background: var(--callout-soft);
+      color: var(--callout-accent);
+      font-size: 0.82rem;
+    }
+
+    .callout__label {
+      font-family: "Fira Code", monospace;
+      font-size: var(--fs-kicker);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--callout-accent);
+    }
+  }
+
+  // Body reads like the surrounding prose, just seated on the tinted surface.
+  .callout__body {
+    color: var(--text-2);
+
+    // Headings inside a callout are SUBORDINATE to the article's own headings —
+    // never as large as a section/sub title, so they don't fight the page scale.
+    .sub-title,
+    h4,
+    h3,
+    .blog-section-title {
+      font-size: var(--fs-lead) !important;
+      font-weight: var(--fw-semibold);
+      line-height: var(--lh-snug);
+      letter-spacing: -0.01em;
+      color: var(--text-1);
+      margin: 4px 0 8px;
+      padding: 0;
+      border: none;
+      &::before { content: none; } // drop the section counter/rule
+    }
+
+    > :first-child { margin-top: 0; }
+    > :last-child { margin-bottom: 0; }
+
+    p {
+      padding: 0 !important;
+      margin: 0 0 10px 0;
+      font-size: var(--fs-body);
+      line-height: var(--lh-normal);
+      color: var(--text-2);
+      &:last-child { margin-bottom: 0; }
+    }
+
+    b { font-weight: 600; color: var(--text-1); }
+
+    a {
+      color: var(--callout-accent);
+      text-decoration: underline;
+      text-underline-offset: 0.2em;
+      text-decoration-color: var(--callout-line);
+      font-weight: 500;
+      &:hover { text-decoration-color: var(--callout-accent); }
+    }
+
+    ul {
+      margin: 4px 0 0 0;
+      padding: 0;
+      list-style: none;
+
+      li {
+        position: relative;
+        margin: 8px 0;
+        padding-left: 22px;
+        font-size: var(--fs-body);
+        line-height: var(--lh-normal);
+        color: var(--text-2);
+
+        // Hanging marker — wrapped lines align under the text, not the marker.
+        &::before {
+          content: "";
+          position: absolute;
+          left: 4px;
+          top: 0.62em;
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: var(--callout-accent);
+        }
+
+        // Neutralise legacy inline fa-arrow markers.
+        i { display: none; }
+
+        &:has(i)::before { left: 4px; }
+      }
+    }
+
+    code { font-size: 0.8rem; }
+
+    // Inline action rows inside a callout (e.g. a download button + note).
+    .div-flex-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 14px;
+      margin: 14px 0 4px;
+      padding: 0 !important;
+
+      b { font-weight: 500; }
+    }
+
+    // Buttons authored inside callouts (download starter code, etc.) — styled as
+    // a compact accent action, matching the callout's live hue.
+    a > button,
+    button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 16px;
+      font-family: "Fira Code", monospace;
+      font-size: var(--fs-kicker);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--callout-accent);
+      background: var(--callout-soft);
+      border: 1px solid var(--callout-line);
+      border-radius: 8px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background var(--dur-base) var(--ease),
+        color var(--dur-base) var(--ease),
+        transform var(--dur-base) var(--ease);
+
+      &::before {
+        content: "\f019"; // fa download glyph
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+        font-size: 0.85em;
+      }
+
+      &:hover {
+        color: var(--bg);
+        background: var(--callout-accent);
+        transform: translateY(-1px);
+      }
+    }
+  }
+
+  ::selection {
+    color: var(--callout-accent) !important;
+    background: var(--callout-soft) !important;
+  }
+}

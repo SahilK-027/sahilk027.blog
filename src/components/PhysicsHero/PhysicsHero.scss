@@ -1,9 +1,9 @@
 .physics-hero {
   position: absolute;
   inset: 0;
-  // Above the hero copy: shapes occlude the text, the pile reads as the
-  // front layer of the composition. Pointer-events stay off so links work.
-  z-index: 2;
+  // Behind the hero copy (hero-content is z-index:1) on every breakpoint:
+  // the pile reads as a background layer and text always stays legible.
+  z-index: 0;
   pointer-events: none;
   opacity: 0;
   animation: physics-hero-in 1.2s ease 0.15s forwards;

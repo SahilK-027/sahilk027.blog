@@ -1,12 +1,31 @@
 .left-sidebar {
-  position: fixed;
-  top: 180px;
-  left: max(24px, calc((100vw - 820px) / 2 - 260px));
-  width: 220px;
+  // Sticky rail in the grid's left column (see .blog-series-page). Because it
+  // lives inside the article grid, it sticks while the article scrolls and stops
+  // naturally at the grid's end — it can never reach or overlap the footer.
+  grid-column: 1;
+  justify-self: end; // pinned to the article's left edge, inside the gutter
+  align-self: start;
+  position: sticky;
+  top: 120px;
+  width: 210px;
+  // A long TOC scrolls inside its own rail instead of running off-screen.
+  max-height: calc(100vh - 160px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  opacity: 1;
+  transition: opacity var(--dur-base) var(--ease);
+
+  // Legacy fade flag (kept harmless): sticky positioning already handles the
+  // footer, so this is a no-op unless BlogLayout still toggles it.
+  &.left-sidebar--hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
 
   .toc-label {
     font-family: "Fira Code", monospace;
-    font-size: 0.68rem;
+    font-size: var(--fs-micro);
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.22em;
@@ -17,6 +36,19 @@
   .toc-body {
     display: flex;
     gap: 16px;
+    min-height: 0;
+    overflow-y: auto;
+    // Thin, unobtrusive rail scrollbar — the chunky geometric page scrollbar
+    // would look wrong inside a 220px nav column.
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+    &::-webkit-scrollbar { width: 6px; }
+    &::-webkit-scrollbar-track { background: transparent; }
+    &::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 3px;
+      border: none;
+    }
 
     .toc-track {
       flex-shrink: 0;
@@ -50,7 +82,7 @@
         align-items: baseline;
         gap: 10px;
         font-family: var(--font-family);
-        font-size: 0.82rem;
+        font-size: var(--fs-small);
         line-height: 1.4;
         text-align: left;
         color: var(--text-3);
@@ -64,7 +96,7 @@
         .toc-item__no {
           flex-shrink: 0;
           font-family: "Fira Code", monospace;
-          font-size: 0.66rem;
+          font-size: var(--fs-micro);
           color: var(--text-3);
           opacity: 0.7;
           transition: color var(--dur-base) var(--ease);
@@ -89,7 +121,10 @@
   }
 }
 
-@media (max-width: 1160px) {
+// Show the rail only when the gutter is genuinely wide enough to hold it
+// (article 820 + two ~230 gutters + padding). Below this it hides and the
+// article stays perfectly centred in the empty grid.
+@media (max-width: 1400px) {
   .left-sidebar {
     display: none;
   }

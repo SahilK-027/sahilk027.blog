@@ -1,22 +1,27 @@
 import Tooltip from "../Tooltip/Tooltip";
-import "./MustReadDiv.scss";
+import "../../styles/callouts.scss";
 
 // `children` = new MDX API. `mustReadText` (HTML string) kept for legacy blogs.
 const MustReadDiv = ({ mustReadText, children }) => {
   return (
-    <div className="must-read-div">
-      <div className="icon">
+    <aside className="callout callout--mustread">
+      <div className="callout__head">
         <Tooltip content="Must Read">
-          <i className="fa-solid fa-book"></i>
+          <span className="callout__icon">
+            <i className="fa-solid fa-book"></i>
+          </span>
         </Tooltip>
+        <span className="callout__label">Must read</span>
       </div>
-      <p>👉 Must Read: </p>{" "}
       {children ? (
-        <div>{children}</div>
+        <div className="callout__body">{children}</div>
       ) : (
-        <div dangerouslySetInnerHTML={{ __html: mustReadText }} />
+        <div
+          className="callout__body"
+          dangerouslySetInnerHTML={{ __html: mustReadText }}
+        />
       )}
-    </div>
+    </aside>
   );
 };
 

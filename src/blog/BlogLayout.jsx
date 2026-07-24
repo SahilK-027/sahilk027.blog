@@ -4,6 +4,11 @@ import { MDXProvider } from "@mdx-js/react";
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer/Footer";
 import LeftSidebar from "../components/LeftSideBar/LeftSidebar";
+import ShareBar from "../components/ShareBar/ShareBar";
+import BackToTop from "../components/BackToTop/BackToTop";
+import BlogTags from "../components/BlogTags/BlogTags";
+import QuoteShare from "../components/QuoteShare/QuoteShare";
+import MobileToc from "../components/MobileToc/MobileToc";
 import SignatureForBlackBg from "../components/SVG-JSX/SignatureForBlackBg/SignatureForBlackBg";
 import SignatureForWhiteBg from "../components/SVG-JSX/SignatureForWhiteBg/SignatureForWhiteBg";
 import { useApp } from "../context/AppContext";
@@ -23,6 +28,7 @@ const BlogLayout = ({ meta, poster, children }) => {
 
   const { pathname } = useLocation();
   const contentRef = useRef(null);
+  const articleRef = useRef(null);
   const [sections, setSections] = useState([]);
   const [activeSection, setActiveSection] = useState(null);
   const [scrollPercentage, setScrollPercentage] = useState(0);
@@ -85,8 +91,9 @@ const BlogLayout = ({ meta, poster, children }) => {
           activeSection={activeSection}
           sections={sections}
           onSelect={jumpToSection}
+          hidden={false}
         />
-        <article className="section-top">
+        <article className="section-top" ref={articleRef}>
           <Link to="/" className="blog-back">
             <i
               className="fa-solid fa-arrow-left-long"
@@ -96,40 +103,32 @@ const BlogLayout = ({ meta, poster, children }) => {
           </Link>
           <header className="blog-header">
             <div className="blog-kicker">
-              <svg
-                className="blog-kicker__glyph"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                {GLYPH_PATHS[(meta?.blogNo ?? 0) % GLYPH_PATHS.length]
-                  .split("M")
-                  .filter(Boolean)
-                  .map((seg, j) => (
-                    <path key={j} d={`M${seg}`} pathLength="1" />
-                  ))}
-              </svg>
-              <span>
+              <span className="blog-kicker__entry">
+                <svg
+                  className="blog-kicker__glyph"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  {GLYPH_PATHS[(meta?.blogNo ?? 0) % GLYPH_PATHS.length]
+                    .split("M")
+                    .filter(Boolean)
+                    .map((seg, j) => (
+                      <path key={j} d={`M${seg}`} pathLength="1" />
+                    ))}
+                </svg>
                 Entry {String(meta?.blogNo ?? 0).padStart(2, "0")}
               </span>
-              <span className="blog-kicker__leader" aria-hidden="true" />
-              <time dateTime={meta?.date}>{meta?.displayDate}</time>
-              <span className="blog-kicker__sep" aria-hidden="true">
-                ·
+              <span className="blog-kicker__meta">
+                <time dateTime={meta?.date}>{meta?.displayDate}</time>
+                <span className="blog-kicker__sep" aria-hidden="true">
+                  ·
+                </span>
+                <span>{meta?.readtime} read</span>
               </span>
-              <span>{meta?.readtime} read</span>
+              <BlogTags tags={meta?.tags} currentBlogNo={meta?.blogNo} />
+              <ShareBar title={meta?.title} />
             </div>
             <h1 className="blog-title">{meta?.title}</h1>
-            <div className="blog-tags">
-              {meta?.tags?.map((tag) => (
-                <Link
-                  key={tag}
-                  className="blog-tag"
-                  to={`/?tag=${encodeURIComponent(tag)}`}
-                >
-                  {tag}
-                </Link>
-              ))}
-            </div>
           </header>
           {poster}
           <div className="main-blog-content" ref={contentRef}>
@@ -215,6 +214,14 @@ const BlogLayout = ({ meta, poster, children }) => {
         </article>
       </div>
       <Footer />
+      <BackToTop />
+      <QuoteShare containerRef={articleRef} />
+      <MobileToc
+        scrollPercentage={scrollPercentage}
+        activeSection={activeSection}
+        sections={sections}
+        onSelect={jumpToSection}
+      />
     </>
   );
 };

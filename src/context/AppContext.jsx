@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import Cookies from "js-cookie";
-import music from "../assets/audio/ghostrifter-purple-dream.ogg";
+import music from "../assets/audio/bgm.ogg";
 import { applyAccent, DEFAULT_ACCENT, getAccent } from "../data/accents";
 import { getLenis } from "../hooks/useLenis";
 

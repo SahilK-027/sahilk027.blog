@@ -1,5 +1,5 @@
 ---
-blogNo: 4
+blogNo: 2
 ---
 
 import img1 from "./utils/assets/1.webp";
@@ -18,9 +18,50 @@ import img6l from "./utils/assets/6l.webp";
 <Intro>
 Welcome to the first installment of our bit manipulation series 😉! If you've
 ever wondered how computers handle the data at the most fundamental level like
-at the core memory and CPU level, then you're in the right place. Let's get
-started with 10010101110s.
+at the core memory and CPU level, then you're in the right place. But before we
+start with 10010101110s, let me answer the WHY first.
 </Intro>
+
+### Why am I starting with bit manipulation?
+
+The reason is simple. Instead of learning something else first, why not learn
+the language that the computer understands? I'm not saying we should learn
+machine language (you can if you want though, all the best for that 😉). But I
+think we should always start by understanding the fundamentals right from the
+beginning.
+
+One of the mistakes I made was considering bit manipulation as a very advanced
+topic in computer science. If we go back to 2021, when I wanted to learn
+Competitive Programming, I started with C-lang, then moved on to pointers,
+arrays, linked lists, stacks, and queues. After that, I gradually progressed to
+recursion trees, heaps, graphs, dynamic programming, and similar topics.
+However, when it came time to learn advanced concepts like Fenwick trees,
+segment trees, or optimizing DP problems, I got stuck. What was I stuck on? Bit
+manipulation. I knew I was stuck on it, but I avoided it. I had this mentality
+that it was hard and advanced, so there was always a mental barrier that kept me
+from trying bit manipulation in my code.
+
+I have always been both mesmerized and daunted by seeing someone like
+[lee215](https://leetcode.com/u/lee215/) or
+[Votrubac](https://leetcode.com/u/votrubac/) writing one-liner codes or using
+bitmasks to solve very difficult problems. I enjoy seeing operators like `>>`,
+`<<`, `^`, `~`, `&`, `|` suddenly appearing in code and reducing 10 lines from
+it, but we avoid them because we think they're hard to understand. However, now
+I know they are not as hard as I used to think. I came across this thought on the
+internet stating that **bit manipulation and bitwise operators are difficult to
+understand, but only if you don't understand how computers work**. Personally, I
+find it shameful that even as a computer engineer, I don't understand the
+language that computers speak. So, I finally learned it. And so I have decided to
+write down all my learnings for you to benefit from!
+
+Throughout this entire series, I will make an effort to answer all the WHYs you
+may have. Why does this work? Why do computers only understand 0s and 1s? Why
+can't a computer understand decimal numbers? If at any point I fail to clearly
+explain the reason, please feel free to ask your questions in the GitHub
+discussion section. I don't want any unanswered question staying in your mind
+after reading this series, stopping you from using bit manipulation in your code.
+That's why I'm writing this series in the first place. So let's start from the
+ground up, one bit at a time.
 
 ### Number Systems & Number Representation
 

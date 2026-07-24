@@ -41,7 +41,22 @@ export const useLenis = () => {
     const touchDevice = window.matchMedia("(pointer: coarse)").matches;
     if (reducedMotion || touchDevice) return undefined;
 
-    lenis = new Lenis({ autoRaf: true });
+    lenis = new Lenis({
+      autoRaf: true,
+      // Silky, Locomotive-like feel: a longer glide with an exponential
+      // ease-out so momentum decays into the bounds instead of stopping hard
+      // at the very top / bottom.
+      duration: 1.4,
+      easing: (t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t)), // expo out
+      smoothWheel: true,
+      wheelMultiplier: 0.9, // slightly lighter wheel so the glide reads longer
+      lerp: 0.075, // low lerp = more inertia / smoother catch-up
+      // Let native scroll win inside the code sandbox (editor / console) and any
+      // element opting out with data-lenis-prevent. Without this, Lenis eats the
+      // wheel and scrolls the page instead of the code.
+      prevent: (node) =>
+        node?.closest?.(".code-sandpack, [data-lenis-prevent]") != null,
+    });
     return () => {
       lenis?.destroy();
       lenis = null;

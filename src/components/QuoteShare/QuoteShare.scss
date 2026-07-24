@@ -1,0 +1,73 @@
+.quote-share {
+  position: fixed;
+  z-index: 60;
+  transform: translate(-50%, 0);
+
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.8rem;
+  border-radius: 999px;
+  // Solid accent fill so it pops out against long highlighted passages.
+  background: var(--accent);
+  color: var(--bg);
+  font-size: 0.82rem;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.32);
+  cursor: pointer;
+  animation: quote-share-in 0.12s ease;
+  transition: filter 0.15s ease;
+
+  i {
+    font-size: 0.85rem;
+    color: var(--bg);
+  }
+
+  &:hover {
+    filter: brightness(1.08);
+  }
+
+  // Arrow matches the fill — no border, so no triangle/pill outline mismatch.
+  &::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: var(--accent);
+  }
+
+  // Flipped below the selection: arrow points up.
+  &--below::after {
+    top: auto;
+    bottom: 100%;
+    border-top-color: transparent;
+    border-bottom-color: var(--accent);
+  }
+}
+
+@keyframes quote-share-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 4px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .quote-share {
+    animation: none;
+  }
+}
+
+// Touch devices: native selection UI already offers share; skip the bubble.
+@media (pointer: coarse) {
+  .quote-share {
+    display: none;
+  }
+}

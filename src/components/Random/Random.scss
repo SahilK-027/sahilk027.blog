@@ -1,0 +1,43 @@
+.random-quote {
+  width: 100%;
+  margin: 32px 0;
+  border-left: 2px solid var(--accent);
+  padding: 4px 0 4px 28px;
+
+  i.random-quote__icon {
+    display: block;
+    font-size: 1.3rem;
+    line-height: 1;
+    color: var(--accent);
+    opacity: 0.8;
+    margin-bottom: 14px;
+  }
+
+  &__body {
+    margin: 0;
+    min-width: 0;
+  }
+
+  // Verse: tight lines so the couplet reads as one stanza, not spaced-out rows.
+  &__line {
+    margin: 0;
+    padding: 2px 0;
+    line-height: 1.55;
+    color: var(--text-1);
+    font-style: italic;
+  }
+
+  // Translation/gloss: muted, smaller, set apart from the verse.
+  &__gloss {
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px dotted var(--border);
+    font-size: var(--fs-body-sm);
+    line-height: 1.6;
+    color: var(--text-3);
+  }
+
+  @media (max-width: 640px) {
+    padding-left: 20px;
+  }
+}

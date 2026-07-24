@@ -70,11 +70,44 @@
   --text-3: #5c6470;
   --border: #232830;
 
-  /* Fluid type scale */
-  --fs-hero: clamp(2.2rem, 5vw, 3.4rem);
-  --fs-h2: clamp(1.35rem, 2.5vw, 1.6rem);
-  --fs-body: 1.05rem;
-  --fs-small: 0.875rem;
+  /* ---------------------------------------------------------------------
+     Type system — ONE fluid modular scale (ratio ≈ 1.2, minor third).
+     Every size in the app snaps to a step below; no ad-hoc px per component.
+     Steps: display > title-1 > title-2 > title-3 > lead > body > body-sm >
+     small > kicker > micro. Semantic roles (kicker/meta/etc.) alias these so
+     intent is readable at the call site.
+  --------------------------------------------------------------------- */
+  --fs-display: clamp(2.5rem, 4.5vw, 3.5rem);   /* hero display */
+  --fs-title-1: clamp(2rem, 3.4vw, 2.6rem);     /* page & article titles */
+  --fs-title-2: clamp(1.6rem, 2.6vw, 2rem);     /* section titles */
+  --fs-title-3: clamp(1.3rem, 1.8vw, 1.5rem);   /* sub-section headings */
+  --fs-lead: 1.125rem;                          /* lead / intro paragraph */
+  --fs-body: 1rem;                              /* default body copy */
+  --fs-body-sm: 0.9375rem;                      /* dense body, entry titles */
+  --fs-small: 0.8125rem;                        /* meta, dates, captions */
+  --fs-kicker: 0.75rem;                         /* mono eyebrow labels */
+  --fs-micro: 0.6875rem;                        /* tiny index numerals */
+
+  /* Weight ladder — use these, not raw numbers. */
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-title: 650;   /* the one heavy weight titles share */
+  --fw-bold: 700;
+
+  /* Line-height ladder */
+  --lh-tight: 1.15;    /* display + titles */
+  --lh-snug: 1.4;      /* sub-heads */
+  --lh-normal: 1.65;   /* body / lead */
+  --lh-relaxed: 1.9;   /* long-form article body */
+
+  /* Tracking */
+  --ls-title: -0.02em;
+  --ls-kicker: 0.14em; /* mono eyebrows are spaced out */
+
+  /* Back-compat aliases for the old scale names */
+  --fs-hero: var(--fs-display);
+  --fs-h2: var(--fs-title-2);
 
   /* Legacy aliases — recolor old components/article pages for free */
   --color-bg-primary: var(--bg);
@@ -127,16 +160,20 @@
   /* Syntax tokens (dark) — harmonized to the active accent: every color is a
      hue rotation off --accent-h, so picking a new accent retunes all code
      blocks (Prism + Sandpack) while staying readable. */
-  --token-plain: hsl(var(--accent-h) 14% 80%);
-  --token-comment: hsl(var(--accent-h) 8% 50%);
-  --token-punctuation: hsl(var(--accent-h) 10% 62%);
-  --token-keyword: hsl(var(--accent-h) 88% 76%);
-  --token-string: hsl(calc(var(--accent-h) + 130) 45% 66%);
-  --token-function: hsl(calc(var(--accent-h) - 45) 85% 72%);
-  --token-number: hsl(calc(var(--accent-h) + 55) 80% 70%);
-  --token-operator: hsl(var(--accent-h) 50% 72%);
-  --token-tag: hsl(calc(var(--accent-h) + 25) 75% 74%);
-  --token-property: hsl(calc(var(--accent-h) + 170) 45% 66%);
+  /* Monochrome + accent: the BULK of code (identifiers, punctuation, comments,
+     operators) is neutral grey — never hue-washed. Only the meaningful tokens
+     (keywords, strings, functions, numbers, tags) carry the live accent, so a
+     green accent gives neutral code with green highlights, not an all-green wash. */
+  --token-plain: var(--text-1);
+  --token-comment: var(--text-3);
+  --token-punctuation: var(--text-2);
+  --token-operator: var(--text-2);
+  --token-property: var(--text-1);
+  --token-keyword: var(--accent);
+  --token-tag: var(--accent);
+  --token-function: hsl(var(--accent-h) var(--accent-s) calc(var(--accent-l) + 10%));
+  --token-string: hsl(var(--accent-h) calc(var(--accent-s) - 45%) calc(var(--accent-l) + 6%));
+  --token-number: hsl(var(--accent-h) calc(var(--accent-s) - 25%) calc(var(--accent-l) + 4%));
 }
 
 /* Light theme */
@@ -199,16 +236,18 @@
 
   /* Syntax tokens (light) — same accent-derived hues, darkened for contrast
      on white. */
-  --token-plain: hsl(var(--accent-h) 14% 30%);
-  --token-comment: hsl(var(--accent-h) 8% 58%);
-  --token-punctuation: hsl(var(--accent-h) 10% 45%);
-  --token-keyword: hsl(var(--accent-h) 75% 44%);
-  --token-string: hsl(calc(var(--accent-h) + 130) 55% 33%);
-  --token-function: hsl(calc(var(--accent-h) - 45) 72% 42%);
-  --token-number: hsl(calc(var(--accent-h) + 55) 72% 37%);
-  --token-operator: hsl(var(--accent-h) 45% 42%);
-  --token-tag: hsl(calc(var(--accent-h) + 25) 68% 39%);
-  --token-property: hsl(calc(var(--accent-h) + 170) 55% 33%);
+  /* Same model as dark: neutral bulk, accent only on meaningful tokens. Accent
+     tokens sit a touch DARKER than --accent-l here so they read on white. */
+  --token-plain: var(--text-1);
+  --token-comment: var(--text-3);
+  --token-punctuation: var(--text-2);
+  --token-operator: var(--text-2);
+  --token-property: var(--text-1);
+  --token-keyword: var(--accent);
+  --token-tag: var(--accent);
+  --token-function: hsl(var(--accent-h) var(--accent-s) calc(var(--accent-l) - 8%));
+  --token-string: hsl(var(--accent-h) calc(var(--accent-s) - 40%) calc(var(--accent-l) - 6%));
+  --token-number: hsl(var(--accent-h) calc(var(--accent-s) - 22%) calc(var(--accent-l) - 6%));
 }
 
 /* Body styles */
@@ -217,7 +256,10 @@ body {
   width: 100%;
   font-family: var(--font-family);
   background-color: var(--color-bg-primary) !important;
-  overflow-x: hidden;
+  // `clip` (not `hidden`) prevents horizontal scroll WITHOUT turning the root
+  // into a scroll container — `hidden` here silently breaks position:sticky for
+  // every descendant (e.g. the blog TOC rail).
+  overflow-x: clip;
 }
 
 body {
@@ -233,24 +275,51 @@ html.no-scroll {
   background-color: var(--color-bg-primary);
 }
 
+/* Geometric scrollbar — echoes the shape-pile hero. Track is a faint diagonal
+   hatch; thumb is a sharp-cornered accent bar cut into stacked segments. */
 ::-webkit-scrollbar {
-  height: 0px;
-  width: 4px;
+  width: 12px;
+  height: 12px;
 }
 
-/* Track */
+/* Track: diagonal geometric hatch over the page bg. */
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: repeating-linear-gradient(
+      45deg,
+      transparent 0 6px,
+      color-mix(in srgb, var(--border) 55%, transparent) 6px 7px
+    ),
+    var(--bg);
 }
 
-/* Handle */
+/* Thumb: accent bar segmented into blocks, sharp corners, bg gutter around it
+   so it reads as a floating geometric column rather than a rounded pill. */
 ::-webkit-scrollbar-thumb {
-  background: var(--anchor-underline-color);
+  background: repeating-linear-gradient(
+    0deg,
+    var(--accent) 0 6px,
+    color-mix(in srgb, var(--accent) 50%, #000) 6px 8px
+  );
+  border: 3px solid var(--bg);
+  border-radius: 0;
 }
 
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--anchor-underline-color);
+  background: repeating-linear-gradient(
+    0deg,
+    var(--accent) 0 5px,
+    color-mix(in srgb, var(--accent) 65%, var(--bg)) 5px 7px
+  );
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--bg);
+}
+
+/* Firefox */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent) transparent;
 }
 
 .page {
@@ -258,6 +327,11 @@ html.no-scroll {
   margin: 0 auto;
   padding: 20px;
   margin-bottom: 50px;
+
+  // Tighter side gutters on phones — 20px each side wastes reading width.
+  @media (max-width: 600px) {
+    padding: 20px 14px;
+  }
 }
 
 /* Selection styles */
@@ -273,30 +347,33 @@ h3,
 h4,
 h5,
 h6 {
-  font-weight: 600;
-  line-height: 1.4;
-  letter-spacing: -0.02em;
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--ls-title);
   color: var(--color-text-primary);
 }
 
 h1 {
-  font-size: 32px;
+  font-size: var(--fs-title-1);
+  font-weight: var(--fw-title);
+  line-height: var(--lh-tight);
 }
 
 h2 {
-  font-size: 24px;
+  font-size: var(--fs-title-2);
+  line-height: var(--lh-tight);
 }
 
 h3 {
-  font-size: 20px;
-  font-weight: 500;
+  font-size: var(--fs-title-3);
+  font-weight: var(--fw-medium);
 }
 
 /* Paragraph styles */
 p {
   color: var(--color-text-secondary);
-  line-height: 1.9;
-  font-size: 18px;
+  line-height: var(--lh-relaxed);
+  font-size: var(--fs-lead);
 }
 
 /* Anchor (link) styles */
@@ -322,7 +399,7 @@ p {
   padding: 8px 16px;
   border-radius: 0.5rem;
   cursor: pointer;
-  font-size: 16px;
+  font-size: var(--fs-body-sm);
   min-width: 100px;
   font-weight: 500;
   border: 1px solid transparent;
@@ -354,7 +431,7 @@ a {
 }
 
 .blog-date {
-  font-size: 16px;
+  font-size: var(--fs-small);
 }
 
 img {
@@ -384,8 +461,8 @@ img {
 ul,
 li {
   color: var(--color-text-secondary);
-  line-height: 1.9;
-  font-size: 16px;
+  line-height: var(--lh-relaxed);
+  font-size: var(--fs-body);
 }
 
 ul {
@@ -417,29 +494,18 @@ ul {
 }
 
 @media (max-width: 768px) {
-  h1 {
-    font-size: 24px;
-  }
-
-  h2 {
-    font-size: 20px;
-  }
-
-  h3 {
-    font-size: 18px;
-  }
-
-  /* Paragraph styles */
+  /* Headings are fluid (clamp) so they scale down on their own — only body
+     copy needs a mobile step-down. */
   p {
-    font-size: 16px;
+    font-size: var(--fs-body);
   }
 
   .link {
-    font-size: 16px;
+    font-size: var(--fs-body);
   }
 
   .btn {
-    font-size: 14px;
+    font-size: var(--fs-small);
   }
 
   .section-top {

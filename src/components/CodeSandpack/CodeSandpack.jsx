@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 import {
   SandpackProvider,
   SandpackLayout,
@@ -108,6 +108,7 @@ const SandpackContent = () => {
   const [tab, setTab] = useState("preview");
   const [showCode, setShowCode] = useState(true);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const rootRef = useRef(null);
 
   useEffect(() => {
     document.body.style.overflow = isFullscreen ? "hidden" : "";
@@ -116,11 +117,34 @@ const SandpackContent = () => {
     };
   }, [isFullscreen]);
 
+  // Lenis smooth-scroll captures the wheel globally, so scrolling over the code
+  // editor moved the PAGE instead of the code (user had to drag the scrollbar).
+  // `data-lenis-prevent` tells Lenis to leave wheel events inside these panes
+  // alone. Re-tag whenever the editor mounts/unmounts (showCode toggle).
+  useEffect(() => {
+    let tries = 0;
+    const tag = () => {
+      const root = rootRef.current;
+      if (root) {
+        root
+          .querySelectorAll(".cm-scroller, .sp-console-list")
+          .forEach((el) => el.setAttribute("data-lenis-prevent", "true"));
+      }
+      // CodeMirror mounts its scroller a tick after commit — retry briefly.
+      if (tries++ < 10) timer = setTimeout(tag, 60);
+    };
+    let timer = setTimeout(tag, 0);
+    return () => clearTimeout(timer);
+  }, [showCode, tab]);
+
   const paneHeight = isFullscreen ? "calc(100dvh - 48px)" : 452;
   const editorHeight = isFullscreen ? "100dvh" : 500;
 
   return (
-    <div className={`code-sandpack ${isFullscreen ? "is-fullscreen" : ""}`}>
+    <div
+      ref={rootRef}
+      className={`code-sandpack ${isFullscreen ? "is-fullscreen" : ""}`}
+    >
       <SandpackLayout>
         {showCode && (
           <SandpackCodeEditor

@@ -5,11 +5,20 @@ import "./LeftSidebar.scss";
  * Article TOC rail: reading-progress track + clickable section list.
  * Hidden below 1160px (no room next to the article column).
  */
-const LeftSidebar = ({ scrollPercentage, activeSection, sections, onSelect }) => {
+const LeftSidebar = ({
+  scrollPercentage,
+  activeSection,
+  sections,
+  onSelect,
+  hidden,
+}) => {
   if (!sections.length) return null;
 
   return (
-    <nav className="left-sidebar" aria-label="On this page">
+    <nav
+      className={`left-sidebar ${hidden ? "left-sidebar--hidden" : ""}`}
+      aria-label="On this page"
+    >
       <p className="toc-label">Index</p>
       <div className="toc-body">
         <div className="toc-track" aria-hidden="true">

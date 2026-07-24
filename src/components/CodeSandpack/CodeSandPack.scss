@@ -1,6 +1,37 @@
 .code-sandpack {
   padding: 16px 0;
 
+  // Scope a thin, subtle scrollbar to everything inside the sandbox. The global
+  // page scrollbar is a chunky 12px geometric accent bar with a 3px bg border —
+  // that reads as broken/misaligned inside the code editor and console. Firefox
+  // + WebKit both overridden so the editor scrolls cleanly.
+  *,
+  .cm-scroller,
+  .sp-code-editor,
+  .sp-console {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+
+  *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  *::-webkit-scrollbar-thumb {
+    background: color-mix(in srgb, var(--text-3) 60%, transparent);
+    border-radius: 4px;
+    border: none;
+  }
+  *::-webkit-scrollbar-thumb:hover {
+    background: var(--text-3);
+  }
+  *::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+
   // One unified, connected card: editor | (toolbar + preview/console).
   .sp-layout {
     background: var(--color-bg-box-container) !important;
@@ -154,6 +185,29 @@
   .cm-gutters {
     background-color: var(--color-bg-box-container) !important;
     font-size: 14px !important;
+  }
+  // Let CodeMirror scroll inside its pane.
+  .cm-scroller {
+    overflow: auto !important;
+  }
+
+  // On mobile the layout stacks vertically; the editor pane (the first child of
+  // .sp-layout) has no row to stretch into and collapses to 0 height, so only the
+  // preview/console show. Force the pane + CodeMirror to an explicit height.
+  @media (max-width: 768px) {
+    .sp-layout > :first-child {
+      display: flex !important;
+      width: 100% !important;
+      height: 400px !important;
+      min-height: 400px !important;
+      flex: none !important;
+    }
+    .cm-editor {
+      height: 100% !important;
+    }
+    .cm-scroller {
+      max-height: 100%;
+    }
   }
   // Kill CodeMirror focus outline (renders as an accent/lavender box on select)
   .cm-editor.cm-focused,

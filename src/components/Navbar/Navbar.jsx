@@ -3,13 +3,13 @@ import React, { useEffect, useRef, useState } from "react";
 import Tooltip from "../Tooltip/Tooltip";
 
 // Importing necessary assets and styles
-import logoForBlackBg from "../../assets/images/logoForBlackBg.webp";
-import logoForWhiteBg from "../../assets/images/logoForWhiteBg.webp";
 import "./Navbar.scss";
 import MusicSVG from "../SVG-JSX/MusicSVG/MusicSVG";
 import AccentPicker from "../AccentPicker/AccentPicker";
 import { Link } from "react-router-dom";
 import { useApp } from "../../context/AppContext";
+import { GLYPH_PATHS } from "../../data/glyphPaths";
+import { accents } from "../../data/accents";
 
 /**
  * Floating pill navbar: wordmark, single command trigger, appearance
@@ -17,7 +17,15 @@ import { useApp } from "../../context/AppContext";
  * @returns {JSX.Element} - Navbar component
  */
 const Navbar = ({ openCMDCenter, controlMusic, isMusicPlaying, theme }) => {
-  const { toggleTheme } = useApp();
+  const { toggleTheme, accent } = useApp();
+
+  // Each accent owns one of the six brand primitives (same index mapping as
+  // the AccentPicker). The nav mark shows the active accent's glyph.
+  const accentIndex = Math.max(
+    0,
+    accents.findIndex((a) => a.name === accent)
+  );
+  const brandGlyph = GLYPH_PATHS[accentIndex % GLYPH_PATHS.length];
   const [scrolled, setScrolled] = useState(false);
   const [appearanceOpen, setAppearanceOpen] = useState(false);
   const appearanceRef = useRef(null);
@@ -51,16 +59,29 @@ const Navbar = ({ openCMDCenter, controlMusic, isMusicPlaying, theme }) => {
   return (
     <header className="navbar-wrap">
       <nav className={`navbar ${scrolled ? "navbar--scrolled" : ""}`}>
-        <Link to="/" className="brand" aria-label="Home">
-          <img
-            className="logo"
-            src={theme === "dark" ? logoForBlackBg : logoForWhiteBg}
-            alt="logo"
-          />
-          <span className="wordmark">
-            sahilk027<span className="wordmark-dot">.blog</span>
-          </span>
-        </Link>
+        <div className="nav-left">
+          <Link to="/" className="brand" aria-label="Home">
+            {/* Wireframe cube — same primitive family as the hero canvas and
+                footer shelf. Draws itself in on mount, redraws in accent and
+                takes a lazy turn on hover. */}
+            <svg
+              key={accent}
+              className="brand-glyph"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              {brandGlyph
+                .split("M")
+                .filter(Boolean)
+                .map((seg, j) => (
+                  <path key={j} d={`M${seg}`} pathLength="1" />
+                ))}
+            </svg>
+            <span className="wordmark">
+              sahilk027<span className="wordmark-dot">.blog</span>
+            </span>
+          </Link>
+        </div>
 
         <div className="navigation-container">
           <button

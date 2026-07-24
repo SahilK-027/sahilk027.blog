@@ -18,7 +18,7 @@
         display: inline-flex;
         align-items: center;
         gap: 10px;
-        font-size: 0.8rem;
+        font-size: var(--fs-small);
         font-weight: 500;
         text-transform: uppercase;
         letter-spacing: 0.14em;
@@ -34,7 +34,7 @@
       }
 
       .footer-heading {
-        font-size: clamp(1.5rem, 2.8vw, 2rem);
+        font-size: var(--fs-title-2);
         font-weight: 650;
         letter-spacing: -0.03em;
         line-height: 1.25;
@@ -83,7 +83,7 @@
 
         .footer-col__title {
           font-family: "Fira Code", monospace;
-          font-size: 0.7rem;
+          font-size: var(--fs-kicker);
           font-weight: 600;
           text-transform: uppercase;
           letter-spacing: 0.22em;
@@ -92,7 +92,7 @@
         }
 
         a {
-          font-size: 0.95rem;
+          font-size: var(--fs-body-sm);
           font-weight: 500;
           color: var(--text-2);
           width: fit-content;
@@ -166,7 +166,7 @@
 
       .footer-copy {
         font-family: "Fira Code", monospace;
-        font-size: 0.75rem;
+        font-size: var(--fs-kicker);
         color: var(--text-3);
 
         .fa-heart {
@@ -180,7 +180,7 @@
         align-items: center;
         gap: 8px;
         font-family: var(--font-family);
-        font-size: 0.85rem;
+        font-size: var(--fs-small);
         font-weight: 500;
         color: var(--text-2);
         background: none;

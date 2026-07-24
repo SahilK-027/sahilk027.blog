@@ -21,6 +21,7 @@ uniform vec2 uOrigin;   // px, canvas space
 uniform vec3 uColor;    // accent rgb 0..1
 uniform float uTime;    // 0..1 normalized progress
 uniform float uMaxDist; // px, farthest corner from origin
+uniform vec2 uSeed;     // per-blast random offset; breaks the fixed pattern
 
 float hash2(vec2 p) {
   return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
@@ -45,7 +46,7 @@ float primDist(vec2 uv, float shape) {
 float mosaic(vec2 px, float radius, float t, float size, float density) {
   vec2 id = floor(px / size);
   vec2 uv = fract(px / size) - 0.5; // -0.5..0.5 inside cell
-  float h = hash2(id * (1.0 + size * 0.01));
+  float h = hash2(id * (1.0 + size * 0.01) + uSeed);
   if (h > density) return 0.0;
 
   vec2 center = (id + 0.5) * size;
@@ -79,7 +80,7 @@ float mosaic(vec2 px, float radius, float t, float size, float density) {
   uv = mat2(ca, -sa, sa, ca) * uv;
 
   // Shape from the glyph family, chosen per cell.
-  float shape = floor(hash2(id + 17.0) * 5.0);
+  float shape = floor(hash2(id + 17.0 + uSeed) * 5.0);
   float sd = primDist(uv, shape);
   // Size ramps with distance from the click: tiny sparks near the origin,
   // bigger primitives as the blast reaches further out...
@@ -182,6 +183,7 @@ const AccentBlast = () => {
       color: gl.getUniformLocation(prog, "uColor"),
       time: gl.getUniformLocation(prog, "uTime"),
       maxDist: gl.getUniformLocation(prog, "uMaxDist"),
+      seed: gl.getUniformLocation(prog, "uSeed"),
     };
 
     // Warm the pipeline with one hidden draw so the driver finishes any lazy
@@ -193,6 +195,7 @@ const AccentBlast = () => {
     gl.uniform2f(u.origin, 2, 2);
     gl.uniform3f(u.color, 1, 1, 1);
     gl.uniform1f(u.maxDist, 4);
+    gl.uniform2f(u.seed, 0, 0);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
 
     const play = (e) => {
@@ -219,6 +222,8 @@ const AccentBlast = () => {
       gl.uniform2f(u.origin, ox, oy);
       gl.uniform3f(u.color, rgb[0], rgb[1], rgb[2]);
       gl.uniform1f(u.maxDist, maxDist);
+      // Fresh seed per blast so the primitive pattern never repeats.
+      gl.uniform2f(u.seed, Math.random() * 100, Math.random() * 100);
 
       const start = performance.now();
       const frame = (now) => {

@@ -17,34 +17,20 @@ const PhysicsHero = lazy(() =>
   import("../../components/PhysicsHero/PhysicsHero")
 );
 
-// Parallax depth: the hero is sticky (scroll speed 0) while the sheet below
-// slides over it at full speed; the copy additionally sinks and fades so the
-// hero recedes instead of just getting wiped.
-const useHeroParallax = (fadeRef, driftRefs) => {
+// Parallax: the fixed hero drifts up at a fraction of scroll speed while the
+// sheet climbs over it at full speed — the classic depth cue. Only the first
+// screen matters; past that the hero is fully covered, so we clamp and stop.
+const useHeroParallax = (heroRef) => {
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     let raf = 0;
-    let parked = false;
     const onScroll = () => {
       if (raf) return;
       raf = requestAnimationFrame(() => {
         raf = 0;
-        const y = window.scrollY;
-        // Deep in the page the hero is invisible under the sheet — skip the
-        // style writes entirely instead of restyling a hidden layer.
-        const deep = y > window.innerHeight * 1.5;
-        if (deep && parked) return;
-        parked = deep;
-        const p = Math.min(y / window.innerHeight, 1);
-        // The whole hero layer — canvas included — fades as one, so the
-        // shapes recede with the copy instead of floating over the sheet.
-        if (fadeRef.current) {
-          fadeRef.current.style.opacity = String(Math.max(1 - p * 1.15, 0));
-        }
-        for (const ref of driftRefs) {
-          if (ref.current) {
-            ref.current.style.transform = `translateY(${y * 0.3}px)`;
-          }
+        const y = Math.min(window.scrollY, window.innerHeight);
+        if (heroRef.current) {
+          heroRef.current.style.transform = `translateY(${-y * 0.25}px)`;
         }
       });
     };
@@ -54,17 +40,13 @@ const useHeroParallax = (fadeRef, driftRefs) => {
       window.removeEventListener("scroll", onScroll);
       cancelAnimationFrame(raf);
     };
-    // Refs are stable tuples created once in Hero.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [heroRef]);
 };
 
 const Hero = () => {
   const latest = postsByDateDesc[0];
   const heroRef = useRef(null);
-  const contentRef = useRef(null);
-  const metaRef = useRef(null);
-  useHeroParallax(heroRef, [contentRef, metaRef]);
+  useHeroParallax(heroRef);
   const entryCount = postsByDateDesc.length;
   const firstEntryYear = postsByDateDesc[postsByDateDesc.length - 1]?.date.slice(
     0,
@@ -85,7 +67,7 @@ const Hero = () => {
       <Suspense fallback={null}>
         <PhysicsHero />
       </Suspense>
-      <div className="hero-content" ref={contentRef}>
+      <div className="hero-content">
         <div className="hero-page hero-page--left">
           <p className="hero-kicker">
             <span className="hero-kicker__dot" aria-hidden="true" />
@@ -94,7 +76,7 @@ const Hero = () => {
             Creative Developer
           </p>
           <h1 className="hero-title">
-            Field notes from a curious mind,{" "}
+            Notes from a curious mind,{" "}
             <span className="hero-title__accent">
               one rabbit hole at a time.
             </span>
@@ -128,6 +110,33 @@ const Hero = () => {
                 className="fa-solid fa-arrow-up-right-from-square"
                 aria-hidden="true"
               ></i>
+            </a>
+            <a
+              target="_blank"
+              rel="noreferrer"
+              href="https://www.linkedin.com/in/sahilk027/"
+            >
+              LinkedIn
+              <i
+                className="fa-solid fa-arrow-up-right-from-square"
+                aria-hidden="true"
+              ></i>
+            </a>
+            <a
+              target="_blank"
+              rel="noreferrer"
+              href="https://x.com/SahilK027"
+              aria-label="X (Twitter)"
+            >
+              <span aria-hidden="true">𝕏</span>
+              <i
+                className="fa-solid fa-arrow-up-right-from-square"
+                aria-hidden="true"
+              ></i>
+            </a>
+            <a href="mailto:sahilkandhare027@gmail.com">
+              Email
+              <i className="fa-solid fa-arrow-right" aria-hidden="true"></i>
             </a>
           </div>
         </div>
@@ -171,30 +180,6 @@ const Hero = () => {
             </div>
           )}
         </aside>
-      </div>
-      <div className="hero-meta" ref={metaRef}>
-        <span className="hero-meta__scroll" aria-hidden="true">
-          <span className="hero-meta__line" />
-          Scroll
-        </span>
-        <div className="hero-meta__socials">
-          <a
-            target="_blank"
-            rel="noreferrer"
-            href="https://www.linkedin.com/in/sahilk027/"
-          >
-            LinkedIn
-          </a>
-          <a
-            target="_blank"
-            rel="noreferrer"
-            href="https://x.com/SahilK027"
-            aria-label="X (Twitter)"
-          >
-            <span aria-hidden="true">𝕏</span>
-          </a>
-          <a href="mailto:sahilkandhare027@gmail.com">Email</a>
-        </div>
       </div>
     </header>
   );

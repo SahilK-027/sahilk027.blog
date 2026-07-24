@@ -9,18 +9,54 @@ $gray: #3a3a3a;
   z-index: 10000;
   display: grid;
   place-items: center;
-  background: #000;
-  opacity: 1;
-  transition: opacity 0.45s ease; // FADE in AppLoader.jsx
+  // Black lives on the slats, not here — so lifting them reveals the page.
+  background: transparent;
 
-  &--fading {
-    opacity: 0;
+  &--revealing {
     pointer-events: none;
   }
 
+  // ---- geometric shutter ----------------------------------------------
+  // Full-screen row of black slats. Side by side they read as one solid
+  // panel; on reveal each lifts out on a per-slat delay (left → right).
+  &__slats {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    display: flex;
+  }
+
+  &__slat {
+    flex: 1 1 0;
+    background: #000;
+    // Paint 1px of black around each slat so the sub-pixel gaps between flex
+    // slats can't leak the loading page through as faint vertical seams. The
+    // shadow lifts away with the slat on reveal, so the page still shows clean.
+    box-shadow: 0 0 0 1px #000;
+    transform: translateY(0);
+    // REVEAL (900ms in AppLoader.jsx) = per-slat transition + last slat's
+    // stagger delay. 0.62s move + up to 0.28s stagger ≈ 0.9s total.
+    transition: transform 0.62s cubic-bezier(0.7, 0, 0.3, 1);
+    transition-delay: calc(var(--i) * 0.055s);
+    will-change: transform;
+  }
+
+  &--revealing &__slat {
+    transform: translateY(-101%); // 101% hides sub-pixel seams at the edge
+  }
+
   &__row {
+    position: relative;
+    z-index: 1; // glyphs ride above the slats
     display: flex;
     gap: 18px;
+    transition: opacity 0.28s ease, transform 0.28s ease;
+  }
+
+  // Glyphs clear first so the shutter opens onto a clean page, not letters.
+  &--revealing &__row {
+    opacity: 0;
+    transform: translateY(-8px);
   }
 
   &__glyph {

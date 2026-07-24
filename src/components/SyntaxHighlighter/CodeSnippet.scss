@@ -19,7 +19,7 @@
       align-items: center;
       gap: 8px;
       font-family: "Fira Code", monospace;
-      font-size: 0.72rem;
+      font-size: var(--fs-kicker);
       text-transform: uppercase;
       letter-spacing: 0.1em;
       color: var(--color-text-secondary);
@@ -137,7 +137,7 @@
     height: 28px;
     padding: 0 10px 0 28px;
     font-family: var(--font-family);
-    font-size: 0.75rem;
+    font-size: var(--fs-kicker);
     font-weight: 500;
     background: transparent;
     color: var(--color-text-secondary);

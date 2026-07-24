@@ -1,23 +1,28 @@
 import Tooltip from "../Tooltip/Tooltip";
-import "./InfoDiv.scss";
+import "../../styles/callouts.scss";
 
 // `children` is the new MDX-friendly API. `infoText` (HTML string) is kept for
 // backward compatibility with not-yet-migrated legacy blogs.
 const InfoDiv = ({ infoText, children }) => {
   return (
-    <div className="info-div">
-      <div className="icon">
+    <aside className="callout callout--info">
+      <div className="callout__head">
         <Tooltip content="Extra Info">
-          <i className="fa-solid fa-circle-info"></i>
+          <span className="callout__icon">
+            <i className="fa-solid fa-circle-info"></i>
+          </span>
         </Tooltip>
+        <span className="callout__label">Note</span>
       </div>
-      <p>👉 Note: </p>{" "}
       {children ? (
-        <div>{children}</div>
+        <div className="callout__body">{children}</div>
       ) : (
-        <div dangerouslySetInnerHTML={{ __html: infoText }} />
+        <div
+          className="callout__body"
+          dangerouslySetInnerHTML={{ __html: infoText }}
+        />
       )}
-    </div>
+    </aside>
   );
 };
 

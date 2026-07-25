@@ -1,20 +1,20 @@
-import { Suspense, lazy, useEffect, useRef } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Suspense, lazy, useEffect, useRef } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 
-import Navbar from "../../components/Navbar/Navbar";
-import Footer from "../../components/Footer/Footer";
-import TagFilter from "../../components/TagFilter/TagFilter";
-import YearLog from "../../components/YearLog/YearLog";
-import CursorTrail from "../../components/CursorTrail/CursorTrail";
-import { postsByDateDesc } from "../../data/posts";
-import { scrollToTarget } from "../../hooks/useLenis";
+import Navbar from '../../components/Navbar/Navbar';
+import Footer from '../../components/Footer/Footer';
+import TagFilter from '../../components/TagFilter/TagFilter';
+import YearLog from '../../components/YearLog/YearLog';
+import CursorTrail from '../../components/CursorTrail/CursorTrail';
+import { postsByDateDesc } from '../../data/posts';
+import { scrollToTarget } from '../../hooks/useLenis';
 
-import "./BlogsPage.scss";
+import './BlogsPage.scss';
 
 // Heavy three.js chunk stays out of the critical path — the page renders
 // instantly and the physics pile fades in when its code arrives.
-const PhysicsHero = lazy(() =>
-  import("../../components/PhysicsHero/PhysicsHero")
+const PhysicsHero = lazy(
+  () => import('../../components/PhysicsHero/PhysicsHero'),
 );
 
 // Parallax: the fixed hero drifts up at a fraction of scroll speed while the
@@ -22,7 +22,7 @@ const PhysicsHero = lazy(() =>
 // screen matters; past that the hero is fully covered, so we clamp and stop.
 const useHeroParallax = (heroRef) => {
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     let raf = 0;
     const onScroll = () => {
       if (raf) return;
@@ -34,10 +34,10 @@ const useHeroParallax = (heroRef) => {
         }
       });
     };
-    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
     return () => {
-      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener('scroll', onScroll);
       cancelAnimationFrame(raf);
     };
   }, [heroRef]);
@@ -48,14 +48,13 @@ const Hero = () => {
   const heroRef = useRef(null);
   useHeroParallax(heroRef);
   const entryCount = postsByDateDesc.length;
-  const firstEntryYear = postsByDateDesc[postsByDateDesc.length - 1]?.date.slice(
-    0,
-    4
-  );
+  const firstEntryYear = postsByDateDesc[
+    postsByDateDesc.length - 1
+  ]?.date.slice(0, 4);
   // Total shelf time: sum of per-post read times ("7 min" → 7).
   const totalMinutes = postsByDateDesc.reduce(
     (sum, p) => sum + (parseInt(p.readtime, 10) || 0),
-    0
+    0,
   );
   const shelfTime =
     totalMinutes >= 60
@@ -72,73 +71,18 @@ const Hero = () => {
           <p className="hero-kicker">
             <span className="hero-kicker__dot" aria-hidden="true" />
             Sahil Kandhare
-            <span className="hero-kicker__sep" aria-hidden="true" />
-            Creative Developer
           </p>
           <h1 className="hero-title">
-            Notes from a curious mind,{" "}
+            Notes from a curious mind,{' '}
             <span className="hero-title__accent">
               one rabbit hole at a time.
             </span>
           </h1>
           <p className="hero-sub">
-            Three.js, WebGL and shaders, CS fundamentals — and whatever else
-            curiosity drags me into — written the way I wish someone had
-            explained it to me.
+            Long-form notes on whatever problem currently has my attention. One
+            topic at a time, taken apart properly and written the way I wish
+            someone had explained it to me.
           </p>
-          <div className="hero-links">
-            <a
-              href="#writing-log"
-              onClick={(e) => {
-                e.preventDefault();
-                // Land at the section top itself — the sheet edge (and its
-                // rounded corners) ends up 64px past the viewport top, so no
-                // sliver of the hero can remain visible.
-                scrollToTarget("#writing-log", 0);
-              }}
-            >
-              Browse the archive
-              <i className="fa-solid fa-arrow-down" aria-hidden="true"></i>
-            </a>
-            <a
-              target="_blank"
-              rel="noreferrer"
-              href="https://github.com/SahilK-027"
-            >
-              GitHub
-              <i
-                className="fa-solid fa-arrow-up-right-from-square"
-                aria-hidden="true"
-              ></i>
-            </a>
-            <a
-              target="_blank"
-              rel="noreferrer"
-              href="https://www.linkedin.com/in/sahilk027/"
-            >
-              LinkedIn
-              <i
-                className="fa-solid fa-arrow-up-right-from-square"
-                aria-hidden="true"
-              ></i>
-            </a>
-            <a
-              target="_blank"
-              rel="noreferrer"
-              href="https://x.com/SahilK027"
-              aria-label="X (Twitter)"
-            >
-              <span aria-hidden="true">𝕏</span>
-              <i
-                className="fa-solid fa-arrow-up-right-from-square"
-                aria-hidden="true"
-              ></i>
-            </a>
-            <a href="mailto:sahilkandhare027@gmail.com">
-              Email
-              <i className="fa-solid fa-arrow-right" aria-hidden="true"></i>
-            </a>
-          </div>
         </div>
         <aside className="hero-page hero-page--right hero-index">
           <p className="hero-index__heading">Index</p>
@@ -146,7 +90,7 @@ const Hero = () => {
             <div className="hero-index__row">
               <dt>Entries</dt>
               <span className="hero-index__leader" aria-hidden="true" />
-              <dd>{String(entryCount).padStart(2, "0")}</dd>
+              <dd>{String(entryCount).padStart(2, '0')}</dd>
             </div>
             <div className="hero-index__row">
               <dt>Writing since</dt>
@@ -167,20 +111,25 @@ const Hero = () => {
               </dd>
             </div>
           </dl>
-          {latest && (
-            <div className="hero-index__latest">
-              <p className="hero-index__latest-label">Freshly inked</p>
-              <Link to={latest.url}>
-                {latest.title}
-                <i className="fa-solid fa-arrow-right" aria-hidden="true"></i>
-              </Link>
-              <p className="hero-index__latest-meta">
-                {latest.displayDate} · {latest.readtime} read
-              </p>
-            </div>
-          )}
         </aside>
       </div>
+      {/* Pinned to the bottom edge of the hero, not the copy column — it is a
+          scroll affordance for the whole screen. */}
+      <a
+        className="hero-scroll-cue"
+        href="#writing-log"
+        onClick={(e) => {
+          e.preventDefault();
+          // Land at the section top itself — the sheet edge (and its rounded
+          // corners) ends up 64px past the viewport top, so no sliver of the
+          // hero can remain visible.
+          scrollToTarget('#writing-log', 0);
+        }}
+      >
+        <i className="fa-solid fa-arrow-down" aria-hidden="true"></i>
+        <span>Browse the archive</span>
+        <i className="fa-solid fa-arrow-down" aria-hidden="true"></i>
+      </a>
     </header>
   );
 };
@@ -193,7 +142,7 @@ const BlogsPage = ({
   toggleTheme,
 }) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const activeTag = searchParams.get("tag");
+  const activeTag = searchParams.get('tag');
 
   const setTag = (tag) => {
     if (tag) setSearchParams({ tag }, { replace: true });
@@ -220,18 +169,18 @@ const BlogsPage = ({
           <main className="page landing-main">
             <section className="log-section" id="writing-log">
               <div className="log-header">
-              <p className="section-kicker">
-                <span className="section-kicker__dot" aria-hidden="true" />
-                The archive
-              </p>
-              <div className="log-header-row">
-                <h2 className="log-title">
-                  Writing log
-                  <span className="log-count">{visiblePosts.length}</span>
-                </h2>
+                <p className="section-kicker">
+                  <span className="section-kicker__dot" aria-hidden="true" />
+                  The archive
+                </p>
+                <div className="log-header-row">
+                  <h2 className="log-title">
+                    Writing log
+                    <span className="log-count">{visiblePosts.length}</span>
+                  </h2>
+                </div>
+                <TagFilter activeTag={activeTag} onSelect={setTag} />
               </div>
-              <TagFilter activeTag={activeTag} onSelect={setTag} />
-            </div>
               <YearLog posts={visiblePosts} onTagClick={setTag} />
             </section>
           </main>

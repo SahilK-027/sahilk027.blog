@@ -19,7 +19,9 @@
       position: relative;
       z-index: 1;
       width: 100%;
-      max-width: 1140px;
+      // Same measure as `.page` (the archive below) so the hero copy and the
+      // entry list share one left/right gutter down the whole landing.
+      max-width: 920px;
       margin: 0 auto;
       // Book-spread composition: copy on the left page, journal index on the
       // right page, spine between. Bottom padding reserves a band for the
@@ -30,16 +32,18 @@
       // band the shapes need. Navbar clearance comes from the centring itself
       // on any normal viewport, and from the short-viewport guard below when it
       // does not.
-      padding: 0 24px min(13vh, 130px);
+      padding: 0 20px min(13vh, 130px);
       display: grid;
       grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
-      gap: 64px;
+      // Narrower measure than before, so the spread gets a tighter gutter to
+      // keep the index column wide enough for its longest row.
+      gap: 44px;
       align-items: center;
 
       .hero-page--right {
         position: relative;
         // The spine: a soft gradient rule between the two pages.
-        padding-left: 64px;
+        padding-left: 44px;
 
         &::before {
           content: "";
@@ -86,7 +90,7 @@
 
       .hero-title {
         font-size: var(--fs-title-1);
-        font-weight: 650;
+        font-weight: 450;
         line-height: 1.12;
         letter-spacing: -0.03em;
         max-width: 15em;
@@ -209,49 +213,70 @@
         }
       }
 
-      // Text links, not buttons — reads editorial rather than product CTA.
-      .hero-links {
-        display: flex;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 28px;
-
-        a {
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          font-size: var(--fs-body-sm);
-          font-weight: 550;
-          color: var(--text-2);
-          transition: color var(--dur-base) var(--ease);
-
-          i {
-            font-size: 0.72em;
-            color: var(--text-3);
-            transition: transform var(--dur-base) var(--ease),
-              color var(--dur-base) var(--ease);
-          }
-
-          &:hover {
-            color: var(--text-1);
-
-            i {
-              color: var(--accent);
-            }
-          }
-
-          &:first-child:hover i {
-            transform: translateY(2px);
-          }
-
-          &:last-child:hover i {
-            transform: translate(2px, -2px);
-          }
-        }
-      }
-
     }
 
+    // Scroll cue pill: parked at the bottom centre of the hero (it belongs to
+    // the whole screen, not the copy column). Arrows flank the label and drift
+    // down on a loop, so it reads "keep going" without shouting like a CTA.
+    .hero-scroll-cue {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      padding: 11px 22px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--bg-raised) 72%, transparent);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      font-family: "Fira Code", monospace;
+      font-size: var(--fs-kicker);
+      font-weight: var(--fw-medium);
+      letter-spacing: var(--ls-kicker);
+      text-transform: uppercase;
+      color: var(--text-1);
+      white-space: nowrap;
+      transition: border-color var(--dur-base) var(--ease),
+        background var(--dur-base) var(--ease),
+        transform var(--dur-base) var(--ease);
+
+      span {
+        // Kicker tracking adds a trailing gap after the last glyph; pull it
+        // back so the label sits optically centred between the two arrows.
+        margin-right: calc(var(--ls-kicker) * -1);
+      }
+
+      i {
+        font-size: 0.85em;
+        color: var(--text-3);
+        animation: hero-cue-drift 1.8s var(--ease) infinite;
+        transition: color var(--dur-base) var(--ease);
+      }
+
+      i:last-child {
+        animation-delay: 0.09s;
+      }
+
+      &:hover {
+        transform: translateX(-50%) translateY(-2px);
+        border-color: var(--accent-faint);
+        background: color-mix(in srgb, var(--bg-raised) 92%, transparent);
+
+        i {
+          color: var(--accent);
+        }
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero-scroll-cue i {
+        animation: none;
+      }
+    }
   }
 
   // The sheet: full-bleed surface that slides over the pinned hero.
@@ -264,7 +289,7 @@
     margin-top: 100svh;
     background: var(--bg);
     border-radius: 32px 32px 0 0;
-    box-shadow: 0 -24px 80px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 -24px 80px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     // Bottom breathing room lives INSIDE the sheet so it meets the footer
     // flush — no bare body background showing between them.
@@ -320,7 +345,7 @@
             align-items: baseline;
             gap: 12px;
             font-size: var(--fs-title-2);
-            font-weight: 650;
+            font-weight: 450;
             letter-spacing: -0.02em;
 
             .log-count {
@@ -347,6 +372,18 @@
   // Sit above the sheet's box-shadow so it doesn't wash over the footer.
   position: relative;
   z-index: 3;
+}
+
+// Both arrows in the scroll cue fall and reset, staggered slightly apart.
+@keyframes hero-cue-drift {
+  0%,
+  55%,
+  100% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(3px);
+  }
 }
 
 @keyframes hero-scroll-pulse {
@@ -385,6 +422,13 @@
       grid-template-columns: minmax(0, 1fr);
       gap: 20px;
 
+      // `.page` tightens to 14px gutters here; match it so hero and archive
+      // still line up on phones.
+      @media (max-width: 600px) {
+        padding-left: 14px;
+        padding-right: 14px;
+      }
+
       // Frosted scrim: the canvas now sits BEHIND the copy on mobile, so a
       // blurred wash of the page bg mutes the shapes under the text. The blur
       // itself has a hard rectangular boundary — a background gradient can't
@@ -401,8 +445,8 @@
         transform: translateX(-50%);
         z-index: -1;
         background: color-mix(in srgb, var(--bg) 72%, transparent);
-        backdrop-filter: blur(7px);
-        -webkit-backdrop-filter: blur(7px);
+        // backdrop-filter: blur(7px);
+        // -webkit-backdrop-filter: blur(7px);
         mask-image: linear-gradient(
           to bottom,
           transparent 0%,
@@ -438,24 +482,6 @@
         margin-bottom: 18px;
       }
 
-      .hero-links {
-        flex-wrap: nowrap;
-        gap: 11px;
-        font-size: var(--fs-small);
-
-        a {
-          font-size: var(--fs-small);
-          gap: 5px;
-          white-space: nowrap;
-        }
-
-        // Social links: drop the trailing arrow icons on mobile so all five
-        // links (archive + GitHub/LinkedIn/𝕏/Email) fit on a single row.
-        a:not(:first-child) i {
-          display: none;
-        }
-      }
-
       // Single column: spine turns into a horizontal rule above the index.
       .hero-page--right {
         padding-left: 0;
@@ -472,6 +498,15 @@
         }
       }
 
+    }
+
+    // Sits in the gap the content's bottom padding leaves, so it never lands
+    // on top of the index rows even on a 667px-tall phone.
+    .hero-scroll-cue {
+      bottom: 14px;
+      gap: 10px;
+      padding: 8px 14px;
+      font-size: var(--fs-micro);
     }
   }
 }

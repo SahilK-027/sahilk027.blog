@@ -8,6 +8,19 @@ import logoWhite from "../../assets/images/logoForWhiteBg.webp";
 import "./AppLoader.scss";
 
 const REVEAL = 900; // ms — full slat-shutter reveal; keep in sync with SCSS
+// ms into the reveal at which deferred landing motion is released. Both ends of
+// the range are wrong, for the same reason from opposite sides. At REVEAL
+// (where this used to sit) the shutter clears onto a still page and the hero's
+// spawn only begins once the eye has settled on it — a beat of dead white. At 0
+// the spawn plays out behind solid slats: it lands ~160ms in and the splash is
+// spent by ~400ms, so the shutter opens on the aftermath.
+//
+// Just past halfway. The deliberate part is what this HIDES: the first few
+// frames of the spawn are a tight over-compressed knot, which is the one pose
+// in the whole animation that looks like a trick rather than like fluid. Those
+// frames play behind the slats, and what emerges through the opening shutter is
+// already a falling, spreading mass.
+const READY_AT = 400;
 const MIN_VISIBLE = 300; // ms — floor so an instant load doesn't flash the splash
 const EASE = 6; // higher = snappier catch-up of the shown bar to real progress
 const SLATS = GLYPH_PATHS.length; // shutter panels — one per glyph
@@ -31,8 +44,9 @@ const WARMUP_CHUNKS = [
  * snapping to 100% and releasing. Shown only while actually loading (min 300ms
  * to avoid a flash). No fixed timer. On release the black panel splits into
  * vertical slats that lift away in a stagger (a geometric shutter, one slat per
- * glyph), revealing the page; only when that finishes does `markAppReady` fire
- * so the hero's rain-in starts on the revealed page, never behind the splash.
+ * glyph), revealing the page. `markAppReady` fires PART WAY THROUGH that lift
+ * (see READY_AT), so the hero's spawn is already under way behind the slats and
+ * the page is in motion by the time they clear.
  */
 const AppLoader = () => {
   const [phase, setPhase] = useState("shown"); // shown -> revealing -> gone
@@ -52,6 +66,7 @@ const AppLoader = () => {
   useEffect(() => {
     const shownAt = performance.now();
     let goneTimer = 0;
+    let readyTimer = 0;
     let raf = 0;
 
     // Real work: warmup images to decode + lazy landing chunks to fetch + the
@@ -102,10 +117,12 @@ const AppLoader = () => {
       if (shown >= 1 && elapsed >= MIN_VISIBLE) {
         getLenis()?.start(); // hand scroll back to the app
         setPhase("revealing"); // slats lift away
-        goneTimer = setTimeout(() => {
-          setPhase("gone");
-          markAppReady(); // reveal done — release deferred landing motion
-        }, REVEAL);
+        // Released DURING the reveal (see READY_AT), not after it. The motion
+        // this gates is the hero's spawn, which is over in about a second —
+        // comparable to the reveal itself — so where in the reveal it starts
+        // decides which half of it the user actually gets to see.
+        readyTimer = setTimeout(markAppReady, READY_AT);
+        goneTimer = setTimeout(() => setPhase("gone"), REVEAL);
         return; // stop the loop
       }
       raf = requestAnimationFrame(tick);
@@ -115,6 +132,7 @@ const AppLoader = () => {
     return () => {
       window.removeEventListener("load", markLoaded);
       clearTimeout(goneTimer);
+      clearTimeout(readyTimer);
       cancelAnimationFrame(raf);
       getLenis()?.start();
     };

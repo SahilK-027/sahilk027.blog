@@ -24,7 +24,13 @@
       // Book-spread composition: copy on the left page, journal index on the
       // right page, spine between. Bottom padding reserves a band for the
       // physics pile so both pages float clear of the shapes.
-      padding: 110px 24px min(13vh, 130px);
+      //
+      // No top padding: .hero centres this block with align-items, so padding
+      // here does not create headroom, it only shoves the spread DOWN into the
+      // band the shapes need. Navbar clearance comes from the centring itself
+      // on any normal viewport, and from the short-viewport guard below when it
+      // does not.
+      padding: 0 24px min(13vh, 130px);
       display: grid;
       grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
       gap: 64px;
@@ -354,6 +360,18 @@
     opacity: 1;
     transform: scaleY(1);
     transform-origin: top;
+  }
+}
+
+// Short-viewport guard. With the top padding gone the spread is purely centred,
+// which clears the floating navbar (~74px: 20px wrap offset + the plate) on any
+// normal desktop height. On a short one — a laptop at 1440x700, a half-height
+// window — the block grows tall enough that centring leaves less than that, and
+// the copy slides under the navbar. Re-establish just the clearance, and only
+// where it is actually at risk, so tall screens keep the full band for shapes.
+@media (min-width: 769px) and (max-height: 760px) {
+  .blogsPage-container .hero .hero-content {
+    padding-top: 90px;
   }
 }
 

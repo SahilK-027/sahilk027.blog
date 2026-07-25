@@ -81,13 +81,11 @@ const YearLog = ({ posts, onTagClick }) => {
                       </span>
                     </span>
                     <span className="post-main">
-                      <span className="post-title">
-                        {post.title}
+                      <span className="post-title">{post.title}</span>
+                      <span className="post-meta">
                         {post.blogNo === mostRecentBlog.blogNo && (
                           <span className="post-badge">Latest</span>
                         )}
-                      </span>
-                      <span className="post-meta">
                         <time dateTime={post.date}>{post.displayDate}</time>
                         <span className="post-meta__dot" aria-hidden="true" />
                         <span className="post-readtime">{post.readtime}</span>

@@ -1,7 +1,7 @@
-// Blog 2 thumbnail: a hand-drawn row of bit "bulbs" (transistor switches) spelling
-// out 10011 = 25, echoing the blog's ON/OFF binary metaphor and the BitSwitches
-// widget. Monochrome line-art with a single accent on the lit bulbs, so it flips
-// with light/dark and the accent picker. viewBox is 1.91:1 (OG ratio).
+// In-article figure: a hand-drawn row of bit "bulbs" (transistor switches)
+// spelling 10011 = 25. Line-art with a single accent on the lit bulbs, so it
+// flips with light/dark and the accent picker. viewBox is cropped to the
+// drawing itself, no poster framing.
 const BULBS = [
   { x: 152, on: 1 },
   { x: 246, on: 0 },
@@ -10,29 +10,19 @@ const BULBS = [
   { x: 528, on: 1 },
 ];
 
-const Blog2Thumbnail = ({ className, style }) => (
+const BitBulbs = ({ className, style }) => (
   <svg
     className={className}
-    style={style}
-    width="100%"
-    viewBox="0 0 680 357"
+    style={{ width: "100%", margin: "12px 0", ...style }}
+    viewBox="98 62 550 194"
     role="img"
     xmlns="http://www.w3.org/2000/svg"
   >
     <title>A hand-drawn row of bit bulbs spelling the binary number 10011 (25)</title>
     <desc>
-      Monochrome hand-drawn illustration of five light bulbs used as binary
-      switches, three lit and two dark, reading 10011 which equals 25.
+      Hand-drawn illustration of five light bulbs used as binary switches,
+      three lit and two dark, reading 10011 which equals 25.
     </desc>
-
-    {/* ground plane */}
-    <g stroke="var(--color-text-primary)" strokeWidth="1" opacity="0.22">
-      <line x1="0" y1="262" x2="680" y2="262" />
-      <line x1="70" y1="262" x2="30" y2="357" />
-      <line x1="250" y1="262" x2="235" y2="357" />
-      <line x1="430" y1="262" x2="470" y2="357" />
-      <line x1="610" y1="262" x2="660" y2="357" />
-    </g>
 
     {/* socket board the bulbs sit on */}
     <line
@@ -132,26 +122,7 @@ const Blog2Thumbnail = ({ className, style }) => (
       <line x1="240" y1="88" x2="246" y2="116" />
     </g>
 
-    <text
-      x="42"
-      y="330"
-      fontFamily="'Bradley Hand','Segoe Print',Caveat,cursive"
-      fill="var(--color-text-primary)"
-      fontSize="26"
-    >
-      getting started with bits
-    </text>
-    <text
-      x="638"
-      y="330"
-      textAnchor="end"
-      fontFamily="'Fira Code',monospace"
-      fill="var(--color-text-secondary)"
-      fontSize="13"
-    >
-      cs · 02
-    </text>
   </svg>
 );
 
-export default Blog2Thumbnail;
+export default BitBulbs;

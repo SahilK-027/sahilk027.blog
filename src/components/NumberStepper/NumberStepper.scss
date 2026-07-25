@@ -50,7 +50,9 @@
     }
 
     input {
-      width: 72px;
+      /* Actual width comes from the digit count (inline style); this is the
+         floor, so short values keep the old pill proportions. */
+      min-width: 72px;
       text-align: center;
       border: none;
       background: transparent;

@@ -1,0 +1,498 @@
+---
+blogNo: 2
+---
+
+import BitsThumbnail from "./utils/Thumbnail";
+import BitBulbs from "./utils/BitBulbs";
+import IntegerLine from "./utils/IntegerLine";
+
+export const poster = <BitsThumbnail />;
+
+<Intro>
+Years ago I printed a variable in C++ and got an answer that made no sense to
+me. I asked for the bits of -1:
+</Intro>
+
+```cpp
+#include <iostream>
+#include <bitset>
+
+int main() {
+    int x = -1;
+    std::cout << x << " : " << std::bitset<32>(x) << '\n';
+}
+```
+
+<Intro>
+And the machine handed me this:
+</Intro>
+
+```bash
+-1 : 11111111111111111111111111111111
+```
+
+<Intro>
+Every single bit set. Not a minus sign hiding somewhere, not a flag, not a
+special slot in memory. Just 32 switches, all turned on. And the number those
+same 32 switches spell out when you read them as a normal positive number is
+4294967295, which is the largest value a 32-bit box can hold.
+</Intro>
+
+<Intro>
+So the biggest number and the smallest number are the exact same bits. That
+sounds like a bug. It isn't. So here is the question I want to actually answer,
+not memorize: <b>how does a computer store -1 when all it has is 0s and 1s?</b>
+</Intro>
+
+### What the machine actually gives us to work with
+
+Before guessing at an answer, it's worth being precise about the materials,
+because the answer is forced by them.
+
+Data lives in registers. A register is a small, fast storage location inside the
+CPU, and the thing that matters here is that it is a fixed row of switches. Each
+switch is a transistor, and a transistor knows exactly two things: current
+flowing, or not. On, or off. 1, or 0.
+
+<BitBulbs />
+
+One switch is a bit. Four of them is a nibble, eight is a byte, and how many the
+hardware moves as a single unit is the register width. That is what people mean
+by a 64-bit CPU: 64 switches per general purpose register.
+
+Two properties of that row do all the work in this post.
+
+**The row has only two states per switch.** There is no third state for "and
+this one is negative". You cannot write a minus sign into a transistor any more
+than you can write it into a light bulb.
+
+**The row never grows.** Store 14 in a 32-bit register and you don't get a
+compact 4-bit number, you get 14 padded with 28 zeros.
+
+<RegisterBits />
+
+That padding looks wasteful, and it is worth understanding why nobody fixes it,
+because "just use more bits when you need them" is the first escape hatch people
+reach for. Memory is byte addressed, so `&x + 1` has to be computable at compile
+time, which means `sizeof(int)` has to be a constant. The adder is physical: a
+32-bit adder is 32 full-adder cells wired together, and there is no instruction
+that grows silicon. Fixed widths are not a convention, they are the hardware.
+
+So the row is fixed at 32 switches, each holding 0 or 1, and nothing can spill
+past the left edge because there is no left edge to spill into.
+
+### Turning the question into a countable problem
+
+Now the question sharpens into something we can actually reason about.
+
+A 32-bit register has 2^32 = 4294967296 distinct patterns. That count is fixed
+and unarguable. If we read those patterns as plain positive binary we get
+`unsigned int`, the range [0, 4294967295], which C++ calls `UINT_MAX`. Every
+pattern is used. There is nothing left over.
+
+So the answer cannot involve *adding* anything. There is no room. The only move
+available is to **reinterpret**: keep the same 4294967296 patterns and change
+our mind about which value each one stands for.
+
+And "reinterpret" has an immediate consequence that people skip past. If some
+patterns start meaning negative numbers, they have to stop meaning the positive
+numbers they meant a second ago. Negatives are not free storage, they are
+bought. Split the patterns down the middle and the bill looks like this:
+
+```bash
+half the patterns  ->  0 .. 2147483647          (2147483648 of them)
+half the patterns  ->  -2147483648 .. -1        (2147483648 of them)
+                                                 4294967296 total
+```
+
+That is `int` versus `unsigned int` in one picture. Same register, same 32
+switches, and the moment you ask for negatives your positive ceiling drops from
+4294967295 to 2147483647. You didn't gain range, you moved it.
+
+So the real design question is not "where do we put the minus sign". It is:
+<b>which pattern should stand for which value?</b> And you can answer that any
+way you like, as long as the answer survives three things:
+
+- **Every value gets exactly one pattern**, and no pattern means two values at
+  once.
+- **Zero appears once.** If it appears twice, every `x == 0` in the machine
+  becomes a two-case check.
+- **The existing adder still works.** The circuit that adds unsigned numbers
+  should add our new signed numbers too, with no extra silicon.
+
+Keep an eye on that third one. It reads like a nice-to-have, and it is the one
+that ends up deciding everything.
+
+### The obvious answer, and where it falls apart
+
+The first idea everyone has (I had it too) is to spend one switch on a flag.
+Take the leftmost bit, call it the sign bit, 0 for positive and 1 for negative,
+and let the rest carry the magnitude. In 8 bits:
+
+```bash
+0000 0101  ->  +5
+1000 0101  ->  -5     (same magnitude, flag flipped)
+0000 0000  ->  +0
+1000 0000  ->  -0
+```
+
+Test two already fails: `00000000` and `10000000` are both zero.
+
+Test three fails harder. Feed +5 and -5 to a plain binary adder and watch what
+comes out:
+
+```bash
+    0000 0101      (+5)
+  + 1000 0101      (-5)
+  -----------
+    1000 1010      reads as -10. Wrong.
+```
+
+For that to come out as 0, the CPU would have to inspect both sign bits, decide
+whether this addition is secretly a subtraction, compare the two magnitudes to
+see which is bigger, subtract smaller from larger, then work out the sign of the
+answer. That is a comparator and a subtractor and control logic, sitting in the
+hottest path of the machine, all to babysit a minus sign.
+
+So try the next natural idea: to negate a number, flip every bit.
+
+```bash
+0000 0101  ->  +5
+1111 1010  ->  -5     (every bit inverted)
+0000 0000  ->  +0
+1111 1111  ->  -0
+```
+
+This is called one's complement, and it gets much closer. Add them:
+
+```bash
+    0000 0101      (+5)
+  + 1111 1010      (-5)
+  -----------
+    1111 1111      which is -0
+```
+
+Zero, but the wrong zero, and still two of them. Machines actually shipped this,
+the CDC 6600 among them, and they paid for it with an extra correction pass:
+when a carry falls off the left end you have to add it back into the lowest bit.
+
+That's the useful failure. Flipping the bits is nearly right. It is off by
+exactly one, and chasing down that one is what gives us the real answer.
+
+### Asking arithmetic instead of notation
+
+Both attempts above tried to *mark* a number as negative. That was the mistake.
+Being negative isn't a label, it's a behaviour, so let's forget notation and
+write down the behaviour instead:
+
+<b>-x is whatever you add to x to get 0.</b>
+
+That is the only property of a negative number that arithmetic actually cares
+about. -5 is the thing that cancels 5. So instead of asking "how do I mark this
+as negative", we can ask a question with a real answer: which 8-bit pattern,
+when added to `0000 0101`, leaves the register holding zero?
+
+Before solving it, look at what the register does when you count. Take 8 bits
+and keep adding 1:
+
+```bash
+1111 1101   = 253
+1111 1110   = 254
+1111 1111   = 255
+0000 0000   = ???
+```
+
+255 + 1 should be 256, which is `1 0000 0000`, nine bits. The register has
+eight. The carry has no switch to land in, so it is dropped and you are left
+holding `0000 0000`. The counter doesn't stop at its maximum and it doesn't
+error, it rolls over, the way a car odometer rolls from 999999 to 000000.
+
+Now run the same thing backwards, which is the step that actually answers our
+question. Start at zero and subtract 1, doing the borrow by hand:
+
+```bash
+    0000 0000      (0)
+  - 0000 0001      (1)
+  -----------
+```
+
+The lowest column needs to borrow. The bit to its left is 0, so that one has to
+borrow too, and so does the next, all the way up the row. Each of those columns
+ends up holding 1. The final borrow goes off the left edge of the register and
+there is nothing out there, so it just vanishes. What's left behind is:
+
+```bash
+    1111 1111
+```
+
+So `0 - 1` is all ones. Not by anyone's decision, just by how borrowing works
+when the row ends. And since all ones behaves exactly like "one less than zero"
+in the hardware, calling it -1 is not an invention. It already is -1.
+
+That rollover has a name. Because the carry is always discarded, an n-bit
+register isn't doing ordinary arithmetic, it's doing arithmetic that wraps every
+2^n steps:
+
+```bash
+(a + b) mod 2^n
+```
+
+Which is the same "mod" you already use without thinking. A clock is mod 12: 10
+o'clock plus 4 hours is 2 o'clock, because the hand wraps. An 8-bit register is
+mod 256 and a 32-bit register is mod 4294967296. Same idea, bigger dial.
+
+Now our question has a clean answer. We want the pattern p with `x + p = 0`
+after wrapping, which means `x + p` has to equal exactly one full lap of the
+dial:
+
+```bash
+x + p = 2^n        =>        p = 2^n - x
+```
+
+That is two's complement. Not "flip the bits and add one", which is the shortcut
+people memorize and then forget the reason for. The definition is `2^n - x`:
+<b>the distance from x all the way around the dial back to zero.</b> Everything
+else in this post falls out of it.
+
+Try it on 5 in 8 bits: `2^8 - 5 = 256 - 5 = 251 = 1111 1011`. Now run it through
+the same adder that failed us twice:
+
+```bash
+    0000 0101      (5)
+  + 1111 1011      (251, which we are calling -5)
+  -----------
+  1 0000 0000      the carry falls off the edge
+    0000 0000      what stays in the register is 0
+```
+
+Exactly 0, on the plain adder, with no sign checking and no correction pass.
+Test three passes. And since `a - b` is just `a + (2^n - b)`, the CPU doesn't
+need a subtractor either. One circuit, every case. That is the entire reason
+this representation won.
+
+Two things now drop out for free, which is usually the sign that you've found
+the right definition rather than a rule.
+
+**Flip-and-add-one is a consequence, not a recipe.** Subtracting x from a row of
+all ones can never borrow, because every bit up there is already 1. So
+`(2^n - 1) - x` is literally "flip every bit of x". Add 1 to both sides and you
+have `2^n - x`, which is what we wanted. One's complement was off by one because
+it stopped one step early.
+
+<TwosComplement />
+
+**The sign bit shows up on its own.** Take any x in [1, 2^(n-1)]. Then `2^n - x`
+lands in [2^(n-1), 2^n - 1], and every pattern in that upper range has its top
+bit set. We never assigned that job to the leftmost bit. It just happens to be
+true, which is why you can still test the sign with a single bit even though
+nothing is storing a sign.
+
+Here's the whole layout the definition produces, drawn at 4 bits so the entire
+range fits on screen.
+
+<IntegerLine />
+
+The `0000` and `1111` sitting next to each other is the borrow we did by hand,
+now in its place on the line. And notice the range came out lopsided: for n bits
+it runs from -2^(n-1) to 2^(n-1) - 1.
+
+```bash
+ 8 bits    -128         ..  127
+16 bits    -32768       ..  32767
+32 bits    -2147483648  ..  2147483647
+```
+
+One extra negative, because 0 sits in the non-negative half and takes the slot
+that would have gone to +2^(n-1). That's the price of having exactly one zero,
+and it's far cheaper than what the other two encodings charged.
+
+### Wait, so is 1111 1011 equal to -5 or 251?
+
+Both. And this is the question worth stopping on, because the answer is the
+actual punchline of the whole post.
+
+Nothing in the register distinguishes them. There is no hidden tag, no extra
+switch, no metadata. `1111 1011` is `1111 1011`. It is -5 *and* 251 at the same
+time, and which one you get depends entirely on who is reading it.
+
+That reader is the compiler. When you write `int` it emits instructions that
+treat the row as signed, and when you write `unsigned` it emits instructions
+that treat the same row as unsigned. The CPU genuinely has both:
+
+- Addition and subtraction are **shared**, which is the entire payoff we
+  designed for. `add` doesn't know or care.
+- Comparison is **not**. x86 has `jl` (jump if less, signed) and `jb` (jump if
+  below, unsigned). Same bits, different verdict: as signed, `1111 1011 < 0`; as
+  unsigned, `1111 1011 > 0`.
+- Division is **not**. `idiv` is signed, `div` is unsigned.
+- Widening is **not**. Going from 8 bits to 32, signed values sign-extend
+  (copy the top bit leftward) while unsigned values zero-extend.
+
+So a type in C++ isn't a property of the memory. It is an instruction about how
+to read it. This is why comparing a signed and an unsigned value is such a
+reliable source of bugs:
+
+```cpp
+int i = -1;
+unsigned u = 1;
+std::cout << (i < u);   // prints 0
+```
+
+-1 is not less than 1 here, because C++ converts the `int` to `unsigned` before
+comparing, and as an unsigned value those 32 bits read as 4294967295. Nothing
+was corrupted. The bits never moved. Somebody just read the same row with the
+other set of rules.
+
+### What living on a wrapping line costs you
+
+The line has no ends. Walk off the top of the positive half and you land in the
+negatives.
+
+```cpp
+int x = INT_MAX;        // 01111111 11111111 11111111 11111111
+std::cout << x + 1;     // -2147483648 in practice
+```
+
+Nothing overflowed out of the register. The carry rippled up into the leftmost
+bit, and that bit is the one that decides how the whole row gets read.
+`0111...111 + 1 = 1000...000`.
+
+<InfoNote>
+Careful with the wording here, because C and C++ split on it. Overflow of
+<b>unsigned</b> types is defined: it wraps modulo 2^n, guaranteed by the
+standard. Overflow of <b>signed</b> types is undefined behaviour, even though
+C++20 finally mandated two's complement <i>representation</i>. The compiler is
+allowed to assume `x + 1 > x` and optimise on it, so a loop guarded by an
+overflow check can be deleted outright. You get `INT_MIN` on most builds, but
+you are not owed it. Use `-fwrapv`, do the arithmetic in an unsigned type, or
+check before you add.
+</InfoNote>
+
+The lopsided range bites too. `abs(INT_MIN)` cannot return the right answer,
+because +2147483648 is not on the line at all. There is no pattern for it. So
+`std::abs` hands back `INT_MIN` on a typical build, and a function whose entire
+job is to return a positive number returns a negative one.
+
+<MustRead>
+In 1996, the launch of the Ariane 5 rocket by the European Space Agency ended in
+tragedy within 40 seconds due to a critical oversight. The engineers reused code
+from Ariane 4, which was designed for lower velocities. Ariane 4 used 16-bit
+number architecture, while Ariane 5 was designed for much higher velocities that
+could exceed the 16-bit limit. During the flight, a 64-bit floating point
+velocity measurement was converted to a 16-bit signed integer, causing an
+integer overflow. This error disrupted the guidance system, resulting in
+incorrect course adjustments, full nozzle deflections, and ultimately, the
+rocket's destruction, a loss of €500 million.
+
+The velocity did not become invalid. It became negative.
+
+To read the story in more details, you can read the blog on
+[Famous bugs rocket launch](https://jam.dev/blog/famous-bugs-rocket-launch/).
+</MustRead>
+
+### So why is -1 all ones?
+
+Back to the printout that started this. -1 is `2^32 - 1`, and `2^32 - 1` is the
+pattern with every switch on. That's the whole answer. On a fixed-width row, one
+step below zero is the top of the range, because the borrow has nowhere to go.
+
+None of this has to be taken on trust. `std::bitset` prints what is actually
+sitting in the register:
+
+```cpp
+#include <iostream>
+#include <bitset>
+#include <climits>
+
+void show(const char* name, int v) {
+    std::cout << name << " (" << v << ") : " << std::bitset<32>(v) << '\n';
+}
+
+int main() {
+    show("      0", 0);
+    show("      5", 5);
+    show("     -5", -5);
+    show("     -1", -1);
+    show("INT_MAX", INT_MAX);
+    show("INT_MIN", INT_MIN);
+
+    unsigned u = UINT_MAX;
+    std::cout << "UINT_MAX (" << u << ") : " << std::bitset<32>(u) << '\n';
+    std::cout << "\n5 + (-5) = " << 5 + (-5) << '\n';
+    std::cout << "~0 = " << ~0 << '\n';
+    std::cout << "UINT_MAX + 1 = " << u + 1 << '\n';
+}
+```
+
+```bash
+      0 (0) : 00000000000000000000000000000000
+      5 (5) : 00000000000000000000000000000101
+     -5 (-5) : 11111111111111111111111111111011
+     -1 (-1) : 11111111111111111111111111111111
+INT_MAX (2147483647) : 01111111111111111111111111111111
+INT_MIN (-2147483648) : 10000000000000000000000000000000
+UINT_MAX (4294967295) : 11111111111111111111111111111111
+
+5 + (-5) = 0
+~0 = -1
+UINT_MAX + 1 = 0
+```
+
+Every line is the theory restated by the machine. `5 + (-5)` is 0 through the
+plain adder, no sign handling anywhere. `~0` is -1, which is the flip half of
+flip-and-add-one applied to zero. `UINT_MAX + 1` is 0, which is the wrap said
+out loud. And the `-1` row and the `UINT_MAX` row printed the same 32 bits,
+because they are the same 32 bits.
+
+That is the part I find genuinely nice: <b>the sign is not stored anywhere.</b>
+It is not a bit that means minus. It is a decision about how to read a row of
+switches that were never anything but on and off.
+
+And once you see -1 as `2^n - 1`, a handful of bit tricks stop looking clever
+and start looking obvious. `~` here is C++'s bitwise NOT, the operator that
+flips every bit in the row, and `&` is bitwise AND, which keeps a bit only if
+both sides have it set.
+
+**`~0` is -1.** Zero is a row of 32 zeros, so flipping every one of them gives a
+row of 32 ones, and we just spent a whole post establishing what that row is:
+
+```bash
+ 0  =  00000000000000000000000000000000
+~0  =  11111111111111111111111111111111   which is -1
+```
+
+Careful with the general case though. `~x` is not `-x`, it is `-x - 1`, because
+negating is flip **and add one** and `~` only does the flip. So `~5` is -6. The
+reason `~0` looks like a clean negation is that 0 is the one value where the
+`+ 1` has nothing to carry into.
+
+**`x & -1` is x.** -1 is the pattern with every bit set, so ANDing with it keeps
+every bit of x untouched. That is why -1 turns up as "all flags on" throughout
+systems code: it is the mask that lets everything through.
+
+**`x & (x - 1)` clears the lowest set bit.** Subtracting 1 borrows through the
+trailing zeros and stops at the lowest 1, turning it into 0 and everything below
+it into 1s. The same borrow we walked through when `0 - 1` became all ones,
+just stopping earlier. AND the two together and only the shared upper bits
+survive:
+
+```bash
+x        =  0101 1000
+x - 1    =  0101 0111
+x & (x-1)=  0101 0000     the lowest 1 is gone
+```
+
+**`x & -x` isolates that lowest set bit**, which is the same fact read from the
+other side, and it is the operation a Fenwick tree runs on every single update.
+
+I avoided bit manipulation for years. If we go back to 2021, when I wanted to
+learn Competitive Programming, I got through pointers, linked lists, recursion,
+graphs, dynamic programming, and then hit Fenwick trees and segment trees and
+got stuck. What was I stuck on? Bit manipulation. I knew I was stuck on it, but
+I avoided it, because I had this mentality that it was hard and advanced.
+
+It wasn't advanced. I just didn't know what a register was. Bit manipulation and
+bitwise operators are difficult to understand, but only if you don't understand
+how computers work.
+
+Happy bit computing!

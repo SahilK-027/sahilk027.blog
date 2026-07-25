@@ -4,8 +4,7 @@ blogNo: 7
 
 import Random from "../../../../../components/Random/Random";
 import Blog7Thumbnail from "./utils/Thumbnail";
-import img2l from "./utils/assets/2l.png";
-import img2d from "./utils/assets/2d.png";
+import PositionalFigure from "./utils/PositionalFigure";
 
 export const poster = <Blog7Thumbnail />;
 
@@ -183,7 +182,9 @@ the right place.
 So in many ways, Zero wasn't just about "nothing", it was about structure. It
 made numbers scalable. It made them digital. It made them make sense.
 
-<BlogImage imgDark={img2d} imgLight={img2l} description="Fig(2.0) Understanding how positional system works" />
+<div className="image">
+  <PositionalFigure />
+</div>
 
 ### Zero as a Number: The Rules, the Power, the Paradox
 
@@ -331,7 +332,7 @@ fall.
 <InfoNote>
 In one of blogs I have already explained this concept of binary representation,
 if you want to know more you can read more about it
-[here](/blogs/cs-fundamentals-bit-manipulation/getting-started-with-bit-manipulation-techniques-the-basics).
+[here](/blogs/how-computers-store-negative-numbers).
 </InfoNote>
 
 Zero is a <span className="bold-text">hinge</span> on which math, logic,

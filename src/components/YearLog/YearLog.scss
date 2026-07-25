@@ -21,7 +21,7 @@
 
         .year-rail__year {
           font-size: var(--fs-title-2);
-          font-weight: 450;
+          font-weight: 500;
           letter-spacing: -0.02em;
           line-height: 1;
           color: var(--text-1);
@@ -136,21 +136,6 @@
               font-size: var(--fs-body);
               line-height: 1.45;
               transition: color var(--dur-base) var(--ease);
-
-              .post-badge {
-                display: inline-block;
-                margin-left: 10px;
-                padding: 2px 9px;
-                font-size: var(--fs-micro);
-                font-weight: 600;
-                text-transform: uppercase;
-                letter-spacing: 0.08em;
-                color: var(--accent);
-                background: var(--accent-subtle);
-                border: 1px solid var(--accent-faint);
-                border-radius: 999px;
-                vertical-align: 2px;
-              }
             }
 
             .post-meta {
@@ -163,6 +148,23 @@
 
               time {
                 font-variant-numeric: tabular-nums;
+              }
+
+              // Lives on the meta line, not appended to the title: a long
+              // title would wrap and strand the pill on a line of its own.
+              .post-badge {
+                flex: none;
+                padding: 1px 8px;
+                font-family: inherit;
+                font-size: var(--fs-micro);
+                font-weight: 500;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+                line-height: 1.6;
+                color: var(--accent);
+                background: var(--accent-subtle);
+                border: 1px solid var(--accent-faint);
+                border-radius: 999px;
               }
 
               .post-meta__dot {

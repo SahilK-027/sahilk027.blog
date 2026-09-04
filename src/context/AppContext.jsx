@@ -2,7 +2,6 @@ import { createContext, useContext, useEffect, useRef, useState } from "react";
 import Cookies from "js-cookie";
 import music from "../assets/audio/bgm.ogg";
 import { applyAccent, DEFAULT_ACCENT, getAccent } from "../data/accents";
-import { getLenis } from "../hooks/useLenis";
 
 const AppContext = createContext(null);
 
@@ -54,15 +53,11 @@ export const AppProvider = ({ children }) => {
   const openCMDCenter = () => {
     setIsCommandCenterOpen(true);
     document.documentElement.classList.add("no-scroll");
-    // Lenis scrolls the page programmatically, so overflow:hidden alone
-    // doesn't stop it — pause it while the palette owns the wheel.
-    getLenis()?.stop();
   };
 
   const closeCMDCenter = () => {
     setIsCommandCenterOpen(false);
     document.documentElement.classList.remove("no-scroll");
-    getLenis()?.start();
   };
 
   const controlMusic = () => setIsMusicPlaying((prev) => !prev);

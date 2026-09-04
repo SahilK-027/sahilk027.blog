@@ -1,6 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { GLYPH_PATHS } from "../../data/glyphPaths";
-import { getLenis } from "../../hooks/useLenis";
 import { markAppReady } from "../../hooks/appReady";
 import logo from "../../assets/images/logo.webp";
 import logoBlack from "../../assets/images/logoForBlackBg.webp";
@@ -57,9 +56,7 @@ const AppLoader = () => {
   // native scrollbar comes back with the app (not one fade later, on unmount).
   // The scroll container is <html>; the repo ships an .no-scroll helper.
   useLayoutEffect(() => {
-    const locked = phase === "shown";
-    document.documentElement.classList.toggle("no-scroll", locked);
-    if (!locked) getLenis()?.start();
+    document.documentElement.classList.toggle("no-scroll", phase === "shown");
     return () => document.documentElement.classList.remove("no-scroll");
   }, [phase]);
 
@@ -102,10 +99,6 @@ const AppLoader = () => {
     let shown = 0; // eased 0..1
     let last = shownAt;
     const tick = (now) => {
-      // Lenis drives scroll programmatically, so overflow:hidden alone doesn't
-      // stop it. Keep it stopped every frame in case it inits after we mount.
-      getLenis()?.stop();
-
       const dt = Math.min((now - last) / 1000, 0.05); // clamp big gaps
       last = now;
       // Exponential ease so the bar chases real progress smoothly, no timer.
@@ -115,7 +108,6 @@ const AppLoader = () => {
 
       const elapsed = now - shownAt;
       if (shown >= 1 && elapsed >= MIN_VISIBLE) {
-        getLenis()?.start(); // hand scroll back to the app
         setPhase("revealing"); // slats lift away
         // Released DURING the reveal (see READY_AT), not after it. The motion
         // this gates is the hero's spawn, which is over in about a second —
@@ -134,7 +126,6 @@ const AppLoader = () => {
       clearTimeout(goneTimer);
       clearTimeout(readyTimer);
       cancelAnimationFrame(raf);
-      getLenis()?.start();
     };
   }, []);
 

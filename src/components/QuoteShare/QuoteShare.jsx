@@ -64,7 +64,7 @@ const QuoteShare = ({ containerRef }) => {
     };
 
     // Re-anchor to the selection on scroll instead of clearing — the bubble
-    // tracks the text. rAF-throttled so Lenis's frequent scroll events are cheap.
+    // tracks the text. rAF-throttled so frequent scroll events stay cheap.
     let rafId = null;
     const onScroll = () => {
       if (rafId) return;

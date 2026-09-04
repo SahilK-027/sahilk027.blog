@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useLocation, useNavigationType } from "react-router-dom";
-import { scrollToTop } from "../../hooks/useLenis";
+import { scrollToTop } from "../../hooks/scroll";
 
 /**
  * Scroll management for client-side routing. On a fresh link click (PUSH) or a

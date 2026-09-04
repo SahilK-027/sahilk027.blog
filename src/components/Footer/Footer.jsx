@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { scrollToTop } from "../../hooks/useLenis";
+import { scrollToTop } from "../../hooks/scroll";
 import { GLYPH_PATHS } from "../../data/glyphPaths";
 import "./Footer.scss";
 

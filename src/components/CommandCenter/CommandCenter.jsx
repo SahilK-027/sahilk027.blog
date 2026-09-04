@@ -245,9 +245,8 @@ const ItemCenter = ({
     setSelectedFilter(noFilter);
   };
   return (
-    // data-lenis-prevent: wheel events here drive this panel's own scroll,
-    // not the Lenis-smoothed page behind the overlay.
-    <div className="item-center" data-lenis-prevent>
+    // This panel owns its own scroll, not the page behind the overlay.
+    <div className="item-center">
       {loadingBlogs ? (
         <Loader />
       ) : searchedFilteredBlogs ? (

@@ -295,9 +295,9 @@
   }
 
   // Preview wrapper hosts the iframe + a scroll guard overlay. The iframe eats
-  // wheel events (cross-origin), which kills Lenis page scroll; the overlay
-  // catches them instead so the page scrolls smoothly. Click hands the wheel
-  // back to the iframe for interactive demos.
+  // wheel events (cross-origin), which stalls page scroll; the overlay catches
+  // them instead so the page keeps moving. Click hands the wheel back to the
+  // iframe for interactive demos.
   .sp-preview-wrap {
     position: relative;
     flex: 1;

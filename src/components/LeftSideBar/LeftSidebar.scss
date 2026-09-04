@@ -1,18 +1,54 @@
+@mixin toc-expanded {
+  .toc-ticks {
+    // Bars stretch toward the text they become, and clear from the top down.
+    .toc-tick {
+      opacity: 0;
+      transform: scaleX(1.25);
+      transition-delay: calc(var(--i, 0) * 20ms);
+    }
+
+    .toc-tick--active::before {
+      opacity: 0;
+    }
+  }
+
+  .toc-panel {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .toc-track {
+    opacity: 1;
+  }
+
+  .toc-list li {
+    opacity: 1;
+    transform: none;
+    transition-delay: calc(90ms + var(--i, 0) * 34ms);
+  }
+}
+
 .left-sidebar {
   // Sticky rail in the grid's left column (see .blog-series-page). Because it
   // lives inside the article grid, it sticks while the article scrolls and stops
-  // naturally at the grid's end — it can never reach or overlap the footer.
+  // naturally at the grid's end, so it can never reach or overlap the footer.
   grid-column: 1;
   justify-self: end; // pinned to the article's left edge, inside the gutter
   align-self: start;
   position: sticky;
   top: 120px;
-  width: 210px;
-  // A long TOC scrolls inside its own rail instead of running off-screen.
-  max-height: calc(100vh - 160px);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
+  // Wide enough that headings wrap to two lines rather than four.
+  width: 248px;
+
+  // Where a row's content starts: track (2) + its gap (14). A bar stands for a
+  // whole row, so it sits on the row's left edge (the number), not on the
+  // heading text, which would leave a dead gap on the left of the rail.
+  --toc-inset: 16px;
+
+  // Hit-testable, but only .toc-ticks / .toc-panel actually open the rail, so
+  // the tall empty column below a short list can't trigger it. mouseleave on
+  // the rail is what closes it.
+  pointer-events: auto;
   opacity: 1;
   transition: opacity var(--dur-base) var(--ease);
 
@@ -23,23 +59,111 @@
     pointer-events: none;
   }
 
+  // One shared curve for the whole morph: a soft ease-out so the bars release
+  // and the rows arrive on the same feel.
+  --toc-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  .toc-panel {
+    transition: opacity 300ms var(--toc-ease), visibility 300ms var(--toc-ease);
+  }
+
+  // The panel stays in flow so the rail is as tall as the real list; if the
+  // ticks were the in-flow layer the rail would collapse to their height and
+  // the list would be clipped to a couple of rows.
+  .toc-panel {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    max-height: calc(100vh - 160px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: auto;
+  }
+
+  // ---- Collapsed: a stack of tick bars, one per section ------------------
+  // Overlaid on the panel and sharing its origin exactly, so each bar grows
+  // into the row that replaces it.
+  .toc-ticks {
+    position: absolute;
+    top: 0;
+    left: 0;
+    // A full-width block, so the hover target is one solid rectangle across
+    // the rail instead of the ragged silhouette of the bars themselves.
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 11px;
+    padding: 12px 0 12px var(--toc-inset);
+    margin-top: -12px;
+    opacity: 1;
+    pointer-events: auto;
+
+    .toc-tick {
+      position: relative;
+      flex-shrink: 0;
+      height: 2px;
+      border-radius: 2px;
+      background: var(--text-3);
+      opacity: 0.32;
+      transform-origin: left center;
+      transition: background-color 300ms var(--toc-ease),
+        opacity 340ms var(--toc-ease), transform 460ms var(--toc-ease);
+    }
+
+    // The reading position: brighter, slightly longer, with a marker sitting
+    // just off its left edge.
+    .toc-tick--active {
+      background: var(--text-1);
+      opacity: 1;
+      transform: scaleX(1.18);
+
+      // Sits exactly on the progress track's x, so the marker reads as
+      // becoming the track when the panel opens.
+      &::before {
+        content: "";
+        position: absolute;
+        left: calc(-1 * var(--toc-inset));
+        top: 50%;
+        width: 2px;
+        height: 14px;
+        border-radius: 2px;
+        background: var(--text-1);
+        transform: translateY(-50%) scaleX(calc(1 / 1.18));
+        transform-origin: left center;
+        transition: opacity 220ms var(--toc-ease);
+      }
+    }
+  }
+
+  // Absolute so it doesn't push the list down: the list has to start at the
+  // same y as the tick stack for the morph to line up.
   .toc-label {
+    position: absolute;
+    top: -34px;
+    left: 0; // flush with the rail's left edge, above the track
+    margin: 0;
     font-family: "Fira Code", monospace;
-    font-size: var(--fs-micro);
+    font-size: var(--fs-small);
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.22em;
+    letter-spacing: 0.16em;
     color: var(--text-3);
-    margin-bottom: 16px;
+    white-space: nowrap;
   }
 
   .toc-body {
     display: flex;
-    gap: 16px;
+    gap: 14px;
     min-height: 0;
+    min-width: 0;
     overflow-y: auto;
-    // Thin, unobtrusive rail scrollbar — the chunky geometric page scrollbar
-    // would look wrong inside a 220px nav column.
+    // Setting one axis to `auto` computes the other to `auto` as well, which is
+    // where the stray horizontal scrollbar came from.
+    overflow-x: hidden;
+    // Thin, unobtrusive rail scrollbar. The chunky geometric page scrollbar
+    // would look wrong inside a 210px nav column.
     scrollbar-width: thin;
     scrollbar-color: var(--border) transparent;
     &::-webkit-scrollbar { width: 6px; }
@@ -52,6 +176,8 @@
 
     .toc-track {
       flex-shrink: 0;
+      opacity: 0;
+      transition: opacity 420ms var(--toc-ease) 120ms;
       width: 2px;
       border-radius: 2px;
       background: var(--border);
@@ -68,19 +194,27 @@
       list-style: none;
       margin: 0;
       padding: 0;
+      min-width: 0;
       display: flex;
       flex-direction: column;
-      gap: 12px;
 
       li {
         margin: 0;
+        padding-bottom: 12px;
         line-height: 1.4;
+        opacity: 0;
+        transform: translateX(-10px);
+        transition: opacity 420ms var(--toc-ease),
+          transform 480ms var(--toc-ease);
       }
 
       .toc-item {
         display: flex;
         align-items: baseline;
         gap: 10px;
+        width: 100%;
+        min-width: 0;
+        overflow-wrap: break-word;
         font-family: var(--font-family);
         font-size: var(--fs-small);
         line-height: 1.4;
@@ -95,6 +229,9 @@
 
         .toc-item__no {
           flex-shrink: 0;
+          // Fixed so every heading starts on the same x, which is the x the
+          // bars are drawn at.
+          width: 20px;
           font-family: "Fira Code", monospace;
           font-size: var(--fs-micro);
           color: var(--text-3);
@@ -117,6 +254,27 @@
           }
         }
       }
+    }
+  }
+
+  // ---- Expanded ----------------------------------------------------------
+  // Driven by React state (see LeftSidebar.jsx), not :hover. The rail is as
+  // tall as the expanded list even while collapsed, so it can't be its own
+  // hover target, and :hover reaching it through a pointer-events:none
+  // ancestor is not reliable across browsers.
+  &.left-sidebar--open {
+    @include toc-expanded;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .left-sidebar {
+    .toc-ticks,
+    .toc-panel,
+    .toc-ticks .toc-tick,
+    .toc-list li {
+      transition-duration: 0.01ms;
+      transition-delay: 0ms;
     }
   }
 }

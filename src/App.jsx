@@ -15,7 +15,6 @@ import { commandShortcuts } from "./data/CommandShortCuts";
 import { mdxBlogs } from "./data/blogRegistry";
 import BlogLayout from "./blog/BlogLayout";
 import { useApp } from "./context/AppContext";
-import { useLenis } from "./hooks/useLenis";
 
 /**
  * `App` is the root component. Theme/music/command-center state lives in
@@ -34,8 +33,6 @@ const App = () => {
   } = useApp();
 
   const [isCommandKeyPressed, setIsCommandKeyPressed] = useState(false);
-
-  useLenis();
 
   // Props still expected by the (non-blog) pages.
   const commonProps = {

@@ -109,10 +109,10 @@ const SandpackContent = () => {
   const [showCode, setShowCode] = useState(true);
   const [isFullscreen, setIsFullscreen] = useState(false);
   // The preview is a cross-origin iframe: when the page scrolls past it the
-  // iframe swallows the wheel event, so Lenis loses it and the page stops dead
-  // ("stuck" scroll). An overlay sits over the iframe and catches those wheel
-  // events itself, letting the page scroll through smoothly. Clicking the
-  // overlay hands control to the iframe (needed for interactive lil-gui demos).
+  // iframe swallows the wheel event and the page stops dead ("stuck" scroll).
+  // An overlay sits over the iframe and catches those wheel events itself, so
+  // the page keeps scrolling. Clicking the overlay hands control to the iframe
+  // (needed for interactive lil-gui demos).
   const [previewInteractive, setPreviewInteractive] = useState(false);
   const rootRef = useRef(null);
 
@@ -122,41 +122,6 @@ const SandpackContent = () => {
       document.body.style.overflow = "";
     };
   }, [isFullscreen]);
-
-  // Lenis smooth-scroll captures the wheel globally, so scrolling over the code
-  // editor moved the PAGE instead of the code. Fully opting the pane out of Lenis
-  // (data-lenis-prevent) broke the reverse: scrolling over a short pane, or past
-  // its top/bottom, left the page stuck. So we do an edge-aware handoff: consume
-  // the wheel only while the pane can still scroll that direction; otherwise let
-  // it bubble to Lenis's window listener so the page keeps moving.
-  //
-  // This is DELEGATED on the stable root, not bound per scroller. CodeMirror
-  // mounts a fresh .cm-scroller every time you switch Sandpack file tabs
-  // (index.js -> styles.css -> index.html), so per-element listeners fell off the
-  // new node and the hijack returned. Delegation resolves the scroller from
-  // e.target at event time, so it survives any inner remount. Root is inside the
-  // window, so this bubble-phase listener runs before Lenis's window listener.
-  useEffect(() => {
-    const root = rootRef.current;
-    if (!root) return undefined;
-    const onWheel = (e) => {
-      const el = e.target.closest?.(".cm-scroller, .sp-console-list");
-      if (!el) return; // not over a scrollable pane — let Lenis have it
-      const canScroll = el.scrollHeight > el.clientHeight + 1;
-      if (!canScroll) return; // nothing to scroll here — let the page take it
-      const atTop = el.scrollTop <= 0;
-      const atBottom =
-        Math.ceil(el.scrollTop + el.clientHeight) >= el.scrollHeight;
-      // Pane can move this way: scroll it (native) and stop the event before it
-      // reaches Lenis. At an edge we do nothing, so it bubbles to Lenis and the
-      // page scrolls on smoothly, no stuck handoff.
-      if ((e.deltaY < 0 && !atTop) || (e.deltaY > 0 && !atBottom)) {
-        e.stopPropagation();
-      }
-    };
-    root.addEventListener("wheel", onWheel, { passive: true });
-    return () => root.removeEventListener("wheel", onWheel);
-  }, []);
 
   // Re-arm the scroll guard whenever the preview is re-shown.
   useEffect(() => {

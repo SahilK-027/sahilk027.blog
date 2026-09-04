@@ -14,7 +14,7 @@ import SignatureForWhiteBg from "../components/SVG-JSX/SignatureForWhiteBg/Signa
 import { useApp } from "../context/AppContext";
 import { postsByDateDesc } from "../data/posts";
 import { GLYPH_PATHS } from "../data/glyphPaths";
-import { scrollToTarget } from "../hooks/useLenis";
+import { scrollToTarget } from "../hooks/scroll";
 import { mdxComponents } from "./mdxComponents";
 import "../pages/BlogsPage/Blogs/Blogs.scss";
 

@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { scrollToTop } from "../../hooks/useLenis";
+import { scrollToTop } from "../../hooks/scroll";
 import "./BackToTop.scss";
 
 /**
  * Floating "scroll to top" button. Hidden until the reader is `threshold`
- * pixels down the page, then fades in bottom-right. Uses the shared Lenis
+ * pixels down the page, then fades in bottom-right. Uses the shared
  * instance so the ride matches the rest of the site.
  */
 const BackToTop = ({ threshold = 600 }) => {

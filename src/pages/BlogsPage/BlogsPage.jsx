@@ -7,7 +7,7 @@ import TagFilter from '../../components/TagFilter/TagFilter';
 import YearLog from '../../components/YearLog/YearLog';
 import CursorTrail from '../../components/CursorTrail/CursorTrail';
 import { postsByDateDesc } from '../../data/posts';
-import { scrollToTarget } from '../../hooks/useLenis';
+import { scrollToTarget } from '../../hooks/scroll';
 
 import './BlogsPage.scss';
 
@@ -30,7 +30,7 @@ const useHeroParallax = (heroRef) => {
         raf = 0;
         const y = Math.min(window.scrollY, window.innerHeight);
         if (heroRef.current) {
-          heroRef.current.style.transform = `translateY(${-y * 0.25}px)`;
+          heroRef.current.style.transform = `translateY(${-y * 0.12}px)`;
         }
       });
     };

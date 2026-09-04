@@ -4,7 +4,8 @@
 // path segments are gone along with the series concept.
 export const posts = [
   {
-    // Merged rewrite of the two old bit-manipulation posts, which are gone.
+    // blogNo is a display/join key only, no URL depends on it. Numbered
+    // chronologically, oldest = 1.
     blogNo: 2,
     title: "How Does a Computer Store -1 When All It Has Is 0s and 1s?",
     date: "2026-07-25",
@@ -25,7 +26,7 @@ export const posts = [
     ],
   },
   {
-    blogNo: 7,
+    blogNo: 1,
     title: "Zero: The Number That Isn’t a Number, or Is It?",
     date: "2025-04-06",
     displayDate: "6th April 2025",

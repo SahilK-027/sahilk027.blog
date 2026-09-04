@@ -24,7 +24,7 @@
       text-decoration-color: var(--color-info-border);
 
       &:hover {
-        transition: all 0.3s ease;
+        transition: all var(--dur-base) var(--ease);
         text-decoration-color: var(--color-info);
       }
 
@@ -39,10 +39,10 @@
         color: var(--color-text-primary);
         border-radius: 5px;
         padding: 10px 20px;
-        font-size: 14px;
+        font-size: var(--fs-small);
         font-family: inherit;
         cursor: pointer;
-        transition: all 0.3s ease;
+        transition: all var(--dur-base) var(--ease);
 
         &:hover {
           background-color: var(--color-info-dark);
@@ -59,7 +59,7 @@
     align-items: center;
     top: -10px;
     right: -10px;
-    font-size: 22px;
+    font-size: var(--fs-title-3);
     color: var(--color-bg-primary);
     background: red;
     background-color: var(--color-info);
@@ -87,7 +87,7 @@
         text-decoration-color: var(--color-info-border);
 
         &:hover {
-          transition: all 0.3s ease;
+          transition: all var(--dur-base) var(--ease);
           text-decoration-color: var(--color-info);
         }
 
@@ -99,7 +99,7 @@
 
       i {
         color: var(--color-info);
-        font-size: 16px;
+        font-size: var(--fs-body);
         margin-right: 6px;
       }
 

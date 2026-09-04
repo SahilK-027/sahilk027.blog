@@ -2,18 +2,29 @@
 import React, { useRef, useEffect, useState } from "react";
 import { useSpring, animated } from "react-spring";
 
-// Importing necessary components and tools
-import Tooltip from "../Tooltip/Tooltip";
-
 // Importing necessary styles && data
 import "./CommandCenter.scss";
 import { commandShortcuts, cmdItems } from "../../data/CommandShortCuts";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-// Blog series data
-import { blogSeries, blogPost } from "../../data/BlogsData";
+// Blog post data
+import { posts, allTags, postsByDateDesc } from "../../data/posts";
+import { GLYPH_PATHS } from "../../data/glyphPaths";
 
 import Loader from "../Loader/Loader";
+
+// One of the six brand primitives, keyed by blog number — same mapping as
+// the archive rows, so a post keeps its glyph everywhere.
+const PostGlyph = ({ n }) => (
+  <svg className="cmd-glyph" viewBox="0 0 24 24" aria-hidden="true">
+    {GLYPH_PATHS[n % GLYPH_PATHS.length]
+      .split("M")
+      .filter(Boolean)
+      .map((seg, j) => (
+        <path key={j} d={`M${seg}`} pathLength="1" />
+      ))}
+  </svg>
+);
 const noFilter = "No filter";
 /**
  * SearchBlogs component
@@ -21,6 +32,7 @@ const noFilter = "No filter";
  */
 
 const SearchBlogs = ({
+  closeCMDCenter,
   selectedFilter,
   showDropdown,
   handleFilterSelection,
@@ -38,12 +50,18 @@ const SearchBlogs = ({
         (searchQuery !== "" && searchQuery.trim().length > 0) ||
         selectedFilter !== noFilter
       ) {
-        let searchedBlogs = blogPost;
+        let searchedBlogs = posts;
 
         if (searchQuery !== "") {
+          const haystack = (blog) => [
+            blog.title,
+            ...blog.tags,
+            ...blog.keywords,
+          ];
+
           // Filter the blogs based on the search query
-          searchedBlogs = blogPost.filter((blog) =>
-            blog.keywords.some((keyword) =>
+          searchedBlogs = posts.filter((blog) =>
+            haystack(blog).some((keyword) =>
               keyword.toLowerCase().includes(searchQuery.toLowerCase())
             )
           );
@@ -51,8 +69,8 @@ const SearchBlogs = ({
           // If no results found, try matching with each word separately
           if (searchedBlogs.length === 0) {
             const searchWords = searchQuery.toLowerCase().split(" ");
-            searchedBlogs = blogPost.filter((blog) =>
-              blog.keywords.some((keyword) =>
+            searchedBlogs = posts.filter((blog) =>
+              haystack(blog).some((keyword) =>
                 searchWords.some((word) => keyword.toLowerCase().includes(word))
               )
             );
@@ -60,20 +78,20 @@ const SearchBlogs = ({
         }
 
         if (selectedFilter !== noFilter) {
-          searchedBlogs = searchedBlogs.filter((blog) => {
-            return blog.filterTag === selectedFilter;
-          });
+          searchedBlogs = searchedBlogs.filter((blog) =>
+            blog.tags.includes(selectedFilter)
+          );
         }
 
         setTimeout(() => {
           setSearchedFilteredBlogs(searchedBlogs);
           setLoadingBlogs(false);
-        }, 1500);
+        }, 250);
       } else {
         setSearchedFilteredBlogs(null);
         setLoadingBlogs(false);
       }
-    }, 1000);
+    }, 300);
 
     // Cleanup function to clear timeout
     return () => clearTimeout(timeoutId);
@@ -81,23 +99,35 @@ const SearchBlogs = ({
 
   return (
     <div className="search-bar">
+      <i className="fa-solid fa-magnifying-glass search-icon" aria-hidden="true"></i>
       <input
         autoFocus={true}
         type="text"
-        placeholder="Search a blog post with keywords..."
+        placeholder="Search posts by title, tag or keyword…"
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />
-      <Tooltip content="Filter Blogs" direction="top">
-        <div className="filter-posts-container" onClick={handleDropdownToggle}>
-          <i className="fa-solid fa-filter filter-icon"></i>
-        </div>
-      </Tooltip>
+      <div
+        className="filter-posts-container"
+        onClick={handleDropdownToggle}
+        title="Filter by tag"
+        aria-label="Filter by tag"
+      >
+        <i className="fa-solid fa-filter filter-icon"></i>
+      </div>
+      <button
+        className="cmd-close"
+        onClick={closeCMDCenter}
+        title="Close (Esc)"
+        aria-label="Close command menu"
+      >
+        <i className="fa-solid fa-xmark"></i>
+      </button>
       {showDropdown && (
         <div className="dropdown-menu">
           <div className="dropdown-top">
             <div>
-              <h5>Filter Blog Series</h5>
+              <h5>Filter by tag</h5>
             </div>
             <div onClick={handleDropdownToggle}>
               <i className="fa-solid fa-xmark"></i>
@@ -118,25 +148,84 @@ const SearchBlogs = ({
                 <div className="series-title">No filter</div>
               </div>
             </li>
-            {blogSeries.map((series, index) => (
-              <li key={index}>
+            {allTags.map((tag) => (
+              <li key={tag}>
                 <div
                   className="series-container"
-                  onClick={() => handleFilterSelection(series.filterTag)}
-                  key={series.seriesID}
+                  onClick={() => handleFilterSelection(tag)}
                 >
                   <i
                     className={`fa-solid fa-check ${
-                      selectedFilter === series.filterTag ? "visible" : ""
+                      selectedFilter === tag ? "visible" : ""
                     }`}
                   ></i>
-                  <div className="series-title">{series.filterTag}</div>
+                  <div className="series-title">{tag}</div>
                 </div>
               </li>
             ))}
           </ul>
         </div>
       )}
+    </div>
+  );
+};
+
+/**
+ * Zero state — the six brand primitives sketch themselves in, with an offramp
+ * to a random post instead of a dead end.
+ */
+const EmptyState = ({ closeCMDCenter }) => {
+  const navigate = useNavigate();
+  const randomPost = () => {
+    const pick = posts[Math.floor(Math.random() * posts.length)];
+    navigate(pick.url);
+    closeCMDCenter();
+  };
+  return (
+    <div className="cmd-empty">
+      <div className="cmd-empty__glyphs" aria-hidden="true">
+        {GLYPH_PATHS.map((d, i) => (
+          <svg key={i} viewBox="0 0 24 24" style={{ "--i": i }}>
+            {d.split("M").filter(Boolean).map((seg, j) => (
+              <path key={j} d={`M${seg}`} pathLength="1" />
+            ))}
+          </svg>
+        ))}
+      </div>
+      <p className="cmd-empty__label">No entries found</p>
+      <p className="cmd-empty__text">
+        Nothing in the archive matches that yet.
+      </p>
+      <button className="cmd-empty__btn" onClick={randomPost}>
+        Read a random post
+        <i className="fa-solid fa-arrow-right" aria-hidden="true"></i>
+      </button>
+    </div>
+  );
+};
+
+/**
+ * Quick actions — palette-native commands: jump to a random post, flip the
+ * theme, cycle the accent through the six brand hues.
+ */
+const QuickActions = ({ closeCMDCenter }) => {
+  const navigate = useNavigate();
+
+  const randomPost = () => {
+    const pick = posts[Math.floor(Math.random() * posts.length)];
+    navigate(pick.url);
+    closeCMDCenter();
+  };
+
+  return (
+    <div>
+      <h4>Quick actions</h4>
+      <button className="cmd-action" onClick={randomPost}>
+        <div className="icon">
+          <i className="fa-solid fa-dice" aria-hidden="true"></i>
+        </div>
+        <div className="nav-link">Read a random post</div>
+      </button>
     </div>
   );
 };
@@ -156,6 +245,7 @@ const ItemCenter = ({
     setSelectedFilter(noFilter);
   };
   return (
+    // This panel owns its own scroll, not the page behind the overlay.
     <div className="item-center">
       {loadingBlogs ? (
         <Loader />
@@ -179,41 +269,47 @@ const ItemCenter = ({
           )}
           {searchedFilteredBlogs.length > 0 ? (
             <div className="result">
-              <span>
-                <b>
-                  {searchedFilteredBlogs.length > 1
-                    ? `${searchedFilteredBlogs.length} results`
-                    : `${searchedFilteredBlogs.length} result`}{" "}
-                </b>
-                for blogs matching entered keyword
+              <span className="result-count">
+                {String(searchedFilteredBlogs.length).padStart(2, "0")}{" "}
+                {searchedFilteredBlogs.length > 1 ? "entries" : "entry"} found
               </span>
-              {searchedFilteredBlogs.map((blog, index) => (
-                <div style={{ display: "flex", marginTop: 4 }} key={index}>
-                  <span
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      fontSize: 15,
-                      fontWeight: 600,
-                      color: "var(--color-text-primary)",
-                    }}
-                  >
-                    {index + 1}.{" "}
-                  </span>
-                  <Link to={blog.blogUrl} onClick={closeCMDCenter}>
-                    {blog.blogTitle}
-                  </Link>
-                </div>
+              {searchedFilteredBlogs.map((blog) => (
+                <Link
+                  className="cmd-post-row"
+                  key={blog.blogNo}
+                  to={blog.url}
+                  onClick={closeCMDCenter}
+                >
+                  <PostGlyph n={blog.blogNo} />
+                  <span className="cmd-post-row__title">{blog.title}</span>
+                  <span className="cmd-post-row__leader" aria-hidden="true" />
+                  <span className="cmd-post-row__meta">{blog.readtime}</span>
+                </Link>
               ))}
             </div>
           ) : (
-            <div className="no-result">
-              Sorry, I haven't written any blog about it yet! 😅
-            </div>
+            <EmptyState closeCMDCenter={closeCMDCenter} />
           )}
         </div>
       ) : (
         <div className="cmd-items">
+          <QuickActions closeCMDCenter={closeCMDCenter} />
+          <div>
+            <h4>Recent entries</h4>
+            {postsByDateDesc.slice(0, 3).map((blog) => (
+              <Link
+                className="cmd-post-row"
+                key={blog.blogNo}
+                to={blog.url}
+                onClick={closeCMDCenter}
+              >
+                <PostGlyph n={blog.blogNo} />
+                <span className="cmd-post-row__title">{blog.title}</span>
+                <span className="cmd-post-row__leader" aria-hidden="true" />
+                <span className="cmd-post-row__meta">{blog.readtime}</span>
+              </Link>
+            ))}
+          </div>
           {cmdItems.map((item, index) => (
             <div key={index}>
               <h4>{item.title}</h4>
@@ -314,6 +410,7 @@ const CommandCenter = ({ closeCMDCenter }) => {
         ref={commandCenterRef}
       >
         <SearchBlogs
+          closeCMDCenter={closeCMDCenter}
           selectedFilter={selectedFilter}
           showDropdown={showDropdown}
           handleFilterSelection={handleFilterSelection}

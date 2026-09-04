@@ -1,0 +1,233 @@
+// Only exists where the desktop rail is gone.
+.mobile-toc {
+  display: none;
+}
+
+@media (max-width: 1400px) {
+  .mobile-toc {
+    display: block;
+  }
+}
+
+// ---- Floating trigger: progress ring + current section ------------------
+.mobile-toc__fab {
+  position: fixed;
+  // Sit directly above the back-to-top button (right column).
+  right: clamp(1rem, 3vw, 2rem);
+  // Default: sit in the back-to-top slot (that button is hidden at the top).
+  // When scrolled, back-to-top appears and we lift above it.
+  bottom: clamp(1rem, 3vw, 2rem);
+  z-index: 55;
+  transition: transform 0.2s var(--ease, ease), border-color 0.2s ease,
+    bottom 0.25s ease;
+
+  .mobile-toc.is-raised & {
+    bottom: calc(clamp(1rem, 3vw, 2rem) + 3.5rem);
+  }
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: var(--bg-raised);
+  color: var(--text-1);
+  cursor: pointer;
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.32);
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+  &:active {
+    transform: translateY(0) scale(0.98);
+  }
+}
+
+.mobile-toc__ring {
+  flex-shrink: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  // Conic fill = reading progress; rest is the track colour.
+  background: conic-gradient(
+    var(--accent) var(--pct, 0%),
+    var(--border) 0
+  );
+  transition: background 0.15s linear;
+
+  &-inner {
+    width: 2.35rem;
+    height: 2.35rem;
+    border-radius: 50%;
+    background: var(--bg-raised);
+    display: grid;
+    place-items: center;
+    color: var(--text-2);
+    font-size: 0.95rem;
+  }
+}
+
+// ---- Scrim + bottom sheet ----------------------------------------------
+.mobile-toc__scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(3px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.28s ease;
+
+  &.is-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+.mobile-toc__sheet {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 91;
+
+  max-height: 72vh;
+  padding: 0.6rem 1.1rem calc(1.4rem + env(safe-area-inset-bottom, 0px));
+  border-radius: 20px 20px 0 0;
+  border-top: 1px solid var(--border);
+  background: var(--bg-subtle);
+  box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.4);
+
+  transform: translateY(102%);
+  transition: transform 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  &.is-open {
+    transform: translateY(0);
+  }
+}
+
+.mobile-toc__grip {
+  width: 40px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--border);
+  margin: 0.2rem auto 0.9rem;
+}
+
+.mobile-toc__sheet-head {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding-bottom: 0.7rem;
+  margin-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+.mobile-toc__sheet-title {
+  font-family: "Fira Code", monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  flex: 1;
+}
+.mobile-toc__sheet-pct {
+  font-family: "Fira Code", monospace;
+  font-size: 0.75rem;
+  color: var(--accent);
+}
+.mobile-toc__close {
+  border: none;
+  background: none;
+  color: var(--text-3);
+  font-size: 1rem;
+  cursor: pointer;
+  line-height: 1;
+  &:active {
+    color: var(--accent);
+  }
+}
+
+.mobile-toc__list {
+  list-style: none;
+  margin: 0;
+  padding: 0.2rem 0 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+
+  li {
+    margin: 0;
+  }
+}
+
+.mobile-toc__item {
+  display: flex;
+  align-items: baseline;
+  gap: 0.8rem;
+  width: 100%;
+  padding: 0.7rem 0.4rem;
+  border: none;
+  background: none;
+  text-align: left;
+  color: var(--text-2);
+  cursor: pointer;
+  border-radius: 10px;
+  transition: background 0.15s ease, color 0.15s ease;
+
+  &:active {
+    background: var(--bg-raised);
+  }
+
+  &.is-active {
+    color: var(--text-1);
+    font-weight: 600;
+    .mobile-toc__no {
+      color: var(--accent);
+    }
+  }
+}
+.mobile-toc__no {
+  flex-shrink: 0;
+  font-family: "Fira Code", monospace;
+  font-size: 0.72rem;
+  color: var(--text-3);
+}
+.mobile-toc__text {
+  font-size: 0.95rem;
+  line-height: 1.35;
+}
+
+// Staggered rise of the list items when the sheet opens.
+.mobile-toc__sheet.is-open .mobile-toc__item {
+  animation: mobile-toc-item-in 0.4s both;
+  animation-delay: calc(0.06s * var(--i) + 0.1s);
+}
+
+@keyframes mobile-toc-item-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-toc__fab,
+  .mobile-toc__sheet,
+  .mobile-toc__scrim {
+    transition-duration: 0.01ms;
+  }
+  .mobile-toc__sheet.is-open .mobile-toc__item {
+    animation: none;
+  }
+}

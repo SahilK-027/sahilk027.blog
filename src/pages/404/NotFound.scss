@@ -1,29 +1,257 @@
-.not-found-page {
+/* Full-viewport standalone 404, in the editorial language: mono kicker,
+   outline numeral, index rows with dotted leaders, tipped-over glyph shelf,
+   text-link actions. */
+.not-found-screen {
+  min-height: 100vh;
+  min-height: 100svh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  height: 82vh;
-  text-align: center;
-  max-width: 460px !important;
 
-  h1 {
-    margin-top: 100px;
-    margin-bottom: 30px;
-  }
+  .nf-main {
+    flex: 1;
+    width: 100%;
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 120px 20px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 
-  p {
-    .requested-URL {
-      color: var(--color-anchor);
-      background-color: var(--selection-bg-color);
-      padding: 4px;
+    .nf-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: "Fira Code", monospace;
+      font-size: var(--fs-kicker);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--text-3);
+      margin-bottom: 18px;
+
+      .nf-kicker__dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--color-error);
+      }
+    }
+
+    /* SVG outline numeral: -webkit-text-stroke on HTML text loses its stroke
+       during selection repaints in WebKit (text goes invisible), SVG strokes
+       don't participate in text selection at all. */
+    .nf-code {
+      width: clamp(240px, 46vw, 440px);
+      height: auto;
+      margin-bottom: 14px;
+      pointer-events: none;
+      user-select: none;
+      -webkit-user-select: none;
+
+      text {
+        font-family: var(--font-family);
+        font-size: 96px;
+        font-weight: 700;
+        letter-spacing: -0.05em;
+        fill: none;
+        stroke: var(--text-3);
+        stroke-width: 1.25;
+      }
+    }
+
+    .nf-title {
+      font-size: var(--fs-title-2);
+      font-weight: 500;
+      letter-spacing: -0.03em;
+      margin-bottom: 28px;
+    }
+
+    // Request details as index rows — same gesture as the hero index card.
+    .nf-index {
+      width: min(100%, 380px);
+      font-family: "Fira Code", monospace;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin: 0 0 34px;
+
+      .nf-index__row {
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+        font-size: var(--fs-small);
+        text-align: left;
+
+        dt {
+          flex-shrink: 0;
+          color: var(--text-3);
+        }
+
+        .nf-index__leader {
+          flex: 1;
+          min-width: 24px;
+          border-bottom: 1px dotted var(--text-3);
+          opacity: 0.5;
+          transform: translateY(-3px);
+        }
+
+        dd {
+          flex-shrink: 0;
+          max-width: 60%;
+          margin: 0;
+          color: var(--text-1);
+          overflow-wrap: anywhere;
+        }
+
+        .nf-path {
+          color: var(--color-error);
+        }
+      }
+    }
+
+    // The shelf, disturbed: glyphs draw in staggered, a few tipped over.
+    .nf-shelf {
+      display: flex;
+      align-items: flex-end;
+      gap: 22px;
+      margin-bottom: 40px;
+
+      svg {
+        width: 22px;
+        height: 22px;
+        fill: none;
+        overflow: visible;
+        transform: rotate(var(--tip, 0deg));
+        transition: transform 0.6s var(--ease);
+
+        path {
+          stroke: var(--text-3);
+          stroke-width: 1.2;
+          stroke-linecap: round;
+          stroke-linejoin: round;
+          stroke-dasharray: 1;
+          stroke-dashoffset: 1;
+          animation: nf-shelf-draw 0.9s var(--ease) forwards;
+          animation-delay: calc(var(--i, 0) * 120ms);
+          transition: stroke 0.3s var(--ease);
+        }
+
+        // Hover rights the fallen shape — small reward for noticing.
+        &:hover {
+          transform: rotate(0deg);
+
+          path {
+            stroke: var(--accent);
+          }
+        }
+      }
+    }
+
+    // Text links, not buttons — matches the hero.
+    .nf-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 28px;
+
+      a,
+      button {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: none;
+        border: none;
+        padding: 0;
+        font-family: var(--font-family);
+        font-size: var(--fs-body-sm);
+        font-weight: 550;
+        color: var(--text-2);
+        cursor: pointer;
+        transition: color var(--dur-base) var(--ease);
+
+        i {
+          font-size: 0.75em;
+          color: var(--text-3);
+          transition: transform var(--dur-base) var(--ease),
+            color var(--dur-base) var(--ease);
+        }
+
+        &:hover {
+          color: var(--text-1);
+
+          i {
+            color: var(--accent);
+            transform: translateX(-3px);
+          }
+        }
+      }
+
+      .nf-kbd {
+        display: inline-flex;
+        gap: 3px;
+
+        kbd {
+          font-family: "Fira Code", monospace;
+          font-size: var(--fs-kicker);
+          min-width: 22px;
+          height: 22px;
+          padding: 0 5px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border: 1px solid var(--border);
+          border-radius: 5px;
+          color: var(--text-3);
+          transition: color var(--dur-base) var(--ease),
+            border-color var(--dur-base) var(--ease);
+        }
+      }
+
+      button:hover .nf-kbd kbd {
+        color: var(--accent);
+        border-color: var(--accent-faint);
+      }
     }
   }
+}
 
-  .error-no {
-    color: var(--color-error);
+@keyframes nf-shelf-draw {
+  to {
+    stroke-dashoffset: 0;
   }
+}
 
-  .rem-h1 {
-    color: var(--color-text-secondary);
+@media (prefers-reduced-motion: reduce) {
+  .not-found-screen .nf-main .nf-shelf svg {
+    transition: none;
+
+    path {
+      animation: none;
+      stroke-dashoffset: 0;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .not-found-screen {
+    .nf-main {
+      padding-top: 100px;
+
+      .nf-shelf {
+        gap: 18px;
+
+        svg {
+          width: 20px;
+          height: 20px;
+        }
+      }
+
+      .nf-actions {
+        gap: 22px;
+      }
+    }
   }
 }

@@ -1,0 +1,86 @@
+.accent-picker {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  // Each swatch is a brand glyph inked in its hue: idle ones sit dim,
+  // hover wakes them, the active one redraws itself stroke-by-stroke.
+  .accent-swatch {
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background 0.2s ease;
+
+    svg {
+      width: 18px;
+      height: 18px;
+      fill: none;
+      overflow: visible;
+      transition: transform 0.5s var(--ease, ease);
+
+      path {
+        stroke: var(--swatch);
+        stroke-width: 1.6;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        opacity: 0.45;
+        transition: opacity 0.2s ease;
+      }
+    }
+
+    &:hover {
+      // Tint with the swatch's own hue, not the active accent.
+      background: color-mix(in srgb, var(--swatch) 14%, transparent);
+
+      svg {
+        transform: rotate(90deg);
+
+        path {
+          opacity: 1;
+        }
+      }
+    }
+
+    &.active {
+      background: color-mix(in srgb, var(--swatch) 14%, transparent);
+
+      svg {
+        filter: drop-shadow(0 0 5px var(--swatch));
+
+        path {
+          opacity: 1;
+          stroke-width: 2;
+          stroke-dasharray: 1;
+          stroke-dashoffset: 1;
+          animation: accent-glyph-draw 0.7s var(--ease, ease) forwards;
+        }
+      }
+    }
+  }
+}
+
+@keyframes accent-glyph-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .accent-picker .accent-swatch {
+    svg {
+      transition: none;
+    }
+
+    &.active svg path {
+      animation: none;
+      stroke-dashoffset: 0;
+    }
+  }
+}

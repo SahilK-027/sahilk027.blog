@@ -1,0 +1,53 @@
+.share-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+
+  &__label {
+    font-size: var(--fs-kicker, 0.75rem);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    margin-right: 0.15rem;
+  }
+
+  &__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    height: 2.1rem;
+    min-width: 2.1rem;
+    padding: 0 0.55rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg-subtle);
+    color: var(--text-2);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: color 0.18s ease, border-color 0.18s ease,
+      background 0.18s ease, transform 0.18s ease;
+
+    &:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    &.is-copied {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+  }
+
+  &__copy-text {
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+
+  // Icon-only for X / LinkedIn; copy keeps its label.
+  &__btn--copy {
+    padding: 0 0.7rem;
+  }
+}

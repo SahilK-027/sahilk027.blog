@@ -1,0 +1,124 @@
+// Tag chips reuse the archive `.blog-tag` hashtag look; here they are buttons
+// that toggle a related-posts popover instead of navigating away.
+.blog-tags__item {
+  position: relative;
+  display: inline-flex;
+}
+
+.blog-tags button.blog-tag {
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  line-height: inherit;
+
+  &.is-open {
+    color: var(--accent);
+  }
+}
+
+.tag-popover {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  z-index: 40;
+  width: min(340px, 84vw);
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-raised);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+  animation: tag-popover-in 0.16s ease;
+
+  &__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 0 4px 8px;
+    margin-bottom: 4px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  &__title {
+    font-size: var(--fs-kicker, 0.75rem);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--text-3);
+
+    b {
+      color: var(--text-2);
+      font-family: "Fira Code", monospace;
+      text-transform: none;
+    }
+  }
+
+  &__close {
+    border: none;
+    background: none;
+    color: var(--text-3);
+    cursor: pointer;
+    font-size: 0.9rem;
+    line-height: 1;
+
+    &:hover {
+      color: var(--accent);
+    }
+  }
+
+  &__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-height: 46vh;
+    overflow-y: auto;
+  }
+
+  &__link {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 8px;
+    border-radius: 8px;
+    transition: background 0.15s ease;
+
+    &:hover {
+      background: var(--bg-subtle);
+    }
+  }
+
+  &__link-title {
+    color: var(--text-1);
+    font-size: 0.92rem;
+    line-height: 1.35;
+  }
+
+  &__link-meta {
+    color: var(--text-3);
+    font-size: 0.75rem;
+  }
+
+  &__empty {
+    padding: 8px 4px;
+    margin: 0;
+    color: var(--text-3);
+    font-size: 0.85rem;
+  }
+}
+
+@keyframes tag-popover-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tag-popover {
+    animation: none;
+  }
+}

@@ -45,7 +45,7 @@
       text-decoration-color: var(--color-heart-border);
 
       &:hover {
-        transition: all 0.3s ease;
+        transition: all var(--dur-base) var(--ease);
         text-decoration-color: var(--color-heart);
       }
 
@@ -63,7 +63,7 @@
     align-items: center;
     top: -10px;
     right: -10px;
-    font-size: 14px;
+    font-size: var(--fs-small);
     color: var(--color-bg-primary);
     background: red;
     background-color: var(--color-heart);
@@ -84,7 +84,7 @@
         text-decoration-color: var(--color-heart-border);
 
         &:hover {
-          transition: all 0.3s ease;
+          transition: all var(--dur-base) var(--ease);
           text-decoration-color: var(--color-heart);
         }
 
@@ -96,7 +96,7 @@
 
       i {
         color: var(--color-heart);
-        font-size: 16px;
+        font-size: var(--fs-body);
         margin-right: 6px;
       }
     }

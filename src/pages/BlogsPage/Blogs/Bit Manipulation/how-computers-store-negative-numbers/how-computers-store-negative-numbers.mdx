@@ -1,0 +1,577 @@
+---
+blogNo: 2
+---
+
+import BitsThumbnail from "./utils/Thumbnail";
+import BitBulbs from "./utils/BitBulbs";
+import IntegerLine from "./utils/IntegerLine";
+
+export const poster = <BitsThumbnail />;
+
+<Intro>
+Somewhere around 2021, when I was trying to get good at Competitive Programming,
+I printed a variable in C++ just to see what was inside it. I asked the computer
+for the bits of -1:
+</Intro>
+
+```cpp
+#include <iostream>
+#include <bitset>
+
+int main() {
+    int x = -1;
+    std::cout << x << " : " << std::bitset<32>(x) << '\n';
+}
+```
+
+<Intro>
+And it handed me this:
+</Intro>
+
+```output
+-1 : 11111111111111111111111111111111
+```
+
+<Intro>
+I remember staring at it for a while. Every single bit was set to 1. No minus
+sign hiding anywhere, no little flag tucked in a corner, no special slot in
+memory that says "by the way, this one is negative." Just 32 ones, sitting there
+looking smug.
+</Intro>
+
+<Intro>
+And it gets worse. Read those exact same 32 bits as an ordinary positive
+number and they spell out 4294967295, which is the <span className="bold-text">
+largest value a 32-bit box can hold</span>. So the smallest number I could think
+of and the biggest number the machine can hold are the same bits. That felt like
+a bug. Like the compiler had made a mistake and nobody had noticed.
+</Intro>
+
+<Intro>
+At first I let it go, the way you let a lot of things go when the code compiles anyway. But it kept bothering me. Because if there is no
+minus sign anywhere in there, then what exactly am I looking at? So here is the
+question: <span className="bold-text">how does a computer store -1 when all
+it has is 0s and 1s?</span>
+</Intro>
+
+### The Row of Switches You're Actually Writing To
+
+Before we guess at anything, let's be honest about what we're working with,
+because I eventually realised the answer isn't clever at all. It's forced. Once
+you know the materials, there is almost nowhere else for it to go.
+
+Your number is sitting in a "register". Forget the word for a second and just
+picture the thing: a row of switches inside the CPU, and the row has a fixed
+length. Each switch is a transistor, and a transistor knows exactly two things,
+current flowing or current not flowing. On, or off. 1, or 0. That's the whole
+vocabulary. That's everything it has ever been able to say.
+
+<BitBulbs />
+
+One switch is a bit. Four of them is a nibble, eight is a byte, and however many
+the hardware moves in a single go is the register width. So when someone says
+"64-bit CPU," they're really just telling you the row is 64 switches long.
+
+Two things about that row do all the work in this post, and both of them are
+the kind of thing you nod at and then forget five minutes later, so let's slow
+down on them.
+
+<span className="bold-text">The row has only two states per switch.</span> There
+is no third state for "and this one is negative." You cannot write a minus sign
+into a transistor any more than you can write one into a light bulb. The bulb is
+on or the bulb is off. It has no opinion about signs.
+
+<span className="bold-text">The row never grows.</span> Store 14 in a 32-bit
+register and you don't get a neat little 4-bit number, you get 14 wearing 28
+zeros it didn't ask for.
+
+<RegisterBits />
+
+That padding looks wasteful, and the first thing I wondered was why nobody just
+fixes it. Why not use more bits only when you need them? Because the width isn't
+a habit, it's baked into the silicon. A 32-bit adder is literally 32 little
+adder circuits wired in a row, and no instruction you write can grow silicon.
+Fixed widths aren't a convention someone chose. They're the hardware.
+
+So that's the material. A row locked at 32 switches, each one holding a 0 or a
+1, and nothing can spill past the left edge, because there is no left edge to
+spill into.
+
+### Turning "Where Is the Minus?" Into Something We Can Count
+
+Now let's take a moment and play a little thought experiment.
+
+Imagine it's your machine. You're the one designing this thing, and someone has
+just told you it has to be able to hold negative numbers. You look at what
+you've got. Count the patterns first, because that count decides everything that
+follows: two choices per switch, 32 switches, so 2^32 = 4294967296 possible
+patterns. And that number is not up for negotiation. You can't argue with it.
+
+Now read all of those patterns as plain positive binary and you get
+`unsigned int`, the range 0 to 4294967295, which C++ calls `UINT_MAX`. Look at
+what that means. <span className="bold-text">Every single pattern is already
+spoken for.</span> There is nothing sitting unused in the corner, no spare
+patterns you can quietly hand to the negatives.
+
+Which kills the obvious plan straight away. You cannot <i>add</i> negatives.
+There's no room. The only move left on the table is to <span
+className="bold-text">reinterpret</span>: keep the exact same 4294967296
+patterns and simply change your mind about which value each one stands for.
+
+And that has a consequence people skip right past. If some patterns start
+meaning negative numbers, they have to <i>stop</i> meaning the positive numbers
+they meant a second ago. Negatives aren't free storage. They're bought, and
+somebody pays. Split the patterns down the middle and here's the bill:
+
+```output
+half the patterns  ->  0 .. 2147483647          (2147483648 of them)
+half the patterns  ->  -2147483648 .. -1        (2147483648 of them)
+                                                 4294967296 total
+```
+
+That's `int` versus `unsigned int`, in one picture. Same register, same 32
+switches, and the moment you ask for negatives your positive ceiling falls from
+4294967295 down to 2147483647. You didn't gain any range. You just moved it.
+
+So the real question was never "where do we put the minus sign." It's this:
+<span className="bold-text">which pattern should stand for which value?</span>
+
+And the beautiful part is that you're allowed to answer that however you like.
+It's your machine. Assign them by throwing darts if you want. But whatever you
+pick has to survive three tests:
+
+<ul>
+  <li><i className="fa-solid fa-arrow-right"></i> <b>Every value gets exactly one pattern</b>, and no pattern is allowed to mean two different values at once.</li>
+  <li><i className="fa-solid fa-arrow-right"></i> <b>Zero shows up once.</b> If it shows up twice, then every single <code>x == 0</code> anywhere in the machine quietly becomes a two-case check.</li>
+  <li><i className="fa-solid fa-arrow-right"></i> <b>The adder you already built still works.</b> The circuit that adds unsigned numbers should add your new signed numbers too, without one extra piece of silicon.</li>
+</ul>
+
+Keep an eye on that third one. When I first wrote it down it looked like a
+nice-to-have, the sort of thing you'd compromise on. It turns out to be the one
+that decides the entire answer.
+
+### The Obvious Idea, and Where It Falls Apart
+
+The first idea everyone has is to just spend a switch on it. I had it too. Take
+the leftmost bit, call it the sign bit, 0 for positive and 1 for negative, and
+let the rest of the row carry the magnitude. In 8 bits it reads beautifully:
+
+```output
+0000 0101  ->  +5
+1000 0101  ->  -5     (same magnitude, flag flipped)
+0000 0000  ->  +0
+1000 0000  ->  -0
+```
+
+Look at the bottom two lines though. Test two is already gone. `00000000` and
+`10000000` are both zero, and now the machine has two of them.
+
+But test three is where it really falls apart. Hand +5 and -5 to a plain binary
+adder, the dumb one that just adds column by column, and watch what comes out:
+
+```output
+    0000 0101      (+5)
+  + 1000 0101      (-5)
+  -----------
+    1000 1010      reads as -10. Wrong.
+```
+
+For that to come out as 0, think about what the CPU would have to do. Look at
+both sign bits. Work out whether this addition is secretly a subtraction.
+Compare the two magnitudes to see which one is bigger. Subtract the smaller from
+the larger. Then figure out what sign the answer should wear. That's a
+comparator and a subtractor and a pile of control logic, all sitting in the
+hottest path of the entire machine, and all of it exists to babysit a minus
+sign. No.
+
+So try the next natural idea. If flipping one bit doesn't work, what if to
+negate a number you flip <i>every</i> bit?
+
+```output
+0000 0101  ->  +5
+1111 1010  ->  -5     (every bit inverted)
+0000 0000  ->  +0
+1111 1111  ->  -0
+```
+
+This one is called one's complement, and honestly it gets so close. Add them:
+
+```output
+    0000 0101      (+5)
+  + 1111 1010      (-5)
+  -----------
+    1111 1111      which is -0
+```
+
+Zero. But the <i>wrong</i> zero, and there are still two of them. And this
+wasn't just a bad idea on paper, real machines shipped it, the CDC 6600 among
+them, and they paid for it with a correction pass: every time a carry falls off
+the left end, you have to go back and add it into the lowest bit.
+
+That's the useful failure, and it's the one that finally got me somewhere.
+Flipping the bits is <i>nearly</i> right. It's off by exactly one. And chasing
+down that one missing step is what hands you the real answer.
+
+### Asking Arithmetic What "Negative" Even Means
+
+Both of those attempts were trying to <i>mark</i> a number as negative. That was
+my mistake, and I think it's the mistake everyone makes, because it's how we
+write on paper. But being negative isn't a label you stick on. It's a behaviour.
+
+So let's throw away notation completely and just write down what the behaviour
+actually is:
+
+<span className="bold-text">-x is whatever you add to x to get 0.</span>
+
+That's it. That's the only property of a negative number arithmetic genuinely
+cares about. -5 is the thing that cancels 5. Which turns our vague question into
+a question with a real, findable answer: which 8-bit pattern, when you add it to
+`0000 0101`, leaves the register holding zero?
+
+Before we solve that, let's watch the register count, because there's something
+about it we all know and never think about. Take 8 bits and keep adding 1:
+
+```output
+1111 1101   = 253
+1111 1110   = 254
+1111 1111   = 255
+0000 0000   = ???
+```
+
+255 + 1 should be 256, and 256 in binary is `1 0000 0000`, which is nine bits
+wide. The register has eight. That carry has nowhere to land, so it's simply
+dropped, and what you're left holding is `0000 0000`. The counter doesn't stop
+at its maximum. It doesn't complain. It rolls over, exactly the way a car
+odometer rolls from 999999 back to 000000.
+
+Now run that backwards, and this is the step that answers the whole thing. Start
+at zero and subtract 1, doing the borrow by hand like we did in school:
+
+```output
+    0000 0000      (0)
+  - 0000 0001      (1)
+  -----------
+```
+
+The lowest column needs to borrow. The bit to its left is a 0, so that column
+has to borrow too. So does the next one, and the next, all the way up the row,
+and every column it passes through ends up holding a 1. The final borrow walks
+off the left edge of the register, and there's nothing out there to borrow from,
+so it just disappears. And what's sitting there when the dust settles is:
+
+```output
+    1111 1111
+```
+
+So `0 - 1` is all ones. Not because anyone decided it should be. Just because
+that's what borrowing does when the row runs out. And since that pattern
+behaves, in the hardware, exactly like "one less than zero," calling it -1 isn't
+an invention at all. <span className="bold-text">It already was -1. I just hadn't
+looked.</span>
+
+That rolling over has a proper name too. Because the carry is always thrown
+away, an n-bit register isn't doing ordinary arithmetic. It's doing arithmetic
+that wraps every 2^n steps:
+
+```output
+(a + b) mod 2^n
+```
+
+Which is the same "mod" you already use every day without calling it that. A
+clock is mod 12: 10 o'clock plus 4 hours is 2 o'clock, because the hand wraps
+around. An 8-bit register is mod 256. A 32-bit register is mod 4294967296. Same
+idea, bigger dial.
+
+And now our question has a clean answer. We want the pattern p where `x + p = 0`
+after wrapping, which means `x + p` has to land on exactly one full lap of the
+dial:
+
+```output
+x + p = 2^n        =>        p = 2^n - x
+```
+
+That's two's complement. Not "flip the bits and add one," which is the shortcut
+I memorized years ago and then promptly forgot the reason for. The actual
+definition is `2^n - x`: <span className="bold-text">the distance from x, all
+the way around the dial, back to zero.</span> Everything else in this post falls
+out of that one line.
+
+Let's try it on 5 in 8 bits. `2^8 - 5 = 256 - 5 = 251 = 1111 1011`. Now feed it
+to the same plain adder that failed us twice already:
+
+```output
+    0000 0101      (5)
+  + 1111 1011      (251, which we are calling -5)
+  -----------
+  1 0000 0000      the carry falls off the edge
+    0000 0000      what stays in the register is 0
+```
+
+Zero. Exactly zero, on the dumb adder, with no sign checking and no correction
+pass and no second rulebook. Test three passes. And since `a - b` is just
+`a + (2^n - b)`, the CPU doesn't even need a subtractor. One circuit handles
+every case there is. <span className="bold-text">That is the entire reason this
+representation won.</span>
+
+And then two more things drop out for free, which for me is usually the sign
+that you've found a real definition instead of just a rule someone made up.
+
+<span className="bold-text">Flip-and-add-one turns out to be a consequence, not
+a recipe.</span> Subtracting x from a row of all ones can never borrow, because
+every bit up there is already a 1. So `(2^n - 1) - x` is literally just "flip
+every bit of x." Add 1 to both sides and you've got `2^n - x`, which is exactly
+what we wanted. So one's complement wasn't wrong, it just stopped one step early.
+
+<TwosComplement />
+
+<span className="bold-text">And the sign bit shows up on its own.</span> Take
+any x from the positive half, subtract it from 2^n, and the answer always lands
+in the upper half of the range, and every pattern up there happens to have its
+top bit set. Notice that we never gave the leftmost bit that job. Nobody
+assigned it. It just fell out, which is why you can still check whether a number
+is negative by looking at one bit, even though absolutely nothing anywhere is
+storing a sign.
+
+Here's the whole layout that one definition produces, drawn at 4 bits so the
+entire thing fits on screen.
+
+<IntegerLine />
+
+That `0000` and `1111` sitting right next to each other is the borrow we did by
+hand, now in its proper place on the line. And look at the range it came out
+with, it's lopsided. For n bits it runs from -2^(n-1) up to 2^(n-1) - 1:
+
+```output
+ 8 bits    -128         ..  127
+16 bits    -32768       ..  32767
+32 bits    -2147483648  ..  2147483647
+```
+
+One extra negative. Why? Because 0 has to live somewhere, and it lives in the
+non-negative half, where it takes the slot that would otherwise have gone to
++2^(n-1). That's the price of having exactly one zero, and compared to what the
+other two encodings were charging, it's nothing.
+
+### So Is 1111 1011 Equal to -5, or 251?
+
+Both. And this is the question I'd stop on if you only remember one thing from
+this post, because it's the actual punchline.
+
+There is nothing in that register that distinguishes them. No hidden tag, no
+extra switch, no little bit of metadata riding along. `1111 1011` is
+`1111 1011`. It is -5 <i>and</i> 251 at the same time, and which one you get
+depends entirely on who's doing the reading.
+
+And that reader is the compiler. When you write `int`, it emits instructions
+that treat the row as signed. When you write `unsigned`, it emits instructions
+that treat the very same row as unsigned. The CPU genuinely carries both sets:
+
+<ul>
+  <li><i className="fa-solid fa-arrow-right"></i> <b>Addition and subtraction are shared.</b> This is the whole payoff we designed for. The add instruction doesn't know and doesn't care.</li>
+  <li><i className="fa-solid fa-arrow-right"></i> <b>Comparison is not.</b> There are two different compare instructions and they flatly disagree on the same bits: read as signed, <code>1111 1011 &lt; 0</code>. Read as unsigned, <code>1111 1011 &gt; 0</code>.</li>
+  <li><i className="fa-solid fa-arrow-right"></i> <b>Division is not.</b> Two instructions again, one for each reading.</li>
+  <li><i className="fa-solid fa-arrow-right"></i> <b>Widening is not.</b> Going from 8 bits up to 32, a signed value copies its top bit leftward so it stays negative, while an unsigned value just gets zeros.</li>
+</ul>
+
+<InfoNote>
+If you want the actual mnemonics: on x86 the signed comparison jump is `jl`
+(jump if less) and the unsigned one is `jb` (jump if below), signed division is
+`idiv` against unsigned `div`, and the two widening moves are called
+sign-extension and zero-extension.
+</InfoNote>
+
+So a type in C++ isn't a property of the memory at all. <span
+className="bold-text">It's an instruction about how to read it.</span> Which is
+exactly why comparing a signed value with an unsigned one is such a reliable way
+to lose an afternoon:
+
+```cpp
+int i = -1;
+unsigned u = 1;
+std::cout << (i < u);   // prints 0
+```
+
+-1 is not less than 1 here. C++ converts the `int` to `unsigned` before
+comparing, and read as unsigned, those 32 bits say 4294967295. Nothing got
+corrupted. The bits never moved. Somebody just walked up and read the same row
+with the other set of rules.
+
+### What Living on a Wrapping Line Costs You
+
+Here's the thing about a line that wraps: it has no ends. Walk off the top of
+the positive half and you don't fall off, you land in the negatives.
+
+```cpp
+int x = INT_MAX;        // 01111111 11111111 11111111 11111111
+std::cout << x + 1;     // -2147483648 in practice
+```
+
+And nothing overflowed <i>out</i> of the register. The carry just rippled up
+into the leftmost bit, and that bit happens to be the one deciding how the whole
+row gets read. `0111...111 + 1 = 1000...000`. That's all that happened.
+
+<InfoNote>
+Be careful with the wording here, because C and C++ split on it. Overflow of
+<b>unsigned</b> types is defined: it wraps modulo 2^n, guaranteed by the
+standard. Overflow of <b>signed</b> types is undefined behaviour, meaning the
+standard lets the compiler do literally anything it likes with that code, even
+though C++20 finally mandated two's complement <i>representation</i>. The
+compiler is allowed to assume `x + 1 > x` and optimise on that assumption, so a
+loop guarded by an overflow check can be deleted outright. You'll get `INT_MIN`
+on most builds, but you are not owed it. Use `-fwrapv`, do the arithmetic in an
+unsigned type, or check before you add.
+</InfoNote>
+
+The lopsided range bites too, and this one is genuinely funny the first time you
+see it. `abs(INT_MIN)` cannot return the right answer, because +2147483648 isn't
+on the line at all. There's no pattern for it. So `std::abs` hands you back
+`INT_MIN`, and a function whose entire job in life is to return a positive number
+returns a negative one.
+
+That sounds like a curiosity. It has not always been one.
+
+<MustRead>
+In 1996, the launch of the Ariane 5 rocket by the European Space Agency ended in
+tragedy within 40 seconds due to a critical oversight. The engineers reused code
+from Ariane 4, which was designed for lower velocities. Ariane 4 used 16-bit
+number architecture, while Ariane 5 was designed for much higher velocities that
+could exceed the 16-bit limit. During the flight, a 64-bit floating point
+velocity measurement was converted to a 16-bit signed integer, causing an
+integer overflow. This error disrupted the guidance system, resulting in
+incorrect course adjustments, full nozzle deflections, and ultimately, the
+rocket's destruction, a loss of €500 million.
+
+The velocity did not become invalid. It became negative.
+
+To read the story in more details, you can read the blog on
+[Famous bugs rocket launch](https://jam.dev/blog/famous-bugs-rocket-launch/).
+</MustRead>
+
+### So Why Is -1 All Ones?
+
+Let's go back to the printout that started all of this, because now it isn't a
+riddle anymore.
+
+-1 is `2^32 - 1`, and `2^32 - 1` is the pattern with every switch turned on.
+That's the whole answer. On a row of fixed width, one step below zero is the top
+of the range, because the borrow has nowhere else to go.
+
+And none of this has to be taken on faith. `std::bitset` will print exactly
+what's sitting in the register, so you can go and look:
+
+```cpp
+#include <iostream>
+#include <bitset>
+#include <climits>
+
+void show(const char* name, int v) {
+    std::cout << name << " (" << v << ") : " << std::bitset<32>(v) << '\n';
+}
+
+int main() {
+    show("      0", 0);
+    show("      5", 5);
+    show("     -5", -5);
+    show("     -1", -1);
+    show("INT_MAX", INT_MAX);
+    show("INT_MIN", INT_MIN);
+
+    unsigned u = UINT_MAX;
+    std::cout << "UINT_MAX (" << u << ") : " << std::bitset<32>(u) << '\n';
+    std::cout << "\n5 + (-5) = " << 5 + (-5) << '\n';
+    std::cout << "~0 = " << ~0 << '\n';
+    std::cout << "UINT_MAX + 1 = " << u + 1 << '\n';
+}
+```
+
+```output
+      0 (0) : 00000000000000000000000000000000
+      5 (5) : 00000000000000000000000000000101
+     -5 (-5) : 11111111111111111111111111111011
+     -1 (-1) : 11111111111111111111111111111111
+INT_MAX (2147483647) : 01111111111111111111111111111111
+INT_MIN (-2147483648) : 10000000000000000000000000000000
+UINT_MAX (4294967295) : 11111111111111111111111111111111
+
+5 + (-5) = 0
+~0 = -1
+UINT_MAX + 1 = 0
+```
+
+Every line there is the theory, said back to you by the machine. `5 + (-5)` is 0
+through the plain adder, with no sign handling anywhere in sight. `~0` is -1,
+which is the flip half of flip-and-add-one applied to zero. `UINT_MAX + 1` is 0,
+which is the wrap said out loud. And the `-1` row and the `UINT_MAX` row printed
+the same 32 bits, for the simple reason that they <i>are</i> the same 32 bits.
+
+And that's the part I still find genuinely lovely: <span className="bold-text">
+the sign isn't stored anywhere.</span> It's not a bit that means minus. It's a
+decision about how to read a row of switches that were never anything but on and
+off.
+
+### The Tricks That Stop Looking Clever
+
+Here's the bonus nobody tells you about. Once you see -1 as `2^n - 1`, a whole
+pile of bit tricks stop looking like magic incantations and start looking
+obvious. Quick reminder before we go: `~` is C++'s bitwise NOT, the operator
+that flips every bit in the row, and `&` is bitwise AND, which keeps a bit only
+if both sides have it set.
+
+<span className="bold-text">`~0` is -1.</span> Zero is a row of 32 zeros, so
+flipping every one of them gives you a row of 32 ones, and we just spent an
+entire post working out what that row is:
+
+```output
+ 0  =  00000000000000000000000000000000
+~0  =  11111111111111111111111111111111   which is -1
+```
+
+Careful with the general case though, this one caught me. `~x` is not `-x`, it's
+`-x - 1`, because negating is flip <i>and add one</i> and `~` only does the
+flip. So `~5` is -6, not -5. The reason `~0` looks like a clean negation is that
+0 is the one value where that `+ 1` has nothing to carry into.
+
+<span className="bold-text">`x & -1` is x.</span> -1 is the pattern with every
+bit set, so ANDing with it leaves every bit of x untouched. Which is why -1
+turns up all over systems code as "all flags on." It's the mask that lets
+everything through.
+
+<span className="bold-text">`x & (x - 1)` clears the lowest set bit.</span>
+Subtracting 1 borrows through the trailing zeros and stops at the lowest 1,
+turning that into a 0 and everything under it into 1s. It's the same borrow we
+walked through when `0 - 1` became all ones, just stopping earlier. AND the two
+together and only the shared upper bits survive:
+
+```output
+x        =  0101 1000
+x - 1    =  0101 0111
+x & (x-1)=  0101 0000     the lowest 1 is gone
+```
+
+<span className="bold-text">`x & -x` isolates that lowest set bit</span>, which
+is the same fact read from the other side, and it's the operation a Fenwick tree
+runs on every single update.
+
+### It Was Never Advanced, I Just Didn't Know What a Register Was
+
+Which brings me back to where this started.
+
+I avoided bit manipulation for years. Back in 2021, when I wanted to learn
+Competitive Programming, I got through pointers, linked lists, recursion,
+graphs, dynamic programming, and then I hit Fenwick trees and segment trees and
+stopped dead. What was I actually stuck on? Bit manipulation. And I knew I was
+stuck on it. I just kept walking around it, because I had this idea in my head
+that it was hard, and advanced, and for other people.
+
+It wasn't advanced. I didn't know what a register was. That's all it ever was.
+Bit manipulation looks difficult right up until you know what the machine is
+actually holding, and then it mostly stops being difficult at all.
+
+So -1 was never hiding a minus sign. It was sitting one step below zero the
+whole time, on a row of switches that wraps, and it took me far too long to walk
+over and read it properly.
+
+<span className="bold-text">The bits never meant anything on their own. We're
+the ones who decide how to read them. -Sahil K.</span>
+
+Keep being curious. Happy bit computing!

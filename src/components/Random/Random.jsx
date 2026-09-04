@@ -2,30 +2,34 @@ import React from "react";
 import "./Random.scss";
 
 const Random = ({ message }) => {
-  const messageLines = message.split("\n");
+  const lines = message
+    .split("\n")
+    .map((l) => l.trim())
+    .filter(Boolean);
+
+  // The parenthetical is the translation/gloss; everything before it is verse.
+  const verse = lines.filter((l) => !l.startsWith("("));
+  const gloss = lines.filter((l) => l.startsWith("("));
 
   return (
-    <div
-      style={{
-        width: "100%",
-        minHeight: 270,
-        margin: "24px 0",
-        borderLeft: "1px solid var(--color-pink)",
-        paddingLeft: 12,
-        display: "flex",
-        gap: 12,
-      }}
-    >
-      <div>
-        <i className="fa-solid fa-quote-left"></i>
-      </div>
-      <div>
-        {/* Map through each line and render it */}
-        {messageLines.map((line, index) => (
-          <p key={index}>{line}</p>
+    <figure className="random-quote">
+      <i
+        className="fa-solid fa-quote-left random-quote__icon"
+        aria-hidden="true"
+      />
+      <blockquote className="random-quote__body">
+        {verse.map((line, i) => (
+          <p key={i} className="random-quote__line">
+            {line}
+          </p>
         ))}
-      </div>
-    </div>
+      </blockquote>
+      {gloss.length > 0 && (
+        <figcaption className="random-quote__gloss">
+          {gloss.join(" ")}
+        </figcaption>
+      )}
+    </figure>
   );
 };
 

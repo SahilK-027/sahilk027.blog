@@ -118,7 +118,7 @@ $size: 50px;
     .text {
         margin-top: math.div($size, 1) * 3.75;
         // margin-bottom: math.div($size, 1) * 3.75;
-        font-size: 0.8rem;
+        font-size: var(--fs-small);
         width: 100%;
         font-weight: 200;
         text-align: center;

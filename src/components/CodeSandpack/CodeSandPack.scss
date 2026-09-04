@@ -1,19 +1,390 @@
-.cm-editor,
-.sp-tabs,
-.cm-gutters,
-.sp-c-flHYPS {
+.code-sandpack {
+  padding: 16px 0;
+
+  // Scope a thin, subtle scrollbar to everything inside the sandbox. The global
+  // page scrollbar is a chunky 12px geometric accent bar with a 3px bg border —
+  // that reads as broken/misaligned inside the code editor and console. Firefox
+  // + WebKit both overridden so the editor scrolls cleanly.
+  *,
+  .cm-scroller,
+  .sp-code-editor,
+  .sp-console {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+
+  *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  *::-webkit-scrollbar-thumb {
+    background: color-mix(in srgb, var(--text-3) 60%, transparent);
+    border-radius: 4px;
+    border: none;
+  }
+  *::-webkit-scrollbar-thumb:hover {
+    background: var(--text-3);
+  }
+  *::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+
+  // One unified, connected card: editor | (toolbar + preview/console).
+  .sp-layout {
+    background: var(--color-bg-box-container) !important;
+    border: 1px solid var(--code-container-border-color) !important;
+    border-radius: 10px !important;
+    overflow: hidden;
+    box-shadow: 0 0 10px 2px var(--blur-bg);
+    display: flex;
+    flex-direction: row;
+    gap: 0;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+    }
+  }
+
+  // Editor pane (left)
+  .sp-editor {
+    flex: 1.25;
+    border-right: 1px solid var(--border-color);
+
+    @media (max-width: 768px) {
+      border-right: none;
+      border-bottom: 1px solid var(--border-color);
+    }
+  }
+
+  // Right column: toolbar + preview/console
+  .sp-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: var(--color-bg-box-container);
+    min-width: 0;
+  }
+
+  // File tabs
+  .sp-tabs {
+    background: var(--color-bg-box-container-dark) !important;
+    border: none !important;
+    border-bottom: 1px solid var(--border-color) !important;
+    position: relative;
+  }
+
+  .sp-tabs-scrollable-container {
+    padding: 6px 4px 0; // top gap above tabs, flush at bottom
+    min-height: 48px; // match .sp-toolbar height
+    align-items: stretch; // tabs fill full height so active tab reaches strip bottom
+    margin-bottom: -1px; // overlap the strip's bottom border
+  }
+
+  // Kill Sandpack's accent focus outline on the tab wrapper (lavender box).
+  .sp-tab-container {
+    margin: 0 !important; // remove default 1px so active tab overlaps strip border
+    padding-right: 0 !important;
+    outline: none !important;
+    &:has(button:focus),
+    &:focus,
+    &:focus-within {
+      outline: none !important;
+    }
+  }
+
+  .sp-tab-button {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 0 16px;
+    min-width: 80px;
+    width: auto;
+    flex: 0 0 auto;
+    white-space: nowrap;
+    margin-bottom: 0;
+    outline: none !important;
+    box-shadow: none !important;
+    color: var(--color-text-secondary) !important;
+
+    &:focus,
+    &:focus-visible {
+      outline: none !important;
+      box-shadow: none !important;
+    }
+
+    --tab-border-color: transparent;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-top: 1px solid var(--tab-border-color);
+    border-left: 1px solid var(--tab-border-color);
+    border-right: 1px solid var(--tab-border-color);
+
+    &:hover {
+      color: var(--color-text-primary) !important;
+    }
+
+    &[data-active="true"] {
+      --tab-border-color: var(--border-color);
+      background: var(--color-bg-box-container);
+      border-bottom: 2px solid var(--color-bg-box-container);
+      margin-bottom: 0;
+      color: var(--color-text-primary) !important;
+      box-shadow: none !important;
+
+      // Rounded outer corners that blend the tab into the editor surface below.
+      &::before {
+        content: "";
+        position: absolute;
+        bottom: -2px;
+        left: -9px;
+        width: 9px;
+        height: 9px;
+        background: radial-gradient(
+            circle at top left,
+            transparent 8px,
+            var(--border-color) 8px,
+            var(--border-color) 9px,
+            transparent 9px
+          ),
+          radial-gradient(
+            circle at top left,
+            transparent 7px,
+            var(--color-bg-box-container) 7px
+          );
+      }
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: -2px;
+        right: -9px;
+        width: 9px;
+        height: 9px;
+        background: radial-gradient(
+            circle at top right,
+            transparent 8px,
+            var(--border-color) 8px,
+            var(--border-color) 9px,
+            transparent 9px
+          ),
+          radial-gradient(
+            circle at top right,
+            transparent 7px,
+            var(--color-bg-box-container) 7px
+          );
+      }
+    }
+  }
+
+  // Editor surface + gutters
+  .cm-editor,
+  .cm-gutters {
     background-color: var(--color-bg-box-container) !important;
     font-size: 14px !important;
-}
+  }
+  // Let CodeMirror scroll inside its pane.
+  .cm-scroller {
+    overflow: auto !important;
+  }
 
-.cm-lineNumbers .cm-gutterElement {
-    padding: 0 8px 0 8px !important;
-}
-
-.cm-gutters {
-    color: #8994ae !important;
-
-    .cm-gutterElement {
-        font-size: 8px !important;
+  // On mobile the layout stacks vertically; the editor pane (the first child of
+  // .sp-layout) has no row to stretch into and collapses to 0 height, so only the
+  // preview/console show. Force the pane + CodeMirror to an explicit height.
+  @media (max-width: 768px) {
+    .sp-layout > :first-child {
+      display: flex !important;
+      width: 100% !important;
+      height: 400px !important;
+      min-height: 400px !important;
+      flex: none !important;
     }
+    .cm-editor {
+      height: 100% !important;
+    }
+    .cm-scroller {
+      max-height: 100%;
+    }
+  }
+  // Kill CodeMirror focus outline (renders as an accent/lavender box on select)
+  .cm-editor.cm-focused,
+  .cm-editor:focus,
+  .cm-editor:focus-visible {
+    outline: none !important;
+  }
+  .cm-gutters {
+    color: var(--color-text-secondary) !important;
+    border-right: none !important;
+  }
+  .cm-lineNumbers .cm-gutterElement {
+    padding: 0 12px !important;
+    font-size: 12px !important;
+    font-variant-numeric: tabular-nums;
+    opacity: 0.55;
+  }
+
+  // ---- Custom preview toolbar ----
+  .sp-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 48px;
+    padding: 0 8px;
+    background: var(--color-bg-box-container-dark);
+    border-bottom: 1px solid var(--border-color);
+
+    &__left,
+    &__right {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+  }
+
+  // Icon buttons (toggle code, fullscreen, refresh, open-in-sandbox)
+  .sp-tbtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border: none;
+    background: transparent;
+    color: var(--color-text-secondary);
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: all var(--dur-base) var(--ease);
+
+    &:hover {
+      color: var(--color-text-primary);
+      background: var(--color-bg-box-container);
+    }
+  }
+
+  // Preview / Console segmented buttons
+  .sp-seg {
+    height: 28px;
+    padding: 0 12px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--color-text-secondary);
+    font-family: var(--font-family);
+    font-size: 13px;
+    cursor: pointer;
+    transition: all var(--dur-base) var(--ease);
+
+    &:hover {
+      color: var(--color-text-primary);
+    }
+    &.is-active {
+      color: var(--color-text-primary);
+      background: var(--color-bg-box-container);
+      border-color: var(--border-color);
+    }
+  }
+
+  .sp-preview-container,
+  .sp-console {
+    background: var(--color-bg-box-container) !important;
+    flex: 1;
+  }
+
+  // Preview wrapper hosts the iframe + a scroll guard overlay. The iframe eats
+  // wheel events (cross-origin), which stalls page scroll; the overlay catches
+  // them instead so the page keeps moving. Click hands the wheel back to the
+  // iframe for interactive demos.
+  .sp-preview-wrap {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+    flex-direction: column;
+  }
+
+  .sp-preview-scrollguard {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 12px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-family: var(--font-family);
+    // Overlay stays transparent but intercepts the wheel; the label fades in on
+    // hover so it isn't intrusive over the running demo.
+    span {
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      color: var(--color-text-primary);
+      background: color-mix(in srgb, var(--color-bg-box-container-dark) 85%, transparent);
+      border: 1px solid var(--border-color);
+      opacity: 0;
+      transform: translateY(4px);
+      transition: opacity var(--dur-base) var(--ease),
+        transform var(--dur-base) var(--ease);
+    }
+    &:hover span {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  // ---- Console pane ----
+  .sp-console {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sp-console-list {
+    flex: 1;
+    font-family: "Fira Code", monospace;
+    font-size: 13px;
+    line-height: 20px;
+    padding: 8px 0;
+
+    // Empty-state placeholder (Sandpack renders no message when there are no logs)
+    &:empty::after {
+      content: "Console output will appear here.";
+      display: block;
+      padding: 16px;
+      color: var(--color-text-secondary);
+      opacity: 0.55;
+      font-family: var(--font-family);
+      font-size: 13px;
+      font-style: italic;
+    }
+  }
+
+  .sp-console-item {
+    padding: 4px 16px !important;
+    border-bottom: 1px solid var(--border-color) !important;
+    color: var(--token-plain);
+  }
+
+  // Console header (shown when showHeader)
+  .sp-console-header {
+    background: var(--color-bg-box-container-dark) !important;
+    border-bottom: 1px solid var(--border-color) !important;
+    color: var(--color-text-secondary) !important;
+  }
+
+  // ---- Fullscreen ----
+  &.is-fullscreen .sp-layout {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    width: 100vw;
+    height: 100dvh;
+    margin: 0;
+    border-radius: 0 !important;
+    box-shadow: none;
+  }
 }

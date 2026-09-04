@@ -1,6 +1,6 @@
 // This file contains the data for the command shortcuts that are displayed in the command center
-import { mostRecentBlog } from "./BlogsData";
-const mostRecentBlogLink = mostRecentBlog.blogUrl;
+import { mostRecentBlog } from "./posts";
+const mostRecentBlogLink = mostRecentBlog.url;
 
 export const commandShortcuts = [
   {
@@ -29,37 +29,14 @@ export const commandShortcuts = [
 
 export const cmdItems = [
   {
-    title: "Actions",
+    title: "Connect",
     navLinks: [
-      {
-        href: "/projects",
-        icon: "fa-solid fa-arrow-right",
-        text: "Checkout my project work",
-        target: "_self",
-      },
-      {
-        href: mostRecentBlogLink,
-        icon: "fa-solid fa-blog",
-        text: "Read the most recent blog post",
-        target: "_self",
-      },
       {
         href: "https://github.com/SahilK-027/sahilk027.blog/discussions",
         icon: "fa-regular fa-lightbulb",
         text: "Suggest a topic for blog",
-        target: "_target",
+        target: "_blank",
       },
-      // {
-      //   href: "#",
-      //   icon: "fa-regular fa-file-lines",
-      //   text: "Download my resume",
-      //   target: "_blank",
-      // },
-    ],
-  },
-  {
-    title: "Connect with me",
-    navLinks: [
       {
         href: "https://github.com/SahilK-027",
         icon: "fa-brands fa-github",
@@ -70,6 +47,12 @@ export const cmdItems = [
         href: "https://www.linkedin.com/in/sahilk027/",
         icon: "fa-brands fa-linkedin-in",
         text: "Connect with me on LinkedIn",
+        target: "_blank",
+      },
+      {
+        href: "https://x.com/SahilK027",
+        icon: "fa-brands fa-x-twitter",
+        text: "Find me on 𝕏 (Twitter)",
         target: "_blank",
       },
       {

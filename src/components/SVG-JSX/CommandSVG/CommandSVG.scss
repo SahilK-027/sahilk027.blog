@@ -19,12 +19,12 @@
 
 /* Command icon hover styles */
 .command-container:hover .command-icon {
-  transition: all 0.3s ease;
+  transition: all var(--dur-base) var(--ease);
   fill: var(--color-anchor);
 }
 
 .command-container:hover {
-  transition: all 0.3s ease;
+  transition: all var(--dur-base) var(--ease);
   border: 1px solid var(--color-anchor);
   box-shadow: 0 0 30px var(--anchor-underline-color);
 }

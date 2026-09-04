@@ -1,0 +1,315 @@
+/* Editorial year log: sticky year rail left, post rows right. */
+.year-log {
+  display: flex;
+  flex-direction: column;
+  gap: 72px;
+
+  .year-group {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 40px;
+    align-items: start;
+
+    .year-rail {
+      position: sticky;
+      top: 96px;
+
+      .year-rail__inner {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        .year-rail__year {
+          font-size: var(--fs-title-2);
+          font-weight: 500;
+          letter-spacing: -0.02em;
+          line-height: 1;
+          color: var(--text-1);
+          font-variant-numeric: tabular-nums;
+        }
+
+        .year-rail__count {
+          color: var(--text-3);
+          font-size: var(--fs-small);
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+        }
+
+        .activity-strip {
+          display: flex;
+          align-items: flex-end;
+          gap: 4px;
+          height: 20px;
+          margin-top: 8px;
+
+          .month-bar {
+            width: 5px;
+            height: 4px;
+            border-radius: 2px;
+            background: var(--border);
+
+            &.filled {
+              background: var(--accent);
+            }
+          }
+        }
+      }
+    }
+
+    .post-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      border-top: 1px solid var(--border);
+
+      .post-row {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        border-bottom: 1px solid var(--border);
+
+        // TOC leader: dotted rule filling the gap between title and tags,
+        // same language as the hero index card.
+        .post-leader {
+          flex: 1;
+          min-width: 24px;
+          border-bottom: 1px dotted var(--text-3);
+          opacity: 0.45;
+          align-self: center;
+        }
+
+        .post-link {
+          flex: 0 1 auto;
+          min-width: 0;
+          display: flex;
+          align-items: center;
+          gap: 20px;
+          padding: 20px 4px;
+          transition: transform var(--dur-base) var(--ease);
+
+          // Wireframe glyph + index stacked: the shape is the row's mark,
+          // the number sits small beneath it.
+          .post-figure {
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            width: 30px;
+          }
+
+          .post-glyph {
+            width: 24px;
+            height: 24px;
+
+            path {
+              stroke: var(--text-3);
+              stroke-width: 0.9;
+              stroke-linecap: round;
+              stroke-linejoin: round;
+              opacity: 0.55;
+              stroke-dasharray: 1;
+              stroke-dashoffset: 0;
+              transition: stroke var(--dur-base) var(--ease),
+                opacity var(--dur-base) var(--ease);
+            }
+          }
+
+          .post-index {
+            font-family: "Fira Code", monospace;
+            font-size: var(--fs-micro);
+            color: var(--text-3);
+            font-variant-numeric: tabular-nums;
+            transition: color var(--dur-base) var(--ease);
+          }
+
+          .post-main {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            min-width: 0;
+            flex: 1;
+
+            .post-title {
+              color: var(--text-1);
+              font-weight: 500;
+              font-size: var(--fs-body);
+              line-height: 1.45;
+              transition: color var(--dur-base) var(--ease);
+            }
+
+            .post-meta {
+              display: flex;
+              align-items: center;
+              gap: 10px;
+              font-family: "Fira Code", monospace;
+              font-size: var(--fs-kicker);
+              color: var(--text-3);
+
+              time {
+                font-variant-numeric: tabular-nums;
+              }
+
+              // Lives on the meta line, not appended to the title: a long
+              // title would wrap and strand the pill on a line of its own.
+              .post-badge {
+                flex: none;
+                padding: 1px 8px;
+                font-family: inherit;
+                font-size: var(--fs-micro);
+                font-weight: 500;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+                line-height: 1.6;
+                color: var(--accent);
+                background: var(--accent-subtle);
+                border: 1px solid var(--accent-faint);
+                border-radius: 999px;
+              }
+
+              .post-meta__dot {
+                width: 3px;
+                height: 3px;
+                border-radius: 50%;
+                background: var(--text-3);
+              }
+            }
+          }
+
+          &:hover {
+            transform: translateX(10px);
+
+            .post-title {
+              color: var(--accent);
+            }
+
+            .post-index {
+              color: var(--accent);
+            }
+
+            // The figure redraws itself line-by-line in the accent color.
+            .post-glyph path {
+              stroke: var(--accent);
+              opacity: 1;
+              animation: glyph-draw 0.7s var(--ease);
+            }
+          }
+        }
+
+        .post-arrow {
+          flex-shrink: 0;
+          font-size: var(--fs-small);
+          color: var(--accent);
+          opacity: 0;
+          transform: translateX(-8px);
+          transition: opacity var(--dur-base) var(--ease),
+            transform var(--dur-base) var(--ease);
+        }
+
+        .post-link:hover ~ .post-arrow {
+          opacity: 1;
+          transform: translateX(0);
+        }
+
+        .post-tags {
+          flex-shrink: 0;
+          display: flex;
+          gap: 8px;
+
+          .post-tag {
+            font-family: "Fira Code", monospace;
+            font-size: var(--fs-kicker);
+            color: var(--text-3);
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            transition: color var(--dur-base) var(--ease);
+
+            &::before {
+              content: "#";
+              opacity: 0.6;
+            }
+
+            &:hover {
+              color: var(--accent);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.year-log-empty {
+  color: var(--text-2);
+}
+
+@keyframes glyph-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .year-log .post-link:hover .post-glyph path {
+    animation: none;
+  }
+}
+
+
+@media (max-width: 860px) {
+  .year-log {
+    gap: 48px;
+
+    .year-group {
+      grid-template-columns: 1fr;
+      gap: 18px;
+
+      .year-rail {
+        position: static;
+
+        .year-rail__inner {
+          flex-direction: row;
+          align-items: baseline;
+          gap: 14px;
+
+          .year-rail__year {
+            font-size: var(--fs-title-3);
+          }
+
+          .activity-strip {
+            margin-top: 0;
+            margin-left: auto;
+          }
+        }
+      }
+
+      .post-list .post-row {
+        flex-wrap: wrap;
+        gap: 0;
+
+        .post-arrow,
+        .post-leader {
+          display: none;
+        }
+
+        .post-tags {
+          width: 100%;
+          padding: 0 4px 16px 54px;
+        }
+
+        .post-link {
+          padding: 16px 4px 10px;
+
+          &:hover {
+            transform: none;
+          }
+        }
+      }
+    }
+  }
+}

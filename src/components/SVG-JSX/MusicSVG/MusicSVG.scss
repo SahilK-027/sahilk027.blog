@@ -1,55 +1,54 @@
 .music-icon-container {
-    height: 100%;
-    padding: 7.5px;
-    border: 1px solid var(--border-color);
+  height: 100%;
+  padding: 7.5px;
+  border: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 8px;
+  transition: border-color var(--dur-base) var(--ease),
+    background var(--dur-base) var(--ease);
+
+  /* Five-bar visualizer — bars centred on the mid-line so they read as a
+     symmetric wave. Motion (dance + settle) is driven by the Web Animations
+     API in MusicSVG.jsx; CSS only sets the resting shape and colours. */
+  .music-viz {
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 10px;
-    cursor: pointer;
-    margin-right: 8px;
-}
+    gap: 2px;
+    width: 20px;
+    height: 18px;
 
-.music-icon-container.play-animation {
-    animation: glow 1s infinite alternate;
-}
-
-@keyframes glow {
-    from {
-        box-shadow: 0 0 0px var(--shadow-color);
+    span {
+      width: 2.5px;
+      height: 100%;
+      border-radius: 2px;
+      background: var(--color-text-secondary);
+      transform-origin: center;
+      /* Resting wave silhouette — WAAPI tweens here on stop. */
+      transform: scaleY(0.34);
+      transition: background var(--dur-base) var(--ease);
     }
 
-    to {
-        box-shadow: 0 0 10px var(--shadow-color);
+    span:nth-child(2) { transform: scaleY(0.62); }
+    span:nth-child(3) { transform: scaleY(0.80); }
+    span:nth-child(4) { transform: scaleY(0.62); }
+  }
+
+  /* Playing: bars ink accent (motion handled in JS). */
+  &.play-animation .music-viz span {
+    background: var(--accent);
+  }
+
+  &:hover {
+    border-color: var(--accent-faint);
+    background: var(--accent-subtle);
+
+    .music-viz span {
+      background: var(--accent);
     }
-}
-
-.music-icon-container .music-icon {
-    fill: var(--color-text-secondary);
-    width: 22px;
-    height: 22px;
-}
-
-.music-icon-container .music-icon.play-animation {
-    animation: colorGlow 1s infinite alternate;
-}
-
-@keyframes colorGlow {
-    from {
-        fill: var(--color-text-secondary);
-    }
-
-    to {
-        fill: var(--color-anchor);
-    }
-}
-
-.music-icon-container:hover .music-icon {
-    transition: all 0.1s ease;
-    fill: var(--color-anchor);
-}
-
-.music-icon-container:hover {
-    border: 1px solid var(--color-anchor);
-    box-shadow: 0 0 30px var(--anchor-underline-color);
+  }
 }

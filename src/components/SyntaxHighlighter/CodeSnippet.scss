@@ -1,5 +1,48 @@
 .code-snippet-container {
   position: relative;
+
+  // A fence carries no margin of its own (surrounding prose owns the rhythm),
+  // so two fences in a row (a program followed by its output) collided. Space
+  // them from each other only.
+  + .code-snippet-container {
+    margin-top: 18px;
+  }
+
+  // ---- Output / console panel -------------------------------------------
+  // A program's output is not source: no grammar to colour, no lines worth
+  // numbering, and nothing to read as syntax. It reads as a terminal instead,
+  // so a fence and the fence below it are visibly different kinds of thing.
+  &.is-output {
+    border-color: var(--border);
+    background-color: var(--bg);
+
+    .code-snippet-header {
+      background-color: transparent;
+      border-bottom-color: var(--border);
+
+      .code-lang {
+        color: var(--text-3);
+
+        .code-lang__glyph {
+          font-size: 0.72em;
+          opacity: 0.75;
+        }
+      }
+    }
+
+    .code--output {
+      margin: 0;
+      padding: 14px 18px;
+      font-family: "Fira Code", monospace;
+      font-size: var(--fs-code, 0.82rem);
+      line-height: 1.65;
+      color: var(--text-2);
+      white-space: pre;
+      overflow-x: auto;
+      tab-size: 2;
+    }
+  }
+
   border: 1px solid var(--code-container-border-color);
   border-radius: 10px;
   overflow: hidden;

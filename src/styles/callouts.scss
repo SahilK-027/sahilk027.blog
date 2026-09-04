@@ -13,14 +13,20 @@
   --callout-accent: hsl(var(--callout-h) var(--accent-s) var(--accent-l));
   --callout-soft: hsl(var(--callout-h) var(--accent-s) var(--accent-l) / 0.12);
   --callout-line: hsl(var(--callout-h) var(--accent-s) var(--accent-l) / 0.5);
+  // The box's own surface + edge: the accent at low alpha, so a callout reads
+  // as a tinted panel rather than a slab with a stripe down one side.
+  --callout-bg: hsl(var(--callout-h) var(--accent-s) var(--accent-l) / 0.06);
+  --callout-edge: hsl(var(--callout-h) var(--accent-s) var(--accent-l) / 0.28);
 
   position: relative;
   margin: 30px 0;
-  padding: 18px 22px 18px 20px;
-  border: 1px solid var(--border);
-  border-left: 3px solid var(--callout-accent);
+  // Even padding on all four sides. The article column is centred, so a heavy
+  // left border pulled the eye off-axis; the tint and a uniform border carry
+  // the emphasis instead.
+  padding: 20px 22px;
+  border: 1px solid var(--callout-edge);
   border-radius: 12px;
-  background: var(--bg-subtle);
+  background-color: var(--callout-bg);
 
   // Variants are distinct SHADES drawn from the accent's own palette — a small
   // hue nudge + lightness shift, never a jump to an unrelated colour. Note = the

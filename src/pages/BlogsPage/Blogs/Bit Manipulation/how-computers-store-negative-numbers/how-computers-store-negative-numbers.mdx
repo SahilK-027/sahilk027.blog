@@ -28,7 +28,7 @@ int main() {
 And it handed me this:
 </Intro>
 
-```bash
+```output
 -1 : 11111111111111111111111111111111
 ```
 
@@ -123,7 +123,7 @@ meaning negative numbers, they have to <i>stop</i> meaning the positive numbers
 they meant a second ago. Negatives aren't free storage. They're bought, and
 somebody pays. Split the patterns down the middle and here's the bill:
 
-```bash
+```output
 half the patterns  ->  0 .. 2147483647          (2147483648 of them)
 half the patterns  ->  -2147483648 .. -1        (2147483648 of them)
                                                  4294967296 total
@@ -156,7 +156,7 @@ The first idea everyone has is to just spend a switch on it. I had it too. Take
 the leftmost bit, call it the sign bit, 0 for positive and 1 for negative, and
 let the rest of the row carry the magnitude. In 8 bits it reads beautifully:
 
-```bash
+```output
 0000 0101  ->  +5
 1000 0101  ->  -5     (same magnitude, flag flipped)
 0000 0000  ->  +0
@@ -169,7 +169,7 @@ Look at the bottom two lines though. Test two is already gone. `00000000` and
 But test three is where it really falls apart. Hand +5 and -5 to a plain binary
 adder, the dumb one that just adds column by column, and watch what comes out:
 
-```bash
+```output
     0000 0101      (+5)
   + 1000 0101      (-5)
   -----------
@@ -187,7 +187,7 @@ sign. No.
 So try the next natural idea. If flipping one bit doesn't work, what if to
 negate a number you flip <i>every</i> bit?
 
-```bash
+```output
 0000 0101  ->  +5
 1111 1010  ->  -5     (every bit inverted)
 0000 0000  ->  +0
@@ -196,7 +196,7 @@ negate a number you flip <i>every</i> bit?
 
 This one is called one's complement, and honestly it gets so close. Add them:
 
-```bash
+```output
     0000 0101      (+5)
   + 1111 1010      (-5)
   -----------
@@ -231,7 +231,7 @@ a question with a real, findable answer: which 8-bit pattern, when you add it to
 Before we solve that, let's watch the register count, because there's something
 about it we all know and never think about. Take 8 bits and keep adding 1:
 
-```bash
+```output
 1111 1101   = 253
 1111 1110   = 254
 1111 1111   = 255
@@ -247,7 +247,7 @@ odometer rolls from 999999 back to 000000.
 Now run that backwards, and this is the step that answers the whole thing. Start
 at zero and subtract 1, doing the borrow by hand like we did in school:
 
-```bash
+```output
     0000 0000      (0)
   - 0000 0001      (1)
   -----------
@@ -259,7 +259,7 @@ and every column it passes through ends up holding a 1. The final borrow walks
 off the left edge of the register, and there's nothing out there to borrow from,
 so it just disappears. And what's sitting there when the dust settles is:
 
-```bash
+```output
     1111 1111
 ```
 
@@ -273,7 +273,7 @@ That rolling over has a proper name too. Because the carry is always thrown
 away, an n-bit register isn't doing ordinary arithmetic. It's doing arithmetic
 that wraps every 2^n steps:
 
-```bash
+```output
 (a + b) mod 2^n
 ```
 
@@ -286,7 +286,7 @@ And now our question has a clean answer. We want the pattern p where `x + p = 0`
 after wrapping, which means `x + p` has to land on exactly one full lap of the
 dial:
 
-```bash
+```output
 x + p = 2^n        =>        p = 2^n - x
 ```
 
@@ -299,7 +299,7 @@ out of that one line.
 Let's try it on 5 in 8 bits. `2^8 - 5 = 256 - 5 = 251 = 1111 1011`. Now feed it
 to the same plain adder that failed us twice already:
 
-```bash
+```output
     0000 0101      (5)
   + 1111 1011      (251, which we are calling -5)
   -----------
@@ -341,7 +341,7 @@ That `0000` and `1111` sitting right next to each other is the borrow we did by
 hand, now in its proper place on the line. And look at the range it came out
 with, it's lopsided. For n bits it runs from -2^(n-1) up to 2^(n-1) - 1:
 
-```bash
+```output
  8 bits    -128         ..  127
 16 bits    -32768       ..  32767
 32 bits    -2147483648  ..  2147483647
@@ -484,7 +484,7 @@ int main() {
 }
 ```
 
-```bash
+```output
       0 (0) : 00000000000000000000000000000000
       5 (5) : 00000000000000000000000000000101
      -5 (-5) : 11111111111111111111111111111011
@@ -521,7 +521,7 @@ if both sides have it set.
 flipping every one of them gives you a row of 32 ones, and we just spent an
 entire post working out what that row is:
 
-```bash
+```output
  0  =  00000000000000000000000000000000
 ~0  =  11111111111111111111111111111111   which is -1
 ```
@@ -542,7 +542,7 @@ turning that into a 0 and everything under it into 1s. It's the same borrow we
 walked through when `0 - 1` became all ones, just stopping earlier. AND the two
 together and only the shared upper bits survive:
 
-```bash
+```output
 x        =  0101 1000
 x - 1    =  0101 0111
 x & (x-1)=  0101 0000     the lowest 1 is gone

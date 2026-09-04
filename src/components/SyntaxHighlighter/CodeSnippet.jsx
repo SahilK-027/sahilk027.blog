@@ -34,11 +34,21 @@ const LANG_LABELS = {
   html: "HTML",
   json: "JSON",
   text: "Text",
+  output: "Output",
+  console: "Console",
+  stdout: "Output",
 };
+
+// Fences that hold a program's OUTPUT (or a hand-drawn ASCII figure) rather
+// than source. They get a terminal-style panel: no grammar, no line numbers,
+// no colour, since highlighting output as if it were shell script invents
+// syntax that isn't there.
+const OUTPUT_LANGS = new Set(["output", "console", "stdout", "out"]);
 
 const CodeSnippet = ({ codeText, language = "javascript" }) => {
   const [copied, setCopied] = useState(false);
   const langKey = language?.toLowerCase() || "";
+  const isOutput = OUTPUT_LANGS.has(langKey);
   const langLabel =
     LANG_LABELS[langKey] ||
     (langKey ? langKey[0].toUpperCase() + langKey.slice(1) : language);
@@ -61,10 +71,16 @@ const CodeSnippet = ({ codeText, language = "javascript" }) => {
   });
 
   return (
-    <div className="code-snippet-container">
+    <div
+      className={`code-snippet-container ${isOutput ? "is-output" : ""}`}
+    >
       <div className="code-snippet-header">
         <span className="code-lang">
-          <span className="code-lang__dot" aria-hidden="true" />
+          {isOutput ? (
+            <i className="fa-solid fa-terminal code-lang__glyph" aria-hidden="true" />
+          ) : (
+            <span className="code-lang__dot" aria-hidden="true" />
+          )}
           {langLabel}
         </span>
         <button
@@ -88,6 +104,11 @@ const CodeSnippet = ({ codeText, language = "javascript" }) => {
         </button>
       </div>
 
+      {isOutput ? (
+        <pre className="code code--output">
+          {codeText.replace(/\n$/, "")}
+        </pre>
+      ) : (
       <Highlight
         code={codeText.replace(/\n$/, "")}
         language={language}
@@ -108,6 +129,7 @@ const CodeSnippet = ({ codeText, language = "javascript" }) => {
           </pre>
         )}
       </Highlight>
+      )}
     </div>
   );
 };
